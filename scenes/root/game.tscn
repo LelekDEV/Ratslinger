@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://gliuja466pg6"]
+
+[ext_resource type="PackedScene" uid="uid://gyh7j0jqrav6" path="res://scenes/player.tscn" id="1_rf1xt"]
+[ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_rf1xt")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(4, 4)
+process_callback = 0
+position_smoothing_enabled = true
+
+[node name="Crosshair" parent="." instance=ExtResource("2_7dpn4")]
