@@ -1,1 +1,0 @@
-Ratslinger is a top-down rougelike game that takes place in wild west rat town. The protagonist is a rat with a gun. The objective of the game is slaughtering wildlife animals that attempt to tamper the village. It offers low-res pixel art graphics. Made with Godot engine.
