@@ -1,8 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://lw0lbb371my5"]
+[gd_scene load_steps=6 format=3 uid="uid://lw0lbb371my5"]
 
 [ext_resource type="Texture2D" uid="uid://dkbksplau0uha" path="res://graphics/crosshair.png" id="1_6blvt"]
 [ext_resource type="Script" uid="uid://bim36bh21eweb" path="res://scripts/crosshair.gd" id="2_norqy"]
 
+[sub_resource type="Animation" id="Animation_qnjby"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_norqy"]
+resource_name = "blink"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(0.75, 0.75), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ihytv"]
+_data = {
+&"RESET": SubResource("Animation_qnjby"),
+&"blink": SubResource("Animation_norqy")
+}
+
 [node name="Crosshair" type="Sprite2D"]
 texture = ExtResource("1_6blvt")
 script = ExtResource("2_norqy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ihytv")
+}

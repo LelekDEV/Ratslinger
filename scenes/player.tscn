@@ -125,6 +125,10 @@ animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.817507
 
-[node name="LegSprite" type="AnimatedSprite2D" parent="."]
+[node name="LegsSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tuyoq")
 animation = &"walk"
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true

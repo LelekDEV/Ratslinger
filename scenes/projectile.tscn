@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://pgwc06daqnn5"]
+
+[ext_resource type="Script" uid="uid://bm72rju3rprm6" path="res://scripts/projectile.gd" id="1_c8fcr"]
+[ext_resource type="Texture2D" uid="uid://doahe653fy8bv" path="res://graphics/player/bullet.png" id="2_q3m7n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3m7n"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(0, 0, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_softn"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(16, 0, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6q2a6"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(32, 0, 16, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jxwu6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3m7n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_softn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6q2a6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Projectile" type="Area2D"]
+script = ExtResource("1_c8fcr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jxwu6")
+autoplay = "default"
+frame_progress = 0.73355
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
