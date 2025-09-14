@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://pgwc06daqnn5"]
+[gd_scene load_steps=8 format=3 uid="uid://pgwc06daqnn5"]
 
 [ext_resource type="Script" uid="uid://bm72rju3rprm6" path="res://scripts/projectile.gd" id="1_c8fcr"]
 [ext_resource type="Texture2D" uid="uid://doahe653fy8bv" path="res://graphics/player/bullet.png" id="2_q3m7n"]
@@ -32,6 +32,9 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_q3m7n"]
+radius = 7.0
+
 [node name="Projectile" type="Area2D"]
 script = ExtResource("1_c8fcr")
 
@@ -40,9 +43,13 @@ sprite_frames = SubResource("SpriteFrames_jxwu6")
 autoplay = "default"
 frame_progress = 0.73355
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_q3m7n")
+
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 autostart = true
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

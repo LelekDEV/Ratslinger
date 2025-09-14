@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://xujmcv6kipp6"]
+
+[ext_resource type="Texture2D" uid="uid://b6dit7a2umjv4" path="res://graphics/blood_particle.png" id="1_ntwx8"]
+[ext_resource type="Script" uid="uid://d3bf6sl0ryhxc" path="res://scripts/basic_particles.gd" id="2_eoory"]
+
+[sub_resource type="Curve" id="Curve_665h7"]
+_data = [Vector2(0.00358423, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="BloodParticles" type="CPUParticles2D"]
+emitting = false
+amount = 4
+texture = ExtResource("1_ntwx8")
+one_shot = true
+explosiveness = 0.8
+spread = 180.0
+gravity = Vector2(0, 50)
+initial_velocity_min = 40.0
+initial_velocity_max = 40.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+damping_min = 100.0
+damping_max = 100.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_665h7")
+script = ExtResource("2_eoory")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -18,11 +18,21 @@ config/icon="res://icon.svg"
 [autoload]
 
 SignalBus="*res://scripts/global/signal_bus.gd"
+ParticleSpawner="*res://scripts/global/particle_spawner.gd"
 
 [editor]
 
 movie_writer/movie_file="C:/Users/Euro/Documents/ratvid.avi"
 movie_writer/fps=144
+
+[file_customization]
+
+folder_colors={
+"res://graphics/": "purple",
+"res://scenes/": "red",
+"res://scripts/": "yellow",
+"res://shaders/": "pink"
+}
 
 [input]
 

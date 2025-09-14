@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvq25qkad3uws"
-path="res://.godot/imported/fence.png-375728663d4b432e2708b7c80505f670.ctex"
+uid="uid://b6dit7a2umjv4"
+path="res://.godot/imported/blood_particle.png-3e3fec6ace541fce57b9e3c456dbcfa7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/fence.png"
-dest_files=["res://.godot/imported/fence.png-375728663d4b432e2708b7c80505f670.ctex"]
+source_file="res://graphics/blood_particle.png"
+dest_files=["res://.godot/imported/blood_particle.png-3e3fec6ace541fce57b9e3c456dbcfa7.ctex"]
 
 [params]
 

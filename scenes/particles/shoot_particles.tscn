@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b0vfomli4c7f8"]
 
-[ext_resource type="Script" uid="uid://d3bf6sl0ryhxc" path="res://scripts/shoot_particles.gd" id="1_odpyr"]
+[ext_resource type="Script" uid="uid://d3bf6sl0ryhxc" path="res://scripts/basic_particles.gd" id="1_odpyr"]
 [ext_resource type="Texture2D" uid="uid://cob1nie54gw8f" path="res://graphics/player/shoot_particle.png" id="1_t7olk"]
 
 [sub_resource type="Curve" id="Curve_t7olk"]
@@ -12,6 +12,7 @@ metadata/_snap_enabled = true
 colors = PackedColorArray(0.772549, 0.235294, 0.117647, 1, 0.984314, 0.792157, 0.368627, 1)
 
 [node name="ShootParticles" type="CPUParticles2D"]
+emitting = false
 texture = ExtResource("1_t7olk")
 lifetime = 2.0
 one_shot = true

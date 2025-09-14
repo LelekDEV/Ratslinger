@@ -1,13 +1,13 @@
 extends CharacterBody2D
 class_name Player
 
+@onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
+
 @onready var gun_sprite: Sprite2D = $GunSprite
 @onready var base_sprite: AnimatedSprite2D = $BaseSprite
 @onready var legs_sprite: AnimatedSprite2D = $LegsSprite
 
 @onready var shoot_cooldown: Timer = $ShootCooldown
-
-@onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
 
 var speed: float = 75
 var acceleration: float = 0.05
@@ -27,7 +27,7 @@ func spawn_projectile(direction: Vector2) -> void:
 	var shoot_pos = Vector2(16, 16) * direction + Vector2(0, 2)
 	
 	var projectile = Projectile.instantiate()
-	var particles = ShootParticles.instantiate()
+	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT)
 	
 	projectile.global_position = global_position + shoot_pos
 	projectile.global_rotation = direction.angle()
