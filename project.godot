@@ -28,6 +28,7 @@ movie_writer/fps=144
 [file_customization]
 
 folder_colors={
+"res://SFX/": "orange",
 "res://graphics/": "purple",
 "res://scenes/": "red",
 "res://scripts/": "yellow",

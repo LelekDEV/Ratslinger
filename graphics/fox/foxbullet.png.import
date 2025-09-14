@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cugo8kcyf1q4f"
-path="res://.godot/imported/Fox.png-ae91e5c9ce3316cef43047c658ad405b.ctex"
+uid="uid://cu5ypubvb3llx"
+path="res://.godot/imported/foxbullet.png-e08c7c518d10e0e45c0b7cc509d3ef96.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/Fox.png"
-dest_files=["res://.godot/imported/Fox.png-ae91e5c9ce3316cef43047c658ad405b.ctex"]
+source_file="res://graphics/fox/foxbullet.png"
+dest_files=["res://.godot/imported/foxbullet.png-e08c7c518d10e0e45c0b7cc509d3ef96.ctex"]
 
 [params]
 

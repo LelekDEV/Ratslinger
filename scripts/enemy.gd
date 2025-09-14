@@ -2,17 +2,23 @@ extends CharacterBody2D
 class_name Enemy
 
 @onready var player: Player = get_tree().get_first_node_in_group("player")
-
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var walk_extend_timer: Timer = $WalkExtendTimer
+@onready var hit_sfx: AudioStreamPlayer = $"../../AudioStreamPlayer"
+@onready var bullets_container: Node = $"../../Bullets"
+@onready var shoot_cooldown: Timer = $Shoot_Cooldown
+
+const BULLET_SCENE:= preload("res://scenes/foxbullet.tscn")
+
 
 var speed: float = 30
 var acceleration: float = 0.05
 var max_health: float = 4
 var health: float = max_health
+var player_pos
 
 func _physics_process(_delta: float) -> void:
-	var player_pos = player.global_position
+	player_pos = player.global_position
 	var direction = (player_pos - global_position).normalized()
 	
 	if global_position.distance_squared_to(player_pos) > 80 ** 2:
@@ -33,10 +39,26 @@ func _physics_process(_delta: float) -> void:
 		sprite.flip_h = false
 	
 	move_and_slide()
+	if global_position.distance_squared_to(player_pos) < 120 ** 2:
+		handle_shooting()
+	
+func handle_shooting():
+	if shoot_cooldown.is_stopped():
+		var direction: Vector2 = (player.global_position - global_position).normalized()
+		spawn_bullet(direction)
+		shoot_cooldown.start()
+
+func spawn_bullet(direction: Vector2) -> void:
+	if shoot_cooldown.is_stopped():
+		var bullet = BULLET_SCENE.instantiate()
+		bullet.global_position = global_position
+		bullet.global_rotation = direction.angle()
+		bullet.direction = direction           
+		bullets_container.add_child(bullet)
 
 func take_damage(amount: float) -> void:
 	health -= amount
-	
+	hit_sfx.play()
 	if health <= 0:
 		queue_free()
 

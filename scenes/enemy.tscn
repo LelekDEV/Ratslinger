@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_4ra3w"]
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="2_5uy6h"]
-[ext_resource type="Texture2D" uid="uid://cugo8kcyf1q4f" path="res://graphics/fox.png" id="3_c4w8v"]
+[ext_resource type="Texture2D" uid="uid://cugo8kcyf1q4f" path="res://graphics/fox/Fox.png" id="3_c4w8v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ra3w"]
 resource_local_to_scene = true
@@ -66,4 +66,8 @@ shape = SubResource("CapsuleShape2D_4gyqm")
 
 [node name="WalkExtendTimer" type="Timer" parent="."]
 wait_time = 0.1
+one_shot = true
+
+[node name="Shoot_Cooldown" type="Timer" parent="."]
+wait_time = 1.2
 one_shot = true

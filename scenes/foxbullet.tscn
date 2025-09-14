@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://cldtifc6qhbt2"]
+
+[ext_resource type="Script" uid="uid://dje1veimh3dda" path="res://scenes/foxbullet.gd" id="1_71ypp"]
+[ext_resource type="Texture2D" uid="uid://cu5ypubvb3llx" path="res://graphics/fox/foxbullet.png" id="1_wtcfe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e48y"]
+atlas = ExtResource("1_wtcfe")
+region = Rect2(0, 10, 30, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epypp"]
+atlas = ExtResource("1_wtcfe")
+region = Rect2(30, 10, 30, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hol4"]
+atlas = ExtResource("1_wtcfe")
+region = Rect2(60, 10, 30, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q6r6c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0e48y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epypp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hol4")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_71ypp"]
+radius = 4.0
+height = 8.0
+
+[node name="FoxBullet" type="Area2D"]
+script = ExtResource("1_71ypp")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q6r6c")
+animation = &"shoot"
+
+[node name="Bullet_Acceleration" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_71ypp")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Bullet_Acceleration" to="." method="_on_bullet_acceleration_timeout"]
