@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SignalBus="*res://scripts/global/signal_bus.gd"
 ParticleSpawner="*res://scripts/global/particle_spawner.gd"
+GlobalAudio="*res://scenes/global/global_audio.tscn"
 
 [editor]
 

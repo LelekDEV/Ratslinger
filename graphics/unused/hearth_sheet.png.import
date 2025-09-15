@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drekyvwt4e2on"
-path="res://.godot/imported/ArenaPopup.png-9e2036f145931e103941025ef9051d76.ctex"
+uid="uid://bgnirk8qencp3"
+path="res://.godot/imported/hearth_sheet.png-97fb9ce2e208cc0a00706cc02e40179d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/unused/ArenaPopup.png"
-dest_files=["res://.godot/imported/ArenaPopup.png-9e2036f145931e103941025ef9051d76.ctex"]
+source_file="res://graphics/unused/hearth_sheet.png"
+dest_files=["res://.godot/imported/hearth_sheet.png-97fb9ce2e208cc0a00706cc02e40179d.ctex"]
 
 [params]
 

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://decrujtypl4ge"]
+
+[ext_resource type="AudioStream" uid="uid://cttxaixgufij5" path="res://SFX/hit.wav" id="1_uc7ok"]
+
+[node name="GlobalAudio" type="AudioStreamPlayer"]
+stream = ExtResource("1_uc7ok")
+volume_db = -5.0
+max_polyphony = 8

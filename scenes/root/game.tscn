@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
 [ext_resource type="PackedScene" uid="uid://gyh7j0jqrav6" path="res://scenes/player.tscn" id="1_rf1xt"]
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
+[ext_resource type="Texture2D" uid="uid://b5nj08axqbslr" path="res://graphics/hearth.png" id="4_3rh43"]
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/cacti.png" id="4_wcdyl"]
 [ext_resource type="PackedScene" uid="uid://b74p6grnvdpcy" path="res://scenes/enemy.tscn" id="5_1qygq"]
-[ext_resource type="AudioStream" uid="uid://cttxaixgufij5" path="res://SFX/hit.wav" id="8_3rh43"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8yes"]
 texture = ExtResource("4_wcdyl")
@@ -28,6 +28,30 @@ sources/1 = SubResource("TileSetAtlasSource_o8yes")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_o8yes")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+z_index = 10
+offset_right = 204.0
+offset_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+z_index = 10
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("4_3rh43")
+expand_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+z_index = 10
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("4_3rh43")
+expand_mode = 3
 
 [node name="Sand" type="Sprite2D" parent="."]
 texture_repeat = 2
@@ -54,7 +78,7 @@ position = Vector2(-33, 52)
 
 [node name="Projectiles" type="Node" parent="." groups=["projectiles"]]
 
-[node name="Bullets" type="Node" parent="." groups=["bullet"]]
+[node name="Bullets" type="Node" parent="." groups=["bullets"]]
 
 [node name="Crosshair" parent="." instance=ExtResource("2_7dpn4")]
 z_index = 1
@@ -74,9 +98,5 @@ metadata/_edit_lock_ = true
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_3rh43")
-volume_db = -5.0
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b74p6grnvdpcy"]
+[gd_scene load_steps=12 format=3 uid="uid://b74p6grnvdpcy"]
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_4ra3w"]
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="2_5uy6h"]
@@ -51,7 +51,11 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4gyqm"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ra3w"]
+height = 20.7978
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
+radius = 8.0
 
 [node name="FoxEnemy" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_4ra3w")
@@ -62,12 +66,18 @@ sprite_frames = SubResource("SpriteFrames_7xaro")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_4gyqm")
+position = Vector2(0, 6)
+scale = Vector2(0.770188, 0.865475)
+shape = SubResource("CapsuleShape2D_4ra3w")
 
 [node name="WalkExtendTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
 
-[node name="Shoot_Cooldown" type="Timer" parent="."]
+[node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 1.2
 one_shot = true
+
+[node name="Headshot" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_5uy6h")

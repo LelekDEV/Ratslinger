@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://cldtifc6qhbt2"]
+
+[ext_resource type="Script" uid="uid://dje1veimh3dda" path="res://scripts/enemy_projectile.gd" id="1_t0w65"]
+[ext_resource type="Texture2D" uid="uid://cf6muid2h5l4m" path="res://graphics/unused/bullet.png" id="2_t0w65"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lmkc"]
+atlas = ExtResource("2_t0w65")
+region = Rect2(0, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iq82"]
+atlas = ExtResource("2_t0w65")
+region = Rect2(30, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fvcs"]
+atlas = ExtResource("2_t0w65")
+region = Rect2(60, 0, 30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q6r6c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lmkc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iq82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fvcs")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0w65"]
+size = Vector2(9, 4)
+
+[node name="FoxProjectile" type="Area2D" groups=["enemy_projectile"]]
+script = ExtResource("1_t0w65")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(5, -5)
+sprite_frames = SubResource("SpriteFrames_q6r6c")
+animation = &"shoot"
+frame = 1
+frame_progress = 0.898469
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5.5, 0)
+shape = SubResource("RectangleShape2D_t0w65")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
