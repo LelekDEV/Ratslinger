@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Ratslinger"
 run/main_scene="res://scenes/root/game.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -29,8 +29,8 @@ movie_writer/fps=144
 [file_customization]
 
 folder_colors={
-"res://SFX/": "orange",
 "res://graphics/": "purple",
+"res://music/": "orange",
 "res://scenes/": "red",
 "res://scripts/": "yellow",
 "res://shaders/": "pink"

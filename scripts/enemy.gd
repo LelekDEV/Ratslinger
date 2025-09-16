@@ -14,7 +14,7 @@ var speed: float = 30
 var acceleration: float = 0.05
 var max_health: float = 4
 var health: float = max_health
-var headshot_mult: float = 2 #for future development
+var headshot_mult: float = 2  #for future development
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()

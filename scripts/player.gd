@@ -2,12 +2,21 @@ extends CharacterBody2D
 class_name Player
 
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
+@onready var hearts: Array = get_tree().get_nodes_in_group("hearts")
+
+@onready var heart_left = hearts[0]
+@onready var heart_right = hearts[1]
 
 @onready var gun_sprite: Sprite2D = $GunSprite
 @onready var base_sprite: AnimatedSprite2D = $BaseSprite
 @onready var legs_sprite: AnimatedSprite2D = $LegsSprite
 
 @onready var shoot_cooldown: Timer = $ShootCooldown
+
+
+var max_hp: int = 8
+var hp: int = max_hp
+var is_dead: bool = false   
 
 var speed: float = 75
 var acceleration: float = 0.05
@@ -16,6 +25,13 @@ var recoil: float = 50
 var input: Vector2
 
 var anim: float = 0
+
+func play_sfx():
+	if hp == 0 and not is_dead:
+		GlobalAudio.get_node("Loose").play()
+		is_dead = !is_dead
+		print("player is dead!")
+		
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
@@ -73,3 +89,14 @@ func handle_movement() -> void:
 	gun_sprite.global_rotation = get_angle_to(get_global_mouse_position())
 	
 	velocity = lerp(velocity, input * speed, acceleration)
+
+
+func take_damage(amount: int) -> void:
+	hp = max(hp - amount, 0)
+	
+	if heart_right.frame < 4:
+		heart_right.frame += 1
+	else:
+		heart_left.frame += 1
+	
+	play_sfx()

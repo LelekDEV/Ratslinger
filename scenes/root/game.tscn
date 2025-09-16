@@ -1,13 +1,99 @@
-[gd_scene load_steps=11 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=23 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
 [ext_resource type="PackedScene" uid="uid://gyh7j0jqrav6" path="res://scenes/player.tscn" id="1_rf1xt"]
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
-[ext_resource type="Texture2D" uid="uid://b5nj08axqbslr" path="res://graphics/hearth.png" id="4_3rh43"]
+[ext_resource type="Texture2D" uid="uid://b4o500yul4vkb" path="res://graphics/Hearth.png" id="2_86ske"]
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/cacti.png" id="4_wcdyl"]
 [ext_resource type="PackedScene" uid="uid://b74p6grnvdpcy" path="res://scenes/enemy.tscn" id="5_1qygq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l77qo"]
+atlas = ExtResource("2_86ske")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_836xp"]
+atlas = ExtResource("2_86ske")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3lrj"]
+atlas = ExtResource("2_86ske")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh5j3"]
+atlas = ExtResource("2_86ske")
+region = Rect2(150, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3fff"]
+atlas = ExtResource("2_86ske")
+region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b3wgx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l77qo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_836xp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3lrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh5j3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3fff")
+}],
+"loop": true,
+"name": &"heart",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rh43"]
+atlas = ExtResource("2_86ske")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86ske"]
+atlas = ExtResource("2_86ske")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijxjl"]
+atlas = ExtResource("2_86ske")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55u7g"]
+atlas = ExtResource("2_86ske")
+region = Rect2(150, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw82j"]
+atlas = ExtResource("2_86ske")
+region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2mmsw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rh43")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86ske")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijxjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55u7g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xw82j")
+}],
+"loop": true,
+"name": &"heart",
+"speed": 5.0
+}]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8yes"]
 texture = ExtResource("4_wcdyl")
@@ -32,34 +118,32 @@ script = ExtResource("1_o8yes")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="HeartUI" type="Node2D" parent="CanvasLayer"]
 z_index = 10
-offset_right = 204.0
-offset_bottom = 150.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+[node name="HeartLeft" type="AnimatedSprite2D" parent="CanvasLayer/HeartUI" groups=["hearts"]]
 z_index = 10
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-texture = ExtResource("4_3rh43")
-expand_mode = 3
+position = Vector2(69, 66)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_b3wgx")
+animation = &"heart"
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+[node name="HeartRight" type="AnimatedSprite2D" parent="CanvasLayer/HeartUI" groups=["hearts"]]
 z_index = 10
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-texture = ExtResource("4_3rh43")
-expand_mode = 3
+position = Vector2(208, 65)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_2mmsw")
+animation = &"heart"
 
 [node name="Sand" type="Sprite2D" parent="."]
 texture_repeat = 2
 texture = ExtResource("1_ncd4d")
 region_enabled = true
 region_rect = Rect2(0, 0, 648, 468)
+metadata/_edit_lock_ = true
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_rf1xt")]
+metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(4, 4)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4o500yul4vkb"
-path="res://.godot/imported/Hearth.png-47372d83e8ad386217190ac155297779.ctex"
+uid="uid://bcjxmy3h3daal"
+path="res://.godot/imported/cow.png-4ebebc922b1b79329c4cc8e9a4c64266.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/Hearth.png"
-dest_files=["res://.godot/imported/Hearth.png-47372d83e8ad386217190ac155297779.ctex"]
+source_file="res://graphics/unused/cow.png"
+dest_files=["res://.godot/imported/cow.png-4ebebc922b1b79329c4cc8e9a4c64266.ctex"]
 
 [params]
 

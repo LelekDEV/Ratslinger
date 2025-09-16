@@ -1,8 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://decrujtypl4ge"]
+[gd_scene load_steps=3 format=3 uid="uid://decrujtypl4ge"]
 
-[ext_resource type="AudioStream" uid="uid://cttxaixgufij5" path="res://SFX/hit.wav" id="1_uc7ok"]
+[ext_resource type="AudioStream" uid="uid://cttxaixgufij5" path="res://music/sfx/hit.wav" id="1_uc7ok"]
+[ext_resource type="AudioStream" uid="uid://cos1sokca25y1" path="res://music/sfx/loose.wav" id="2_tlmfv"]
 
 [node name="GlobalAudio" type="AudioStreamPlayer"]
 stream = ExtResource("1_uc7ok")
 volume_db = -5.0
 max_polyphony = 8
+
+[node name="Loose" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_tlmfv")
