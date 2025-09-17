@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://djd1q01nwytri"]
+
+[ext_resource type="Texture2D" uid="uid://c6qijcnyigwbf" path="res://graphics/masks/heart_mask.png" id="1_6l0s0"]
+[ext_resource type="Script" uid="uid://bggnn8swbverx" path="res://scripts/ui_heart.gd" id="1_tg2me"]
+[ext_resource type="Script" uid="uid://cn5e6r0kut0ji" path="res://scripts/wave_draw.gd" id="1_y7sw2"]
+[ext_resource type="Texture2D" uid="uid://cmjsehea0s8kb" path="res://graphics/heart_outline.png" id="3_aqp5m"]
+
+[node name="UIHeart" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 50.0
+script = ExtResource("1_tg2me")
+
+[node name="MaskSprite" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(25, 25)
+texture = ExtResource("1_6l0s0")
+
+[node name="EmptySprite" type="Sprite2D" parent="MaskSprite"]
+self_modulate = Color(1, 1, 1, 0.3)
+texture = ExtResource("1_6l0s0")
+
+[node name="WaveDraw" type="Node2D" parent="MaskSprite"]
+position = Vector2(-25, -11)
+script = ExtResource("1_y7sw2")
+
+[node name="ColorRect" type="ColorRect" parent="MaskSprite"]
+offset_left = -25.0
+offset_top = -8.0
+offset_right = 25.0
+offset_bottom = 42.0
+color = Color(0.8980392, 0.36078432, 0.36078432, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="."]
+position = Vector2(25, 25)
+texture = ExtResource("3_aqp5m")

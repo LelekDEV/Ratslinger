@@ -42,6 +42,7 @@ script = ExtResource("1_t0w65")
 position = Vector2(5, -5)
 sprite_frames = SubResource("SpriteFrames_q6r6c")
 animation = &"shoot"
+autoplay = "shoot"
 frame = 1
 frame_progress = 0.898469
 
