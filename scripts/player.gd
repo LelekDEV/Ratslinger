@@ -1,11 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
+@onready var ui: CanvasLayer = get_tree().get_first_node_in_group("ui")
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
-@onready var hearts: Array = get_tree().get_nodes_in_group("hearts")
-
-@onready var heart_left = hearts[0]
-@onready var heart_right = hearts[1]
 
 @onready var gun_sprite: Sprite2D = $GunSprite
 @onready var base_sprite: AnimatedSprite2D = $BaseSprite
@@ -14,8 +11,8 @@ class_name Player
 @onready var shoot_cooldown: Timer = $ShootCooldown
 @onready var hit_cooldown: Timer = $HitCooldown
 
-var max_hp: int = 8
-var hp: int = max_hp
+var max_health: float = 8
+var health: float = max_health
 var is_dead: bool = false   
 
 var speed: float = 75
@@ -25,13 +22,6 @@ var recoil: float = 50
 var input: Vector2
 
 var anim: float = 0
-
-func play_sfx():
-	if hp == 0 and not is_dead:
-		GlobalAudio.get_node("Loose").play()
-		is_dead = !is_dead
-		print("player is dead!")
-		
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
@@ -58,6 +48,8 @@ func spawn_projectile(direction: Vector2) -> void:
 
 func handle_shooting() -> void:
 	if Input.is_action_just_pressed("shoot") and shoot_cooldown.is_stopped():
+		#GlobalAudio.play_sfx(GlobalAudio.SFX.HIT) # <-- insert shoot sound here
+		
 		var direction: Vector2 = get_local_mouse_position().normalized()
 		
 		spawn_projectile(direction)
@@ -90,20 +82,19 @@ func handle_movement() -> void:
 	
 	velocity = lerp(velocity, input * speed, acceleration)
 
-
-func kick_recoil(amount: int):
-	
-	var direction: Vector2 = get_local_mouse_position().normalized()
-	velocity -= direction * amount
-
-func take_damage(amount: int) -> void:
+func take_damage(amount: float) -> void:
 	if hit_cooldown.is_stopped():
-		hp = max(hp - amount, 0)
-	
-		if heart_right.frame < 4:
-			heart_right.frame += 1
-		else:
-			heart_left.frame += 1
-	
-		play_sfx()
+		health -= amount
+		
+		if health <= 0:
+			GlobalAudio.play_sfx(GlobalAudio.SFX.LOSE)
+			
+			# Retrieve to max health as placeholder
+			health = max_health
+			
+			print("You died")
+		
+		ui.update_hearts(health)
+		
+		GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 		hit_cooldown.start()

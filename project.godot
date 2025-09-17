@@ -29,12 +29,16 @@ movie_writer/fps=144
 [file_customization]
 
 folder_colors={
+"res://audio/": "blue",
 "res://graphics/": "purple",
-"res://music/": "orange",
 "res://scenes/": "red",
 "res://scripts/": "yellow",
 "res://shaders/": "pink"
 }
+
+[global_group]
+
+enemy=""
 
 [input]
 

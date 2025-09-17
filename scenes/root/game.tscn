@@ -1,100 +1,15 @@
-[gd_scene load_steps=24 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=13 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
 [ext_resource type="PackedScene" uid="uid://gyh7j0jqrav6" path="res://scenes/player.tscn" id="1_rf1xt"]
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
-[ext_resource type="Texture2D" uid="uid://b4o500yul4vkb" path="res://graphics/hearth.png" id="2_86ske"]
+[ext_resource type="Texture2D" uid="uid://cyth727vd6q26" path="res://graphics/heart.png" id="2_86ske"]
+[ext_resource type="Script" uid="uid://cvi745bdmkf4h" path="res://scripts/ui.gd" id="2_ijxjl"]
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/cacti.png" id="4_wcdyl"]
-[ext_resource type="PackedScene" uid="uid://b74p6grnvdpcy" path="res://scenes/enemy.tscn" id="5_1qygq"]
-[ext_resource type="PackedScene" uid="uid://x4kte2qp8tv" path="res://scenes/cow.tscn" id="9_86ske"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l77qo"]
-atlas = ExtResource("2_86ske")
-region = Rect2(0, 0, 50, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_836xp"]
-atlas = ExtResource("2_86ske")
-region = Rect2(50, 0, 50, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s3lrj"]
-atlas = ExtResource("2_86ske")
-region = Rect2(100, 0, 50, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sh5j3"]
-atlas = ExtResource("2_86ske")
-region = Rect2(150, 0, 50, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r3fff"]
-atlas = ExtResource("2_86ske")
-region = Rect2(200, 0, 50, 50)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_b3wgx"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l77qo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_836xp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_s3lrj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sh5j3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r3fff")
-}],
-"loop": true,
-"name": &"heart",
-"speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3rh43"]
-atlas = ExtResource("2_86ske")
-region = Rect2(0, 0, 50, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_86ske"]
-atlas = ExtResource("2_86ske")
-region = Rect2(50, 0, 50, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ijxjl"]
-atlas = ExtResource("2_86ske")
-region = Rect2(100, 0, 50, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_55u7g"]
-atlas = ExtResource("2_86ske")
-region = Rect2(150, 0, 50, 50)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xw82j"]
-atlas = ExtResource("2_86ske")
-region = Rect2(200, 0, 50, 50)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_2mmsw"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3rh43")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_86ske")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ijxjl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_55u7g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xw82j")
-}],
-"loop": true,
-"name": &"heart",
-"speed": 5.0
-}]
+[ext_resource type="PackedScene" uid="uid://b74p6grnvdpcy" path="res://scenes/enemies/fox_enemy.tscn" id="5_1qygq"]
+[ext_resource type="PackedScene" uid="uid://x4kte2qp8tv" path="res://scenes/enemies/cow_enemy.tscn" id="9_86ske"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8yes"]
 texture = ExtResource("4_wcdyl")
@@ -116,25 +31,23 @@ sources/1 = SubResource("TileSetAtlasSource_o8yes")
 [node name="Game" type="Node2D"]
 script = ExtResource("1_o8yes")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 10
+[node name="UI" type="CanvasLayer" parent="." groups=["ui"]]
+layer = 0
+script = ExtResource("2_ijxjl")
 
-[node name="HeartUI" type="Node2D" parent="CanvasLayer"]
+[node name="Hearts" type="Node2D" parent="UI"]
 z_index = 10
+position = Vector2(-144, -81)
 
-[node name="HeartLeft" type="AnimatedSprite2D" parent="CanvasLayer/HeartUI" groups=["hearts"]]
-z_index = 10
-position = Vector2(69, 66)
-scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_b3wgx")
-animation = &"heart"
+[node name="Heart1" type="Sprite2D" parent="UI/Hearts"]
+position = Vector2(25, 25)
+texture = ExtResource("2_86ske")
+hframes = 5
 
-[node name="HeartRight" type="AnimatedSprite2D" parent="CanvasLayer/HeartUI" groups=["hearts"]]
-z_index = 10
-position = Vector2(208, 65)
-scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_2mmsw")
-animation = &"heart"
+[node name="Heart2" type="Sprite2D" parent="UI/Hearts"]
+position = Vector2(75, 25)
+texture = ExtResource("2_86ske")
+hframes = 5
 
 [node name="Sand" type="Sprite2D" parent="."]
 texture_repeat = 2
@@ -161,6 +74,9 @@ script = ExtResource("4_bq78c")
 [node name="FoxEnemy" parent="Enemies" instance=ExtResource("5_1qygq")]
 position = Vector2(-33, 52)
 
+[node name="CowEnemy" parent="Enemies" instance=ExtResource("9_86ske")]
+position = Vector2(103, -37)
+
 [node name="Projectiles" type="Node" parent="." groups=["projectiles"]]
 
 [node name="Bullets" type="Node" parent="." groups=["bullets"]]
@@ -181,10 +97,7 @@ offset_bottom = 180.0
 metadata/_edit_lock_ = true
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 10.0
 autostart = true
-
-[node name="Cow" parent="." instance=ExtResource("9_86ske")]
-position = Vector2(103, -37)
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

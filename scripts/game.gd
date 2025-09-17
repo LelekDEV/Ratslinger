@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var _Enemy: PackedScene = preload("res://scenes/enemy.tscn")
+@onready var _Enemy: PackedScene = preload("res://scenes/enemies/fox_enemy.tscn")
 
 @onready var enemies: Node = $Enemies
 

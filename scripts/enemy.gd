@@ -5,24 +5,47 @@ class_name Enemy
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var walk_extend_timer: Timer = $WalkExtendTimer
-@onready var shoot_cooldown: Timer = $ShootCooldown
 
-var _Projectile: PackedScene = preload("res://scenes/fox_projectile.tscn")
+@onready var walk_extend_timer: Timer# = $WalkExtendTimer
+@onready var shoot_cooldown: Timer# = $ShootCooldown
+@onready var kick_delay: Timer# = $KickDelay
 
 var speed: float = 30
 var acceleration: float = 0.05
-var max_health: float = 4
-var health: float = max_health
-var headshot_mult: float = 2  #for future development
+
+@export var max_health: float = 4
+var health: float
+
+@export var damage: float = 1
+var headshot_mult: float = 2  # for future development
+
+# AI options
+# 0 - SHOOTER: follow the player and shoot projectiles, used for FoxEnemy
+# 1 - KICKER: remain stationary, trigger a kick attack on player's proximity, used for CowEnemy
+enum AI {SHOOTER, KICKER}
+@export var ai: AI
+
+func _ready() -> void:
+	match ai:
+		AI.SHOOTER:
+			walk_extend_timer = get_node("WalkExtendTimer")
+			shoot_cooldown = get_node("ShootCooldown")
+	
+		AI.KICKER:
+			kick_delay = get_node("KickDelay")
+	
+	health = max_health
 
 func _physics_process(_delta: float) -> void:
-	handle_movement()
-	handle_shooting()
+	if ai == AI.SHOOTER:
+		handle_movement()
+		handle_shooting()
+	else:
+		velocity = lerp(velocity, Vector2.ZERO, 0.3) # called as default logic to prevent infinite sliding from knockback for different AIs
 	
 	move_and_slide()
 
-func handle_shooting():
+func handle_shooting() -> void:
 	var player_pos: Vector2 = player.global_position
 	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
@@ -54,7 +77,7 @@ func handle_movement() -> void:
 func spawn_projectile(direction: Vector2) -> void:
 	var shoot_pos = Vector2(14, 2) * Vector2(-1 if sprite.flip_h else 1, 0)
 	
-	var projectile = _Projectile.instantiate()
+	var projectile = EnemyProjectile.instantiate()
 	
 	projectile.global_position = global_position + shoot_pos
 	projectile.global_rotation = direction.angle()
@@ -64,7 +87,8 @@ func spawn_projectile(direction: Vector2) -> void:
 
 func take_damage(amount: float) -> void:
 	health -= amount
-	GlobalAudio.play()
+	
+	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 	
 	if health <= 0:
 		queue_free()
@@ -85,3 +109,12 @@ func hit_flash() -> void:
 	sprite.material.set_shader_parameter("active", true)
 	await get_tree().create_timer(0.1).timeout
 	sprite.material.set_shader_parameter("active", false)
+
+func _on_kick_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		sprite.play("kick")
+		kick_delay.start()
+
+func _on_kick_delay_timeout() -> void:
+	player.velocity -= Vector2(300, 0)
+	player.take_damage(damage)
