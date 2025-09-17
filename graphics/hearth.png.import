@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4o500yul4vkb"
-path="res://.godot/imported/Hearth.png-47372d83e8ad386217190ac155297779.ctex"
+path="res://.godot/imported/hearth.png-e7b26af6fd5b19594472c3f8df8b556b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/Hearth.png"
-dest_files=["res://.godot/imported/Hearth.png-47372d83e8ad386217190ac155297779.ctex"]
+source_file="res://graphics/hearth.png"
+dest_files=["res://.godot/imported/hearth.png-e7b26af6fd5b19594472c3f8df8b556b.ctex"]
 
 [params]
 

@@ -12,7 +12,7 @@ class_name Player
 @onready var legs_sprite: AnimatedSprite2D = $LegsSprite
 
 @onready var shoot_cooldown: Timer = $ShootCooldown
-
+@onready var hit_cooldown: Timer = $HitCooldown
 
 var max_hp: int = 8
 var hp: int = max_hp
@@ -91,12 +91,19 @@ func handle_movement() -> void:
 	velocity = lerp(velocity, input * speed, acceleration)
 
 
+func kick_recoil(amount: int):
+	
+	var direction: Vector2 = get_local_mouse_position().normalized()
+	velocity -= direction * amount
+
 func take_damage(amount: int) -> void:
-	hp = max(hp - amount, 0)
+	if hit_cooldown.is_stopped():
+		hp = max(hp - amount, 0)
 	
-	if heart_right.frame < 4:
-		heart_right.frame += 1
-	else:
-		heart_left.frame += 1
+		if heart_right.frame < 4:
+			heart_right.frame += 1
+		else:
+			heart_left.frame += 1
 	
-	play_sfx()
+		play_sfx()
+		hit_cooldown.start()
