@@ -2,6 +2,7 @@ extends Node2D
 class_name EnemyProjectile
 
 @onready var sprite: AnimatedSprite2D = $Sprite2D
+@onready var projectile_collide_cooldown: Timer = $ProjectileCollideCooldown
 
 var direction: Vector2 = Vector2.ZERO
 

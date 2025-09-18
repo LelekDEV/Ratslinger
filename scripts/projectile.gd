@@ -8,6 +8,7 @@ var speed: float = 150
 var direction: Vector2
 var velocity: Vector2
 
+
 static func instantiate() -> Projectile:
 	return preload("res://scenes/projectile.tscn").instantiate() as Projectile
 
@@ -20,7 +21,7 @@ func _on_death_timer_timeout() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
-		body.take_damage(1)
+		body.take_damage(damage)
 		body.spawn_damage_particle(global_position)
 		body.hit_flash()
 		
@@ -30,5 +31,17 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_projectile"):
+		if area.projectile_collide_cooldown.is_stopped():
+			queue_free()
+			area.queue_free()
+		
+	elif area.is_in_group("headshot_area"):
+		var enemy: Enemy = area.get_parent()
+		
+		enemy.take_damage(damage * enemy.headshot_mult)
+		enemy.spawn_damage_particle(global_position)
+		enemy.hit_flash()
+		
+		enemy.velocity += direction * knockback
+		
 		queue_free()
-		area.queue_free()

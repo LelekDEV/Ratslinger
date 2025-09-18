@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_4ra3w"]
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="2_5uy6h"]
-[ext_resource type="Texture2D" uid="uid://cugo8kcyf1q4f" path="res://graphics/fox/fox.png" id="3_c4w8v"]
+[ext_resource type="Texture2D" uid="uid://cugo8kcyf1q4f" path="res://graphics/fox/Fox.png" id="3_c4w8v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ra3w"]
 resource_local_to_scene = true
@@ -60,6 +60,7 @@ radius = 8.0
 [node name="FoxEnemy" type="CharacterBody2D" groups=["enemy"]]
 collision_mask = 2
 script = ExtResource("1_4ra3w")
+max_health = 6.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_4ra3w")
@@ -79,6 +80,8 @@ one_shot = true
 wait_time = 1.2
 one_shot = true
 
-[node name="Headshot" type="CollisionShape2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["headshot_area"]]
+
+[node name="Headshot" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_5uy6h")

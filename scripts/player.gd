@@ -83,18 +83,20 @@ func handle_movement() -> void:
 	velocity = lerp(velocity, input * speed, acceleration)
 
 func take_damage(amount: float) -> void:
-	if hit_cooldown.is_stopped():
-		health -= amount
+	if not hit_cooldown.is_stopped():
+		return
 		
-		if health <= 0:
-			GlobalAudio.play_sfx(GlobalAudio.SFX.LOSE)
+	health -= amount
+		
+	if health <= 0:
+		GlobalAudio.play_sfx(GlobalAudio.SFX.LOSE)
 			
-			# Retrieve to max health as placeholder
-			health = max_health
+		# Retrieve to max health as placeholder
+		health = max_health
 			
-			print("You died")
+		print("You died")
 		
-		ui.update_hearts(health)
+	ui.update_hearts(health)
 		
-		GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
-		hit_cooldown.start()
+	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
+	hit_cooldown.start()

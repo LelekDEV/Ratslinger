@@ -9,15 +9,16 @@ class_name Enemy
 @onready var walk_extend_timer: Timer# = $WalkExtendTimer
 @onready var shoot_cooldown: Timer# = $ShootCooldown
 @onready var kick_delay: Timer# = $KickDelay
+@onready var projectile_collide_cooldown: Timer
 
 var speed: float = 30
 var acceleration: float = 0.05
 
-@export var max_health: float = 4
+@export var max_health: float = 8
 var health: float
 
 @export var damage: float = 1
-var headshot_mult: float = 2  # for future development
+var headshot_mult: float = 2
 
 # AI options
 # 0 - SHOOTER: follow the player and shoot projectiles, used for FoxEnemy
@@ -30,7 +31,6 @@ func _ready() -> void:
 		AI.SHOOTER:
 			walk_extend_timer = get_node("WalkExtendTimer")
 			shoot_cooldown = get_node("ShootCooldown")
-	
 		AI.KICKER:
 			kick_delay = get_node("KickDelay")
 	
