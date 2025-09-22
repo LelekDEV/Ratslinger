@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6qijcnyigwbf"
-path="res://.godot/imported/heart_mask.png-756dbf67278b31b6885f7ddbbe921878.ctex"
+uid="uid://buc76ufd0sp2s"
+path="res://.godot/imported/gun.png-a4789d0a1dac6c3429debd242b86f436.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/masks/heart_mask.png"
-dest_files=["res://.godot/imported/heart_mask.png-756dbf67278b31b6885f7ddbbe921878.ctex"]
+source_file="res://graphics/fox/gun.png"
+dest_files=["res://.godot/imported/gun.png-a4789d0a1dac6c3429debd242b86f436.ctex"]
 
 [params]
 

@@ -2,8 +2,10 @@ extends CanvasLayer
 
 @onready var hearts: HBoxContainer = $Hearts
 
+var scale_factor: float = 0.9
+
 func _ready() -> void:
-	hearts.scale = Vector2i.ONE * 4
+	hearts.scale = Vector2i.ONE * 4 * scale_factor
 	hearts.global_position = Vector2i.ZERO
 
 func update_hearts(health: float) -> void:

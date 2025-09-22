@@ -253,14 +253,14 @@ script = ExtResource("1_ie652")
 damage = 2.0
 ai = 1
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="BaseSprite" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_67sd0")
 sprite_frames = SubResource("SpriteFrames_gfyqs")
 animation = &"kick"
 frame = 8
 frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShapeBody" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ie652")
@@ -268,19 +268,19 @@ shape = SubResource("CapsuleShape2D_ie652")
 [node name="KickArea" type="Area2D" parent="."]
 position = Vector2(-11, 10)
 
-[node name="CollisionShapeBody" type="CollisionShape2D" parent="KickArea"]
+[node name="CollisionShapeKick" type="CollisionShape2D" parent="KickArea"]
 position = Vector2(-0.5, -3)
 shape = SubResource("RectangleShape2D_cairq")
+
+[node name="HeadshotArea" type="Area2D" parent="." groups=["headshot_area"]]
+
+[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea"]
+position = Vector2(12, -3)
+shape = SubResource("CircleShape2D_57r5i")
 
 [node name="KickDelay" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
-
-[node name="Area2D" type="Area2D" parent="." groups=["headshot_area"]]
-
-[node name="CollisionShapeHead" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(12, -3)
-shape = SubResource("CircleShape2D_57r5i")
 
 [connection signal="body_entered" from="KickArea" to="." method="_on_kick_area_body_entered"]
 [connection signal="timeout" from="KickDelay" to="." method="_on_kick_delay_timeout"]

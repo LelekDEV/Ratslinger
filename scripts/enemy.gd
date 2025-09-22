@@ -1,10 +1,13 @@
 extends CharacterBody2D
 class_name Enemy
 
+@onready var DamageIndicator: PackedScene = preload("res://scenes/damage_indicator.tscn")
+
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite: AnimatedSprite2D = $BaseSprite
+@onready var gun_sprite: Sprite2D
 
 @onready var walk_extend_timer: Timer# = $WalkExtendTimer
 @onready var shoot_cooldown: Timer# = $ShootCooldown
@@ -31,6 +34,7 @@ func _ready() -> void:
 		AI.SHOOTER:
 			walk_extend_timer = get_node("WalkExtendTimer")
 			shoot_cooldown = get_node("ShootCooldown")
+			gun_sprite = get_node("GunSprite")
 		AI.KICKER:
 			kick_delay = get_node("KickDelay")
 	
@@ -47,9 +51,11 @@ func _physics_process(_delta: float) -> void:
 
 func handle_shooting() -> void:
 	var player_pos: Vector2 = player.global_position
+	var direction: Vector2 = (player.global_position - global_position).normalized()
+	
+	gun_sprite.global_rotation = direction.angle()
 	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
-		var direction: Vector2 = (player.global_position - global_position).normalized()
 		spawn_projectile(direction)
 		shoot_cooldown.start()
 
@@ -71,11 +77,13 @@ func handle_movement() -> void:
 	
 	if direction.x < 0:
 		sprite.flip_h = true
+		gun_sprite.flip_v = true
 	elif direction.x > 0:
 		sprite.flip_h = false
+		gun_sprite.flip_v = false
 
 func spawn_projectile(direction: Vector2) -> void:
-	var shoot_pos = Vector2(14, 2) * Vector2(-1 if sprite.flip_h else 1, 0)
+	var shoot_pos = Vector2(16, 16) * direction
 	
 	var projectile = EnemyProjectile.instantiate()
 	
@@ -85,16 +93,20 @@ func spawn_projectile(direction: Vector2) -> void:
 	  
 	projectiles.add_child(projectile)
 
-func take_damage(amount: float) -> void:
+func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false) -> void:
 	health -= amount
 	
 	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 	
 	if health <= 0:
 		queue_free()
+	
+	hit_flash()
+	spawn_damage_fx(amount, hit_position, is_critical)
 
-func spawn_damage_particle(hit_position: Vector2) -> void:
+func spawn_damage_fx(amount: float, hit_position: Vector2, is_critical: bool) -> void:
 	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOOD)
+	var indicator = DamageIndicator.instantiate()
 	
 	particles.emitting = true
 	
@@ -104,6 +116,12 @@ func spawn_damage_particle(hit_position: Vector2) -> void:
 	else:
 		particles.position = (hit_position - global_position) * 0.5
 		add_child(particles)
+	
+	indicator.text = str(amount)
+	indicator.global_position = hit_position
+	indicator.is_critical = is_critical
+	
+	get_tree().root.add_child(indicator)
 
 func hit_flash() -> void:
 	sprite.material.set_shader_parameter("active", true)

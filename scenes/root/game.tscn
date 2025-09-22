@@ -30,6 +30,7 @@ tile_size = Vector2i(4, 4)
 sources/1 = SubResource("TileSetAtlasSource_o8yes")
 
 [node name="Game" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_o8yes")
 
 [node name="UI" type="CanvasLayer" parent="." groups=["ui"]]
@@ -57,6 +58,7 @@ texture = ExtResource("2_86ske")
 hframes = 5
 
 [node name="Sand" type="Sprite2D" parent="."]
+z_index = -1
 texture_repeat = 2
 texture = ExtResource("1_ncd4d")
 region_enabled = true
@@ -76,7 +78,8 @@ limit_bottom = 234
 position_smoothing_enabled = true
 script = ExtResource("4_bq78c")
 
-[node name="Enemies" type="Node" parent="."]
+[node name="Enemies" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="FoxEnemy" parent="Enemies" instance=ExtResource("5_1qygq")]
 position = Vector2(-33, 52)
@@ -84,9 +87,11 @@ position = Vector2(-33, 52)
 [node name="CowEnemy" parent="Enemies" instance=ExtResource("9_86ske")]
 position = Vector2(103, -37)
 
-[node name="Projectiles" type="Node" parent="." groups=["projectiles"]]
+[node name="Projectiles" type="Node2D" parent="." groups=["projectiles"]]
+y_sort_enabled = true
 
-[node name="Bullets" type="Node" parent="." groups=["bullets"]]
+[node name="Bullets" type="Node2D" parent="." groups=["bullets"]]
+y_sort_enabled = true
 
 [node name="Crosshair" parent="." instance=ExtResource("2_7dpn4")]
 z_index = 1
