@@ -48,7 +48,7 @@ func spawn_projectile(direction: Vector2) -> void:
 
 func handle_shooting() -> void:
 	if Input.is_action_just_pressed("shoot") and shoot_cooldown.is_stopped():
-		#GlobalAudio.play_sfx(GlobalAudio.SFX.HIT) # <-- insert shoot sound here
+		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4)
 		
 		var direction: Vector2 = get_local_mouse_position().normalized()
 		

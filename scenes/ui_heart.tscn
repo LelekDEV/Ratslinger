@@ -25,14 +25,6 @@ texture = ExtResource("1_6l0s0")
 position = Vector2(-25, -11)
 script = ExtResource("1_y7sw2")
 
-[node name="ColorRect" type="ColorRect" parent="MaskSprite"]
-offset_left = -25.0
-offset_top = -8.0
-offset_right = 25.0
-offset_bottom = 42.0
-color = Color(0.8980392, 0.36078432, 0.36078432, 1)
-metadata/_edit_use_anchors_ = true
-
 [node name="OutlineSprite" type="Sprite2D" parent="."]
 position = Vector2(25, 25)
 texture = ExtResource("3_aqp5m")

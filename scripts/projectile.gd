@@ -28,6 +28,13 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_projectile"):
 		if area.projectile_collide_cooldown.is_stopped():
+			GlobalAudio.play_sfx(GlobalAudio.SFX.BLOCK)
+			
+			var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOCK)
+			particles.position = global_position
+			particles.emitting = true
+			get_tree().root.add_child(particles)
+			
 			queue_free()
 			area.queue_free()
 		

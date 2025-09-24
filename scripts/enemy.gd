@@ -56,6 +56,8 @@ func handle_shooting() -> void:
 	gun_sprite.global_rotation = direction.angle()
 	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
+		GlobalAudio.play_sfx(GlobalAudio.SFX.ENEMY_SHOOT, -6)
+		
 		spawn_projectile(direction)
 		shoot_cooldown.start()
 
@@ -86,12 +88,18 @@ func spawn_projectile(direction: Vector2) -> void:
 	var shoot_pos = Vector2(16, 16) * direction
 	
 	var projectile = EnemyProjectile.instantiate()
+	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT)
 	
 	projectile.global_position = global_position + shoot_pos
 	projectile.global_rotation = direction.angle()
-	projectile.direction = direction         
+	projectile.direction = direction
+	
+	particles.position = shoot_pos
+	particles.global_rotation = direction.angle()
+	particles.emitting = true  
 	  
 	projectiles.add_child(projectile)
+	add_child(particles)
 
 func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false) -> void:
 	health -= amount

@@ -8,6 +8,7 @@ _data = [Vector2(0.00358423, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0
 point_count = 2
 
 [node name="BloodParticles" type="CPUParticles2D"]
+z_index = 1
 emitting = false
 amount = 4
 texture = ExtResource("1_ntwx8")
