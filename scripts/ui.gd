@@ -27,7 +27,7 @@ func _physics_process(_delta: float) -> void:
 
 func update_hearts(health: float) -> void:
 	var i: int = 0
-	print(get_viewport().get_visible_rect().size)
+	
 	var hearts_sorted: Array = hearts.get_children()
 	hearts_sorted.reverse()
 	
