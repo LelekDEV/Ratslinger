@@ -7,15 +7,10 @@ class_name Enemy
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
 
 @onready var sprite: AnimatedSprite2D = $BaseSprite
-@onready var gun_sprite: Sprite2D
-
-@onready var walk_extend_timer: Timer# = $WalkExtendTimer
-@onready var shoot_cooldown: Timer# = $ShootCooldown
-@onready var kick_delay: Timer# = $KickDelay
-@onready var projectile_collide_cooldown: Timer
 
 var speed: float = 30
 var acceleration: float = 0.05
+var direction: Vector2
 
 @export var max_health: float = 8
 var health: float
@@ -24,17 +19,33 @@ var health: float
 var headshot_mult: float = 2
 
 # AI options
-# 0 - SHOOTER: follow the player and shoot projectiles, used for FoxEnemy
-# 1 - KICKER: remain stationary, trigger a kick attack on player's proximity, used for CowEnemy
 enum AI {SHOOTER, KICKER}
 @export var ai: AI
+
+# 0 - SHOOTER: follow the player and shoot projectiles, used for FoxEnemy
+# Used nodes:
+@onready var walk_extend_timer: Timer
+@onready var shoot_cooldown: Timer
+@onready var projectile_collide_cooldown: Timer
+@onready var shoot_notion_timer: Timer
+
+@onready var gun_sprite: Sprite2D
+@onready var attack_highlight: Node2D
+
+# 1 - KICKER: remain stationary, trigger a kick attack on player's proximity, used for CowEnemy
+# Used nodes:
+@onready var kick_delay: Timer
 
 func _ready() -> void:
 	match ai:
 		AI.SHOOTER:
 			walk_extend_timer = get_node("WalkExtendTimer")
 			shoot_cooldown = get_node("ShootCooldown")
+			shoot_notion_timer = get_node("ShootNotionTimer")
+			
 			gun_sprite = get_node("GunSprite")
+			attack_highlight = get_node("AttackHighlight")
+			
 		AI.KICKER:
 			kick_delay = get_node("KickDelay")
 	
@@ -51,19 +62,20 @@ func _physics_process(_delta: float) -> void:
 
 func handle_shooting() -> void:
 	var player_pos: Vector2 = player.global_position
-	var direction: Vector2 = (player.global_position - global_position).normalized()
+	direction = (player.global_position - global_position).normalized()
 	
 	gun_sprite.global_rotation = direction.angle()
 	
+	attack_highlight.target = direction * 400
+	attack_highlight.alpha = abs(sin((1 - shoot_notion_timer.time_left / shoot_notion_timer.wait_time) * PI * 3))
+	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
-		GlobalAudio.play_sfx(GlobalAudio.SFX.ENEMY_SHOOT, -6)
-		
-		spawn_projectile(direction)
-		shoot_cooldown.start()
+		shoot_notion_timer.start()
+		shoot_cooldown.start(shoot_cooldown.wait_time * randf_range(0.8, 1.2))
 
 func handle_movement() -> void:
 	var player_pos: Vector2 = player.global_position
-	var direction: Vector2 = (player_pos - global_position).normalized()
+	direction = (player_pos - global_position).normalized()
 	
 	if global_position.distance_squared_to(player_pos) > 80 ** 2:
 		velocity = lerp(velocity, speed * direction, 0.2)
@@ -80,11 +92,12 @@ func handle_movement() -> void:
 	if direction.x < 0:
 		sprite.flip_h = true
 		gun_sprite.flip_v = true
+		
 	elif direction.x > 0:
 		sprite.flip_h = false
 		gun_sprite.flip_v = false
 
-func spawn_projectile(direction: Vector2) -> void:
+func spawn_projectile() -> void:
 	var shoot_pos = Vector2(16, 16) * direction
 	
 	var projectile = EnemyProjectile.instantiate()
@@ -144,3 +157,7 @@ func _on_kick_area_body_entered(body: Node2D) -> void:
 func _on_kick_delay_timeout() -> void:
 	player.velocity -= Vector2(300, 0)
 	player.take_damage(damage)
+
+func _on_shoot_notion_timer_timeout() -> void:
+	GlobalAudio.play_sfx(GlobalAudio.SFX.ENEMY_SHOOT, -6)
+	spawn_projectile()

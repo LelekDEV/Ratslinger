@@ -106,7 +106,7 @@ offset_bottom = 180.0
 metadata/_edit_lock_ = true
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 8.0
 autostart = true
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

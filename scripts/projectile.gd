@@ -19,6 +19,9 @@ func _on_death_timer_timeout() -> void:
 	queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
+	if is_queued_for_deletion():
+		return
+	
 	if body.is_in_group("enemy"):
 		body.take_damage(damage, global_position, false)
 		body.velocity += direction * knockback
@@ -26,6 +29,9 @@ func _on_body_entered(body: Node2D) -> void:
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
+	if is_queued_for_deletion():
+		return
+	
 	if area.is_in_group("enemy_projectile"):
 		if area.projectile_collide_cooldown.is_stopped():
 			GlobalAudio.play_sfx(GlobalAudio.SFX.BLOCK)

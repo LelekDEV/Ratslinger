@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://b74p6grnvdpcy"]
+[gd_scene load_steps=14 format=3 uid="uid://b74p6grnvdpcy"]
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_4ra3w"]
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="2_5uy6h"]
+[ext_resource type="Script" uid="uid://c0qhidnilfkjn" path="res://scripts/attack_highlight.gd" id="2_k7pnw"]
 [ext_resource type="Texture2D" uid="uid://buc76ufd0sp2s" path="res://graphics/fox/gun.png" id="2_y6uqw"]
 [ext_resource type="Texture2D" uid="uid://cugo8kcyf1q4f" path="res://graphics/fox/base.png" id="3_c4w8v"]
 
@@ -63,6 +64,10 @@ collision_mask = 2
 script = ExtResource("1_4ra3w")
 max_health = 6.0
 
+[node name="AttackHighlight" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("2_k7pnw")
+
 [node name="GunSprite" type="Sprite2D" parent="."]
 position = Vector2(0, 3.5)
 texture = ExtResource("2_y6uqw")
@@ -88,6 +93,12 @@ shape = SubResource("CircleShape2D_5uy6h")
 wait_time = 0.1
 one_shot = true
 
-[node name="ShootCooldown" type="Timer" parent="."]
-wait_time = 1.2
+[node name="ShootNotionTimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="ShootNotionTimer" to="." method="_on_shoot_notion_timer_timeout"]
