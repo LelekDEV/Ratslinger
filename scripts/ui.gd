@@ -1,16 +1,33 @@
 extends CanvasLayer
 
 @onready var hearts: HBoxContainer = $Hearts
+@onready var location_popup: Sprite2D = $LocationPopup
 
 var scale_factor: float = 0.9
+
+var popup_tween: Tween
+var popup_value: float = 0
 
 func _ready() -> void:
 	hearts.scale = Vector2i.ONE * 4 * scale_factor
 	hearts.global_position = Vector2i.ZERO
+	
+	location_popup.scale = Vector2i.ONE * 4
+	
+	popup_tween = create_tween()
+	
+	popup_tween.set_trans(Tween.TRANS_CUBIC)
+	popup_tween.set_ease(Tween.EASE_OUT)
+	
+	popup_tween.tween_property(self, "popup_value", 1, 6)
+
+func _physics_process(_delta: float) -> void:
+	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
+	location_popup.self_modulate.a = sin(popup_value * PI)
 
 func update_hearts(health: float) -> void:
 	var i: int = 0
-	
+	print(get_viewport().get_visible_rect().size)
 	var hearts_sorted: Array = hearts.get_children()
 	hearts_sorted.reverse()
 	
