@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://buccy3llcjjp6" path="res://scripts/global/global_audio.gd" id="1_uc7ok"]
 
 [node name="GlobalAudio" type="Node"]
+process_mode = 3
 script = ExtResource("1_uc7ok")

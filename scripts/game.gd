@@ -8,9 +8,12 @@ extends Node2D
 @onready var camera: Camera2D = $Player/Camera2D
 @onready var crosshair: Sprite2D = $Crosshair
 
+@onready var player_death_handler: Node = $PlayerDeathHandler
+
 func _ready() -> void:
 	SignalBus.player_shoot.connect(camera.on_player_shoot)
 	SignalBus.player_shoot.connect(crosshair.on_player_shoot)
+	SignalBus.player_death.connect(player_death_handler.on_player_death)
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	var enemy: Enemy = _Enemy.instantiate()

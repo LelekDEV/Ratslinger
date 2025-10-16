@@ -82,21 +82,23 @@ func handle_movement() -> void:
 	
 	velocity = lerp(velocity, input * speed, acceleration)
 
-func take_damage(amount: float) -> void:
+func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_enemy: Enemy = null) -> bool:
+	# (returns true if it's lethal, false otherwise)
+	
 	if not hit_cooldown.is_stopped():
-		return
+		return false
 		
 	health -= amount
 		
 	if health <= 0:
 		GlobalAudio.play_sfx(GlobalAudio.SFX.LOSE)
-			
-		# Retrieve to max health as placeholder
-		health = max_health
-			
-		print("You died")
+		SignalBus.player_death.emit(from_projectile, from_enemy)
 		
+		return true
+	
 	ui.update_hearts(health)
-		
+	
 	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 	hit_cooldown.start()
+	
+	return false

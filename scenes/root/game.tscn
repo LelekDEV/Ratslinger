@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=15 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/arena_popup.png" id="4_xw82j"]
 [ext_resource type="PackedScene" uid="uid://b74p6grnvdpcy" path="res://scenes/enemies/fox_enemy.tscn" id="5_1qygq"]
 [ext_resource type="PackedScene" uid="uid://x4kte2qp8tv" path="res://scenes/enemies/cow_enemy.tscn" id="9_86ske"]
+[ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8yes"]
 texture = ExtResource("4_wcdyl")
@@ -66,6 +67,7 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+process_mode = 3
 zoom = Vector2(4, 4)
 process_callback = 0
 limit_left = -324
@@ -104,6 +106,23 @@ offset_top = -180.0
 offset_right = 270.0
 offset_bottom = 180.0
 metadata/_edit_lock_ = true
+
+[node name="PlayerDeathHandler" type="Node2D" parent="." node_paths=PackedStringArray("camera", "death_shadow_rect", "ui")]
+process_mode = 3
+z_index = 10
+script = ExtResource("12_xw82j")
+camera = NodePath("../Player/Camera2D")
+death_shadow_rect = NodePath("../DeathShadowRect")
+ui = NodePath("../UI")
+
+[node name="DeathShadowRect" type="ColorRect" parent="."]
+visible = false
+z_index = 10
+offset_left = -324.0
+offset_top = -234.0
+offset_right = 324.0
+offset_bottom = 234.0
+color = Color(0, 0, 0, 1)
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 wait_time = 8.0

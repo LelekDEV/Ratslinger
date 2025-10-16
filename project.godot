@@ -30,6 +30,7 @@ movie_writer/fps=144
 
 folder_colors={
 "res://audio/": "blue",
+"res://data/": "orange",
 "res://fonts/": "teal",
 "res://graphics/": "purple",
 "res://scenes/": "red",
@@ -41,6 +42,7 @@ folder_colors={
 
 enemy=""
 headshot_area=""
+particles=""
 
 [input]
 

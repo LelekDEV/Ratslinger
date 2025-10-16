@@ -12,6 +12,8 @@ var max_speed = 200
 
 var damage: float = 1
 
+var parent: Enemy
+
 static func instantiate() -> EnemyProjectile:
 	return preload("res://scenes/enemy_projectile.tscn").instantiate() as EnemyProjectile
 
@@ -23,5 +25,5 @@ func _physics_process(delta):
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		body.take_damage(damage)
-		queue_free()
+		if not body.take_damage(damage, self, parent):
+			queue_free()

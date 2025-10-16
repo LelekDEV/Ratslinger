@@ -50,6 +50,7 @@ func _ready() -> void:
 			kick_delay = get_node("KickDelay")
 	
 	health = max_health
+	sprite.material.set_shader_parameter("active", false)
 
 func _physics_process(_delta: float) -> void:
 	if ai == AI.SHOOTER:
@@ -107,6 +108,9 @@ func spawn_projectile() -> void:
 	projectile.global_rotation = direction.angle()
 	projectile.direction = direction
 	
+	projectile.damage = damage
+	projectile.parent = self
+	
 	particles.position = shoot_pos
 	particles.global_rotation = direction.angle()
 	particles.emitting = true  
@@ -156,7 +160,7 @@ func _on_kick_area_body_entered(body: Node2D) -> void:
 
 func _on_kick_delay_timeout() -> void:
 	player.velocity -= Vector2(300, 0)
-	player.take_damage(damage)
+	player.take_damage(damage, null, self)
 
 func _on_shoot_notion_timer_timeout() -> void:
 	GlobalAudio.play_sfx(GlobalAudio.SFX.ENEMY_SHOOT, -6)
