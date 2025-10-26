@@ -36,6 +36,9 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 	ui.visible = false
 	
 	for node in [from_projectile, from_enemy, player]:
+		if not node:
+			continue
+		
 		node.z_index = death_shadow_rect.z_index + 1
 		
 		for sprite in node.find_children("*Sprite*"):
@@ -45,10 +48,11 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 	for particles in get_tree().get_nodes_in_group("particles"):
 		particles.queue_free()
 	
-	line_direction = from_projectile.direction
-	
-	line_start_pos = from_projectile.global_position + line_direction * 4
-	line_end_pos = line_start_pos
+	if from_projectile:
+		line_direction = from_projectile.direction
+		
+		line_start_pos = from_projectile.global_position + line_direction * 4
+		line_end_pos = line_start_pos
 	
 	camera.shake_time = 0.35
 	camera.shake_intensity = 7.5

@@ -26,6 +26,3 @@ func _physics_process(_delta: float) -> void:
 		global_position.x = max(-324 + get_viewport_rect().size.x / zoom.x / 2, get_parent().global_position.x)
 	else:
 		global_position = get_parent().global_position
-
-func on_player_shoot() -> void:
-	shake()

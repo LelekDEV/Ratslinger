@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=19 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -13,6 +13,43 @@
 [ext_resource type="PackedScene" uid="uid://x4kte2qp8tv" path="res://scenes/enemies/cow_enemy.tscn" id="9_86ske"]
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
+
+[sub_resource type="Animation" id="Animation_2mmsw"]
+resource_name = "player_hit"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.3), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l77qo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_836xp"]
+_data = {
+&"RESET": SubResource("Animation_l77qo"),
+&"player_hit": SubResource("Animation_2mmsw")
+}
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8yes"]
 texture = ExtResource("4_wcdyl")
@@ -39,6 +76,16 @@ script = ExtResource("1_o8yes")
 layer = 0
 script = ExtResource("2_ijxjl")
 
+[node name="FlashRect" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
+
 [node name="Hearts" type="HBoxContainer" parent="UI"]
 z_index = 10
 offset_left = -144.0
@@ -55,6 +102,11 @@ layout_mode = 2
 
 [node name="LocationPopup" type="Sprite2D" parent="UI"]
 texture = ExtResource("4_xw82j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
+libraries = {
+&"": SubResource("AnimationLibrary_836xp")
+}
 
 [node name="Sand1" type="Sprite2D" parent="."]
 z_index = -1
@@ -132,7 +184,7 @@ ui = NodePath("../UI")
 [node name="DeathShadowRect" type="ColorRect" parent="."]
 visible = false
 z_index = 10
-offset_left = -324.0
+offset_left = -972.0
 offset_top = -234.0
 offset_right = 324.0
 offset_bottom = 234.0

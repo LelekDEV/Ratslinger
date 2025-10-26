@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var hearts: HBoxContainer = $Hearts
 @onready var location_popup: Sprite2D = $LocationPopup
+@onready var animation: AnimationPlayer = $AnimationPlayer
 
 var scale_factor: float = 0.9
 

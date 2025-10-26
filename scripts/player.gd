@@ -103,6 +103,9 @@ func handle_movement() -> void:
 func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_enemy: Enemy = null) -> bool:
 	# (returns true if it's lethal, false otherwise)
 	
+	SignalBus.player_hit.emit()
+	
+	
 	if not hit_cooldown.is_stopped():
 		return false
 		
