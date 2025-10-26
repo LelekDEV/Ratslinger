@@ -11,14 +11,29 @@ extends Node2D
 @onready var crosshair: Sprite2D = $Crosshair
 
 @onready var player_death_handler: Node = $PlayerDeathHandler
+@onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 
 func _ready() -> void:
 	SignalBus.player_shoot.connect(camera.shake)
 	SignalBus.player_shoot.connect(crosshair.on_player_shoot)
+	
 	SignalBus.player_death.connect(player_death_handler.on_player_death)
+	
 	SignalBus.player_location_change.connect(ui.on_player_location_change)
+	SignalBus.player_location_change.connect(on_player_location_change)
+	
 	SignalBus.player_hit.connect(ui.animation.play.bind("player_hit"))
 	SignalBus.player_hit.connect(camera.shake)
+
+func on_player_location_change(location: Player.Locations) -> void:
+	# Placeholder approach, remember to get rid of it
+	
+	if location == Player.Locations.ARENA:
+		enemy_spawn_timer.paused = false
+		enemies.process_mode = Node.PROCESS_MODE_INHERIT
+	else:
+		enemy_spawn_timer.paused = true
+		enemies.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	var enemy: Enemy = _Enemy.instantiate()

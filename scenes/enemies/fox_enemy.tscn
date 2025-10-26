@@ -54,7 +54,7 @@ height = 20.7978
 radius = 8.0
 
 [node name="FoxEnemy" type="CharacterBody2D" groups=["enemy"]]
-collision_mask = 2
+collision_mask = 4
 script = ExtResource("1_4ra3w")
 max_health = 6.0
 
