@@ -7,6 +7,8 @@ var shake_time: float = 0.2
 var shake_intensity: float = 2.5
 var shake_smoothness: float = 0.8
 
+@export var gate: Node2D
+
 func shake() -> void:
 	shake_tween = create_tween()
 	
@@ -18,7 +20,12 @@ func _physics_process(_delta: float) -> void:
 		var target: Vector2 = Vector2.RIGHT.rotated(randf_range(-PI, PI)) * sin(shake_value * PI) * shake_intensity
 		offset = lerp(offset, target, 1 - shake_smoothness)
 	else:
-		offset = Vector2.ZERO 
+		offset = Vector2.ZERO
+	
+	if get_parent().global_position.x > gate.global_position.x:
+		global_position.x = max(-324 + get_viewport_rect().size.x / zoom.x / 2, get_parent().global_position.x)
+	else:
+		global_position = get_parent().global_position
 
 func on_player_shoot() -> void:
 	shake()

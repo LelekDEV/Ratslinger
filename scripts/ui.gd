@@ -14,16 +14,24 @@ func _ready() -> void:
 	
 	location_popup.scale = Vector2i.ONE * 4
 	
+	show_location_popup()
+
+func _physics_process(_delta: float) -> void:
+	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
+	location_popup.self_modulate.a = sin(popup_value * PI)
+
+func show_location_popup() -> void:
+	popup_value = 0
+	
+	if popup_tween:
+		popup_tween.kill()
+	
 	popup_tween = create_tween()
 	
 	popup_tween.set_trans(Tween.TRANS_CUBIC)
 	popup_tween.set_ease(Tween.EASE_OUT)
 	
 	popup_tween.tween_property(self, "popup_value", 1, 6)
-
-func _physics_process(_delta: float) -> void:
-	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
-	location_popup.self_modulate.a = sin(popup_value * PI)
 
 func update_hearts(health: float) -> void:
 	var i: int = 0
@@ -44,3 +52,6 @@ func update_hearts_old(health: int) -> void:
 	for heart: Sprite2D in hearts_sorted:
 		heart.frame = clamp(8 - health - i * 4, 0, 4)
 		i += 1
+
+func on_player_location_change(_location: Player.Locations) -> void:
+	show_location_popup()

@@ -11,6 +11,8 @@ class_name Player
 @onready var shoot_cooldown: Timer = $ShootCooldown
 @onready var hit_cooldown: Timer = $HitCooldown
 
+@export var gate: Node2D
+
 var max_health: float = 8
 var health: float = max_health
 var is_dead: bool = false   
@@ -23,9 +25,14 @@ var input: Vector2
 
 var anim: float = 0
 
+enum Locations {ARENA, TOWN}
+var location: Locations = Locations.ARENA
+var last_location: Locations = location
+
 func _physics_process(_delta: float) -> void:
 	handle_movement()
 	handle_shooting()
+	handle_locations()
 	
 	move_and_slide()
 
@@ -45,6 +52,17 @@ func spawn_projectile(direction: Vector2) -> void:
 	
 	projectiles.add_child(projectile)
 	add_child(particles)
+
+func handle_locations() -> void:
+	if global_position.x > gate.global_position.x:
+		location = Locations.ARENA
+	else:
+		location = Locations.TOWN
+	
+	if last_location != location:
+		SignalBus.player_location_change.emit(location)
+	
+	last_location = location
 
 func handle_shooting() -> void:
 	if Input.is_action_just_pressed("shoot") and shoot_cooldown.is_stopped():

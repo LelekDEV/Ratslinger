@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var _Enemy: PackedScene = preload("res://scenes/enemies/fox_enemy.tscn")
 
+@onready var ui: CanvasLayer = $UI
+
 @onready var enemies: Node = $Enemies
 
 @onready var player: Player = $Player
@@ -14,6 +16,7 @@ func _ready() -> void:
 	SignalBus.player_shoot.connect(camera.on_player_shoot)
 	SignalBus.player_shoot.connect(crosshair.on_player_shoot)
 	SignalBus.player_death.connect(player_death_handler.on_player_death)
+	SignalBus.player_location_change.connect(ui.on_player_location_change)
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	var enemy: Enemy = _Enemy.instantiate()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=16 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/arena_popup.png" id="4_xw82j"]
 [ext_resource type="PackedScene" uid="uid://b74p6grnvdpcy" path="res://scenes/enemies/fox_enemy.tscn" id="5_1qygq"]
 [ext_resource type="PackedScene" uid="uid://x4kte2qp8tv" path="res://scenes/enemies/cow_enemy.tscn" id="9_86ske"]
+[ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8yes"]
@@ -55,7 +56,7 @@ layout_mode = 2
 [node name="LocationPopup" type="Sprite2D" parent="UI"]
 texture = ExtResource("4_xw82j")
 
-[node name="Sand" type="Sprite2D" parent="."]
+[node name="Sand1" type="Sprite2D" parent="."]
 z_index = -1
 texture_repeat = 2
 texture = ExtResource("1_ncd4d")
@@ -63,19 +64,29 @@ region_enabled = true
 region_rect = Rect2(0, 0, 648, 468)
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("1_rf1xt")]
+[node name="Sand2" type="Sprite2D" parent="."]
+z_index = -1
+texture_repeat = 2
+position = Vector2(-648, 0)
+texture = ExtResource("1_ncd4d")
+region_enabled = true
+region_rect = Rect2(0, 0, 648, 468)
 metadata/_edit_lock_ = true
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Player" parent="." node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
+gate = NodePath("../Gate")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("gate")]
 process_mode = 3
 zoom = Vector2(4, 4)
 process_callback = 0
-limit_left = -324
 limit_top = -234
 limit_right = 324
 limit_bottom = 234
 position_smoothing_enabled = true
 script = ExtResource("4_bq78c")
+gate = NodePath("../../Gate")
 
 [node name="Enemies" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -91,6 +102,9 @@ y_sort_enabled = true
 
 [node name="Bullets" type="Node2D" parent="." groups=["bullets"]]
 y_sort_enabled = true
+
+[node name="Gate" parent="." instance=ExtResource("10_2mmsw")]
+position = Vector2(-298, 0)
 
 [node name="Crosshair" parent="." instance=ExtResource("2_7dpn4")]
 z_index = 1

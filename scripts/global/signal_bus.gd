@@ -4,3 +4,4 @@ extends Node
 
 signal player_shoot
 signal player_death
+signal player_location_change

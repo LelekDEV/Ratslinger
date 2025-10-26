@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxmq3gxpsmp2o"]
+
+[ext_resource type="Texture2D" uid="uid://coxn8hkpro15a" path="res://graphics/gate_front.png" id="1_xfvdi"]
+[ext_resource type="Texture2D" uid="uid://kaxojo37tma2" path="res://graphics/gate_back.png" id="2_xwxio"]
+
+[node name="Gate" type="Node2D"]
+
+[node name="SpriteFront" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("1_xfvdi")
+region_enabled = true
+region_rect = Rect2(0, 0, 46, 75)
+
+[node name="SpriteBack" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("2_xwxio")
+region_enabled = true
+region_rect = Rect2(0, 0, 46, 75)
