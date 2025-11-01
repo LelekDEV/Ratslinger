@@ -7,7 +7,7 @@ var shake_time: float = 0.2
 var shake_intensity: float = 2.5
 var shake_smoothness: float = 0.8
 
-@export var gate: Node2D
+@export var gate: StaticBody2D
 
 func shake() -> void:
 	shake_tween = create_tween()

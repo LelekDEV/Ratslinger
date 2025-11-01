@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=27 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -6,14 +6,32 @@
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
 [ext_resource type="Script" uid="uid://cvi745bdmkf4h" path="res://scripts/ui.gd" id="2_ijxjl"]
 [ext_resource type="PackedScene" uid="uid://djd1q01nwytri" path="res://scenes/ui_heart.tscn" id="4_55u7g"]
+[ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="4_836xp"]
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/cacti.png" id="4_wcdyl"]
 [ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/arena_popup.png" id="4_xw82j"]
-[ext_resource type="PackedScene" uid="uid://b74p6grnvdpcy" path="res://scenes/enemies/fox_enemy.tscn" id="5_1qygq"]
-[ext_resource type="PackedScene" uid="uid://x4kte2qp8tv" path="res://scenes/enemies/cow_enemy.tscn" id="9_86ske"]
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
 [ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/fence.png" id="12_l77qo"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
+
+[sub_resource type="Theme" id="Theme_s3lrj"]
+default_font = ExtResource("4_836xp")
+default_font_size = 32
+
+[sub_resource type="Animation" id="Animation_l77qo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_2mmsw"]
 resource_name = "player_hit"
@@ -31,25 +49,48 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0.3), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_l77qo"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_836xp"]
+_data = {
+&"RESET": SubResource("Animation_l77qo"),
+&"player_hit": SubResource("Animation_2mmsw")
+}
+
+[sub_resource type="Animation" id="Animation_836xp"]
+resource_name = "wave_cleared"
+length = 0.5
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/EnemiesLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.7764706, 0.6313726, 0.39215687, 1), Color(0.95, 0.84866667, 0.57, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_s3lrj"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FlashRect:color")
+tracks/0/path = NodePath("MarginContainer/EnemiesLabel:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Color(0.7764706, 0.6313726, 0.39215687, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_836xp"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sh5j3"]
 _data = {
-&"RESET": SubResource("Animation_l77qo"),
-&"player_hit": SubResource("Animation_2mmsw")
+&"RESET": SubResource("Animation_s3lrj"),
+&"wave_cleared": SubResource("Animation_836xp")
 }
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_836xp"]
@@ -128,12 +169,36 @@ layout_mode = 2
 [node name="UIHeart2" parent="UI/Hearts" instance=ExtResource("4_55u7g")]
 layout_mode = 2
 
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="EnemiesLabel" type="Label" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme = SubResource("Theme_s3lrj")
+theme_override_colors/font_color = Color(0.7764706, 0.6313726, 0.39215687, 1)
+text = "Enemies killed: 0/5"
+
 [node name="LocationPopup" type="Sprite2D" parent="UI"]
 texture = ExtResource("4_xw82j")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
+[node name="AnimationPlayer1" type="AnimationPlayer" parent="UI"]
 libraries = {
 &"": SubResource("AnimationLibrary_836xp")
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="UI"]
+libraries = {
+&"": SubResource("AnimationLibrary_sh5j3")
 }
 
 [node name="Sand1" type="Sprite2D" parent="."]
@@ -170,12 +235,6 @@ gate = NodePath("../../Gate")
 
 [node name="Enemies" type="Node2D" parent="."]
 y_sort_enabled = true
-
-[node name="FoxEnemy" parent="Enemies" instance=ExtResource("5_1qygq")]
-position = Vector2(-33, 52)
-
-[node name="CowEnemy" parent="Enemies" instance=ExtResource("9_86ske")]
-position = Vector2(103, -37)
 
 [node name="Projectiles" type="Node2D" parent="." groups=["projectiles"]]
 y_sort_enabled = true

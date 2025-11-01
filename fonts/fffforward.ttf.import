@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cwrysi1envklm"
-path="res://.godot/imported/bold_pixels.otf-42d6e1dd74f5ffb660678fe0dd40a1dc.fontdata"
+uid="uid://sgwyci3gbawn"
+path="res://.godot/imported/fffforward.ttf-d8f3b6b58645c8502fe80dd651e3836e.fontdata"
 
 [deps]
 
-source_file="res://fonts/bold_pixels.otf"
-dest_files=["res://.godot/imported/bold_pixels.otf-42d6e1dd74f5ffb660678fe0dd40a1dc.fontdata"]
+source_file="res://fonts/fffforward.ttf"
+dest_files=["res://.godot/imported/fffforward.ttf-d8f3b6b58645c8502fe80dd651e3836e.fontdata"]
 
 [params]
 
@@ -23,7 +23,7 @@ allow_system_fallback=true
 force_autohinter=false
 modulate_color_glyphs=false
 hinting=1
-subpixel_positioning=4
+subpixel_positioning=1
 keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null

@@ -11,7 +11,7 @@ class_name Player
 @onready var shoot_cooldown: Timer = $ShootCooldown
 @onready var hit_cooldown: Timer = $HitCooldown
 
-@export var gate: Node2D
+@export var gate: StaticBody2D
 
 var max_health: float = 8
 var health: float = max_health

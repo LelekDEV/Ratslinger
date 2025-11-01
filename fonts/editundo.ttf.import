@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cwrysi1envklm"
-path="res://.godot/imported/bold_pixels.otf-42d6e1dd74f5ffb660678fe0dd40a1dc.fontdata"
+uid="uid://p2bucbfm56gn"
+path="res://.godot/imported/editundo.ttf-a4b29aa4dbffeee838ebc56ca114b0d6.fontdata"
 
 [deps]
 
-source_file="res://fonts/bold_pixels.otf"
-dest_files=["res://.godot/imported/bold_pixels.otf-42d6e1dd74f5ffb660678fe0dd40a1dc.fontdata"]
+source_file="res://fonts/editundo.ttf"
+dest_files=["res://.godot/imported/editundo.ttf-a4b29aa4dbffeee838ebc56ca114b0d6.fontdata"]
 
 [params]
 

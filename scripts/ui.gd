@@ -2,7 +2,11 @@ extends CanvasLayer
 
 @onready var hearts: HBoxContainer = $Hearts
 @onready var location_popup: Sprite2D = $LocationPopup
-@onready var animation: AnimationPlayer = $AnimationPlayer
+@onready var margin_container: MarginContainer = $MarginContainer
+@onready var enemies_label: Label = $MarginContainer/EnemiesLabel
+
+@onready var animation1: AnimationPlayer = $AnimationPlayer1
+@onready var animation2: AnimationPlayer = $AnimationPlayer2
 
 var scale_factor: float = 0.9
 
@@ -20,6 +24,9 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
 	location_popup.self_modulate.a = sin(popup_value * PI)
+
+func update_enemy_count(enemies_killed: int) -> void:
+	enemies_label.text = "Enemies killed: " + str(enemies_killed) + "/5"
 
 func show_location_popup() -> void:
 	popup_value = 0

@@ -36,6 +36,8 @@ enum AI {SHOOTER, KICKER}
 # Used nodes:
 @onready var kick_delay: Timer
 
+signal death
+
 func _ready() -> void:
 	match ai:
 		AI.SHOOTER:
@@ -124,6 +126,7 @@ func take_damage(amount: float, hit_position: Vector2 = global_position, is_crit
 	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 	
 	if health <= 0:
+		death.emit()
 		queue_free()
 	
 	hit_flash()
