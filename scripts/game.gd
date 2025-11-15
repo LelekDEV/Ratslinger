@@ -21,6 +21,10 @@ var enemies_killed: int = 0
 func _ready() -> void:
 	setup_signals()
 	spawn_enemy()
+	
+	update_enemies(5)
+	enemies_to_spawn = 0
+	for enemy: Enemy in enemies.get_children(): enemy.queue_free()
 
 func setup_signals() -> void:
 	SignalBus.player_shoot.connect(camera.shake)

@@ -1,7 +1,7 @@
 #@tool # <-- enable for in-editor preview
 extends Node2D
 
-@onready var image: Image = preload("res://graphics/heart_texture.png").get_image()
+@onready var image: Image = preload("res://graphics/ui/heart_texture.png").get_image()
 
 var anim: float = 0
 var anim_speed: float = 5

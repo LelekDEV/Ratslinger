@@ -65,7 +65,7 @@ func handle_locations() -> void:
 	last_location = location
 
 func handle_shooting() -> void:
-	if Input.is_action_just_pressed("shoot") and shoot_cooldown.is_stopped():
+	if Input.is_action_just_pressed("shoot") and shoot_cooldown.is_stopped() and not Global.block_input:
 		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4)
 		
 		var direction: Vector2 = get_local_mouse_position().normalized()

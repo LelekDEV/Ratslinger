@@ -1,11 +1,26 @@
 [gd_scene load_steps=11 format=3 uid="uid://cxmq3gxpsmp2o"]
 
-[ext_resource type="Texture2D" uid="uid://coxn8hkpro15a" path="res://graphics/gate_front.png" id="1_xfvdi"]
-[ext_resource type="Texture2D" uid="uid://kaxojo37tma2" path="res://graphics/gate_back.png" id="2_xwxio"]
-[ext_resource type="Texture2D" uid="uid://ccpvkydl3si26" path="res://graphics/lock.png" id="3_hudsw"]
+[ext_resource type="Texture2D" uid="uid://coxn8hkpro15a" path="res://graphics/environment/gate_front.png" id="1_xfvdi"]
+[ext_resource type="Texture2D" uid="uid://kaxojo37tma2" path="res://graphics/environment/gate_back.png" id="2_xwxio"]
+[ext_resource type="Texture2D" uid="uid://ccpvkydl3si26" path="res://graphics/environment/lock.png" id="3_hudsw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hudsw"]
 size = Vector2(48, 76)
+
+[sub_resource type="Animation" id="Animation_nbnmf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteLock:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_wi8tm"]
 resource_name = "locked"
@@ -25,25 +40,25 @@ tracks/0/keys = {
 "values": [Vector2(0, 8), Vector2(0, 12), Vector2(0, 8)]
 }
 
-[sub_resource type="Animation" id="Animation_nbnmf"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rqvqh"]
+_data = {
+&"RESET": SubResource("Animation_nbnmf"),
+&"locked": SubResource("Animation_wi8tm")
+}
+
+[sub_resource type="Animation" id="Animation_rqvqh"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteLock:position")
+tracks/0/path = NodePath("SpriteLock:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_rqvqh"]
-_data = {
-&"RESET": SubResource("Animation_nbnmf"),
-&"locked": SubResource("Animation_wi8tm")
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_hudsw"]
@@ -61,21 +76,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_rqvqh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteLock:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iffko"]

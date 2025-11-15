@@ -1,17 +1,19 @@
-[gd_scene load_steps=27 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=29 format=4 uid="uid://gliuja466pg6"]
 
-[ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/sand_tile.png" id="1_ncd4d"]
+[ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
 [ext_resource type="PackedScene" uid="uid://gyh7j0jqrav6" path="res://scenes/player.tscn" id="1_rf1xt"]
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
+[ext_resource type="PackedScene" uid="uid://cbkx546wmeje8" path="res://scenes/shop_layer.tscn" id="2_836xp"]
 [ext_resource type="Script" uid="uid://cvi745bdmkf4h" path="res://scripts/ui.gd" id="2_ijxjl"]
 [ext_resource type="PackedScene" uid="uid://djd1q01nwytri" path="res://scenes/ui_heart.tscn" id="4_55u7g"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="4_836xp"]
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
-[ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/cacti.png" id="4_wcdyl"]
-[ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/arena_popup.png" id="4_xw82j"]
+[ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/environment/cacti.png" id="4_wcdyl"]
+[ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/ui/arena_popup.png" id="4_xw82j"]
+[ext_resource type="PackedScene" uid="uid://dd62w7380cncx" path="res://scenes/building.tscn" id="9_l77qo"]
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
-[ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/fence.png" id="12_l77qo"]
+[ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/environment/fence.png" id="12_l77qo"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 
 [sub_resource type="Theme" id="Theme_s3lrj"]
@@ -55,6 +57,21 @@ _data = {
 &"player_hit": SubResource("Animation_2mmsw")
 }
 
+[sub_resource type="Animation" id="Animation_s3lrj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/EnemiesLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.7764706, 0.6313726, 0.39215687, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_836xp"]
 resource_name = "wave_cleared"
 length = 0.5
@@ -72,21 +89,6 @@ tracks/0/keys = {
 "values": [Color(0.7764706, 0.6313726, 0.39215687, 1), Color(0.95, 0.84866667, 0.57, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_s3lrj"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MarginContainer/EnemiesLabel:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.7764706, 0.6313726, 0.39215687, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sh5j3"]
 _data = {
 &"RESET": SubResource("Animation_s3lrj"),
@@ -98,6 +100,9 @@ texture = ExtResource("12_l77qo")
 texture_region_size = Vector2i(10, 27)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -13.5, 5, -13.5, 5, 13.5, -5, 13.5)
+1:0/size_in_atlas = Vector2i(5, 1)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-25, -13.5, 25, -13.5, 25, 13.5, -25, 13.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8yes"]
 texture = ExtResource("4_wcdyl")
@@ -137,9 +142,13 @@ distance = -234.0
 normal = Vector2(-1, 0)
 distance = -324.0
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" groups=["game"]]
 y_sort_enabled = true
 script = ExtResource("1_o8yes")
+
+[node name="ShopLayer" parent="." instance=ExtResource("2_836xp")]
+process_mode = 3
+visible = false
 
 [node name="UI" type="CanvasLayer" parent="." groups=["ui"]]
 layer = 0
@@ -242,6 +251,9 @@ y_sort_enabled = true
 [node name="Bullets" type="Node2D" parent="." groups=["bullets"]]
 y_sort_enabled = true
 
+[node name="Building" parent="." instance=ExtResource("9_l77qo")]
+position = Vector2(-452, -95)
+
 [node name="Gate" parent="." instance=ExtResource("10_2mmsw")]
 position = Vector2(-298, 0)
 
@@ -250,7 +262,7 @@ z_index = 1
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAACt/+v/AAABAAAAAACf/+v/AAABAAAAAAB+/+v/AAABAAAAAABw/+v/AAABAAAAAACt/xYAAAABAAAAAACf/xYAAAABAAAAAACR/xYAAAABAAAAAACD/xYAAAABAAAAAAB1/xYAAAABAAAAAABn/xYAAAABAAAAAAA=")
 tile_set = SubResource("TileSet_bq78c")
 
 [node name="WorldBounds" type="StaticBody2D" parent="."]

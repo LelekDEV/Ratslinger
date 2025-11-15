@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dd62w7380cncx"]
+
+[ext_resource type="Script" uid="uid://ben8b5g3o6gf6" path="res://scripts/building.gd" id="1_ejq8p"]
+[ext_resource type="Texture2D" uid="uid://cihdedv4dwtsy" path="res://graphics/environment/buildings/shop.png" id="1_n8bkc"]
+[ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="2_uvy8r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvy8r"]
+size = Vector2(72, 54.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejq8p"]
+size = Vector2(36, 16)
+
+[node name="Building" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_ejq8p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_n8bkc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.75)
+shape = SubResource("RectangleShape2D_uvy8r")
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_uvy8r")]
+position = Vector2(0, 27)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, 8.5)
+shape = SubResource("RectangleShape2D_ejq8p")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=39 format=3 uid="uid://x4kte2qp8tv"]
 
-[ext_resource type="Texture2D" uid="uid://bcjxmy3h3daal" path="res://graphics/unused/cow.png" id="1_fgglk"]
+[ext_resource type="Texture2D" uid="uid://bcjxmy3h3daal" path="res://graphics/characters/enemies/cow/cow.png" id="1_fgglk"]
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_ie652"]
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="2_57r5i"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b0vfomli4c7f8"]
 
 [ext_resource type="Script" uid="uid://d3bf6sl0ryhxc" path="res://scripts/basic_particles.gd" id="1_odpyr"]
-[ext_resource type="Texture2D" uid="uid://cob1nie54gw8f" path="res://graphics/player/shoot_particle.png" id="1_t7olk"]
+[ext_resource type="Texture2D" uid="uid://cob1nie54gw8f" path="res://graphics/characters/player/shoot_particle.png" id="1_t7olk"]
 
 [sub_resource type="Curve" id="Curve_t7olk"]
 _data = [Vector2(0, 1), 0.0, -5.0, 0, 1, Vector2(0.2, 0), -5.0, 0.0, 1, 0]

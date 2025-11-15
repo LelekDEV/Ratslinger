@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_4ra3w"]
 [ext_resource type="Script" uid="uid://c0qhidnilfkjn" path="res://scripts/attack_highlight.gd" id="2_k7pnw"]
-[ext_resource type="Texture2D" uid="uid://buc76ufd0sp2s" path="res://graphics/fox/gun.png" id="2_y6uqw"]
-[ext_resource type="Texture2D" uid="uid://cugo8kcyf1q4f" path="res://graphics/fox/base.png" id="3_c4w8v"]
+[ext_resource type="Texture2D" uid="uid://buc76ufd0sp2s" path="res://graphics/characters/enemies/fox/gun.png" id="2_y6uqw"]
+[ext_resource type="Texture2D" uid="uid://cugo8kcyf1q4f" path="res://graphics/characters/enemies/fox/base.png" id="3_c4w8v"]
 [ext_resource type="Material" uid="uid://dlas80bb87afk" path="res://data/flash_shader_material.tres" id="4_k7pnw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iifgy"]
