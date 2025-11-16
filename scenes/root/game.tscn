@@ -251,6 +251,10 @@ y_sort_enabled = true
 [node name="Bullets" type="Node2D" parent="." groups=["bullets"]]
 y_sort_enabled = true
 
+[node name="Coins" type="Node2D" parent="." groups=["coins"]]
+z_index = 1
+y_sort_enabled = true
+
 [node name="Building" parent="." instance=ExtResource("9_l77qo")]
 position = Vector2(-452, -95)
 
@@ -258,7 +262,7 @@ position = Vector2(-452, -95)
 position = Vector2(-298, 0)
 
 [node name="Crosshair" parent="." instance=ExtResource("2_7dpn4")]
-z_index = 1
+z_index = 2
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]

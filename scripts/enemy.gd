@@ -4,7 +4,8 @@ class_name Enemy
 @onready var DamageIndicator: PackedScene = preload("res://scenes/damage_indicator.tscn")
 
 @onready var player: Player = get_tree().get_first_node_in_group("player")
-@onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
+@onready var projectiles: Node2D = get_tree().get_first_node_in_group("projectiles")
+@onready var coins: Node2D = get_tree().get_first_node_in_group("coins")
 
 @onready var sprite: AnimatedSprite2D = $BaseSprite
 
@@ -127,10 +128,21 @@ func take_damage(amount: float, hit_position: Vector2 = global_position, is_crit
 	
 	if health <= 0:
 		death.emit()
+		
+		drop_coins(randi_range(1, 2))
 		queue_free()
 	
 	hit_flash()
 	spawn_damage_fx(amount, hit_position, is_critical)
+
+func drop_coins(amount: int) -> void:
+	for i in range(amount):
+		var coin = Coin.instantiate()
+		
+		coin.global_position = global_position
+		coin.velocity = Vector2.RIGHT.rotated(randf_range(0, TAU)) * 0.5
+		
+		coins.call_deferred("add_child", coin)
 
 func spawn_damage_fx(amount: float, hit_position: Vector2, is_critical: bool) -> void:
 	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOOD)
