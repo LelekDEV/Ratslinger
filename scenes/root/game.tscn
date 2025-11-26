@@ -69,7 +69,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.7764706, 0.6313726, 0.39215687, 1)]
+"values": [Color(0.776471, 0.631373, 0.392157, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_836xp"]
@@ -86,7 +86,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.7764706, 0.6313726, 0.39215687, 1), Color(0.95, 0.84866667, 0.57, 1)]
+"values": [Color(0.776471, 0.631373, 0.392157, 1), Color(0.95, 0.848667, 0.57, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sh5j3"]
@@ -194,7 +194,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme = SubResource("Theme_s3lrj")
-theme_override_colors/font_color = Color(0.7764706, 0.6313726, 0.39215687, 1)
+theme_override_colors/font_color = Color(0.776471, 0.631373, 0.392157, 1)
 text = "Enemies killed: 0/5"
 
 [node name="LocationPopup" type="Sprite2D" parent="UI"]

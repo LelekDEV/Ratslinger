@@ -33,6 +33,9 @@ enum AI {SHOOTER, KICKER}
 @onready var gun_sprite: Sprite2D
 @onready var attack_highlight: Node2D
 
+@export var shoot_count: int = 1
+@export var shoot_spread_deg: float = 0
+
 # 1 - KICKER: remain stationary, trigger a kick attack on player's proximity, used for CowEnemy
 # Used nodes:
 @onready var kick_delay: Timer
@@ -101,21 +104,26 @@ func handle_movement() -> void:
 		sprite.flip_h = false
 		gun_sprite.flip_v = false
 
-func spawn_projectile() -> void:
-	var shoot_pos = Vector2(16, 16) * direction
+func spawn_shotgun_projectile() -> void:
+	for i in range(shoot_count):
+		spawn_projectile((shoot_spread_deg / shoot_count) * i - shoot_spread_deg / 2) 
+
+func spawn_projectile(angle_deg: float = 0) -> void:
+	var shoot_dir = direction.rotated(deg_to_rad(angle_deg))
+	var shoot_pos = Vector2(16, 16) * shoot_dir
 	
 	var projectile = EnemyProjectile.instantiate()
 	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT)
 	
 	projectile.global_position = global_position + shoot_pos
-	projectile.global_rotation = direction.angle()
-	projectile.direction = direction
+	projectile.global_rotation = shoot_dir.angle()
+	projectile.direction = shoot_dir
 	
 	projectile.damage = damage
 	projectile.parent = self
 	
 	particles.position = shoot_pos
-	particles.global_rotation = direction.angle()
+	particles.global_rotation = shoot_dir.angle()
 	particles.emitting = true  
 	  
 	projectiles.add_child(projectile)
@@ -179,4 +187,4 @@ func _on_kick_delay_timeout() -> void:
 
 func _on_shoot_notion_timer_timeout() -> void:
 	GlobalAudio.play_sfx(GlobalAudio.SFX.ENEMY_SHOOT, -6)
-	spawn_projectile()
+	spawn_shotgun_projectile()

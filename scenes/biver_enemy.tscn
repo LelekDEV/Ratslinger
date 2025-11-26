@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxnfigumi82y3"]
+
+[ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_ap1r7"]
+
+[node name="BeaverEnemy" type="CharacterBody2D"]
+script = ExtResource("1_ap1r7")
+max_health = 12.0
+damage = 0.5
+shoot_count = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="GunSprite" type="Sprite2D" parent="."]
+
+[node name="BaseSprite" type="AnimatedSprite2D" parent="."]
