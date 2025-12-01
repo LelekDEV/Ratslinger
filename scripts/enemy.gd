@@ -35,6 +35,7 @@ enum AI {SHOOTER, KICKER}
 
 @onready var gun_sprite: Sprite2D
 
+@export var cooldown_time: float = 1.5
 @export var shoot_count: int = 1
 @export var shoot_spread_deg: float = 0
 
@@ -80,7 +81,7 @@ func handle_shooting() -> void:
 	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
 		shoot_notion_timer.start()
-		shoot_cooldown.start(shoot_cooldown.wait_time * randf_range(0.8, 1.2))
+		shoot_cooldown.start(cooldown_time * 0.8)#randf_range(0.8, 1.2))
 		
 		attack_highlight = AttackHighlight.instantiate()
 		add_child(attack_highlight)
@@ -164,13 +165,7 @@ func detach_attack_highlight() -> void:
 	fx.add_child(attack_highlight)
 	
 	attack_highlight.global_position = global_position
-	
-	attack_highlight.decay_tween = create_tween() \
-		.set_trans(Tween.TRANS_LINEAR) \
-		.set_ease(Tween.EASE_IN_OUT)
-	
-	attack_highlight.decay_tween.tween_property(attack_highlight, "alpha", 0, 1.5)
-	attack_highlight.decay_tween.tween_callback(attack_highlight.queue_free)
+	attack_highlight.start_decay_tween()
 
 func spawn_damage_fx(amount: float, hit_position: Vector2, is_critical: bool) -> void:
 	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOOD)
