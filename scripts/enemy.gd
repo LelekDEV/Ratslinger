@@ -81,7 +81,7 @@ func handle_shooting() -> void:
 	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
 		shoot_notion_timer.start()
-		shoot_cooldown.start(cooldown_time * 0.8)#randf_range(0.8, 1.2))
+		shoot_cooldown.start(cooldown_time * randf_range(0.8, 1.2))
 		
 		attack_highlight = AttackHighlight.instantiate()
 		add_child(attack_highlight)
