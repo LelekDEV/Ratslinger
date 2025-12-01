@@ -6,6 +6,7 @@ class_name Enemy
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var projectiles: Node2D = get_tree().get_first_node_in_group("projectiles")
 @onready var coins: Node2D = get_tree().get_first_node_in_group("coins")
+@onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
 
 @onready var sprite: AnimatedSprite2D = $BaseSprite
 
@@ -19,6 +20,8 @@ var health: float
 @export var damage: float = 1
 var headshot_mult: float = 2
 
+var attack_highlight: AttackHighlight
+
 # AI options
 enum AI {SHOOTER, KICKER}
 @export var ai: AI
@@ -31,7 +34,6 @@ enum AI {SHOOTER, KICKER}
 @onready var shoot_notion_timer: Timer
 
 @onready var gun_sprite: Sprite2D
-@onready var attack_highlight: Node2D
 
 @export var shoot_count: int = 1
 @export var shoot_spread_deg: float = 0
@@ -50,7 +52,6 @@ func _ready() -> void:
 			shoot_notion_timer = get_node("ShootNotionTimer")
 			
 			gun_sprite = get_node("GunSprite")
-			attack_highlight = get_node("AttackHighlight")
 			
 		AI.KICKER:
 			kick_delay = get_node("KickDelay")
@@ -73,12 +74,16 @@ func handle_shooting() -> void:
 	
 	gun_sprite.global_rotation = direction.angle()
 	
-	attack_highlight.target = direction * 400
-	attack_highlight.alpha = abs(sin((1 - shoot_notion_timer.time_left / shoot_notion_timer.wait_time) * PI * 3))
+	if attack_highlight and not shoot_notion_timer.is_stopped():
+		attack_highlight.target = direction * 400
+		attack_highlight.alpha = abs(cos((1 - shoot_notion_timer.time_left / shoot_notion_timer.wait_time) * PI * 3)) * 0.5 + 0.5
 	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
 		shoot_notion_timer.start()
 		shoot_cooldown.start(shoot_cooldown.wait_time * randf_range(0.8, 1.2))
+		
+		attack_highlight = AttackHighlight.instantiate()
+		add_child(attack_highlight)
 
 func handle_movement() -> void:
 	var player_pos: Vector2 = player.global_position
@@ -138,7 +143,9 @@ func take_damage(amount: float, hit_position: Vector2 = global_position, is_crit
 		death.emit()
 		
 		drop_coins(randi_range(1, 2))
+		
 		queue_free()
+		attack_highlight.queue_free()
 	
 	hit_flash()
 	spawn_damage_fx(amount, hit_position, is_critical)
@@ -151,6 +158,19 @@ func drop_coins(amount: int) -> void:
 		coin.velocity = Vector2.RIGHT.rotated(randf_range(0, TAU)) * 0.5
 		
 		coins.call_deferred("add_child", coin)
+
+func detach_attack_highlight() -> void:
+	remove_child(attack_highlight)
+	fx.add_child(attack_highlight)
+	
+	attack_highlight.global_position = global_position
+	
+	attack_highlight.decay_tween = create_tween() \
+		.set_trans(Tween.TRANS_LINEAR) \
+		.set_ease(Tween.EASE_IN_OUT)
+	
+	attack_highlight.decay_tween.tween_property(attack_highlight, "alpha", 0, 1.5)
+	attack_highlight.decay_tween.tween_callback(attack_highlight.queue_free)
 
 func spawn_damage_fx(amount: float, hit_position: Vector2, is_critical: bool) -> void:
 	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOOD)
@@ -187,4 +207,6 @@ func _on_kick_delay_timeout() -> void:
 
 func _on_shoot_notion_timer_timeout() -> void:
 	GlobalAudio.play_sfx(GlobalAudio.SFX.ENEMY_SHOOT, -6)
+	
+	detach_attack_highlight()
 	spawn_shotgun_projectile()

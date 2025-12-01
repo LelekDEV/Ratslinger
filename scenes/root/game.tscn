@@ -211,7 +211,7 @@ libraries = {
 }
 
 [node name="Sand1" type="Sprite2D" parent="."]
-z_index = -1
+z_index = -2
 texture_repeat = 2
 texture = ExtResource("1_ncd4d")
 region_enabled = true
@@ -219,7 +219,7 @@ region_rect = Rect2(0, 0, 648, 468)
 metadata/_edit_lock_ = true
 
 [node name="Sand2" type="Sprite2D" parent="."]
-z_index = -1
+z_index = -2
 texture_repeat = 2
 position = Vector2(-648, 0)
 texture = ExtResource("1_ncd4d")
@@ -254,6 +254,8 @@ y_sort_enabled = true
 [node name="Coins" type="Node2D" parent="." groups=["coins"]]
 z_index = 1
 y_sort_enabled = true
+
+[node name="FX" type="Node2D" parent="." groups=["fx"]]
 
 [node name="Building" parent="." instance=ExtResource("9_l77qo")]
 position = Vector2(-452, -95)

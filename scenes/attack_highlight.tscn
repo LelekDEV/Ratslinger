@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm32epdmwv6c5"]
+
+[ext_resource type="Script" uid="uid://c0qhidnilfkjn" path="res://scripts/attack_highlight.gd" id="1_jm20y"]
+
+[node name="AttackHighlight" type="Node2D"]
+z_index = -1
+script = ExtResource("1_jm20y")
+color = Color(1, 0.14999998, 0.14999998, 0.5019608)
