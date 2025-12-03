@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=30 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/environment/cacti.png" id="4_wcdyl"]
 [ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/ui/arena_popup.png" id="4_xw82j"]
+[ext_resource type="PackedScene" uid="uid://2on6pkejauvo" path="res://scenes/accuracy_bar.tscn" id="6_s3lrj"]
 [ext_resource type="PackedScene" uid="uid://dd62w7380cncx" path="res://scenes/building.tscn" id="9_l77qo"]
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
 [ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/environment/fence.png" id="12_l77qo"]
@@ -192,10 +193,12 @@ theme_override_constants/margin_bottom = 16
 [node name="EnemiesLabel" type="Label" parent="UI/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 0
+size_flags_vertical = 8
 theme = SubResource("Theme_s3lrj")
 theme_override_colors/font_color = Color(0.776471, 0.631373, 0.392157, 1)
 text = "Enemies killed: 0/5"
+
+[node name="AccuracyBar" parent="UI" instance=ExtResource("6_s3lrj")]
 
 [node name="LocationPopup" type="Sprite2D" parent="UI"]
 texture = ExtResource("4_xw82j")

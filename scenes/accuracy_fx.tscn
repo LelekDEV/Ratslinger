@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://crubntn62r0qu"]
+
+[ext_resource type="FontFile" uid="uid://cwrysi1envklm" path="res://fonts/bold_pixels.otf" id="1_h1l0b"]
+[ext_resource type="Script" uid="uid://corf4sopdhoxq" path="res://scripts/accuracy_fx.gd" id="2_o4ejd"]
+
+[sub_resource type="Theme" id="Theme_o4ejd"]
+default_font = ExtResource("1_h1l0b")
+default_font_size = 0
+
+[node name="AccuracyFX" type="Label"]
+offset_right = 49.0
+offset_bottom = 16.0
+pivot_offset = Vector2(24.5, 8)
+theme = SubResource("Theme_o4ejd")
+text = "perfect"
+script = ExtResource("2_o4ejd")

@@ -9,7 +9,10 @@ var shake_smoothness: float = 0.8
 
 @export var gate: StaticBody2D
 
-func shake() -> void:
+func shake(miss: bool = false) -> void:
+	if miss:
+		return
+	
 	shake_tween = create_tween()
 	
 	shake_value = 0

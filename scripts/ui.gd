@@ -4,11 +4,12 @@ extends CanvasLayer
 @onready var location_popup: Sprite2D = $LocationPopup
 @onready var margin_container: MarginContainer = $MarginContainer
 @onready var enemies_label: Label = $MarginContainer/EnemiesLabel
+@onready var accuracy_bar: AccuracyBar = $AccuracyBar
 
 @onready var animation1: AnimationPlayer = $AnimationPlayer1
 @onready var animation2: AnimationPlayer = $AnimationPlayer2
 
-var scale_factor: float = 0.9
+var scale_factor: float = 1
 
 var popup_tween: Tween
 var popup_value: float = 0
@@ -19,11 +20,15 @@ func _ready() -> void:
 	
 	location_popup.scale = Vector2i.ONE * 4
 	
+	accuracy_bar.scale = Vector2i.ONE * 4
+	
 	show_location_popup()
 
 func _physics_process(_delta: float) -> void:
 	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
 	location_popup.self_modulate.a = sin(popup_value * PI)
+	
+	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
 
 func update_enemy_count(enemies_killed: int) -> void:
 	enemies_label.text = "Enemies killed: " + str(enemies_killed) + "/5"

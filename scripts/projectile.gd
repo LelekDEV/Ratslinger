@@ -7,6 +7,7 @@ var knockback: float = 150
 var speed: float = 150
 var direction: Vector2
 var velocity: Vector2
+var penetrating: bool = false
 
 static func instantiate() -> Projectile:
 	return preload("res://scenes/projectile.tscn").instantiate() as Projectile
@@ -41,7 +42,7 @@ func _on_area_entered(area: Area2D) -> void:
 			particles.emitting = true
 			get_tree().root.add_child(particles)
 			
-			queue_free()
+			if not penetrating: queue_free()
 			area.queue_free()
 		
 	elif area.is_in_group("headshot_area"):

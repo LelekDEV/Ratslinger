@@ -146,7 +146,7 @@ func take_damage(amount: float, hit_position: Vector2 = global_position, is_crit
 		drop_coins(randi_range(1, 2))
 		
 		queue_free()
-		attack_highlight.queue_free()
+		if attack_highlight: attack_highlight.queue_free()
 	
 	hit_flash()
 	spawn_damage_fx(amount, hit_position, is_critical)

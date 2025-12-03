@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://2on6pkejauvo"]
+
+[ext_resource type="Script" uid="uid://cb7nt15q0i2lx" path="res://scripts/accuracy_bar.gd" id="1_lfime"]
+[ext_resource type="Texture2D" uid="uid://b2dlbk050xl8v" path="res://graphics/ui/accuracy_bar.png" id="1_nc87v"]
+[ext_resource type="Texture2D" uid="uid://fw2h68gmsdfb" path="res://graphics/ui/accuracy_cursor.png" id="2_tdin3"]
+
+[node name="AccuracyBar" type="Node2D" groups=["accuracy_bar"]]
+script = ExtResource("1_lfime")
+
+[node name="BarSprite" type="Sprite2D" parent="."]
+position = Vector2(-42.5, 17.5)
+texture = ExtResource("1_nc87v")
+
+[node name="CursorSprite" type="Sprite2D" parent="."]
+position = Vector2(0.5, 23.5)
+texture = ExtResource("2_tdin3")

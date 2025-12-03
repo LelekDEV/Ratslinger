@@ -8,6 +8,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	global_position = get_global_mouse_position()
 
-func on_player_shoot() -> void:
+func on_player_shoot(_miss: bool = false) -> void:
 	animation.stop()
 	animation.play("blink")

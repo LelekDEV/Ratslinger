@@ -3,6 +3,7 @@ class_name Player
 
 @onready var ui: CanvasLayer = get_tree().get_first_node_in_group("ui")
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
+@onready var accuracy_bar: AccuracyBar = get_tree().get_first_node_in_group("accuracy_bar")
 
 @onready var gun_sprite: Sprite2D = $GunSprite
 @onready var base_sprite: AnimatedSprite2D = $BaseSprite
@@ -46,6 +47,11 @@ func spawn_projectile(direction: Vector2) -> void:
 	projectile.global_rotation = direction.angle()
 	projectile.direction = direction
 	
+	if accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 2:
+		projectile.speed *= 1.5
+		projectile.knockback *= 3
+		projectile.penetrating = true
+	
 	particles.position = shoot_pos
 	particles.global_rotation = direction.angle()
 	particles.emitting = true
@@ -66,6 +72,12 @@ func handle_locations() -> void:
 
 func handle_shooting() -> void:
 	if Input.is_action_just_pressed("shoot") and shoot_cooldown.is_stopped() and not Global.block_input:
+		if accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 0:
+			shoot_cooldown.start()
+			SignalBus.player_shoot.emit(true)
+			
+			return
+		
 		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4)
 		
 		var direction: Vector2 = get_local_mouse_position().normalized()
@@ -75,7 +87,7 @@ func handle_shooting() -> void:
 		velocity -= direction * recoil
 		
 		shoot_cooldown.start()
-		SignalBus.player_shoot.emit()
+		SignalBus.player_shoot.emit(false)
 
 func handle_movement() -> void:
 	input = Input.get_vector("left", "right", "up", "down")
