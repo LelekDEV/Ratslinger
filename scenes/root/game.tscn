@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=34 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -12,8 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/environment/cacti.png" id="4_wcdyl"]
 [ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/ui/arena_popup.png" id="4_xw82j"]
 [ext_resource type="PackedScene" uid="uid://2on6pkejauvo" path="res://scenes/accuracy_bar.tscn" id="6_s3lrj"]
+[ext_resource type="Texture2D" uid="uid://bykgmcn3ihdkj" path="res://graphics/environment/crossmark.png" id="8_sh5j3"]
 [ext_resource type="PackedScene" uid="uid://dd62w7380cncx" path="res://scenes/building.tscn" id="9_l77qo"]
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
+[ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="10_r3fff"]
 [ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/environment/fence.png" id="12_l77qo"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 
@@ -70,11 +72,11 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.776471, 0.631373, 0.392157, 1)]
+"values": [Color(0.9490196, 0.84705883, 0.5686275, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_836xp"]
-resource_name = "wave_cleared"
+resource_name = "wave_end"
 length = 0.5
 step = 0.5
 tracks/0/type = "value"
@@ -90,11 +92,32 @@ tracks/0/keys = {
 "values": [Color(0.776471, 0.631373, 0.392157, 1), Color(0.95, 0.848667, 0.57, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_r3fff"]
+resource_name = "wave_start"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/EnemiesLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.95, 0.848667, 0.57, 1), Color(0.776471, 0.631373, 0.392157, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sh5j3"]
 _data = {
 &"RESET": SubResource("Animation_s3lrj"),
-&"wave_cleared": SubResource("Animation_836xp")
+&"wave_end": SubResource("Animation_836xp"),
+&"wave_start": SubResource("Animation_r3fff")
 }
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r3fff"]
+radius = 30.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_836xp"]
 texture = ExtResource("12_l77qo")
@@ -195,8 +218,8 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme = SubResource("Theme_s3lrj")
-theme_override_colors/font_color = Color(0.776471, 0.631373, 0.392157, 1)
-text = "Enemies killed: 0/5"
+theme_override_colors/font_color = Color(0.9490196, 0.84705883, 0.5686275, 1)
+text = "Wave cleared"
 
 [node name="AccuracyBar" parent="UI" instance=ExtResource("6_s3lrj")]
 
@@ -213,7 +236,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_sh5j3")
 }
 
-[node name="Sand1" type="Sprite2D" parent="."]
+[node name="SandSprite1" type="Sprite2D" parent="."]
 z_index = -2
 texture_repeat = 2
 texture = ExtResource("1_ncd4d")
@@ -221,7 +244,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 648, 468)
 metadata/_edit_lock_ = true
 
-[node name="Sand2" type="Sprite2D" parent="."]
+[node name="SandSprite2" type="Sprite2D" parent="."]
 z_index = -2
 texture_repeat = 2
 position = Vector2(-648, 0)
@@ -229,6 +252,15 @@ texture = ExtResource("1_ncd4d")
 region_enabled = true
 region_rect = Rect2(0, 0, 648, 468)
 metadata/_edit_lock_ = true
+
+[node name="CrossmarkSprite" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("8_sh5j3")
+
+[node name="WaveStartInteractionArea" parent="." instance=ExtResource("10_r3fff")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveStartInteractionArea"]
+shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
 gate = NodePath("../Gate")
@@ -313,6 +345,5 @@ color = Color(0, 0, 0, 1)
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 wait_time = 8.0
-autostart = true
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

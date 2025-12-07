@@ -1,7 +1,7 @@
 extends Area2D
 class_name Projectile
 
-var damage: float = 1
+var damage: float = 6
 var knockback: float = 150
 
 var speed: float = 150

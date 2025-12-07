@@ -1,4 +1,5 @@
 extends CanvasLayer
+class_name UI
 
 @onready var hearts: HBoxContainer = $Hearts
 @onready var location_popup: Sprite2D = $LocationPopup
@@ -30,8 +31,11 @@ func _physics_process(_delta: float) -> void:
 	
 	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
 
-func update_enemy_count(enemies_killed: int) -> void:
-	enemies_label.text = "Enemies killed: " + str(enemies_killed) + "/5"
+func update_enemy_count(enemies_killed: int, enemies_total: int = 0) -> void:
+	if enemies_killed == -1:
+		enemies_label.text = "Wave cleared"
+	else:
+		enemies_label.text = "Enemies killed: " + str(enemies_killed) + "/" + str(enemies_total)
 
 func show_location_popup() -> void:
 	popup_value = 0

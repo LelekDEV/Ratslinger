@@ -12,7 +12,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteLock:position")
+tracks/0/path = NodePath("LockSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -30,7 +30,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteLock:position")
+tracks/0/path = NodePath("LockSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -51,14 +51,14 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteLock:self_modulate")
+tracks/0/path = NodePath("LockSprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_hudsw"]
@@ -68,7 +68,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteLock:self_modulate")
+tracks/0/path = NodePath("LockSprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -88,24 +88,26 @@ _data = {
 collision_layer = 2
 collision_mask = 2
 
-[node name="SpriteFront" type="Sprite2D" parent="."]
+[node name="FrontSprite" type="Sprite2D" parent="."]
 z_index = 1
 texture = ExtResource("1_xfvdi")
 region_enabled = true
 region_rect = Rect2(0, 0, 46, 75)
 
-[node name="SpriteBack" type="Sprite2D" parent="."]
+[node name="BackSprite" type="Sprite2D" parent="."]
 z_index = -1
 texture = ExtResource("2_xwxio")
 region_enabled = true
 region_rect = Rect2(0, 0, 46, 75)
 
-[node name="SpriteLock" type="Sprite2D" parent="."]
+[node name="LockSprite" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 texture = ExtResource("3_hudsw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hudsw")
+disabled = true
 
 [node name="AnimationPlayer1" type="AnimationPlayer" parent="."]
 libraries = {
