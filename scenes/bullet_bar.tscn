@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dga30tbdq47t5"]
+
+[ext_resource type="PackedScene" uid="uid://bwcbybdenkoe8" path="res://scenes/bullet_bar_slot.tscn" id="1_ffmki"]
+[ext_resource type="Script" uid="uid://s1lpiwb0bmqy" path="res://scripts/bullet_bar.gd" id="1_mdlt4"]
+
+[node name="BulletBar" type="Node2D" groups=["bullet_bar"]]
+script = ExtResource("1_mdlt4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 86.0
+offset_bottom = 23.0
+
+[node name="BulletBarSlot1" parent="HBoxContainer" instance=ExtResource("1_ffmki")]
+layout_mode = 2
+
+[node name="BulletBarSlot2" parent="HBoxContainer" instance=ExtResource("1_ffmki")]
+layout_mode = 2
+
+[node name="BulletBarSlot3" parent="HBoxContainer" instance=ExtResource("1_ffmki")]
+layout_mode = 2
+
+[node name="BulletBarSlot4" parent="HBoxContainer" instance=ExtResource("1_ffmki")]
+layout_mode = 2
+
+[node name="BulletBarSlot5" parent="HBoxContainer" instance=ExtResource("1_ffmki")]
+layout_mode = 2
+
+[node name="BulletBarSlot6" parent="HBoxContainer" instance=ExtResource("1_ffmki")]
+layout_mode = 2

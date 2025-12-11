@@ -5,7 +5,9 @@ class_name UI
 @onready var location_popup: Sprite2D = $LocationPopup
 @onready var margin_container: MarginContainer = $MarginContainer
 @onready var enemies_label: Label = $MarginContainer/EnemiesLabel
+
 @onready var accuracy_bar: AccuracyBar = $AccuracyBar
+@onready var bullet_bar: BulletBar = $BulletBar
 
 @onready var animation1: AnimationPlayer = $AnimationPlayer1
 @onready var animation2: AnimationPlayer = $AnimationPlayer2
@@ -23,6 +25,9 @@ func _ready() -> void:
 	
 	accuracy_bar.scale = Vector2i.ONE * 4
 	
+	bullet_bar.scale = Vector2i.ONE * 4
+	bullet_bar.global_position.y = 140 + 6 * 4
+	
 	show_location_popup()
 
 func _physics_process(_delta: float) -> void:
@@ -30,6 +35,7 @@ func _physics_process(_delta: float) -> void:
 	location_popup.self_modulate.a = sin(popup_value * PI)
 	
 	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
+	bullet_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85 * 4 - 86
 
 func update_enemy_count(enemies_killed: int, enemies_total: int = 0) -> void:
 	if enemies_killed == -1:

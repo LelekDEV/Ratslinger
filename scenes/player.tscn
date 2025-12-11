@@ -140,9 +140,15 @@ position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_dqkch")
 
 [node name="ShootCooldown" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.5
 one_shot = true
 
 [node name="HitCooldown" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

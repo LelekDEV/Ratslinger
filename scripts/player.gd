@@ -4,6 +4,7 @@ class_name Player
 @onready var ui: CanvasLayer = get_tree().get_first_node_in_group("ui")
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
 @onready var accuracy_bar: AccuracyBar = get_tree().get_first_node_in_group("accuracy_bar")
+@onready var bullet_bar: BulletBar = get_tree().get_first_node_in_group("bullet_bar")
 
 @onready var gun_sprite: Sprite2D = $GunSprite
 @onready var base_sprite: AnimatedSprite2D = $BaseSprite
@@ -11,6 +12,7 @@ class_name Player
 
 @onready var shoot_cooldown: Timer = $ShootCooldown
 @onready var hit_cooldown: Timer = $HitCooldown
+@onready var reload_timer: Timer = $ReloadTimer
 
 @export var gate: StaticBody2D
 
@@ -36,6 +38,13 @@ func _physics_process(_delta: float) -> void:
 	handle_locations()
 	
 	move_and_slide()
+
+func reload_bullets() -> void:
+	accuracy_bar.reload_bullets = false
+	accuracy_bar.progress_time = bullet_bar.current_slot * 0.3
+	accuracy_bar.start()
+	
+	reload_timer.start()
 
 func spawn_projectile(direction: Vector2) -> void:
 	var shoot_pos = Vector2(16, 16) * direction + Vector2(0, 2)
@@ -71,14 +80,17 @@ func handle_locations() -> void:
 	last_location = location
 
 func handle_shooting() -> void:
-	if Input.is_action_just_pressed("shoot") and shoot_cooldown.is_stopped() and not Global.block_input:
+	if Input.is_action_just_pressed("shoot") and \
+		shoot_cooldown.is_stopped() and \
+		reload_timer.is_stopped() and \
+		not Global.block_input:
+		
+		accuracy_bar.reload_bullets = false if bullet_bar.current_slot == 5 else true
+		
 		if accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 0:
-			shoot_cooldown.start()
 			SignalBus.player_shoot.emit(true)
 			
 			return
-		
-		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4)
 		
 		var direction: Vector2 = get_local_mouse_position().normalized()
 		
@@ -86,7 +98,7 @@ func handle_shooting() -> void:
 		
 		velocity -= direction * recoil
 		
-		shoot_cooldown.start()
+		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4)
 		SignalBus.player_shoot.emit(false)
 
 func handle_movement() -> void:
@@ -135,3 +147,11 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	hit_cooldown.start()
 	
 	return false
+
+func _on_reload_timer_timeout() -> void:
+	bullet_bar.load_slot()
+	
+	if not bullet_bar.current_slot == 0:
+		reload_timer.start()
+	else:
+		shoot_cooldown.start()

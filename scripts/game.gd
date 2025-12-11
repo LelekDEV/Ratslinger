@@ -8,7 +8,7 @@ extends Node2D
 
 @onready var player: Player = $Player
 @onready var camera: Camera2D = $Player/Camera2D
-@onready var crosshair: Sprite2D = $Crosshair
+@onready var crosshair: Sprite2D = $UI/Crosshair
 
 @onready var player_death_handler: Node = $PlayerDeathHandler
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer

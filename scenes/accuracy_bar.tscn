@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://2on6pkejauvo"]
+[gd_scene load_steps=6 format=3 uid="uid://2on6pkejauvo"]
 
 [ext_resource type="Script" uid="uid://cb7nt15q0i2lx" path="res://scripts/accuracy_bar.gd" id="1_lfime"]
 [ext_resource type="Texture2D" uid="uid://b2dlbk050xl8v" path="res://graphics/ui/accuracy_bar.png" id="1_nc87v"]
 [ext_resource type="Texture2D" uid="uid://fw2h68gmsdfb" path="res://graphics/ui/accuracy_cursor.png" id="2_tdin3"]
+[ext_resource type="Shader" uid="uid://1lld1d5krmy8" path="res://shaders/outline.gdshader" id="3_ymnd8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jpu5p"]
+shader = ExtResource("3_ymnd8")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_visible = false
+shader_parameter/thickness = 1.0
 
 [node name="AccuracyBar" type="Node2D" groups=["accuracy_bar"]]
 script = ExtResource("1_lfime")
@@ -12,5 +19,7 @@ position = Vector2(-42.5, 17.5)
 texture = ExtResource("1_nc87v")
 
 [node name="CursorSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_jpu5p")
 position = Vector2(0.5, 23.5)
 texture = ExtResource("2_tdin3")
+region_rect = Rect2(0, 0, 5, 30)
