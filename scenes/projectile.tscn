@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://pgwc06daqnn5"]
+[gd_scene load_steps=9 format=3 uid="uid://pgwc06daqnn5"]
 
 [ext_resource type="Script" uid="uid://bm72rju3rprm6" path="res://scripts/projectile.gd" id="1_c8fcr"]
 [ext_resource type="Texture2D" uid="uid://doahe653fy8bv" path="res://graphics/characters/player/bullet.png" id="2_q3m7n"]
+
+[sub_resource type="Gradient" id="Gradient_q3m7n"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3m7n"]
 atlas = ExtResource("2_q3m7n")
@@ -37,6 +40,19 @@ radius = 7.0
 
 [node name="Projectile" type="Area2D"]
 script = ExtResource("1_c8fcr")
+
+[node name="SpecialParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 32
+lifetime = 0.5
+lifetime_randomness = 0.25
+emission_shape = 3
+emission_rect_extents = Vector2(0, 1.5)
+particle_flag_align_y = true
+gravity = Vector2(0, 0)
+scale_amount_max = 2.0
+color = Color(0.8, 0.16, 0.16, 1)
+color_ramp = SubResource("Gradient_q3m7n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jxwu6")

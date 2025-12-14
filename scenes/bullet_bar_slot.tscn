@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bwcbybdenkoe8"]
 
-[ext_resource type="Texture2D" uid="uid://ctn6xvdhcknd1" path="res://graphics/ui/bullet_slot_loaded.png" id="1_71135"]
+[ext_resource type="Texture2D" uid="uid://ctn6xvdhcknd1" path="res://graphics/ui/bullet_slot.png" id="1_71135"]
 [ext_resource type="Shader" uid="uid://1lld1d5krmy8" path="res://shaders/outline.gdshader" id="1_wofxp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4y304"]
@@ -21,4 +21,4 @@ offset_bottom = 23.0
 material = SubResource("ShaderMaterial_4y304")
 texture = ExtResource("1_71135")
 offset = Vector2(5.5, 11.5)
-hframes = 2
+hframes = 5

@@ -3,6 +3,7 @@ class_name Player
 
 @onready var ui: CanvasLayer = get_tree().get_first_node_in_group("ui")
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
+
 @onready var accuracy_bar: AccuracyBar = get_tree().get_first_node_in_group("accuracy_bar")
 @onready var bullet_bar: BulletBar = get_tree().get_first_node_in_group("bullet_bar")
 
@@ -44,9 +45,12 @@ func reload_bullets() -> void:
 	accuracy_bar.progress_time = bullet_bar.current_slot * 0.3
 	accuracy_bar.start()
 	
+	bullet_bar.assign_specials()
+	
 	reload_timer.start()
 
-func spawn_projectile(direction: Vector2) -> void:
+func spawn_projectile(direction: Vector2) -> bool:
+	var is_special: bool = false
 	var shoot_pos = Vector2(16, 16) * direction + Vector2(0, 2)
 	
 	var projectile = Projectile.instantiate()
@@ -60,6 +64,12 @@ func spawn_projectile(direction: Vector2) -> void:
 		projectile.speed *= 1.5
 		projectile.knockback *= 3
 		projectile.penetrating = true
+		
+		var type: Projectile.Type = bullet_bar.slot_types[bullet_bar.current_slot]
+		projectile.type = type
+		
+		if type != Projectile.Type.REGULAR:
+			is_special = true
 	
 	particles.position = shoot_pos
 	particles.global_rotation = direction.angle()
@@ -67,6 +77,8 @@ func spawn_projectile(direction: Vector2) -> void:
 	
 	projectiles.add_child(projectile)
 	add_child(particles)
+	
+	return is_special
 
 func handle_locations() -> void:
 	if global_position.x > gate.global_position.x:
@@ -89,16 +101,14 @@ func handle_shooting() -> void:
 		
 		if accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 0:
 			SignalBus.player_shoot.emit(true)
-			
 			return
 		
 		var direction: Vector2 = get_local_mouse_position().normalized()
-		
-		spawn_projectile(direction)
+		var is_special: bool = spawn_projectile(direction)
 		
 		velocity -= direction * recoil
 		
-		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4)
+		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4, 1.5 if is_special else 1.0)
 		SignalBus.player_shoot.emit(false)
 
 func handle_movement() -> void:
@@ -128,7 +138,6 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	# (returns true if it's lethal, false otherwise)
 	
 	SignalBus.player_hit.emit()
-	
 	
 	if not hit_cooldown.is_stopped():
 		return false

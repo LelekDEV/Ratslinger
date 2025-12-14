@@ -2,7 +2,7 @@ extends Node
 
 enum SFX {HIT, LOSE, BLOCK,ENEMY_SHOOT, PLAYER_SHOOT}
 
-func play_sfx(sfx: SFX, volume: int = 0) -> void:
+func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1) -> void:
 	var audio = AudioStreamPlayer.new()
 	
 	match sfx:
@@ -13,6 +13,7 @@ func play_sfx(sfx: SFX, volume: int = 0) -> void:
 		SFX.PLAYER_SHOOT: audio.stream = preload("res://audio/SFX/player_shoot.wav")
 	
 	audio.volume_db = volume
+	audio.pitch_scale = pitch
 	audio.finished.connect(on_audio_finished.bind(audio))
 	
 	add_child(audio)

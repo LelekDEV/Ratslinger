@@ -10,7 +10,6 @@ var progress_value: float = 1
 var progress_time: float = 1.5
 
 var started: bool = false
-
 var reload_bullets: bool = false
 
 func _ready() -> void:

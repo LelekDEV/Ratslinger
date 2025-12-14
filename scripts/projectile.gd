@@ -1,6 +1,10 @@
 extends Area2D
 class_name Projectile
 
+@onready var player: Player = get_tree().get_first_node_in_group("player")
+
+@onready var special_particles: CPUParticles2D = $SpecialParticles
+
 var damage: float = 1
 var knockback: float = 150
 
@@ -9,8 +13,15 @@ var direction: Vector2
 var velocity: Vector2
 var penetrating: bool = false
 
+enum Type {REGULAR = -1, VAMPIRE, FIRE, POISON}
+var type: Type = Type.REGULAR
+
 static func instantiate() -> Projectile:
 	return preload("res://scenes/projectile.tscn").instantiate() as Projectile
+
+func _ready() -> void:
+	if type != Type.REGULAR:
+		special_particles.emitting = true
 
 func _physics_process(delta: float) -> void:
 	velocity = direction * speed * delta
@@ -26,6 +37,10 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
 		body.take_damage(damage, global_position, false)
 		body.velocity += direction * knockback
+		
+		if type == Type.VAMPIRE:
+			player.health = min(player.health + 2, 8)
+			player.ui.update_hearts(player.health)
 		
 		queue_free()
 
@@ -50,5 +65,9 @@ func _on_area_entered(area: Area2D) -> void:
 		
 		enemy.take_damage(damage * enemy.headshot_mult, global_position, true)
 		enemy.velocity += direction * knockback
+		
+		if type == Type.VAMPIRE:
+			player.health = min(player.health + 2, 8)
+			player.ui.update_hearts(player.health)
 		
 		queue_free()

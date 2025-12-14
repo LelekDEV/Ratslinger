@@ -7,8 +7,16 @@ class_name BulletBar
 
 var current_slot: int = 0
 
+var slot_types: Array = []
+var next_special: Array = []
+
 func _ready() -> void:
 	SignalBus.player_shoot.connect(free_slot)
+	
+	for i in Projectile.Type.size() - 1:
+		next_special.append(9 if i == Projectile.Type.VAMPIRE else -1)
+	
+	assign_specials()
 
 func _physics_process(_delta: float) -> void:
 	var i: int = 0
@@ -25,6 +33,22 @@ func _physics_process(_delta: float) -> void:
 		
 		i += 1
 
+func assign_specials() -> void:
+	slot_types.clear()
+	
+	for i in 6:
+		var special: int = next_special.find(0)
+		
+		if special == -1 or i == 0:
+			for j in next_special.size():
+				if next_special[j] > 0:
+					next_special[j] -= 1
+			
+			slot_types.append(Projectile.Type.REGULAR)
+		else:
+			next_special[special] = 9
+			slot_types.append(special)
+
 func free_slot(_miss: bool) -> void:
 	container.get_child(current_slot).get_node("Sprite2D").frame = 1
 	
@@ -34,7 +58,9 @@ func free_slot(_miss: bool) -> void:
 		current_slot += 1
 
 func load_slot() -> void:
-	container.get_child(current_slot).get_node("Sprite2D").frame = 0
+	var frame: int = 0 if slot_types[current_slot] == -1 else slot_types[current_slot] + 2
+	
+	container.get_child(current_slot).get_node("Sprite2D").frame = frame
 	
 	if current_slot == 1:
 		current_slot -= 1
