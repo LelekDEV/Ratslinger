@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbkx546wmeje8"]
+[gd_scene load_steps=5 format=3 uid="uid://cbkx546wmeje8"]
 
 [ext_resource type="Script" uid="uid://cx01rjoswmf27" path="res://scripts/shop_layer.gd" id="1_mucha"]
+[ext_resource type="Texture2D" uid="uid://olke6q3wxo3e" path="res://graphics/shop/backlayer.png" id="2_fj35d"]
+[ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="3_rsgqm"]
+
+[sub_resource type="Theme" id="Theme_jccsb"]
+default_font = ExtResource("3_rsgqm")
+default_font_size = 32
 
 [node name="ShopLayer" type="CanvasLayer" groups=["shop_layer"]]
 script = ExtResource("1_mucha")
@@ -11,16 +17,90 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.29803923, 0.29803923, 0.29803923, 1)
+color = Color(0, 0, 0, 1)
 
-[node name="Button" type="Button" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="LeftContainer" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(520, 420)
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="ExitButton" type="Button" parent="HBoxContainer/LeftContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 50)
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 110.0
-offset_bottom = 60.0
+layout_mode = 2
 focus_mode = 0
 action_mode = 0
 text = "exit"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="PreviousButton" type="Button" parent="HBoxContainer/LeftContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_mode = 0
+action_mode = 0
+text = "<"
+
+[node name="NextButton" type="Button" parent="HBoxContainer/LeftContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_mode = 0
+action_mode = 0
+text = ">"
+
+[node name="SpriteParent" type="Control" parent="HBoxContainer/LeftContainer"]
+custom_minimum_size = Vector2(520, 420)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent"]
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 6
+frame = 5
+
+[node name="RightContainer" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="HBoxContainer/RightContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_jccsb")
+text = "Vampiric Bullet"
+horizontal_alignment = 1
+
+[node name="DescLabel" type="Label" parent="HBoxContainer/RightContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_jccsb")
+text = "Heals HP on hit.
+Level: not bought
+Appears: every 10 bullets"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="UpgradeButton" type="Button" parent="HBoxContainer/RightContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_mode = 0
+action_mode = 0
+text = "upgrade"
+
+[connection signal="pressed" from="HBoxContainer/LeftContainer/HBoxContainer/ExitButton" to="." method="_on_button_pressed"]
