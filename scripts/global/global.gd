@@ -9,7 +9,7 @@ func _ready() -> void:
 
 func pause_game() -> void:
 	game.process_mode = Node.PROCESS_MODE_DISABLED
-	
+
 func resume_game() -> void:
 	game.process_mode = Node.PROCESS_MODE_INHERIT
 	block_input = true

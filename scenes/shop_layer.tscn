@@ -1,12 +1,96 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbkx546wmeje8"]
+[gd_scene load_steps=13 format=3 uid="uid://cbkx546wmeje8"]
 
 [ext_resource type="Script" uid="uid://cx01rjoswmf27" path="res://scripts/shop_layer.gd" id="1_mucha"]
 [ext_resource type="Texture2D" uid="uid://olke6q3wxo3e" path="res://graphics/shop/backlayer.png" id="2_fj35d"]
+[ext_resource type="Script" uid="uid://i7x4xt1158xc" path="res://scripts/button.gd" id="3_jccsb"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="3_rsgqm"]
+
+[sub_resource type="Theme" id="Theme_uf4kc"]
+default_font = ExtResource("3_rsgqm")
+default_font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rsgqm"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+expand_margin_bottom = 4.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yjygl"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.25)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 0.75000006)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uf4kc"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.25)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fx51c"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.25)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 0.75000006)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djswy"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.25)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 0.75000006)
+anti_aliasing = false
 
 [sub_resource type="Theme" id="Theme_jccsb"]
 default_font = ExtResource("3_rsgqm")
 default_font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jccsb"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.25)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 0.75000006)
+anti_aliasing = false
 
 [node name="ShopLayer" type="CanvasLayer" groups=["shop_layer"]]
 script = ExtResource("1_mucha")
@@ -40,25 +124,41 @@ theme_override_constants/separation = 15
 alignment = 1
 
 [node name="ExitButton" type="Button" parent="HBoxContainer/LeftContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+size_flags_vertical = 8
 focus_mode = 0
+theme = SubResource("Theme_uf4kc")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_rsgqm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yjygl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uf4kc")
 action_mode = 0
 text = "exit"
+script = ExtResource("3_jccsb")
 
 [node name="PreviousButton" type="Button" parent="HBoxContainer/LeftContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 focus_mode = 0
+theme = SubResource("Theme_uf4kc")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_rsgqm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fx51c")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uf4kc")
 action_mode = 0
 text = "<"
+script = ExtResource("3_jccsb")
 
 [node name="NextButton" type="Button" parent="HBoxContainer/LeftContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 focus_mode = 0
+theme = SubResource("Theme_uf4kc")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_rsgqm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_djswy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uf4kc")
 action_mode = 0
 text = ">"
+script = ExtResource("3_jccsb")
 
 [node name="SpriteParent" type="Control" parent="HBoxContainer/LeftContainer"]
 custom_minimum_size = Vector2(520, 420)
@@ -100,7 +200,13 @@ autowrap_mode = 3
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 focus_mode = 0
+theme = SubResource("Theme_uf4kc")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_rsgqm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jccsb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uf4kc")
 action_mode = 0
 text = "upgrade"
+script = ExtResource("3_jccsb")
 
 [connection signal="pressed" from="HBoxContainer/LeftContainer/HBoxContainer/ExitButton" to="." method="_on_button_pressed"]
