@@ -10,7 +10,7 @@ class_name Enemy
 
 @onready var sprite: AnimatedSprite2D = $BaseSprite
 
-var speed: float = 30
+@export var speed: float = 30
 var acceleration: float = 0.05
 var direction: Vector2
 
@@ -20,14 +20,16 @@ var health: float
 @export var damage: float = 1
 var headshot_mult: float = 2
 
+var drop_coins_enabled: bool = true
+
 var attack_highlight: AttackHighlight
 
 # AI options
-enum AI {SHOOTER, KICKER}
+enum AI {SHOOTER, KICKER, SEGMENT}
 @export var ai: AI
 
 # 0 - SHOOTER: follow the player and shoot projectiles, used for FoxEnemy
-# Used nodes:
+# Used nodes and variables:
 @onready var walk_extend_timer: Timer
 @onready var shoot_cooldown: Timer
 @onready var projectile_collide_cooldown: Timer
@@ -40,10 +42,15 @@ enum AI {SHOOTER, KICKER}
 @export var shoot_spread_deg: float = 0
 
 # 1 - KICKER: remain stationary, trigger a kick attack on player's proximity, used for CowEnemy
-# Used nodes:
+# Used nodes and variables:
 @onready var kick_delay: Timer
 
+# 2 - SEGMENT: moves along other segments that share it's health, hurts player on collision, used for SnakeEnemy
+# Used nodes and variables:
+var is_vertical: bool = false
+
 signal death
+signal damaged
 
 func _ready() -> void:
 	match ai:
@@ -64,6 +71,8 @@ func _physics_process(_delta: float) -> void:
 	if ai == AI.SHOOTER:
 		handle_movement()
 		handle_shooting()
+	elif ai == AI.SEGMENT:
+		velocity = Vector2.ZERO
 	else:
 		velocity = lerp(velocity, Vector2.ZERO, 0.3) # called as default logic to prevent infinite sliding from knockback for different AIs
 	
@@ -135,21 +144,27 @@ func spawn_projectile(angle_deg: float = 0) -> void:
 	projectiles.add_child(projectile)
 	add_child(particles)
 
-func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false) -> void:
-	health -= amount
+func die() -> void:
+	death.emit()
 	
+	if drop_coins_enabled:
+		drop_coins(randi_range(1, 2))
+	
+	queue_free()
+	if attack_highlight: attack_highlight.queue_free()
+
+func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false) -> void:
 	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 	
+	health -= amount
+	
 	if health <= 0:
-		death.emit()
-		
-		drop_coins(randi_range(1, 2))
-		
-		queue_free()
-		if attack_highlight: attack_highlight.queue_free()
+		die()
 	
 	hit_flash()
 	spawn_damage_fx(amount, hit_position, is_critical)
+	
+	damaged.emit(health, self)
 
 func drop_coins(amount: int) -> void:
 	for i in range(amount):
@@ -192,12 +207,12 @@ func hit_flash() -> void:
 	sprite.material.set_shader_parameter("active", false)
 
 func _on_kick_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if body is Player:
 		sprite.play("kick")
 		kick_delay.start()
 
 func _on_kick_delay_timeout() -> void:
-	player.velocity -= Vector2(300, 0)
+	player.take_knockback(Vector2(-300, 0)) 
 	player.take_damage(damage, null, self)
 
 func _on_shoot_notion_timer_timeout() -> void:
@@ -205,3 +220,27 @@ func _on_shoot_notion_timer_timeout() -> void:
 	
 	detach_attack_highlight()
 	spawn_shotgun_projectile()
+
+func _on_hurt_area_body_entered(body: Node2D) -> void:
+	if body is Player:
+		if is_vertical:
+			if player.global_position.x > global_position.x:
+				player.take_knockback(Vector2(300, 0))
+			
+			elif player.global_position.x < global_position.x:
+				player.take_knockback(Vector2(-300, 0))
+			
+			else:
+				player.take_knockback(Vector2(300, 0) if randi_range(0, 1) == 0 else Vector2(-300, 0))
+		
+		else:
+			if player.global_position.y > global_position.y:
+				player.take_knockback(Vector2(0, 300))
+			
+			elif player.global_position.y < global_position.y:
+				player.take_knockback(Vector2(0, -300))
+			
+			else:
+				player.take_knockback(Vector2(0, 300) if randi_range(0, 1) == 0 else Vector2(0, -300))
+		
+		player.take_damage(damage, null, self)

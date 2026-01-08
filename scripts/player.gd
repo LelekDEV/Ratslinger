@@ -19,7 +19,8 @@ class_name Player
 
 var max_health: float = 8
 var health: float = max_health
-var is_dead: bool = false   
+var is_dead: bool = false
+var is_queued_to_die: bool = false
 
 var speed: float = 75
 var acceleration: float = 0.05
@@ -134,19 +135,27 @@ func handle_movement() -> void:
 	
 	velocity = lerp(velocity, input * speed, acceleration)
 
+func take_knockback(vector: Vector2) -> void:
+	if not hit_cooldown.is_stopped():
+		return
+	
+	velocity += vector
+
 func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_enemy: Enemy = null) -> bool:
 	# (returns true if it's lethal, false otherwise)
 	
-	SignalBus.player_hit.emit()
-	
 	if not hit_cooldown.is_stopped():
 		return false
-		
+	
+	SignalBus.player_hit.emit()
+	
 	health -= amount
 		
-	if health <= 0:
+	if health <= 0 and not is_queued_to_die:
 		GlobalAudio.play_sfx(GlobalAudio.SFX.LOSE)
 		SignalBus.player_death.emit(from_projectile, from_enemy)
+		
+		is_queued_to_die = true
 		
 		return true
 	

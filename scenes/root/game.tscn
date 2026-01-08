@@ -272,7 +272,7 @@ shape = SubResource("CircleShape2D_r3fff")
 gate = NodePath("../Gate")
 metadata/_edit_lock_ = true
 
-[node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("gate")]
+[node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("gate") groups=["camera"]]
 process_mode = 3
 zoom = Vector2(4, 4)
 process_callback = 0

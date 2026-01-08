@@ -1,0 +1,110 @@
+[gd_scene load_steps=14 format=3 uid="uid://cg5tfv8axllw0"]
+
+[ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_i1qjg"]
+[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="1_wtnrl"]
+[ext_resource type="Texture2D" uid="uid://do7eubc5sfptt" path="res://graphics/characters/enemies/snake/segments.png" id="2_cndbj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cndbj"]
+resource_local_to_scene = true
+shader = ExtResource("1_wtnrl")
+shader_parameter/active = false
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1qjg"]
+atlas = ExtResource("2_cndbj")
+region = Rect2(20, 0, 20, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nekb2"]
+atlas = ExtResource("2_cndbj")
+region = Rect2(0, 0, 20, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jx7bc"]
+atlas = ExtResource("2_cndbj")
+region = Rect2(0, 15, 20, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jjv2"]
+atlas = ExtResource("2_cndbj")
+region = Rect2(0, 30, 20, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8bcc"]
+atlas = ExtResource("2_cndbj")
+region = Rect2(40, 0, 20, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pry0t"]
+atlas = ExtResource("2_cndbj")
+region = Rect2(40, 15, 20, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i1qjg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1qjg")
+}],
+"loop": true,
+"name": &"body",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nekb2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jx7bc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jjv2")
+}],
+"loop": true,
+"name": &"head",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t8bcc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pry0t")
+}],
+"loop": true,
+"name": &"tail",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i1qjg"]
+size = Vector2(17, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nekb2"]
+size = Vector2(20, 14)
+
+[node name="SnakeEnemySegment" type="CharacterBody2D" groups=["enemy"]]
+collision_mask = 4
+script = ExtResource("1_i1qjg")
+speed = 150.0
+ai = 2
+cooldown_time = 0.0
+shoot_count = 0
+
+[node name="BaseSprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_cndbj")
+sprite_frames = SubResource("SpriteFrames_i1qjg")
+animation = &"tail"
+frame_progress = 0.07610207
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_i1qjg")
+
+[node name="HurtArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea"]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_i1qjg")
+
+[node name="HeadshotArea" type="Area2D" parent="." groups=["headshot_area"]]
+
+[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea"]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_nekb2")
+disabled = true
+
+[connection signal="body_entered" from="HurtArea" to="." method="_on_hurt_area_body_entered"]

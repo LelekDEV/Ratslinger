@@ -1,6 +1,7 @@
 extends Node2D
 
-@onready var _Enemy: PackedScene = preload("res://scenes/enemies/fox_enemy.tscn")
+@onready var FoxEnemy: PackedScene = preload("res://scenes/enemies/fox_enemy.tscn")
+@onready var SnakeEnemy: PackedScene = preload("res://scenes/enemies/snake_enemy_wrapper.tscn")
 
 @onready var ui: UI = $UI
 
@@ -80,7 +81,10 @@ func setup_signals() -> void:
 	SignalBus.player_location_change.connect(ui.on_player_location_change)
 	SignalBus.player_location_change.connect(on_player_location_change)
 	
-	SignalBus.player_hit.connect(ui.animation1.play.bind("player_hit"))
+	SignalBus.player_hit.connect(func():
+		ui.animation1.stop()
+		ui.animation1.play("player_hit")
+	)
 	SignalBus.player_hit.connect(camera.shake)
 
 func update_enemies(killed_amount: int = 1) -> void:
@@ -94,17 +98,24 @@ func spawn_enemy() -> void:
 	if enemies_to_spawn <= 0:
 		return
 	
-	var enemy: Enemy = _Enemy.instantiate()
+	if randi_range(0, 5) <= 4:
+		var enemy: Enemy = FoxEnemy.instantiate()
+		
+		if randi_range(0, 1) == 0:
+			enemy.global_position.x = 364
+			enemy.global_position.y = randi_range(-264, 264)
+		else:
+			enemy.global_position.x = randi_range(-364, 364)
+			enemy.global_position.y = -264 if randi_range(0, 1) == 0 else 264
+		
+		enemy.death.connect(update_enemies)
+		enemies.add_child(enemy)
 	
-	if randi_range(0, 2) == 0:
-		enemy.global_position.x = 364
-		enemy.global_position.y = randi_range(-264, 264)
 	else:
-		enemy.global_position.x = randi_range(-364, 364)
-		enemy.global_position.y = -264 if randi_range(0, 1) == 0 else 264
-	
-	enemy.death.connect(update_enemies)
-	enemies.add_child(enemy)
+		var enemy: SnakeEnemyWrapper = SnakeEnemy.instantiate()
+		
+		enemy.death.connect(update_enemies)
+		enemies.add_child(enemy)
 	
 	enemies_to_spawn -= 1
 

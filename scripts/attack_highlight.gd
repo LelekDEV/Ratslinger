@@ -11,6 +11,7 @@ var alpha: float = 1
 var width: float = 10
 
 var decay_tween: Tween
+var alternate_tween: Tween
 
 func _physics_process(_delta: float) -> void:
 	queue_redraw()
@@ -25,3 +26,13 @@ func start_decay_tween() -> void:
 	
 	decay_tween.tween_property(self, "alpha", 0, 1.5)
 	decay_tween.tween_callback(self.queue_free)
+
+func start_alternate_tween() -> void:
+	alternate_tween = create_tween() \
+		.set_trans(Tween.TRANS_SINE) \
+		.set_ease(Tween.EASE_IN_OUT)
+	
+	for i in range(3):
+		alternate_tween.tween_callback(GlobalAudio.play_sfx.bind(GlobalAudio.SFX.DANGER, -4))
+		alternate_tween.tween_property(self, "alpha", 1, 0.1)
+		alternate_tween.tween_property(self, "alpha", 0.0 if i == 2 else 0.5, 0.1)

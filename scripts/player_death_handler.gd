@@ -35,7 +35,14 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 	death_shadow_rect.visible = true
 	ui.visible = false
 	
-	for node in [from_projectile, from_enemy, player]:
+	var highlight_nodes: Array = [player, from_projectile]
+	
+	if from_enemy.ai == Enemy.AI.SEGMENT:
+		highlight_nodes.append_array(from_enemy.get_parent().get_children())
+	else:
+		highlight_nodes.append(from_enemy)
+	
+	for node in highlight_nodes:
 		if not node:
 			continue
 		
