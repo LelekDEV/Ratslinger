@@ -3,6 +3,7 @@ class_name Projectile
 
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var special_particles: CPUParticles2D = $SpecialParticles
 
 var damage: float = 1
@@ -22,6 +23,9 @@ static func instantiate() -> Projectile:
 func _ready() -> void:
 	if type != Type.REGULAR:
 		special_particles.emitting = true
+		
+		if type == Type.VAMPIRE:
+			sprite.self_modulate = Color("d96c8fff")
 
 func _physics_process(delta: float) -> void:
 	velocity = direction * speed * delta

@@ -57,11 +57,11 @@ func update_textures() -> void:
 	
 	for slot in container.get_children():
 		var frame: int = 0 if slot_types[i] == -1 else slot_types[i] + 2
-		slot.get_node("Sprite2D").frame = frame
+		slot.get_node("Sprite2D").frame_coords.y = frame
 		i += 1
 
 func free_slot(_miss: bool) -> void:
-	container.get_child(current_slot).get_node("Sprite2D").frame = 1
+	container.get_child(current_slot).get_node("Sprite2D").frame_coords.y = 1
 	
 	if current_slot == 5:
 		player.reload_bullets(true)
@@ -71,12 +71,12 @@ func free_slot(_miss: bool) -> void:
 func load_slot() -> void:
 	var frame: int = 0 if slot_types[current_slot] == -1 else slot_types[current_slot] + 2
 	
-	container.get_child(current_slot).get_node("Sprite2D").frame = frame
+	container.get_child(current_slot).get_node("Sprite2D").frame_coords.y = frame
 	
 	if current_slot == 1:
 		current_slot -= 1
 		
 		await get_tree().create_timer(0.2).timeout
-		container.get_child(0).get_node("Sprite2D").frame = 0
+		container.get_child(0).get_node("Sprite2D").frame_coords.y = 0
 	else:
 		current_slot -= 1

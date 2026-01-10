@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwcbybdenkoe8"]
+[gd_scene load_steps=5 format=3 uid="uid://bwcbybdenkoe8"]
 
+[ext_resource type="Script" uid="uid://05ebr6n8qq2m" path="res://scripts/bullet_bar_slot.gd" id="1_4y304"]
 [ext_resource type="Texture2D" uid="uid://ctn6xvdhcknd1" path="res://graphics/ui/bullet_slot.png" id="1_71135"]
 [ext_resource type="Shader" uid="uid://1lld1d5krmy8" path="res://shaders/outline.gdshader" id="1_wofxp"]
 
@@ -16,9 +17,11 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 11.0
 offset_bottom = 23.0
+script = ExtResource("1_4y304")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_4y304")
 texture = ExtResource("1_71135")
 offset = Vector2(5.5, 11.5)
-hframes = 5
+hframes = 11
+vframes = 5
