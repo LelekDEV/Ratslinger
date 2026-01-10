@@ -14,13 +14,11 @@ func _ready() -> void:
 	SignalBus.player_shoot.connect(free_slot)
 	
 	for i in Projectile.Type.size() - 1:
-		next_special.append(9 if i == Projectile.Type.VAMPIRE else -1)
+		next_special.append(Upgrades.stat_1[i])
 	
 	assign_specials(true)
 
 func _physics_process(_delta: float) -> void:
-	print(slot_types)
-	
 	var i: int = 0
 	
 	for slot in container.get_children():
@@ -51,8 +49,16 @@ func assign_specials(full: bool = false) -> void:
 			
 			slot_types.insert(i, Projectile.Type.REGULAR)
 		else:
-			next_special[special] = 9
+			next_special[special] = Upgrades.stat_1[special]
 			slot_types.insert(i, special)
+
+func update_textures() -> void:
+	var i = 0
+	
+	for slot in container.get_children():
+		var frame: int = 0 if slot_types[i] == -1 else slot_types[i] + 2
+		slot.get_node("Sprite2D").frame = frame
+		i += 1
 
 func free_slot(_miss: bool) -> void:
 	container.get_child(current_slot).get_node("Sprite2D").frame = 1
