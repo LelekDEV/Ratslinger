@@ -16,9 +16,11 @@ func _ready() -> void:
 	for i in Projectile.Type.size() - 1:
 		next_special.append(9 if i == Projectile.Type.VAMPIRE else -1)
 	
-	assign_specials()
+	assign_specials(true)
 
 func _physics_process(_delta: float) -> void:
+	print(slot_types)
+	
 	var i: int = 0
 	
 	for slot in container.get_children():
@@ -33,10 +35,13 @@ func _physics_process(_delta: float) -> void:
 		
 		i += 1
 
-func assign_specials() -> void:
-	slot_types.clear()
+func assign_specials(full: bool = false) -> void:
+	var slot_amount = 6 if full else current_slot
 	
-	for i in 6:
+	for i in slot_amount:
+		slot_types.pop_front()
+	
+	for i in slot_amount:
 		var special: int = next_special.find(0)
 		
 		if special == -1 or i == 0:
@@ -44,16 +49,16 @@ func assign_specials() -> void:
 				if next_special[j] > 0:
 					next_special[j] -= 1
 			
-			slot_types.append(Projectile.Type.REGULAR)
+			slot_types.insert(i, Projectile.Type.REGULAR)
 		else:
 			next_special[special] = 9
-			slot_types.append(special)
+			slot_types.insert(i, special)
 
 func free_slot(_miss: bool) -> void:
 	container.get_child(current_slot).get_node("Sprite2D").frame = 1
 	
 	if current_slot == 5:
-		player.reload_bullets()
+		player.reload_bullets(true)
 	else:
 		current_slot += 1
 

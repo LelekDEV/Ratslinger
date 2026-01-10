@@ -24,6 +24,8 @@ ParticleSpawner="*res://scripts/global/particle_spawner.gd"
 GlobalAudio="*res://scenes/global/global_audio.tscn"
 Global="*res://scripts/global/global.gd"
 Fullscreen="res://scripts/global/fullscreen.gd"
+Upgrades="*res://scripts/global/upgrades.gd"
+Consts="*res://scripts/global/consts.gd"
 
 [editor]
 

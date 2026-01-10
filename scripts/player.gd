@@ -41,12 +41,12 @@ func _physics_process(_delta: float) -> void:
 	
 	move_and_slide()
 
-func reload_bullets() -> void:
+func reload_bullets(full: bool = false) -> void:
 	accuracy_bar.reload_bullets = false
 	accuracy_bar.progress_time = bullet_bar.current_slot * 0.3
 	accuracy_bar.start()
 	
-	bullet_bar.assign_specials()
+	bullet_bar.assign_specials(full)
 	
 	reload_timer.start()
 

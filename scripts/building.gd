@@ -5,6 +5,4 @@ extends StaticBody2D
 
 func _physics_process(_delta: float) -> void:
 	if interaction_area.interacting and Input.is_action_just_pressed("interact"):
-		shop_layer.visible = true
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		Global.pause_game()
+		shop_layer.enter()
