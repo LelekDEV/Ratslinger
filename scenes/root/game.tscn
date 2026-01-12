@@ -269,7 +269,6 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
-position = Vector2(-450, -50)
 gate = NodePath("../Gate")
 metadata/_edit_lock_ = true
 

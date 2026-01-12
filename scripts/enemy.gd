@@ -40,6 +40,7 @@ enum AI {SHOOTER, KICKER, SEGMENT}
 @export var cooldown_time: float = 1.5
 @export var shoot_count: int = 1
 @export var shoot_spread_deg: float = 0
+@export var projectile_name: String
 
 # 1 - KICKER: remain stationary, trigger a kick attack on player's proximity, used for CowEnemy
 # Used nodes and variables:
@@ -80,12 +81,12 @@ func _physics_process(_delta: float) -> void:
 
 func handle_shooting() -> void:
 	var player_pos: Vector2 = player.global_position
-	direction = (player.global_position - global_position).normalized()
+	direction = (player.global_position - gun_sprite.global_position).normalized()
 	
 	gun_sprite.global_rotation = direction.angle()
 	
 	if attack_highlight and not shoot_notion_timer.is_stopped():
-		attack_highlight.target = direction * 400
+		attack_highlight.target = player.global_position if shoot_spread_deg > 0 else direction * 400
 		attack_highlight.alpha = abs(cos((1 - shoot_notion_timer.time_left / shoot_notion_timer.wait_time) * PI * 3)) * 0.5 + 0.5
 	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
@@ -93,6 +94,11 @@ func handle_shooting() -> void:
 		shoot_cooldown.start(cooldown_time * randf_range(0.8, 1.2))
 		
 		attack_highlight = AttackHighlight.instantiate()
+		
+		attack_highlight.position = gun_sprite.position
+		attack_highlight.arc_mode = shoot_spread_deg > 0
+		attack_highlight.arc_spread = shoot_spread_deg / 2
+		
 		add_child(attack_highlight)
 
 func handle_movement() -> void:
@@ -125,12 +131,12 @@ func spawn_shotgun_projectile() -> void:
 
 func spawn_projectile(angle_deg: float = 0) -> void:
 	var shoot_dir = direction.rotated(deg_to_rad(angle_deg))
-	var shoot_pos = Vector2(16, 16) * shoot_dir
+	var shoot_pos = Vector2(16, 16) * shoot_dir * 0
 	
-	var projectile = EnemyProjectile.instantiate()
+	var projectile = EnemyProjectile.instantiate(projectile_name)
 	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT)
 	
-	projectile.global_position = global_position + shoot_pos
+	projectile.global_position = gun_sprite.global_position + shoot_pos
 	projectile.global_rotation = shoot_dir.angle()
 	projectile.direction = shoot_dir
 	
@@ -179,7 +185,7 @@ func detach_attack_highlight() -> void:
 	remove_child(attack_highlight)
 	fx.add_child(attack_highlight)
 	
-	attack_highlight.global_position = global_position
+	attack_highlight.global_position = global_position + gun_sprite.position
 	attack_highlight.start_decay_tween()
 
 func spawn_damage_fx(amount: float, hit_position: Vector2, is_critical: bool) -> void:

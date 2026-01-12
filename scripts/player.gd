@@ -19,6 +19,8 @@ class_name Player
 
 var max_health: float = 8
 var health: float = max_health
+var ignored_hitter: Enemy
+
 var is_dead: bool = false
 var is_queued_to_die: bool = false
 
@@ -144,13 +146,14 @@ func take_knockback(vector: Vector2) -> void:
 func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_enemy: Enemy = null) -> bool:
 	# (returns true if it's lethal, false otherwise)
 	
-	if not hit_cooldown.is_stopped():
+	if not hit_cooldown.is_stopped() and from_enemy != ignored_hitter:
 		return false
 	
 	SignalBus.player_hit.emit()
 	
+	ignored_hitter = from_enemy
 	health -= amount
-		
+	
 	if health <= 0 and not is_queued_to_die:
 		GlobalAudio.play_sfx(GlobalAudio.SFX.LOSE)
 		SignalBus.player_death.emit(from_projectile, from_enemy)

@@ -144,7 +144,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="HitCooldown" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.25
 one_shot = true
 
 [node name="ReloadTimer" type="Timer" parent="."]

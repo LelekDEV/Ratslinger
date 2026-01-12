@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var FoxEnemy: PackedScene = preload("res://scenes/enemies/fox_enemy.tscn")
+@onready var BeaverEnemy: PackedScene = preload("res://scenes/enemies/beaver_enemy.tscn")
 @onready var SnakeEnemy: PackedScene = preload("res://scenes/enemies/snake_enemy_wrapper.tscn")
 
 @onready var ui: UI = $UI
@@ -98,11 +99,13 @@ func spawn_enemy() -> void:
 	if enemies_to_spawn <= 0:
 		return
 	
-	if randi_range(0, 5) <= 4:
-		var enemy: Enemy = FoxEnemy.instantiate()
+	var enemy_roll: float = randf_range(0, 1)
+	
+	if enemy_roll > 0.2:
+		var enemy: Enemy = BeaverEnemy.instantiate() if enemy_roll > 0.5 else FoxEnemy.instantiate()
 		
 		if randi_range(0, 1) == 0:
-			enemy.global_position.x = 364
+			enemy.global_position.x = -364 if randi_range(0, 1) == 0 else 364
 			enemy.global_position.y = randi_range(-264, 264)
 		else:
 			enemy.global_position.x = randi_range(-364, 364)

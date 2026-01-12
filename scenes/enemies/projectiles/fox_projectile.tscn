@@ -1,18 +1,18 @@
 [gd_scene load_steps=8 format=3 uid="uid://cldtifc6qhbt2"]
 
-[ext_resource type="Script" uid="uid://dje1veimh3dda" path="res://scripts/enemy_projectile.gd" id="1_t0w65"]
-[ext_resource type="Texture2D" uid="uid://cf6muid2h5l4m" path="res://graphics/characters/enemies/fox/bullet.png" id="2_t0w65"]
+[ext_resource type="Script" uid="uid://dje1veimh3dda" path="res://scripts/enemy_projectile.gd" id="1_1y65w"]
+[ext_resource type="Texture2D" uid="uid://cf6muid2h5l4m" path="res://graphics/characters/enemies/fox/bullet.png" id="2_52733"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7lmkc"]
-atlas = ExtResource("2_t0w65")
+atlas = ExtResource("2_52733")
 region = Rect2(0, 0, 30, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6iq82"]
-atlas = ExtResource("2_t0w65")
+atlas = ExtResource("2_52733")
 region = Rect2(30, 0, 30, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5fvcs"]
-atlas = ExtResource("2_t0w65")
+atlas = ExtResource("2_52733")
 region = Rect2(60, 0, 30, 30)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q6r6c"]
@@ -36,7 +36,7 @@ animations = [{
 size = Vector2(9, 4)
 
 [node name="FoxProjectile" type="Area2D" groups=["enemy_projectile"]]
-script = ExtResource("1_t0w65")
+script = ExtResource("1_1y65w")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(5, -5)
@@ -55,5 +55,4 @@ wait_time = 0.1
 one_shot = true
 autostart = true
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,14 +1,106 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxnfigumi82y3"]
+[gd_scene load_steps=13 format=3 uid="uid://cxnfigumi82y3"]
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_ap1r7"]
+[ext_resource type="Texture2D" uid="uid://blietn0tcfv36" path="res://graphics/characters/enemies/beaver/gun.png" id="2_cd8fp"]
+[ext_resource type="Texture2D" uid="uid://bji4utf555maj" path="res://graphics/characters/enemies/beaver/base.png" id="2_dh1yt"]
+[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="3_si8ge"]
 
-[node name="BeaverEnemy" type="CharacterBody2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q56ky"]
+resource_local_to_scene = true
+shader = ExtResource("3_si8ge")
+shader_parameter/active = false
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q56ky"]
+atlas = ExtResource("2_dh1yt")
+region = Rect2(0, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sr0mg"]
+atlas = ExtResource("2_dh1yt")
+region = Rect2(30, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cd8fp"]
+atlas = ExtResource("2_dh1yt")
+region = Rect2(60, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_si8ge"]
+atlas = ExtResource("2_dh1yt")
+region = Rect2(90, 0, 30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q56ky"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q56ky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sr0mg")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd8fp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_si8ge")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cd8fp"]
+radius = 9.0
+height = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_si8ge"]
+radius = 7.0
+
+[node name="BeaverEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_mask = 4
 script = ExtResource("1_ap1r7")
+speed = null
+max_health = 4.0
 damage = 0.5
-shoot_count = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+ai = null
+cooldown_time = 2.5
+shoot_count = 4
+shoot_spread_deg = 30.0
+projectile_name = "beaver"
 
 [node name="GunSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 4)
+texture = ExtResource("2_cd8fp")
+offset = Vector2(8.5, 0)
 
 [node name="BaseSprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_q56ky")
+sprite_frames = SubResource("SpriteFrames_q56ky")
+animation = &"idle"
+
+[node name="CollisionShapeBody" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_cd8fp")
+
+[node name="HeadshotArea" type="Area2D" parent="." groups=["headshot_area"]]
+
+[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_si8ge")
+
+[node name="WalkExtendTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="ShootNotionTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="ShootNotionTimer" to="." method="_on_shoot_notion_timer_timeout"]

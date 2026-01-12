@@ -13,9 +13,16 @@ func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1) -> void:
 		SFX.PLAYER_SHOOT: audio.stream = preload("res://audio/SFX/player_shoot.wav")
 		SFX.DANGER: audio.stream = preload("res://audio/SFX/danger.wav")
 	
+	audio.set_meta("sfx", sfx)
 	audio.volume_db = volume
 	audio.pitch_scale = pitch
+	
 	audio.finished.connect(on_audio_finished.bind(audio))
+	
+	for played_audio in get_children():
+		if played_audio.get_meta("sfx") == sfx and played_audio.get_playback_position() < 0.05:
+			played_audio.stop()
+			played_audio.queue_free()
 	
 	add_child(audio)
 	audio.play()

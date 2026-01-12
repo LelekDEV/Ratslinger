@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4ydbsxvsg8yd"]
+
+[ext_resource type="Script" uid="uid://dje1veimh3dda" path="res://scripts/enemy_projectile.gd" id="1_sirks"]
+[ext_resource type="Texture2D" uid="uid://cir30rxg7ckms" path="res://graphics/characters/enemies/beaver/bullet.png" id="2_sirks"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75l7v"]
+atlas = ExtResource("2_sirks")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rljjr"]
+atlas = ExtResource("2_sirks")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wiuni"]
+atlas = ExtResource("2_sirks")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q6r6c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75l7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rljjr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wiuni")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0w65"]
+size = Vector2(4, 4)
+
+[node name="BeaverProjectile" type="Area2D" groups=["enemy_projectile"]]
+script = ExtResource("1_sirks")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q6r6c")
+animation = &"shoot"
+autoplay = "shoot"
+frame_progress = 0.07827358
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_t0w65")
+
+[node name="ProjectileCollideCooldown" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

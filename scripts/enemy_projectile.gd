@@ -14,8 +14,8 @@ var damage: float = 1
 
 var parent: Enemy
 
-static func instantiate() -> EnemyProjectile:
-	return preload("res://scenes/enemy_projectile.tscn").instantiate() as EnemyProjectile
+static func instantiate(filename: String) -> EnemyProjectile:
+	return load("res://scenes/enemies/projectiles/%s_projectile.tscn" % filename).instantiate() as EnemyProjectile
 
 func _physics_process(delta):
 	global_position += direction * speed * delta
