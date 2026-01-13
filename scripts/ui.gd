@@ -5,6 +5,7 @@ class_name UI
 @onready var location_popup: Sprite2D = $LocationPopup
 @onready var margin_container: MarginContainer = $MarginContainer
 @onready var enemies_label: Label = $MarginContainer/EnemiesLabel
+@onready var coin_label: Label = $MarginContainer/CoinsContainer/CoinLabel
 
 @onready var accuracy_bar: AccuracyBar = $AccuracyBar
 @onready var bullet_bar: BulletBar = $BulletBar
@@ -18,6 +19,8 @@ var popup_tween: Tween
 var popup_value: float = 0
 
 func _ready() -> void:
+	SignalBus.player_coin_collect.connect(update_coin_count)
+	
 	hearts.scale = Vector2i.ONE * 4 * scale_factor
 	hearts.global_position = Vector2i.ZERO
 	
@@ -29,6 +32,7 @@ func _ready() -> void:
 	bullet_bar.global_position.y = 140 + 6 * 4
 	
 	show_location_popup()
+	update_coin_count()
 
 func _physics_process(_delta: float) -> void:
 	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
@@ -36,6 +40,9 @@ func _physics_process(_delta: float) -> void:
 	
 	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
 	bullet_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85 * 4 - 86
+
+func update_coin_count() -> void:
+	coin_label.text = str(Global.coins)
 
 func update_enemy_count(enemies_killed: int, enemies_total: int = 0) -> void:
 	if enemies_killed == -1:

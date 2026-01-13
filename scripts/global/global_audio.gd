@@ -1,6 +1,6 @@
 extends Node
 
-enum SFX {HIT, LOSE, BLOCK,ENEMY_SHOOT, PLAYER_SHOOT, DANGER}
+enum SFX {HIT, LOSE, BLOCK,ENEMY_SHOOT, PLAYER_SHOOT, DANGER, COLLECT, SELECT, PLAYER_SHOOT_VAMPIRE}
 
 func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1) -> void:
 	var audio = AudioStreamPlayer.new()
@@ -12,6 +12,9 @@ func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1) -> void:
 		SFX.ENEMY_SHOOT: audio.stream = preload("res://audio/SFX/enemy_shoot.wav")
 		SFX.PLAYER_SHOOT: audio.stream = preload("res://audio/SFX/player_shoot.wav")
 		SFX.DANGER: audio.stream = preload("res://audio/SFX/danger.wav")
+		SFX.COLLECT: audio.stream = preload("res://audio/SFX/collect.wav")
+		SFX.SELECT: audio.stream = preload("res://audio/SFX/select.wav")
+		SFX.PLAYER_SHOOT_VAMPIRE: audio.stream = preload("res://audio/SFX/player_shoot_vampire.wav")
 	
 	audio.set_meta("sfx", sfx)
 	audio.volume_db = volume

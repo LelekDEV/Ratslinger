@@ -16,6 +16,10 @@ func _physics_process(_delta: float) -> void:
 		global_position = lerp(global_position, target_player.global_position, lerp_value)
 		
 		if round(global_position) == round(target_player.global_position):
+			GlobalAudio.play_sfx(GlobalAudio.SFX.COLLECT, -2, randf_range(0.9, 1.1))
+			Global.coins += 1
+			SignalBus.player_coin_collect.emit()
+			
 			queue_free()
 	else:
 		global_position += velocity

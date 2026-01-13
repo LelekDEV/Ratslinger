@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cbkx546wmeje8"]
+[gd_scene load_steps=14 format=3 uid="uid://cbkx546wmeje8"]
 
 [ext_resource type="Script" uid="uid://cx01rjoswmf27" path="res://scripts/shop_layer.gd" id="1_mucha"]
 [ext_resource type="Texture2D" uid="uid://olke6q3wxo3e" path="res://graphics/shop/backlayer.png" id="2_fj35d"]
 [ext_resource type="Script" uid="uid://i7x4xt1158xc" path="res://scripts/button.gd" id="3_jccsb"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="3_rsgqm"]
+[ext_resource type="Texture2D" uid="uid://c0ub0hdeeqktf" path="res://graphics/misc/coin.png" id="5_jccsb"]
 
 [sub_resource type="Theme" id="Theme_uf4kc"]
 default_font = ExtResource("3_rsgqm")
@@ -208,6 +209,39 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_uf4kc")
 action_mode = 0
 text = "buy"
 script = ExtResource("3_jccsb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/RightContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="CostLabel" type="Label" parent="HBoxContainer/RightContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = SubResource("Theme_jccsb")
+text = "Cost: 10"
+horizontal_alignment = 1
+
+[node name="SpriteParent" type="Control" parent="HBoxContainer/RightContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CoinSprite" type="Sprite2D" parent="HBoxContainer/RightContainer/HBoxContainer/SpriteParent"]
+position = Vector2(0, -10)
+scale = Vector2(8, 8)
+texture = ExtResource("5_jccsb")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+
+[node name="CashLabel" type="Label" parent="HBoxContainer/RightContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = SubResource("Theme_jccsb")
+text = "Cash: 10"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="HBoxContainer/LeftContainer/HBoxContainer/ExitButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/RightContainer/UpgradeButton" to="." method="_on_upgrade_button_pressed"]

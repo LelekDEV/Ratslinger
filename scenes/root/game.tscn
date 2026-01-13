@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=37 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/environment/cacti.png" id="4_wcdyl"]
 [ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/ui/arena_popup.png" id="4_xw82j"]
+[ext_resource type="Texture2D" uid="uid://c0ub0hdeeqktf" path="res://graphics/misc/coin.png" id="6_02ogl"]
 [ext_resource type="PackedScene" uid="uid://2on6pkejauvo" path="res://scenes/accuracy_bar.tscn" id="6_s3lrj"]
 [ext_resource type="PackedScene" uid="uid://dga30tbdq47t5" path="res://scenes/bullet_bar.tscn" id="7_b3wgx"]
 [ext_resource type="Texture2D" uid="uid://bykgmcn3ihdkj" path="res://graphics/environment/crossmark.png" id="8_sh5j3"]
@@ -21,6 +22,10 @@
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 
 [sub_resource type="Theme" id="Theme_s3lrj"]
+default_font = ExtResource("4_836xp")
+default_font_size = 32
+
+[sub_resource type="Theme" id="Theme_a8jnx"]
 default_font = ExtResource("4_836xp")
 default_font_size = 32
 
@@ -221,6 +226,35 @@ theme = SubResource("Theme_s3lrj")
 theme_override_colors/font_color = Color(0.9490196, 0.84705883, 0.5686275, 1)
 text = "Wave cleared"
 
+[node name="CoinsContainer" type="Control" parent="UI/MarginContainer"]
+custom_minimum_size = Vector2(60, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="CoinSprite" type="Sprite2D" parent="UI/MarginContainer/CoinsContainer"]
+position = Vector2(36, 15)
+scale = Vector2(8, 8)
+texture = ExtResource("6_02ogl")
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+
+[node name="CoinLabel" type="Label" parent="UI/MarginContainer/CoinsContainer"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = -22.0
+offset_right = 64.0
+offset_bottom = 22.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_a8jnx")
+text = "0"
+
 [node name="AccuracyBar" parent="UI" instance=ExtResource("6_s3lrj")]
 
 [node name="BulletBar" parent="UI" instance=ExtResource("7_b3wgx")]
@@ -269,6 +303,7 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
+position = Vector2(-450, -50)
 gate = NodePath("../Gate")
 metadata/_edit_lock_ = true
 

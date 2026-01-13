@@ -105,8 +105,12 @@ func spawn_enemy() -> void:
 		var enemy: Enemy = BeaverEnemy.instantiate() if enemy_roll > 0.5 else FoxEnemy.instantiate()
 		
 		if randi_range(0, 1) == 0:
-			enemy.global_position.x = -364 if randi_range(0, 1) == 0 else 364
-			enemy.global_position.y = randi_range(-264, 264)
+			if randi_range(0, 1) == 0:
+				enemy.global_position.x = -364
+				enemy.global_position.y = randi_range(100, 264) * -1 if randi_range(0, 1) == 0 else 1
+			else:
+				enemy.global_position.x = 364
+				enemy.global_position.y = randi_range(-264, 264)
 		else:
 			enemy.global_position.x = randi_range(-364, 364)
 			enemy.global_position.y = -264 if randi_range(0, 1) == 0 else 264

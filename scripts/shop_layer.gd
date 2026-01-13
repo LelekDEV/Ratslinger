@@ -5,6 +5,8 @@ extends CanvasLayer
 @onready var title_label: Label = $HBoxContainer/RightContainer/TitleLabel
 @onready var desc_label: Label = $HBoxContainer/RightContainer/DescLabel
 @onready var upgrade_button: Button = $HBoxContainer/RightContainer/UpgradeButton
+@onready var cost_label: Label = $HBoxContainer/RightContainer/HBoxContainer/CostLabel
+@onready var cash_label: Label = $HBoxContainer/RightContainer/HBoxContainer/CashLabel
 
 func enter() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -25,6 +27,9 @@ func exit() -> void:
 	
 	visible = false
 
+func get_cost(level: int) -> int:
+	return int(5 + (level + 1) * level / 2.0)
+
 func update_labels() -> void:
 	var level: int = Upgrades.levels[0]
 	
@@ -35,12 +40,21 @@ func update_labels() -> void:
 	
 	desc_label.text = Consts.ITEM_DESC[0] + level_desc + replaces_desc
 	upgrade_button.text = "buy" if level == 0 else "upgrade"
+	cost_label.text = "Cost: %s" % get_cost(level)
+	cash_label.text = "Cash: %s" % Global.coins
 
 func _on_button_pressed() -> void:
 	exit()
 
 func _on_upgrade_button_pressed() -> void:
-	Upgrades.levels[0] += 1
-	Upgrades.stat_1[0] = 10 - Upgrades.levels[0]
+	var level: int = Upgrades.levels[0]
+	var cost: int = get_cost(level)
+	
+	if Global.coins >= cost:
+		Global.coins -= cost
+		Upgrades.levels[0] += 1
+		Upgrades.stat_1[0] = 10 - level
+		
+		GlobalAudio.play_sfx(GlobalAudio.SFX.SELECT, -4)
 	
 	update_labels()

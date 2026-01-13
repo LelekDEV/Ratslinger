@@ -2,6 +2,7 @@ extends Node
 
 var game: Node2D
 
+var coins: int = 50
 var block_input: bool = false
 
 func _ready() -> void:
