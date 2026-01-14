@@ -14,4 +14,4 @@ func pause_game() -> void:
 func resume_game() -> void:
 	game.process_mode = Node.PROCESS_MODE_INHERIT
 	block_input = true
-	set_deferred("block_input", false)
+	#set_deferred("block_input", false)

@@ -41,6 +41,22 @@ func _physics_process(_delta: float) -> void:
 	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
 	bullet_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85 * 4 - 86
 
+func toggle_combat_hud(on: bool) -> void:
+	accuracy_bar.anim_tween = create_tween() \
+		.set_ease(Tween.EASE_OUT if on else Tween.EASE_IN) \
+		.set_trans(Tween.TRANS_BACK)
+	
+	accuracy_bar.anim_tween.tween_property(accuracy_bar, "position:y", -6 if on else -46 * 4, 0.5)
+	
+	for slot: BulletBarSlot in bullet_bar.container.get_children():
+		slot.anim_tween = create_tween() \
+			.set_ease(Tween.EASE_OUT if on else Tween.EASE_IN) \
+			.set_trans(Tween.TRANS_CUBIC)
+		
+		slot.anim_tween.tween_property(slot, "position:y", 0 if on else -40 * 4, 0.5)
+		
+		await get_tree().create_timer(0.05).timeout
+
 func update_coin_count() -> void:
 	coin_label.text = str(Global.coins)
 
@@ -83,5 +99,18 @@ func update_hearts_old(health: int) -> void:
 		heart.frame = clamp(8 - health - i * 4, 0, 4)
 		i += 1
 
-func on_player_location_change(_location: Player.Locations) -> void:
+func on_player_location_change(location: Player.Locations) -> void:
 	show_location_popup()
+	
+	if location == Player.Locations.ARENA:
+		toggle_combat_hud(true)
+		Global.block_input = false
+		
+		for i in bullet_bar.next_special.size():
+			bullet_bar.next_special[i] = Upgrades.stat_1[i]
+		
+		bullet_bar.assign_specials(true)
+		bullet_bar.update_textures()
+	else:
+		toggle_combat_hud(false)
+		Global.block_input = true

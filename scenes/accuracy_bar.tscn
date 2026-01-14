@@ -20,6 +20,6 @@ texture = ExtResource("1_nc87v")
 
 [node name="CursorSprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_jpu5p")
-position = Vector2(0.5, 23.5)
+position = Vector2(-85, 29.5)
 texture = ExtResource("2_tdin3")
 region_rect = Rect2(0, 0, 5, 30)

@@ -9,6 +9,9 @@ var progress_tween: Tween
 var progress_value: float = 1
 var progress_time: float = 1.5
 
+var anim_tween: Tween
+var anim_value: float = 0
+
 var started: bool = false
 var reload_bullets: bool = false
 

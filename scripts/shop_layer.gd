@@ -2,6 +2,8 @@ extends CanvasLayer
 
 @onready var bullet_bar: BulletBar = get_tree().get_first_node_in_group("bullet_bar")
 
+@onready var ui: UI = $"../UI"
+
 @onready var title_label: Label = $HBoxContainer/RightContainer/TitleLabel
 @onready var desc_label: Label = $HBoxContainer/RightContainer/DescLabel
 @onready var upgrade_button: Button = $HBoxContainer/RightContainer/UpgradeButton
@@ -19,11 +21,7 @@ func exit() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	Global.resume_game()
 	
-	for i in bullet_bar.next_special.size():
-		bullet_bar.next_special[i] = Upgrades.stat_1[i]
-	
-	bullet_bar.assign_specials(true)
-	bullet_bar.update_textures()
+	ui.update_coin_count()
 	
 	visible = false
 
