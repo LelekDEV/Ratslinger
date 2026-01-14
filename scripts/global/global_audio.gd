@@ -6,15 +6,15 @@ func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1) -> void:
 	var audio = AudioStreamPlayer.new()
 	
 	match sfx:
-		SFX.HIT: audio.stream = preload("res://audio/SFX/hit.wav")
-		SFX.LOSE: audio.stream = preload("res://audio/SFX/lose.wav")
-		SFX.BLOCK: audio.stream = preload("res://audio/SFX/block.wav")
-		SFX.ENEMY_SHOOT: audio.stream = preload("res://audio/SFX/enemy_shoot.wav")
-		SFX.PLAYER_SHOOT: audio.stream = preload("res://audio/SFX/player_shoot.wav")
-		SFX.DANGER: audio.stream = preload("res://audio/SFX/danger.wav")
-		SFX.COLLECT: audio.stream = preload("res://audio/SFX/collect.wav")
-		SFX.SELECT: audio.stream = preload("res://audio/SFX/select.wav")
-		SFX.PLAYER_SHOOT_VAMPIRE: audio.stream = preload("res://audio/SFX/player_shoot_vampire.wav")
+		SFX.HIT: audio.stream = preload("res://audio/sfx/hit.wav")
+		SFX.LOSE: audio.stream = preload("res://audio/sfx/lose.wav")
+		SFX.BLOCK: audio.stream = preload("res://audio/sfx/block.wav")
+		SFX.ENEMY_SHOOT: audio.stream = preload("res://audio/sfx/enemy_shoot.wav")
+		SFX.PLAYER_SHOOT: audio.stream = preload("res://audio/sfx/player_shoot.wav")
+		SFX.DANGER: audio.stream = preload("res://audio/sfx/danger.wav")
+		SFX.COLLECT: audio.stream = preload("res://audio/sfx/collect.wav")
+		SFX.SELECT: audio.stream = preload("res://audio/sfx/select.wav")
+		SFX.PLAYER_SHOOT_VAMPIRE: audio.stream = preload("res://audio/sfx/player_shoot_vampire.wav")
 	
 	audio.set_meta("sfx", sfx)
 	audio.volume_db = volume

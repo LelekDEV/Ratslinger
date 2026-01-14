@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://upl25sla6ia0"
-path="res://.godot/imported/player_shoot_vampire.wav-206f4b27ef7672b844f6b6bb41be6666.sample"
+path="res://.godot/imported/player_shoot_vampire.wav-327e55b833d59068cf30c8aff8f4f1bd.sample"
 
 [deps]
 
-source_file="res://audio/SFX/player_shoot_vampire.wav"
-dest_files=["res://.godot/imported/player_shoot_vampire.wav-206f4b27ef7672b844f6b6bb41be6666.sample"]
+source_file="res://audio/sfx/player_shoot_vampire.wav"
+dest_files=["res://.godot/imported/player_shoot_vampire.wav-327e55b833d59068cf30c8aff8f4f1bd.sample"]
 
 [params]
 

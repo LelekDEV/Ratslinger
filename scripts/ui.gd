@@ -9,6 +9,7 @@ class_name UI
 
 @onready var accuracy_bar: AccuracyBar = $AccuracyBar
 @onready var bullet_bar: BulletBar = $BulletBar
+@onready var crosshair: Sprite2D = $Crosshair
 
 @onready var animation1: AnimationPlayer = $AnimationPlayer1
 @onready var animation2: AnimationPlayer = $AnimationPlayer2
@@ -20,6 +21,8 @@ var popup_value: float = 0
 
 func _ready() -> void:
 	SignalBus.player_coin_collect.connect(update_coin_count)
+	Dialogic.timeline_started.connect(start_dialogue)
+	Dialogic.timeline_ended.connect(end_dialogue)
 	
 	hearts.scale = Vector2i.ONE * 4 * scale_factor
 	hearts.global_position = Vector2i.ZERO
@@ -40,6 +43,20 @@ func _physics_process(_delta: float) -> void:
 	
 	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
 	bullet_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85 * 4 - 86
+
+func start_dialogue() -> void:
+	Global.block_movement = true
+	crosshair.visible = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	animation1.play("start_dialogue")
+
+func end_dialogue() -> void:
+	Global.block_movement = false
+	crosshair.visible = true
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	
+	animation1.play("end_dialogue")
 
 func toggle_combat_hud(on: bool) -> void:
 	accuracy_bar.anim_tween = create_tween() \

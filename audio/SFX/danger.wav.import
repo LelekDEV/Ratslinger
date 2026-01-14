@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://5nlaomrywfyr"
-path="res://.godot/imported/danger.wav-bb5e43f54f9ccf954cb6f09bdce5ba26.sample"
+path="res://.godot/imported/danger.wav-0c93370c4b19001db8003d772b2682cc.sample"
 
 [deps]
 
-source_file="res://audio/SFX/danger.wav"
-dest_files=["res://.godot/imported/danger.wav-bb5e43f54f9ccf954cb6f09bdce5ba26.sample"]
+source_file="res://audio/sfx/danger.wav"
+dest_files=["res://.godot/imported/danger.wav-0c93370c4b19001db8003d772b2682cc.sample"]
 
 [params]
 

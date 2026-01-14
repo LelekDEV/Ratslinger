@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=41 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -16,10 +16,12 @@
 [ext_resource type="PackedScene" uid="uid://dga30tbdq47t5" path="res://scenes/bullet_bar.tscn" id="7_b3wgx"]
 [ext_resource type="Texture2D" uid="uid://bykgmcn3ihdkj" path="res://graphics/environment/crossmark.png" id="8_sh5j3"]
 [ext_resource type="PackedScene" uid="uid://dd62w7380cncx" path="res://scenes/building.tscn" id="9_l77qo"]
+[ext_resource type="Script" uid="uid://btwriu2gbmrm3" path="res://scripts/dialogue_strips.gd" id="9_wt5dx"]
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="10_r3fff"]
 [ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/environment/fence.png" id="12_l77qo"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
+[ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
 
 [sub_resource type="Theme" id="Theme_s3lrj"]
 default_font = ExtResource("4_836xp")
@@ -43,6 +45,42 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogueStrips:width")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hearts:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_2mmsw"]
 resource_name = "player_hit"
@@ -60,10 +98,92 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0.3), Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_wt5dx"]
+resource_name = "start_dialogue"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogueStrips:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [0.0, 50.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hearts:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MarginContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_d8x6a"]
+resource_name = "end_dialogue"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogueStrips:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [50.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hearts:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MarginContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_836xp"]
 _data = {
 &"RESET": SubResource("Animation_l77qo"),
-&"player_hit": SubResource("Animation_2mmsw")
+&"end_dialogue": SubResource("Animation_d8x6a"),
+&"player_hit": SubResource("Animation_2mmsw"),
+&"start_dialogue": SubResource("Animation_wt5dx")
 }
 
 [sub_resource type="Animation" id="Animation_s3lrj"]
@@ -261,6 +381,9 @@ position = Vector2(0, -24)
 [node name="BulletBar" parent="UI" instance=ExtResource("7_b3wgx")]
 position = Vector2(-86, 41)
 
+[node name="DialogueStrips" type="Node2D" parent="UI"]
+script = ExtResource("9_wt5dx")
+
 [node name="LocationPopup" type="Sprite2D" parent="UI"]
 texture = ExtResource("4_xw82j")
 
@@ -304,6 +427,7 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
+position = Vector2(-400, 0)
 gate = NodePath("../Gate")
 metadata/_edit_lock_ = true
 
@@ -338,6 +462,9 @@ position = Vector2(-452, -95)
 
 [node name="Gate" parent="." instance=ExtResource("10_2mmsw")]
 position = Vector2(-298, 0)
+
+[node name="NPC" parent="." instance=ExtResource("18_a8jnx")]
+position = Vector2(-500, 50)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAACt/+v/AAABAAAAAACf/+v/AAABAAAAAAB+/+v/AAABAAAAAABw/+v/AAABAAAAAACt/xYAAAABAAAAAACf/xYAAAABAAAAAACR/xYAAAABAAAAAACD/xYAAAABAAAAAAB1/xYAAAABAAAAAABn/xYAAAABAAAAAAA=")

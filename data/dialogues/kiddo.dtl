@@ -1,0 +1,15 @@
+if {repelled_kiddo} == true:
+	*Why is he still staying here, I wish he'd just go away...*
+	return
+Heyy Mister!
+Are you the sheriff everyone's talking about?
+- Yes
+	You're so cool!
+	Can I touch your pistol?
+	- NO
+	- No way
+	Maybe next time though...
+- No
+	Ugh...
+	*My mom actually told me to not talk to strangers*
+	set {repelled_kiddo} = true

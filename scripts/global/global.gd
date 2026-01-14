@@ -3,7 +3,9 @@ extends Node
 var game: Node2D
 
 var coins: int = 50
+
 var block_input: bool = false
+var block_movement: bool = false
 
 func _ready() -> void:
 	game = get_tree().get_first_node_in_group("game")

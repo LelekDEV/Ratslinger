@@ -119,7 +119,10 @@ func handle_shooting() -> void:
 		SignalBus.player_shoot.emit(false)
 
 func handle_movement() -> void:
-	input = Input.get_vector("left", "right", "up", "down")
+	if Global.block_movement:
+		input = Vector2.ZERO
+	else:
+		input = Input.get_vector("left", "right", "up", "down")
 	
 	legs_sprite.play("walk" if input.length() > 0 else "idle")
 	
