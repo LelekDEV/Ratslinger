@@ -1,8 +1,10 @@
 extends Node
 
-enum SFX {HIT, LOSE, BLOCK,ENEMY_SHOOT, PLAYER_SHOOT, DANGER, COLLECT, SELECT, PLAYER_SHOOT_VAMPIRE}
+enum SFX {HIT, LOSE, BLOCK,ENEMY_SHOOT, PLAYER_SHOOT, DANGER, COLLECT, SELECT, PLAYER_SHOOT_VAMPIRE, PLAYER_SHOOT_SPECIAL}
 
-func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1) -> void:
+func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1, delay: float = 0) -> void:
+	await get_tree().create_timer(delay).timeout
+	
 	var audio = AudioStreamPlayer.new()
 	
 	match sfx:
@@ -15,6 +17,7 @@ func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1) -> void:
 		SFX.COLLECT: audio.stream = preload("res://audio/sfx/collect.wav")
 		SFX.SELECT: audio.stream = preload("res://audio/sfx/select.wav")
 		SFX.PLAYER_SHOOT_VAMPIRE: audio.stream = preload("res://audio/sfx/player_shoot_vampire.wav")
+		SFX.PLAYER_SHOOT_SPECIAL: audio.stream = preload("res://audio/sfx/player_shoot_special.wav")
 	
 	audio.set_meta("sfx", sfx)
 	audio.volume_db = volume

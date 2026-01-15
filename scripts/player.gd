@@ -112,7 +112,7 @@ func handle_shooting() -> void:
 		velocity -= direction * recoil
 		
 		if is_special:
-			GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT_VAMPIRE, -12)
+			GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT_SPECIAL, -4)
 		else:
 			GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4)
 		

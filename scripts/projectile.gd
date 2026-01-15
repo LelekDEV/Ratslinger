@@ -1,7 +1,10 @@
 extends Area2D
 class_name Projectile
 
+@onready var ChompFX: PackedScene = preload("res://scenes/chomp_fx.tscn")
+
 @onready var player: Player = get_tree().get_first_node_in_group("player")
+@onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var special_particles: CPUParticles2D = $SpecialParticles
@@ -31,6 +34,27 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * speed * delta
 	global_position += velocity
 
+func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
+	enemy.take_damage(damage * enemy.headshot_mult if is_critical else 1.0, global_position, is_critical)
+	enemy.velocity += direction * knockback
+	
+	if type == Type.VAMPIRE:
+		player.health = min(player.health + 2, 8)
+		player.ui.update_hearts(player.health)
+		
+		var chomp_fx: AnimatedSprite2D = ChompFX.instantiate()
+		chomp_fx.global_position = global_position
+		fx.add_child(chomp_fx)
+		
+		var heal_particles = ParticleSpawner.instantiate(ParticleSpawner.ID.HEAL)
+		heal_particles.position.y = 8
+		heal_particles.emitting = true
+		player.add_child(heal_particles)
+		
+		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT_VAMPIRE, -12, 1, 0.2)
+	
+	queue_free()
+
 func _on_death_timer_timeout() -> void:
 	queue_free()
 
@@ -39,14 +63,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	
 	if body.is_in_group("enemy"):
-		body.take_damage(damage, global_position, false)
-		body.velocity += direction * knockback
-		
-		if type == Type.VAMPIRE:
-			player.health = min(player.health + 2, 8)
-			player.ui.update_hearts(player.health)
-		
-		queue_free()
+		damage_and_destroy(body, false)
 
 func _on_area_entered(area: Area2D) -> void:
 	if is_queued_for_deletion():
@@ -65,13 +82,4 @@ func _on_area_entered(area: Area2D) -> void:
 			area.queue_free()
 		
 	elif area.is_in_group("headshot_area"):
-		var enemy: Enemy = area.get_parent()
-		
-		enemy.take_damage(damage * enemy.headshot_mult, global_position, true)
-		enemy.velocity += direction * knockback
-		
-		if type == Type.VAMPIRE:
-			player.health = min(player.health + 2, 8)
-			player.ui.update_hearts(player.health)
-		
-		queue_free()
+		damage_and_destroy(area.get_parent(), true)

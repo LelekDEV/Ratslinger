@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://xujmcv6kipp6"]
 
-[ext_resource type="Texture2D" uid="uid://b6dit7a2umjv4" path="res://graphics/particles/blood_particle.png" id="1_ntwx8"]
+[ext_resource type="Texture2D" uid="uid://b6dit7a2umjv4" path="res://graphics/fx/particles/blood_particle.png" id="1_ntwx8"]
 [ext_resource type="Script" uid="uid://d3bf6sl0ryhxc" path="res://scripts/basic_particles.gd" id="2_eoory"]
 
 [sub_resource type="Curve" id="Curve_665h7"]

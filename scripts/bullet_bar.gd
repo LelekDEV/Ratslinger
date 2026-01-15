@@ -17,6 +17,7 @@ func _ready() -> void:
 		next_special.append(Upgrades.stat_1[i])
 	
 	assign_specials(true)
+	update_textures()
 
 func _physics_process(_delta: float) -> void:
 	var i: int = 0

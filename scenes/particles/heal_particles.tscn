@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://y54kx3rfqhrl"]
+
+[ext_resource type="Texture2D" uid="uid://5b5fvuu2bqja" path="res://graphics/fx/particles/heal_particle.png" id="1_qpfan"]
+[ext_resource type="Script" uid="uid://d3bf6sl0ryhxc" path="res://scripts/basic_particles.gd" id="2_2tp6q"]
+
+[sub_resource type="Curve" id="Curve_qpfan"]
+_limits = [0.5, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.25, 0.975), 0.0, 0.0, 0, 0, Vector2(0.5, 0.5), 0.0, 0.0, 0, 0, Vector2(0.50001, 0.55), 0.0, 0.0, 0, 0, Vector2(0.75, 0.975), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 6
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="Gradient" id="Gradient_qpfan"]
+offsets = PackedFloat32Array(0.006849315, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="HealParticles" type="CPUParticles2D" groups=["particles"]]
+z_index = 1
+emitting = false
+amount = 16
+texture = ExtResource("1_qpfan")
+lifetime = 0.5
+one_shot = true
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(16, 8)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 60.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_qpfan")
+color_ramp = SubResource("Gradient_qpfan")
+script = ExtResource("2_2tp6q")
+
+[connection signal="finished" from="." to="." method="_on_finished"]
