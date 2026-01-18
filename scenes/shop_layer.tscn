@@ -244,4 +244,6 @@ text = "Cash: 10"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="HBoxContainer/LeftContainer/HBoxContainer/ExitButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftContainer/HBoxContainer/PreviousButton" to="." method="_on_previous_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftContainer/HBoxContainer/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/RightContainer/UpgradeButton" to="." method="_on_upgrade_button_pressed"]

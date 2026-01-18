@@ -1,15 +1,24 @@
-[gd_scene load_steps=13 format=3 uid="uid://cxnfigumi82y3"]
+[gd_scene load_steps=15 format=3 uid="uid://cxnfigumi82y3"]
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_ap1r7"]
 [ext_resource type="Texture2D" uid="uid://blietn0tcfv36" path="res://graphics/characters/enemies/beaver/gun.png" id="2_cd8fp"]
 [ext_resource type="Texture2D" uid="uid://bji4utf555maj" path="res://graphics/characters/enemies/beaver/base.png" id="2_dh1yt"]
-[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="3_si8ge"]
+[ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_q56ky"]
+[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/enemy.gdshader" id="3_si8ge"]
+
+[sub_resource type="Curve" id="Curve_sr0mg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q56ky"]
 resource_local_to_scene = true
 shader = ExtResource("3_si8ge")
-shader_parameter/active = false
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_active = false
+shader_parameter/strip_active = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/strip_color = Color(0.2901961, 0.3137255, 0.9098039, 0.5019608)
+shader_parameter/spacing = 6.0
+shader_parameter/speed = -20.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q56ky"]
 atlas = ExtResource("2_dh1yt")
@@ -62,14 +71,31 @@ radius = 7.0
 [node name="BeaverEnemy" type="CharacterBody2D" groups=["enemy"]]
 collision_mask = 4
 script = ExtResource("1_ap1r7")
-speed = null
 max_health = 4.0
 damage = 0.5
-ai = null
 cooldown_time = 2.5
 shoot_count = 4
 shoot_spread_deg = 30.0
 projectile_name = "beaver"
+
+[node name="PoisonParticles" type="CPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(0, 6)
+emitting = false
+amount = 4
+texture = ExtResource("2_q56ky")
+lifetime = 0.65
+emission_shape = 3
+emission_rect_extents = Vector2(16, 8)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 60.0
+angular_velocity_min = -360.0
+angular_velocity_max = -360.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_sr0mg")
 
 [node name="GunSprite" type="Sprite2D" parent="."]
 position = Vector2(0, 4)
@@ -103,4 +129,9 @@ one_shot = true
 wait_time = 1.5
 one_shot = true
 
+[node name="PoisonTick" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
 [connection signal="timeout" from="ShootNotionTimer" to="." method="_on_shoot_notion_timer_timeout"]
+[connection signal="timeout" from="PoisonTick" to="." method="_on_poison_tick_timeout"]

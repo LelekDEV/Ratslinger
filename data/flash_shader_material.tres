@@ -1,9 +1,13 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dlas80bb87afk"]
 
-[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="1_bs51n"]
+[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/enemy.gdshader" id="1_bs51n"]
 
 [resource]
 resource_local_to_scene = true
 shader = ExtResource("1_bs51n")
-shader_parameter/active = false
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_active = false
+shader_parameter/strip_active = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/strip_color = Color(0.2901961, 0.3137255, 0.9098039, 0.5019608)
+shader_parameter/spacing = 6.0
+shader_parameter/speed = -20.0

@@ -10,12 +10,17 @@ class_name Enemy
 
 @onready var sprite: AnimatedSprite2D = $BaseSprite
 
+@onready var poison_tick: Timer = $PoisonTick
+@onready var poison_particles: CPUParticles2D = $PoisonParticles
+
 @export var speed: float = 30
 var acceleration: float = 0.05
 var direction: Vector2
 
 @export var max_health: float = 8
 var health: float
+
+var poison_value: int = 0
 
 @export var damage: float = 1
 var headshot_mult: float = 2
@@ -66,7 +71,9 @@ func _ready() -> void:
 			kick_delay = get_node("KickDelay")
 	
 	health = max_health
-	sprite.material.set_shader_parameter("active", false)
+	
+	sprite.material.set_shader_parameter("flash_active", false)
+	sprite.material.set_shader_parameter("strip_active", false)
 
 func _physics_process(_delta: float) -> void:
 	if ai == AI.SHOOTER:
@@ -159,16 +166,25 @@ func die() -> void:
 	queue_free()
 	if attack_highlight: attack_highlight.queue_free()
 
-func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false) -> void:
+func apply_poison() -> void:
+	poison_value = 5
+	poison_particles.emitting = true
+	
+	sprite.material.set_shader_parameter("strip_active", true)
+	
+	poison_tick.start()
+
+func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false, ignore_poison: bool = false) -> void:
 	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 	
-	health -= amount
+	var final_amount = amount * (1.2 if poison_value >= 1 and not ignore_poison else 1.0)
+	health -= final_amount
 	
 	if health <= 0:
 		die()
 	
 	hit_flash()
-	spawn_damage_fx(amount, hit_position, is_critical)
+	spawn_damage_fx(final_amount, hit_position, is_critical)
 	
 	damaged.emit(health, self)
 
@@ -208,9 +224,9 @@ func spawn_damage_fx(amount: float, hit_position: Vector2, is_critical: bool) ->
 	get_tree().root.add_child(indicator)
 
 func hit_flash() -> void:
-	sprite.material.set_shader_parameter("active", true)
+	sprite.material.set_shader_parameter("flash_active", true)
 	await get_tree().create_timer(0.1).timeout
-	sprite.material.set_shader_parameter("active", false)
+	sprite.material.set_shader_parameter("flash_active", false)
 
 func _on_kick_area_body_entered(body: Node2D) -> void:
 	if body is Player:
@@ -250,3 +266,13 @@ func _on_hurt_area_body_entered(body: Node2D) -> void:
 				player.take_knockback(Vector2(0, 300) if randi_range(0, 1) == 0 else Vector2(0, -300))
 		
 		player.take_damage(damage, null, self)
+
+func _on_poison_tick_timeout() -> void:
+	take_damage(0.5, global_position, false, true)
+	poison_value -= 1
+	
+	if poison_value >= 1:
+		poison_tick.start()
+	else:
+		poison_particles.emitting = false
+		sprite.material.set_shader_parameter("strip_active", false)

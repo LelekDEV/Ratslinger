@@ -53,6 +53,9 @@ func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
 		
 		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT_VAMPIRE, -12, 1, 0.2)
 	
+	elif type == Type.POISON:
+		enemy.apply_poison()
+	
 	queue_free()
 
 func _on_death_timer_timeout() -> void:

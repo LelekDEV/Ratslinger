@@ -1,14 +1,23 @@
-[gd_scene load_steps=14 format=3 uid="uid://cg5tfv8axllw0"]
+[gd_scene load_steps=16 format=3 uid="uid://cg5tfv8axllw0"]
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_i1qjg"]
-[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="1_wtnrl"]
+[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/enemy.gdshader" id="1_wtnrl"]
 [ext_resource type="Texture2D" uid="uid://do7eubc5sfptt" path="res://graphics/characters/enemies/snake/segments.png" id="2_cndbj"]
+[ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_nekb2"]
+
+[sub_resource type="Curve" id="Curve_jx7bc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cndbj"]
 resource_local_to_scene = true
 shader = ExtResource("1_wtnrl")
-shader_parameter/active = false
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_active = false
+shader_parameter/strip_active = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/strip_color = Color(0.2901961, 0.3137255, 0.9098039, 0.5019608)
+shader_parameter/spacing = 6.0
+shader_parameter/speed = -20.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i1qjg"]
 atlas = ExtResource("2_cndbj")
@@ -84,6 +93,25 @@ ai = 2
 cooldown_time = 0.0
 shoot_count = 0
 
+[node name="PoisonParticles" type="CPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(0, 6)
+emitting = false
+amount = 4
+texture = ExtResource("2_nekb2")
+lifetime = 0.65
+emission_shape = 3
+emission_rect_extents = Vector2(16, 8)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 60.0
+angular_velocity_min = -360.0
+angular_velocity_max = -360.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_jx7bc")
+
 [node name="BaseSprite" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_cndbj")
 sprite_frames = SubResource("SpriteFrames_i1qjg")
@@ -107,4 +135,9 @@ position = Vector2(-1.5, 0)
 shape = SubResource("RectangleShape2D_nekb2")
 disabled = true
 
+[node name="PoisonTick" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
 [connection signal="body_entered" from="HurtArea" to="." method="_on_hurt_area_body_entered"]
+[connection signal="timeout" from="PoisonTick" to="." method="_on_poison_tick_timeout"]

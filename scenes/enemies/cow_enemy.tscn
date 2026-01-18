@@ -1,14 +1,23 @@
-[gd_scene load_steps=39 format=3 uid="uid://x4kte2qp8tv"]
+[gd_scene load_steps=41 format=3 uid="uid://x4kte2qp8tv"]
 
 [ext_resource type="Texture2D" uid="uid://bcjxmy3h3daal" path="res://graphics/characters/enemies/cow/cow.png" id="1_fgglk"]
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_ie652"]
-[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/flash.gdshader" id="2_57r5i"]
+[ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_47cvi"]
+[ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/enemy.gdshader" id="2_57r5i"]
+
+[sub_resource type="Curve" id="Curve_1nh28"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_67sd0"]
 resource_local_to_scene = true
 shader = ExtResource("2_57r5i")
-shader_parameter/active = false
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_active = false
+shader_parameter/strip_active = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/strip_color = Color(0.28918967, 0.3133042, 0.90982777, 0.5)
+shader_parameter/spacing = 6.0
+shader_parameter/speed = -20.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_877to"]
 atlas = ExtResource("1_fgglk")
@@ -253,6 +262,25 @@ script = ExtResource("1_ie652")
 damage = 2.0
 ai = 1
 
+[node name="PoisonParticles" type="CPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(0, 6)
+emitting = false
+amount = 4
+texture = ExtResource("2_47cvi")
+lifetime = 0.65
+emission_shape = 3
+emission_rect_extents = Vector2(16, 8)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 60.0
+angular_velocity_min = -360.0
+angular_velocity_max = -360.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_1nh28")
+
 [node name="BaseSprite" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_67sd0")
 sprite_frames = SubResource("SpriteFrames_gfyqs")
@@ -282,5 +310,10 @@ shape = SubResource("CircleShape2D_57r5i")
 wait_time = 0.5
 one_shot = true
 
+[node name="PoisonTick" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
 [connection signal="body_entered" from="KickArea" to="." method="_on_kick_area_body_entered"]
 [connection signal="timeout" from="KickDelay" to="." method="_on_kick_delay_timeout"]
+[connection signal="timeout" from="PoisonTick" to="." method="_on_poison_tick_timeout"]

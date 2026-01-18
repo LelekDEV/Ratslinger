@@ -2,7 +2,7 @@ extends Node
 
 var game: Node2D
 
-var coins: int = 50
+var coins: int = 9999
 
 var block_input: bool = false
 var block_movement: bool = false
