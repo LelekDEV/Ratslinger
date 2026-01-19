@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=45 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -22,6 +22,8 @@
 [ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/environment/fence.png" id="12_l77qo"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
+[ext_resource type="Texture2D" uid="uid://q16ufe8f7bow" path="res://graphics/environment/buildings/rathaus.png" id="18_jrnar"]
+[ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
 
 [sub_resource type="Theme" id="Theme_s3lrj"]
 default_font = ExtResource("4_836xp")
@@ -245,6 +247,9 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_r3fff"]
 radius = 30.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dawlq"]
+size = Vector2(72, 61)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_836xp"]
 texture = ExtResource("12_l77qo")
 texture_region_size = Vector2i(10, 27)
@@ -291,6 +296,9 @@ distance = -234.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_s3lrj"]
 normal = Vector2(-1, 0)
 distance = -324.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jrnar"]
+size = Vector2(26, 78)
 
 [node name="Game" type="Node2D" groups=["game"]]
 y_sort_enabled = true
@@ -428,7 +436,7 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
-gate = NodePath("../Gate")
+gate = NodePath("../Buildings/Gate")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("gate") groups=["camera"]]
@@ -440,7 +448,7 @@ limit_right = 324
 limit_bottom = 234
 position_smoothing_enabled = true
 script = ExtResource("4_bq78c")
-gate = NodePath("../../Gate")
+gate = NodePath("../../Buildings/Gate")
 
 [node name="Enemies" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -457,17 +465,56 @@ y_sort_enabled = true
 
 [node name="FX" type="Node2D" parent="." groups=["fx"]]
 
-[node name="Building" parent="." instance=ExtResource("9_l77qo")]
+[node name="Buildings" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Shop" parent="Buildings" instance=ExtResource("9_l77qo")]
 position = Vector2(-452, -95)
 
-[node name="Gate" parent="." instance=ExtResource("10_2mmsw")]
+[node name="Rathaus" parent="Buildings" instance=ExtResource("9_l77qo")]
+position = Vector2(-584, -104)
+
+[node name="Sprite2D" parent="Buildings/Rathaus" index="0"]
+texture = ExtResource("18_jrnar")
+
+[node name="CollisionShape2D" parent="Buildings/Rathaus" index="1"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_dawlq")
+
+[node name="CollisionShape2D" parent="Buildings/Rathaus/InteractionArea" index="2"]
+position = Vector2(0, 15)
+disabled = true
+
+[node name="Gate" parent="Buildings" instance=ExtResource("10_2mmsw")]
 position = Vector2(-298, 0)
+
+[node name="RiverRect1" type="ColorRect" parent="Buildings"]
+offset_left = -694.0
+offset_top = -234.0
+offset_right = -660.0
+offset_bottom = 234.0
+color = Color(0.2016, 0.44751993, 0.48, 1)
+
+[node name="RiverRect2" type="ColorRect" parent="Buildings"]
+offset_left = -693.0
+offset_top = -234.0
+offset_right = -661.0
+offset_bottom = 234.0
+color = Color(0.29899997, 0.63245, 0.65, 1)
+
+[node name="TowerSprite1" type="Sprite2D" parent="Buildings"]
+position = Vector2(-667, -47)
+texture = ExtResource("19_d8x6a")
+
+[node name="TowerSprite2" type="Sprite2D" parent="Buildings"]
+position = Vector2(-671, 32)
+texture = ExtResource("19_d8x6a")
 
 [node name="NPC" parent="." instance=ExtResource("18_a8jnx")]
 position = Vector2(-500, 50)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAACt/+v/AAABAAAAAACf/+v/AAABAAAAAAB+/+v/AAABAAAAAABw/+v/AAABAAAAAACt/xYAAAABAAAAAACf/xYAAAABAAAAAACR/xYAAAABAAAAAACD/xYAAAABAAAAAAB1/xYAAAABAAAAAABn/xYAAAABAAAAAAA=")
+tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAACt/+v/AAABAAAAAACf/+v/AAABAAAAAAB+/+v/AAABAAAAAACt/xYAAAABAAAAAACf/xYAAAABAAAAAACR/xYAAAABAAAAAACD/xYAAAABAAAAAAB1/xYAAAABAAAAAABn/xYAAAABAAAAAABi/+v/AAAAAAAAAABe/xYAAAAAAAAAAABe/+v/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_bq78c")
 
 [node name="WorldBounds" type="StaticBody2D" parent="."]
@@ -482,6 +529,14 @@ shape = SubResource("WorldBoundaryShape2D_836xp")
 
 [node name="RightShape" type="CollisionShape2D" parent="WorldBounds"]
 shape = SubResource("WorldBoundaryShape2D_s3lrj")
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(-660, -48)
+shape = SubResource("RectangleShape2D_jrnar")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(-664, 31)
+shape = SubResource("RectangleShape2D_jrnar")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 offset_left = -270.0
@@ -511,3 +566,5 @@ color = Color(0, 0, 0, 1)
 wait_time = 8.0
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
+
+[editable path="Buildings/Rathaus"]
