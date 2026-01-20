@@ -10,6 +10,12 @@ extends CanvasLayer
 @onready var cost_label: Label = $HBoxContainer/RightContainer/HBoxContainer/CostLabel
 @onready var cash_label: Label = $HBoxContainer/RightContainer/HBoxContainer/CashLabel
 
+@onready var item_sprites: Array = [
+	$HBoxContainer/LeftContainer/SpriteParent/VampireSprite,
+	$HBoxContainer/LeftContainer/SpriteParent/FireSprite,
+	$HBoxContainer/LeftContainer/SpriteParent/PoisonSprite
+]
+
 enum Pages {VAMPIRE_BULLET, FIRE_BULLET, POISON_BULLET}
 var page: Pages = Pages.VAMPIRE_BULLET
 
@@ -53,6 +59,12 @@ func update_labels() -> void:
 	else:
 		upgrade_button.text = "buy" if level == 0 else "upgrade"
 		upgrade_button.disabled = false
+	
+	var i: int = 0
+	
+	for sprite in item_sprites:
+		sprite.material.set_shader_parameter("is_visible", i == page)
+		i += 1
 
 func _on_button_pressed() -> void:
 	exit()

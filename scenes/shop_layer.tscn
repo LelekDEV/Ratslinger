@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://cbkx546wmeje8"]
+[gd_scene load_steps=18 format=3 uid="uid://cbkx546wmeje8"]
 
 [ext_resource type="Script" uid="uid://cx01rjoswmf27" path="res://scripts/shop_layer.gd" id="1_mucha"]
-[ext_resource type="Texture2D" uid="uid://olke6q3wxo3e" path="res://graphics/shop/backlayer.png" id="2_fj35d"]
+[ext_resource type="Texture2D" uid="uid://olke6q3wxo3e" path="res://graphics/shop/layers.png" id="2_fj35d"]
 [ext_resource type="Script" uid="uid://i7x4xt1158xc" path="res://scripts/button.gd" id="3_jccsb"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="3_rsgqm"]
 [ext_resource type="Texture2D" uid="uid://c0ub0hdeeqktf" path="res://graphics/misc/coin.png" id="5_jccsb"]
@@ -75,6 +75,60 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(1, 1, 1, 0.75000006)
 anti_aliasing = false
+
+[sub_resource type="Shader" id="Shader_jccsb"]
+code = "shader_type canvas_item;
+
+uniform vec4 outline_color : source_color;
+uniform bool is_visible = false;
+uniform float thickness;
+varying vec4 v_vertex_color;
+
+void vertex()
+{
+	v_vertex_color = COLOR;
+}
+
+void fragment()
+{
+	if (is_visible)
+	{
+		float size_x = thickness/float(textureSize(TEXTURE, 0).x);
+		float size_y = thickness/float(textureSize(TEXTURE, 0).y);
+		vec4 sprite_color = texture(TEXTURE, UV);
+		float alpha = -4.0 * sprite_color.a;
+		alpha += texture(TEXTURE, UV + vec2(size_x, 0)).a;
+		alpha += texture(TEXTURE, UV + vec2(-size_x, 0)).a;
+		alpha += texture(TEXTURE, UV + vec2(0, size_y)).a;
+		alpha += texture(TEXTURE, UV + vec2(0, -size_y)).a;
+		//For outlining corners
+		//Change the -4.0 to -8.0 in alpa if adding these lines
+		//alpha += texture(TEXTURE, UV + vec2(size_x, size_y)).a;
+		//alpha += texture(TEXTURE, UV + vec2(-size_x, size_y)).a;
+		//alpha += texture(TEXTURE, UV + vec2(-size_x, -size_y)).a;
+		//alpha += texture(TEXTURE, UV + vec2(size_x, -size_y)).a;
+		vec4 final_color = mix(sprite_color, outline_color, clamp(alpha, 0.0, 1.0));
+		COLOR = v_vertex_color * vec4(final_color.rgb, clamp(abs(alpha) + sprite_color.a, 0.0, 1.0));
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yjygl"]
+shader = SubResource("Shader_jccsb")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_visible = false
+shader_parameter/thickness = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_djswy"]
+shader = SubResource("Shader_jccsb")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_visible = false
+shader_parameter/thickness = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fx51c"]
+shader = SubResource("Shader_jccsb")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_visible = false
+shader_parameter/thickness = 1.0
 
 [sub_resource type="Theme" id="Theme_jccsb"]
 default_font = ExtResource("3_rsgqm")
@@ -167,12 +221,42 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent"]
+[node name="BackSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent"]
 scale = Vector2(4, 4)
 texture = ExtResource("2_fj35d")
 centered = false
-hframes = 6
-frame = 5
+hframes = 5
+
+[node name="VampireSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent"]
+material = SubResource("ShaderMaterial_yjygl")
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 5
+frame = 2
+
+[node name="FireSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent"]
+material = SubResource("ShaderMaterial_djswy")
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 5
+frame = 4
+
+[node name="PoisonSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent"]
+material = SubResource("ShaderMaterial_fx51c")
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 5
+frame = 3
+
+[node name="FrontSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent"]
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 5
+frame = 1
 
 [node name="RightContainer" type="VBoxContainer" parent="HBoxContainer"]
 custom_minimum_size = Vector2(400, 0)
