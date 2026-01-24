@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://lno6nmuf2m2w"]
+[gd_scene load_steps=13 format=3 uid="uid://lno6nmuf2m2w"]
 
 [ext_resource type="Texture2D" uid="uid://dt216nyh373om" path="res://graphics/characters/npc/kiddo.png" id="1_abqhh"]
 [ext_resource type="Script" uid="uid://hqfvf7ibnt7h" path="res://scripts/npc.gd" id="1_rv78h"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="2_rv78h"]
+[ext_resource type="Texture2D" uid="uid://dvvdqlpp6aonx" path="res://graphics/characters/npc/mayor.png" id="3_7n8xq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wt5dx"]
 atlas = ExtResource("1_abqhh")
@@ -15,6 +16,14 @@ region = Rect2(30, 0, 30, 30)
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8jnx"]
 atlas = ExtResource("1_abqhh")
 region = Rect2(60, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wlns"]
+atlas = ExtResource("3_7n8xq")
+region = Rect2(0, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tl2vt"]
+atlas = ExtResource("3_7n8xq")
+region = Rect2(30, 0, 30, 30)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7n8xq"]
 animations = [{
@@ -32,11 +41,24 @@ animations = [{
 "texture": SubResource("AtlasTexture_d8x6a")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"kiddo",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wlns")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_tl2vt")
+}],
+"loop": true,
+"name": &"mayor",
+"speed": 3.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rv78h"]
+resource_local_to_scene = true
+radius = 15.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wlns"]
 radius = 30.0
@@ -45,14 +67,15 @@ radius = 30.0
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_rv78h")
+id = 1
 
-[node name="KiddoSprite" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7n8xq")
-animation = &"idle"
-autoplay = "idle"
+animation = &"mayor"
+frame_progress = 0.55346614
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-5, 3)
+position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_rv78h")
 
 [node name="InteractionArea" parent="." instance=ExtResource("2_rv78h")]

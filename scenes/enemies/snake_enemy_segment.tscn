@@ -89,6 +89,7 @@ size = Vector2(20, 14)
 collision_mask = 4
 script = ExtResource("1_i1qjg")
 speed = 150.0
+id = 3
 ai = 2
 cooldown_time = 0.0
 shoot_count = 0

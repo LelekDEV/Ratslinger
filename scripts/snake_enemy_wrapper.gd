@@ -110,5 +110,5 @@ func link_health(health: float, caller: Enemy) -> void:
 			to_die = true
 	
 	if to_die:
-		death.emit()
+		death.emit(Enemy.ID.SNAKE)
 		queue_free()

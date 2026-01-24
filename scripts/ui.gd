@@ -4,15 +4,16 @@ class_name UI
 @onready var hearts: HBoxContainer = $Hearts
 @onready var location_popup: Sprite2D = $LocationPopup
 @onready var margin_container: MarginContainer = $MarginContainer
-@onready var enemies_label: Label = $MarginContainer/EnemiesLabel
+
+@onready var enemies_label: Label = $MarginContainer/VBoxContainer/EnemiesLabel
+@onready var mission_label: Label = $MarginContainer/VBoxContainer/MissionLabel
 @onready var coin_label: Label = $MarginContainer/CoinsContainer/CoinLabel
 
 @onready var accuracy_bar: AccuracyBar = $AccuracyBar
 @onready var bullet_bar: BulletBar = $BulletBar
 @onready var crosshair: Sprite2D = $Crosshair
 
-@onready var animation1: AnimationPlayer = $AnimationPlayer1
-@onready var animation2: AnimationPlayer = $AnimationPlayer2
+@onready var animation: AnimationHandler = $AnimationHandler
 
 var scale_factor: float = 1
 
@@ -21,8 +22,15 @@ var popup_value: float = 0
 
 func _ready() -> void:
 	SignalBus.player_coin_collect.connect(update_coin_count)
+	
 	Dialogic.timeline_started.connect(start_dialogue)
 	Dialogic.timeline_ended.connect(end_dialogue)
+	
+	Dialogic.signal_event.connect(func(signal_name: String):
+		if signal_name == "mission_reward":
+			mission_label.text = "No mission active"
+			animation.play("mission_redeem")
+	)
 	
 	hearts.scale = Vector2i.ONE * 4 * scale_factor
 	hearts.global_position = Vector2i.ZERO
@@ -49,28 +57,34 @@ func start_dialogue() -> void:
 	crosshair.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
-	animation1.play("start_dialogue")
+	animation.play("start_dialogue")
 
 func end_dialogue() -> void:
 	Global.block_movement = false
 	crosshair.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
-	animation1.play("end_dialogue")
+	if Global.is_mission_active:
+		mission_label.text = "Mission - %s killed: %s/%s" % [
+			Dialogic.VAR.get_variable("mission_enemy_name"),
+			Global.mission_killed, Global.mission_total
+		]
+	
+	animation.play("end_dialogue")
 
 func toggle_combat_hud(on: bool) -> void:
 	accuracy_bar.anim_tween = create_tween() \
 		.set_ease(Tween.EASE_OUT if on else Tween.EASE_IN) \
 		.set_trans(Tween.TRANS_BACK)
 	
-	accuracy_bar.anim_tween.tween_property(accuracy_bar, "position:y", -6 if on else -46 * 4, 0.5)
+	accuracy_bar.anim_tween.tween_property(accuracy_bar, "position:y", (-6 if on else -46) * 4, 0.5)
 	
 	for slot: BulletBarSlot in bullet_bar.container.get_children():
 		slot.anim_tween = create_tween() \
 			.set_ease(Tween.EASE_OUT if on else Tween.EASE_IN) \
 			.set_trans(Tween.TRANS_CUBIC)
 		
-		slot.anim_tween.tween_property(slot, "position:y", 0 if on else -40 * 4, 0.5)
+		slot.anim_tween.tween_property(slot, "position:y", (0 if on else -40) * 4, 0.5)
 		
 		await get_tree().create_timer(0.05).timeout
 
@@ -81,7 +95,21 @@ func update_enemy_count(enemies_killed: int, enemies_total: int = 0) -> void:
 	if enemies_killed == -1:
 		enemies_label.text = "Wave cleared"
 	else:
-		enemies_label.text = "Enemies killed: " + str(enemies_killed) + "/" + str(enemies_total)
+		enemies_label.text = "Wave - enemies killed: " + str(enemies_killed) + "/" + str(enemies_total)
+	
+	if Global.is_mission_active:
+		if Global.mission_killed >= Global.mission_total:
+			if mission_label.text != "Mission completed":
+				animation.play("mission_complete")
+			
+			mission_label.text = "Mission completed"
+		else:
+			mission_label.text = "Mission - %s killed: %s/%s" % [
+				Dialogic.VAR.get_variable("mission_enemy_name"),
+				Global.mission_killed, Global.mission_total
+			]
+	else:
+		mission_label.text = "No mission active"
 
 func show_location_popup() -> void:
 	popup_value = 0

@@ -29,6 +29,9 @@ var drop_coins_enabled: bool = true
 
 var attack_highlight: AttackHighlight
 
+enum ID {FOX, COW, BEAVER, SNAKE}
+@export var id: ID
+
 # AI options
 enum AI {SHOOTER, KICKER, SEGMENT}
 @export var ai: AI
@@ -158,7 +161,7 @@ func spawn_projectile(angle_deg: float = 0) -> void:
 	add_child(particles)
 
 func die() -> void:
-	death.emit()
+	death.emit(id)
 	
 	if drop_coins_enabled:
 		drop_coins(randi_range(1, 2))

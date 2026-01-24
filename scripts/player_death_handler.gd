@@ -50,7 +50,7 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 		
 		for sprite in node.find_children("*Sprite*"):
 			sprite.material = preload("res://data/flash_shader_material.tres")
-			sprite.material.set_shader_parameter("active", true)
+			sprite.material.set_shader_parameter("flash_active", true)
 	
 	for particles in get_tree().get_nodes_in_group("particles"):
 		particles.queue_free()

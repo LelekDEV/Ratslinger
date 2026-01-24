@@ -40,7 +40,7 @@ func start_wave() -> void:
 	gate.get_node("LockSprite").self_modulate.a = 1
 	gate.get_node("CollisionShape2D").set_deferred("disabled", false)
 	
-	ui.animation2.play("wave_start")
+	ui.animation.play("wave_start")
 	
 	enemies_total = 5 + waves_cleared
 	enemies_to_spawn = enemies_total
@@ -65,7 +65,7 @@ func end_wave() -> void:
 	gate.get_node("AnimationPlayer2").play("unlock")
 	gate.get_node("CollisionShape2D").set_deferred("disabled", true)
 	
-	ui.animation2.play("wave_end")
+	ui.animation.play("wave_end")
 	
 	ui.update_enemy_count(-1)
 	
@@ -82,14 +82,16 @@ func setup_signals() -> void:
 	SignalBus.player_location_change.connect(ui.on_player_location_change)
 	SignalBus.player_location_change.connect(on_player_location_change)
 	
-	SignalBus.player_hit.connect(func():
-		ui.animation1.stop()
-		ui.animation1.play("player_hit")
-	)
+	SignalBus.player_hit.connect(ui.animation.play.bind("player_hit"))
 	SignalBus.player_hit.connect(camera.shake)
 
-func update_enemies(killed_amount: int = 1) -> void:
+@warning_ignore("int_as_enum_without_cast", "int_as_enum_without_match")
+func update_enemies(killed_id: Enemy.ID = -1, killed_amount: int = 1) -> void:
 	enemies_killed += killed_amount
+	
+	if killed_id == Global.mission_target:
+		Global.mission_killed += killed_amount
+	
 	ui.update_enemy_count(enemies_killed, enemies_total)
 	
 	if enemies_killed >= enemies_total:
@@ -102,7 +104,7 @@ func spawn_enemy() -> void:
 	var enemy_roll: float = randf_range(0, 1)
 	
 	if enemy_roll > 0.2:
-		var enemy: Enemy = BeaverEnemy.instantiate() if enemy_roll > 0.5 else FoxEnemy.instantiate()
+		var enemy: Enemy = FoxEnemy.instantiate() if enemy_roll > 0.5 else BeaverEnemy.instantiate()
 		
 		if randi_range(0, 1) == 0:
 			if randi_range(0, 1) == 0:

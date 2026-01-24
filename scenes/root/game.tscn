@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://gliuja466pg6"]
+[gd_scene load_steps=51 format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://btwriu2gbmrm3" path="res://scripts/dialogue_strips.gd" id="9_wt5dx"]
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="10_r3fff"]
+[ext_resource type="Script" uid="uid://cp448dgxo5kaw" path="res://scripts/animation_handler.gd" id="12_dawlq"]
 [ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/environment/fence.png" id="12_l77qo"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
@@ -193,7 +194,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MarginContainer/EnemiesLabel:theme_override_colors/font_color")
+tracks/0/path = NodePath("MarginContainer/VBoxContainer/EnemiesLabel:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -210,7 +211,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MarginContainer/EnemiesLabel:theme_override_colors/font_color")
+tracks/0/path = NodePath("MarginContainer/VBoxContainer/EnemiesLabel:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -227,7 +228,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MarginContainer/EnemiesLabel:theme_override_colors/font_color")
+tracks/0/path = NodePath("MarginContainer/VBoxContainer/EnemiesLabel:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -244,11 +245,74 @@ _data = {
 &"wave_start": SubResource("Animation_r3fff")
 }
 
+[sub_resource type="Animation" id="Animation_psga7"]
+resource_name = "RESET"
+length = 0.001
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MarginContainer/VBoxContainer/MissionLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.7764706, 0.6313726, 0.39215687, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_f0ccc"]
+resource_name = "mission_complete"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MarginContainer/VBoxContainer/MissionLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.7764706, 0.6313726, 0.39215687, 1), Color(0.9490196, 0.84705883, 0.5686275, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dawlq"]
+resource_name = "mission_redeem"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MarginContainer/VBoxContainer/MissionLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.9490196, 0.84705883, 0.5686275, 1), Color(0.7764706, 0.6313726, 0.39215687, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_psga7"]
+_data = {
+&"RESET": SubResource("Animation_psga7"),
+&"mission_complete": SubResource("Animation_f0ccc"),
+&"mission_redeem": SubResource("Animation_dawlq")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_r3fff"]
 radius = 30.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dawlq"]
 size = Vector2(72, 61)
+
+[sub_resource type="Curve" id="Curve_dawlq"]
+_data = [Vector2(0, 1), 0.0, -2.2396998, 0, 0, Vector2(0.6, 0.1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 3
+metadata/_snap_enabled = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_836xp"]
 texture = ExtResource("12_l77qo")
@@ -346,13 +410,26 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="EnemiesLabel" type="Label" parent="UI/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="EnemiesLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme = SubResource("Theme_s3lrj")
 theme_override_colors/font_color = Color(0.9490196, 0.84705883, 0.5686275, 1)
 text = "Wave cleared"
+
+[node name="MissionLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = SubResource("Theme_s3lrj")
+theme_override_colors/font_color = Color(0.7764706, 0.6313726, 0.39215687, 1)
+text = "No mission active"
 
 [node name="CoinsContainer" type="Control" parent="UI/MarginContainer"]
 custom_minimum_size = Vector2(60, 50)
@@ -399,14 +476,24 @@ texture = ExtResource("4_xw82j")
 [node name="Crosshair" parent="UI" instance=ExtResource("2_7dpn4")]
 metadata/_edit_lock_ = true
 
-[node name="AnimationPlayer1" type="AnimationPlayer" parent="UI"]
+[node name="AnimationHandler" type="Node" parent="UI"]
+script = ExtResource("12_dawlq")
+
+[node name="Player1" type="AnimationPlayer" parent="UI/AnimationHandler"]
+root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_836xp")
 }
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="UI"]
+[node name="Player2" type="AnimationPlayer" parent="UI/AnimationHandler"]
+root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_sh5j3")
+}
+
+[node name="Player3" type="AnimationPlayer" parent="UI/AnimationHandler"]
+libraries = {
+&"": SubResource("AnimationLibrary_psga7")
 }
 
 [node name="SandSprite1" type="Sprite2D" parent="."]
@@ -436,6 +523,7 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
+position = Vector2(-538, 0)
 gate = NodePath("../Buildings/Gate")
 metadata/_edit_lock_ = true
 
@@ -510,8 +598,16 @@ texture = ExtResource("19_d8x6a")
 position = Vector2(-671, 32)
 texture = ExtResource("19_d8x6a")
 
-[node name="NPC" parent="." instance=ExtResource("18_a8jnx")]
+[node name="NPC" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="KiddoNPC" parent="NPC" instance=ExtResource("18_a8jnx")]
 position = Vector2(-500, 50)
+id = 0
+
+[node name="MayorNPC" parent="NPC" instance=ExtResource("18_a8jnx")]
+position = Vector2(-584, -50)
+reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAACt/+v/AAABAAAAAACf/+v/AAABAAAAAAB+/+v/AAABAAAAAACt/xYAAAABAAAAAACf/xYAAAABAAAAAACR/xYAAAABAAAAAACD/xYAAAABAAAAAAB1/xYAAAABAAAAAABn/xYAAAABAAAAAABi/+v/AAAAAAAAAABe/xYAAAAAAAAAAABe/+v/AAAAAAAAAAA=")
