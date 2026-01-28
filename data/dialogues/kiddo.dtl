@@ -1,5 +1,5 @@
 if {repelled_kiddo} == true:
-	*Why is he still staying here, I wish he'd just go away...*
+	*Why is he still staying here,[pause=0.25] I wish he'd just go away...*
 	return
 Heyy Mister!
 Are you the sheriff everyone's talking about?

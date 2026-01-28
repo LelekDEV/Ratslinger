@@ -8,7 +8,7 @@ var block_input: bool = false
 var block_movement: bool = false
 
 var mission_target: Enemy.ID
-var mission_total: int = 2
+var mission_total: int = 5
 var mission_killed: int = 0
 var is_mission_active: bool = false
 

@@ -22,7 +22,7 @@ var enemies_total: int = 5
 var enemies_to_spawn: int = enemies_total
 var enemies_killed: int = 0
 
-var wave_active: bool = false
+var is_wave_active: bool = false
 var waves_cleared: int = 0
 
 func _ready() -> void:
@@ -33,7 +33,7 @@ func _ready() -> void:
 	for enemy: Enemy in enemies.get_children(): enemy.queue_free()"""
 
 func _physics_process(_delta: float) -> void:
-	if wave_start_interaction_area.interacting and Input.is_action_just_pressed("interact") and not wave_active:
+	if wave_start_interaction_area.interacting and Input.is_action_just_pressed("interact") and not is_wave_active:
 		start_wave()
 
 func start_wave() -> void:
@@ -58,7 +58,7 @@ func start_wave() -> void:
 		enemy_spawn_timer.wait_time
 	])
 	
-	wave_active = true
+	is_wave_active = true
 	wave_start_interaction_area.visible = false
 
 func end_wave() -> void:
@@ -69,7 +69,7 @@ func end_wave() -> void:
 	
 	ui.update_enemy_count(-1)
 	
-	wave_active = false
+	is_wave_active = false
 	wave_start_interaction_area.visible = true
 	waves_cleared += 1
 

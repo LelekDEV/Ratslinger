@@ -5,41 +5,41 @@ Anything specific y'come for?
 		if {Global.mission_killed} >= {Global.mission_total}}:
 			set {Global.is_mission_active} = false
 			set {has_asked_for_mission_before} = false
-			Golly! You did it.
+			Golly![pause=0.25] You did it.
 			Amazing job...
-			Of course, the reward that y'come for.
+			Of course,[pause=0.25] the reward that y'come for.
 			[wait time="0.5"]
 			[signal arg="mission_reward"]
 			[wait time="6.0"]
-			That's your regular pricing, [b]30 silver coins[/b] calculated to a single penny.
-			If you'd like more, I'm sure I can find another one for you, just say a word.
+			That's your regular pricing,[pause=0.25] {so}30 silver coins{sc} calculated to a single penny.
+			If you'd like more,[pause=0.25] I'm sure I can find another one for you,[pause=0.25] just say a word.
 			- Alright
 				jump decribe_mission
 			- No, but thanks
 				jump goodbye
 		else:
 			set {mission_enemy_left} = {mission_enemy_amount} - {Global.mission_killed}
-			Still not finished? You have [b]{mission_enemy_left} {mission_enemy_name}[/b] left to get.
-			So go get 'em! I'm counting for ya.
+			Still not finished?[pause=0.25] You have {so}{mission_enemy_left} {mission_enemy_name}{sc} left to get.
+			So go get 'em![pause=0.25] I'm counting for ya.
 			[end_timeline]
 	if {has_asked_for_mission_before} == true:
 		Have you finnaly changed your mind? [kill {mission_enemy_amount} {mission_enemy_name}]
 		jump decide_on_mission
-	So a mission's what y'want, huh?
+	So a mission's what y'want,[pause=0.25] huh?
 	label decribe_mission
 	do Global.roll_mission()
-	Then hear me out, 'cause I won't say it twice.
-	A bunch of those pesky [b]{mission_enemy_name}[/b] dominated my yard recently, and for the love of The Rat Lord, I cannot get rid of those bastards!
-	Make sure they won't ever willingly place a foot here again, let [b]{mission_enemy_amount} of them[/b] bite the dust, and that shall teach 'em a lesson!
+	Then hear me out,[pause=0.25] 'cause I won't say it twice.
+	A bunch of those pesky {so}{mission_enemy_name}{sc} dominated my yard recently,[pause=0.25] and for the love of The Rat Lord,[pause=0.25] I cannot get rid of those bastards!
+	Make sure they won't ever willingly place a foot here again,[pause=0.25] let {so}{mission_enemy_amount} of them{sc} bite the dust,[pause=0.25] and that shall teach 'em a lesson!
 	You believe you can do it?
 	set {has_asked_for_mission_before} = true
 	label decide_on_mission
 	- Yes
 		do Global.start_mission()
-		Wonderful, that's the energy I need.
-		So go for it, as you might know, money doesn't grow on trees...
+		Wonderful,[pause=0.25] that's the energy I need.
+		So go for it,[pause=0.25] as you might know,[pause=0.25] money doesn't grow on trees...
 	- No
 		Hmph... Let me know when you're ready to take it.
 - Nothing
 	label goodbye
-	Well, go get back to work then. It won't do itself.
+	Well,[pause=0.25] go get back to work then. It won't do itself.

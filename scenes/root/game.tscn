@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://gliuja466pg6"]
+[gd_scene format=4 uid="uid://gliuja466pg6"]
 
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/environment/cacti.png" id="4_wcdyl"]
 [ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/ui/arena_popup.png" id="4_xw82j"]
 [ext_resource type="Texture2D" uid="uid://c0ub0hdeeqktf" path="res://graphics/misc/coin.png" id="6_02ogl"]
+[ext_resource type="Script" uid="uid://dhjd8qg5fcogs" path="res://scripts/ui_label.gd" id="6_f0ccc"]
 [ext_resource type="PackedScene" uid="uid://2on6pkejauvo" path="res://scenes/accuracy_bar.tscn" id="6_s3lrj"]
 [ext_resource type="PackedScene" uid="uid://dga30tbdq47t5" path="res://scenes/bullet_bar.tscn" id="7_b3wgx"]
 [ext_resource type="Texture2D" uid="uid://bykgmcn3ihdkj" path="res://graphics/environment/crossmark.png" id="8_sh5j3"]
@@ -98,7 +99,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(-2, -2),
 "update": 0,
-"values": [50.0, 0.0]
+"values": [75.0, 0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -154,7 +155,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(-2, -2),
 "update": 0,
-"values": [0.0, 50.0]
+"values": [0.0, 75.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -364,19 +365,19 @@ distance = -324.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jrnar"]
 size = Vector2(26, 78)
 
-[node name="Game" type="Node2D" groups=["game"]]
+[node name="Game" type="Node2D" unique_id=1244812287 groups=["game"]]
 y_sort_enabled = true
 script = ExtResource("1_o8yes")
 
-[node name="ShopLayer" parent="." instance=ExtResource("2_836xp")]
+[node name="ShopLayer" parent="." unique_id=1318422254 instance=ExtResource("2_836xp")]
 process_mode = 3
 visible = false
 
-[node name="UI" type="CanvasLayer" parent="." groups=["ui"]]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1372504453 groups=["ui"]]
 layer = 0
 script = ExtResource("2_ijxjl")
 
-[node name="FlashRect" type="ColorRect" parent="UI"]
+[node name="FlashRect" type="ColorRect" parent="UI" unique_id=353919241]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -386,20 +387,21 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 metadata/_edit_lock_ = true
 
-[node name="Hearts" type="HBoxContainer" parent="UI"]
+[node name="Hearts" type="HBoxContainer" parent="UI" unique_id=255009402]
 offset_left = -144.0
 offset_top = -81.0
 offset_right = 56.0
 offset_bottom = -31.0
 theme_override_constants/separation = 50
 
-[node name="UIHeart1" parent="UI/Hearts" instance=ExtResource("4_55u7g")]
+[node name="UIHeart1" parent="UI/Hearts" unique_id=1885165400 instance=ExtResource("4_55u7g")]
 layout_mode = 2
 
-[node name="UIHeart2" parent="UI/Hearts" instance=ExtResource("4_55u7g")]
+[node name="UIHeart2" parent="UI/Hearts" unique_id=1180109079 instance=ExtResource("4_55u7g")]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1574277206]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -410,41 +412,46 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer" unique_id=1664629954]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="EnemiesLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+[node name="EnemiesLabel" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=1735487136]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme = SubResource("Theme_s3lrj")
 theme_override_colors/font_color = Color(0.9490196, 0.84705883, 0.5686275, 1)
 text = "Wave cleared"
+visible_characters_behavior = 4
+script = ExtResource("6_f0ccc")
 
-[node name="MissionLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+[node name="MissionLabel" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=178067893]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme = SubResource("Theme_s3lrj")
 theme_override_colors/font_color = Color(0.7764706, 0.6313726, 0.39215687, 1)
 text = "No mission active"
+visible_characters_behavior = 4
+script = ExtResource("6_f0ccc")
+rect_offset = Vector2(0, -48)
 
-[node name="CoinsContainer" type="Control" parent="UI/MarginContainer"]
+[node name="CoinsContainer" type="Control" parent="UI/MarginContainer" unique_id=388680449]
 custom_minimum_size = Vector2(60, 50)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="CoinSprite" type="Sprite2D" parent="UI/MarginContainer/CoinsContainer"]
+[node name="CoinSprite" type="Sprite2D" parent="UI/MarginContainer/CoinsContainer" unique_id=1931979703]
 position = Vector2(36, 15)
 scale = Vector2(8, 8)
 texture = ExtResource("6_02ogl")
 region_enabled = true
 region_rect = Rect2(0, 0, 8, 8)
 
-[node name="CoinLabel" type="Label" parent="UI/MarginContainer/CoinsContainer"]
+[node name="CoinLabel" type="Label" parent="UI/MarginContainer/CoinsContainer" unique_id=154091310]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -461,42 +468,36 @@ theme = SubResource("Theme_a8jnx")
 theme_override_colors/font_color = Color(0.73319995, 0.76596, 0.78, 1)
 text = "0"
 
-[node name="AccuracyBar" parent="UI" instance=ExtResource("6_s3lrj")]
+[node name="AccuracyBar" parent="UI" unique_id=1989509615 instance=ExtResource("6_s3lrj")]
 position = Vector2(0, -24)
 
-[node name="BulletBar" parent="UI" instance=ExtResource("7_b3wgx")]
+[node name="BulletBar" parent="UI" unique_id=178394332 instance=ExtResource("7_b3wgx")]
 position = Vector2(-86, 41)
 
-[node name="DialogueStrips" type="Node2D" parent="UI"]
+[node name="DialogueStrips" type="Node2D" parent="UI" unique_id=263507374]
 script = ExtResource("9_wt5dx")
 
-[node name="LocationPopup" type="Sprite2D" parent="UI"]
+[node name="LocationPopup" type="Sprite2D" parent="UI" unique_id=1393942738]
 texture = ExtResource("4_xw82j")
 
-[node name="Crosshair" parent="UI" instance=ExtResource("2_7dpn4")]
+[node name="Crosshair" parent="UI" unique_id=148041615 instance=ExtResource("2_7dpn4")]
 metadata/_edit_lock_ = true
 
-[node name="AnimationHandler" type="Node" parent="UI"]
+[node name="AnimationHandler" type="Node" parent="UI" unique_id=1523482957]
 script = ExtResource("12_dawlq")
 
-[node name="Player1" type="AnimationPlayer" parent="UI/AnimationHandler"]
+[node name="Player1" type="AnimationPlayer" parent="UI/AnimationHandler" unique_id=728152371]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_836xp")
-}
+libraries/ = SubResource("AnimationLibrary_836xp")
 
-[node name="Player2" type="AnimationPlayer" parent="UI/AnimationHandler"]
+[node name="Player2" type="AnimationPlayer" parent="UI/AnimationHandler" unique_id=1223452245]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_sh5j3")
-}
+libraries/ = SubResource("AnimationLibrary_sh5j3")
 
-[node name="Player3" type="AnimationPlayer" parent="UI/AnimationHandler"]
-libraries = {
-&"": SubResource("AnimationLibrary_psga7")
-}
+[node name="Player3" type="AnimationPlayer" parent="UI/AnimationHandler" unique_id=599942333]
+libraries/ = SubResource("AnimationLibrary_psga7")
 
-[node name="SandSprite1" type="Sprite2D" parent="."]
+[node name="SandSprite1" type="Sprite2D" parent="." unique_id=577903870]
 z_index = -2
 texture_repeat = 2
 texture = ExtResource("1_ncd4d")
@@ -504,7 +505,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 648, 468)
 metadata/_edit_lock_ = true
 
-[node name="SandSprite2" type="Sprite2D" parent="."]
+[node name="SandSprite2" type="Sprite2D" parent="." unique_id=785497505]
 z_index = -2
 texture_repeat = 2
 position = Vector2(-648, 0)
@@ -513,21 +514,21 @@ region_enabled = true
 region_rect = Rect2(0, 0, 648, 468)
 metadata/_edit_lock_ = true
 
-[node name="CrossmarkSprite" type="Sprite2D" parent="."]
+[node name="CrossmarkSprite" type="Sprite2D" parent="." unique_id=531476546]
 z_index = -2
 texture = ExtResource("8_sh5j3")
 
-[node name="WaveStartInteractionArea" parent="." instance=ExtResource("10_r3fff")]
+[node name="WaveStartInteractionArea" parent="." unique_id=902325514 instance=ExtResource("10_r3fff")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveStartInteractionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveStartInteractionArea" unique_id=1572488804]
 shape = SubResource("CircleShape2D_r3fff")
 
-[node name="Player" parent="." node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
-position = Vector2(-538, 0)
+[node name="Player" parent="." unique_id=1960160699 node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
+position = Vector2(-488, 0)
 gate = NodePath("../Buildings/Gate")
 metadata/_edit_lock_ = true
 
-[node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("gate") groups=["camera"]]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=151954985 node_paths=PackedStringArray("gate") groups=["camera"]]
 process_mode = 3
 zoom = Vector2(4, 4)
 process_callback = 0
@@ -538,28 +539,28 @@ position_smoothing_enabled = true
 script = ExtResource("4_bq78c")
 gate = NodePath("../../Buildings/Gate")
 
-[node name="Enemies" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="." unique_id=1167283035]
 y_sort_enabled = true
 
-[node name="Projectiles" type="Node2D" parent="." groups=["projectiles"]]
+[node name="Projectiles" type="Node2D" parent="." unique_id=1412819979 groups=["projectiles"]]
 y_sort_enabled = true
 
-[node name="Bullets" type="Node2D" parent="." groups=["bullets"]]
+[node name="Bullets" type="Node2D" parent="." unique_id=1731328154 groups=["bullets"]]
 y_sort_enabled = true
 
-[node name="Coins" type="Node2D" parent="." groups=["coins"]]
+[node name="Coins" type="Node2D" parent="." unique_id=1787759229 groups=["coins"]]
 z_index = 1
 y_sort_enabled = true
 
-[node name="FX" type="Node2D" parent="." groups=["fx"]]
+[node name="FX" type="Node2D" parent="." unique_id=52843161 groups=["fx"]]
 
-[node name="Buildings" type="Node2D" parent="."]
+[node name="Buildings" type="Node2D" parent="." unique_id=268704630]
 y_sort_enabled = true
 
-[node name="Shop" parent="Buildings" instance=ExtResource("9_l77qo")]
+[node name="Shop" parent="Buildings" unique_id=2105327580 instance=ExtResource("9_l77qo")]
 position = Vector2(-452, -95)
 
-[node name="Rathaus" parent="Buildings" instance=ExtResource("9_l77qo")]
+[node name="Rathaus" parent="Buildings" unique_id=1779372816 instance=ExtResource("9_l77qo")]
 position = Vector2(-584, -104)
 
 [node name="Sprite2D" parent="Buildings/Rathaus" index="0"]
@@ -573,75 +574,75 @@ shape = SubResource("RectangleShape2D_dawlq")
 position = Vector2(0, 15)
 disabled = true
 
-[node name="Gate" parent="Buildings" instance=ExtResource("10_2mmsw")]
+[node name="Gate" parent="Buildings" unique_id=1886308699 instance=ExtResource("10_2mmsw")]
 position = Vector2(-298, 0)
 
-[node name="RiverRect1" type="ColorRect" parent="Buildings"]
+[node name="RiverRect1" type="ColorRect" parent="Buildings" unique_id=1650193637]
 offset_left = -694.0
 offset_top = -234.0
 offset_right = -660.0
 offset_bottom = 234.0
 color = Color(0.2016, 0.44751993, 0.48, 1)
 
-[node name="RiverRect2" type="ColorRect" parent="Buildings"]
+[node name="RiverRect2" type="ColorRect" parent="Buildings" unique_id=1883370981]
 offset_left = -693.0
 offset_top = -234.0
 offset_right = -661.0
 offset_bottom = 234.0
 color = Color(0.29899997, 0.63245, 0.65, 1)
 
-[node name="TowerSprite1" type="Sprite2D" parent="Buildings"]
+[node name="TowerSprite1" type="Sprite2D" parent="Buildings" unique_id=946271222]
 position = Vector2(-667, -47)
 texture = ExtResource("19_d8x6a")
 
-[node name="TowerSprite2" type="Sprite2D" parent="Buildings"]
+[node name="TowerSprite2" type="Sprite2D" parent="Buildings" unique_id=1756406117]
 position = Vector2(-671, 32)
 texture = ExtResource("19_d8x6a")
 
-[node name="NPC" type="Node2D" parent="."]
+[node name="NPC" type="Node2D" parent="." unique_id=1592318965]
 y_sort_enabled = true
 
-[node name="KiddoNPC" parent="NPC" instance=ExtResource("18_a8jnx")]
+[node name="KiddoNPC" parent="NPC" unique_id=1471927015 instance=ExtResource("18_a8jnx")]
 position = Vector2(-500, 50)
 id = 0
 
-[node name="MayorNPC" parent="NPC" instance=ExtResource("18_a8jnx")]
+[node name="MayorNPC" parent="NPC" unique_id=1886138594 instance=ExtResource("18_a8jnx")]
 position = Vector2(-584, -50)
 reward_coins_curve = SubResource("Curve_dawlq")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1513322276]
 tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAACt/+v/AAABAAAAAACf/+v/AAABAAAAAAB+/+v/AAABAAAAAACt/xYAAAABAAAAAACf/xYAAAABAAAAAACR/xYAAAABAAAAAACD/xYAAAABAAAAAAB1/xYAAAABAAAAAABn/xYAAAABAAAAAABi/+v/AAAAAAAAAABe/xYAAAAAAAAAAABe/+v/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_bq78c")
 
-[node name="WorldBounds" type="StaticBody2D" parent="."]
+[node name="WorldBounds" type="StaticBody2D" parent="." unique_id=1827856613]
 collision_layer = 2
 collision_mask = 2
 
-[node name="BottomShape" type="CollisionShape2D" parent="WorldBounds"]
+[node name="BottomShape" type="CollisionShape2D" parent="WorldBounds" unique_id=1153301312]
 shape = SubResource("WorldBoundaryShape2D_l77qo")
 
-[node name="TopShape" type="CollisionShape2D" parent="WorldBounds"]
+[node name="TopShape" type="CollisionShape2D" parent="WorldBounds" unique_id=262434055]
 shape = SubResource("WorldBoundaryShape2D_836xp")
 
-[node name="RightShape" type="CollisionShape2D" parent="WorldBounds"]
+[node name="RightShape" type="CollisionShape2D" parent="WorldBounds" unique_id=532631891]
 shape = SubResource("WorldBoundaryShape2D_s3lrj")
 
-[node name="CollisionShape1" type="CollisionShape2D" parent="WorldBounds"]
+[node name="CollisionShape1" type="CollisionShape2D" parent="WorldBounds" unique_id=1499526189]
 position = Vector2(-660, -48)
 shape = SubResource("RectangleShape2D_jrnar")
 
-[node name="CollisionShape2" type="CollisionShape2D" parent="WorldBounds"]
+[node name="CollisionShape2" type="CollisionShape2D" parent="WorldBounds" unique_id=2066139006]
 position = Vector2(-664, 31)
 shape = SubResource("RectangleShape2D_jrnar")
 
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
+[node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=1017912923]
 offset_left = -270.0
 offset_top = -180.0
 offset_right = 270.0
 offset_bottom = 180.0
 metadata/_edit_lock_ = true
 
-[node name="PlayerDeathHandler" type="Node2D" parent="." node_paths=PackedStringArray("camera", "death_shadow_rect", "ui")]
+[node name="PlayerDeathHandler" type="Node2D" parent="." unique_id=1706911077 node_paths=PackedStringArray("camera", "death_shadow_rect", "ui")]
 process_mode = 3
 z_index = 10
 script = ExtResource("12_xw82j")
@@ -649,7 +650,7 @@ camera = NodePath("../Player/Camera2D")
 death_shadow_rect = NodePath("../DeathShadowRect")
 ui = NodePath("../UI")
 
-[node name="DeathShadowRect" type="ColorRect" parent="."]
+[node name="DeathShadowRect" type="ColorRect" parent="." unique_id=1755472873]
 visible = false
 z_index = 10
 offset_left = -972.0
@@ -658,7 +659,7 @@ offset_right = 324.0
 offset_bottom = 234.0
 color = Color(0, 0, 0, 1)
 
-[node name="EnemySpawnTimer" type="Timer" parent="."]
+[node name="EnemySpawnTimer" type="Timer" parent="." unique_id=737762801]
 wait_time = 8.0
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
