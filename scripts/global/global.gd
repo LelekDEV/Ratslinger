@@ -1,6 +1,6 @@
 extends Node
 
-var game: Node2D
+var game: Game
 
 var coins: int = 30
 

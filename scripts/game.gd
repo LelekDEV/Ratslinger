@@ -1,4 +1,5 @@
 extends Node2D
+class_name Game
 
 @onready var FoxEnemy: PackedScene = preload("res://scenes/enemies/fox_enemy.tscn")
 @onready var BeaverEnemy: PackedScene = preload("res://scenes/enemies/beaver_enemy.tscn")
@@ -27,6 +28,7 @@ var waves_cleared: int = 0
 
 func _ready() -> void:
 	setup_signals()
+	Global.game = self
 	
 	"""update_enemies(5)
 	enemies_to_spawn = 0

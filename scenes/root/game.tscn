@@ -10,7 +10,7 @@
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="4_836xp"]
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
 [ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/environment/cacti.png" id="4_wcdyl"]
-[ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/ui/arena_popup.png" id="4_xw82j"]
+[ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/ui/location_popup.png" id="4_xw82j"]
 [ext_resource type="Texture2D" uid="uid://c0ub0hdeeqktf" path="res://graphics/misc/coin.png" id="6_02ogl"]
 [ext_resource type="Script" uid="uid://dhjd8qg5fcogs" path="res://scripts/ui_label.gd" id="6_f0ccc"]
 [ext_resource type="PackedScene" uid="uid://2on6pkejauvo" path="res://scenes/accuracy_bar.tscn" id="6_s3lrj"]
@@ -401,7 +401,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1574277206]
-modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -479,6 +478,7 @@ script = ExtResource("9_wt5dx")
 
 [node name="LocationPopup" type="Sprite2D" parent="UI" unique_id=1393942738]
 texture = ExtResource("4_xw82j")
+hframes = 2
 
 [node name="Crosshair" parent="UI" unique_id=148041615 instance=ExtResource("2_7dpn4")]
 metadata/_edit_lock_ = true
@@ -524,7 +524,6 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." unique_id=1960160699 node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
-position = Vector2(-488, 0)
 gate = NodePath("../Buildings/Gate")
 metadata/_edit_lock_ = true
 

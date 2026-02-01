@@ -44,6 +44,12 @@ func _ready() -> void:
 	
 	show_location_popup()
 	update_coin_count()
+	update_enemy_count()
+	
+	await SignalBus.game_loaded
+	
+	update_coin_count()
+	update_enemy_count()
 
 func _physics_process(_delta: float) -> void:
 	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
@@ -91,7 +97,7 @@ func toggle_combat_hud(on: bool) -> void:
 func update_coin_count() -> void:
 	coin_label.text = str(Global.coins)
 
-func update_enemy_count(enemies_killed: int, enemies_total: int = 0) -> void:
+func update_enemy_count(enemies_killed: int = -1, enemies_total: int = 0) -> void:
 	if enemies_killed == -1:
 		enemies_label.text = "Wave cleared"
 	else:
@@ -145,6 +151,7 @@ func update_hearts_old(health: int) -> void:
 		i += 1
 
 func on_player_location_change(location: Player.Locations) -> void:
+	location_popup.frame = location
 	show_location_popup()
 	
 	if location == Player.Locations.ARENA:
