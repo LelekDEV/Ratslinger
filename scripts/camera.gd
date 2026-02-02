@@ -10,10 +10,14 @@ var shake_smoothness: float = 0.8
 @export var gate: StaticBody2D
 
 func _ready() -> void:
+	SignalBus.scale_changed.connect(update_scale)
+	
 	await SignalBus.game_loaded
 	
 	reset_physics_interpolation()
 	reset_smoothing()
+	
+	update_scale()
 
 func _physics_process(_delta: float) -> void:
 	if shake_tween and shake_tween.is_running():
@@ -26,6 +30,9 @@ func _physics_process(_delta: float) -> void:
 		global_position.x = max(-324 + get_viewport_rect().size.x / zoom.x / 2, get_parent().global_position.x)
 	else:
 		global_position = get_parent().global_position
+
+func update_scale() -> void:
+	zoom = Vector2.ONE * (Global.scale_level + 4)
 
 func shake(miss: bool = false) -> void:
 	if miss:

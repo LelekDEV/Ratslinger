@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://2on6pkejauvo"]
+[gd_scene format=3 uid="uid://2on6pkejauvo"]
 
 [ext_resource type="Script" uid="uid://cb7nt15q0i2lx" path="res://scripts/accuracy_bar.gd" id="1_lfime"]
 [ext_resource type="Texture2D" uid="uid://b2dlbk050xl8v" path="res://graphics/ui/accuracy_bar.png" id="1_nc87v"]
@@ -11,14 +11,14 @@ shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/is_visible = false
 shader_parameter/thickness = 1.0
 
-[node name="AccuracyBar" type="Node2D" groups=["accuracy_bar"]]
+[node name="AccuracyBar" type="Node2D" unique_id=1594001584 groups=["accuracy_bar"]]
 script = ExtResource("1_lfime")
 
-[node name="BarSprite" type="Sprite2D" parent="."]
+[node name="BarSprite" type="Sprite2D" parent="." unique_id=2112649743]
 position = Vector2(-42.5, 17.5)
 texture = ExtResource("1_nc87v")
 
-[node name="CursorSprite" type="Sprite2D" parent="."]
+[node name="CursorSprite" type="Sprite2D" parent="." unique_id=1782413900]
 material = SubResource("ShaderMaterial_jpu5p")
 position = Vector2(-85, 29.5)
 texture = ExtResource("2_tdin3")

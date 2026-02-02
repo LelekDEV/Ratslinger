@@ -12,8 +12,18 @@ var mission_total: int = 5
 var mission_killed: int = 0
 var is_mission_active: bool = false
 
+var scale_level: int = 0
+
 func _ready() -> void:
 	game = get_tree().get_first_node_in_group("game")
+
+func _physics_process(_delta: float) -> void:
+	if Input.is_action_just_pressed("scale_in"):
+		scale_level = scale_level + 1
+		SignalBus.scale_changed.emit()
+	elif Input.is_action_just_pressed("scale_out"):
+		scale_level = max(scale_level - 1, 0)
+		SignalBus.scale_changed.emit()
 
 func roll_mission() -> void:
 	var discluded_id: Array = [Enemy.ID.COW]

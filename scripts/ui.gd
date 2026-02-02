@@ -16,12 +16,17 @@ class_name UI
 @onready var animation: AnimationHandler = $AnimationHandler
 
 var scale_factor: float = 1
+var scale_float: float
+
+var is_combat_hud_on: bool = true
 
 var popup_tween: Tween
 var popup_value: float = 0
 
 func _ready() -> void:
 	SignalBus.player_coin_collect.connect(update_coin_count)
+	
+	SignalBus.scale_changed.connect(update_scale)
 	
 	Dialogic.timeline_started.connect(start_dialogue)
 	Dialogic.timeline_ended.connect(end_dialogue)
@@ -32,15 +37,7 @@ func _ready() -> void:
 			animation.play("mission_redeem")
 	)
 	
-	hearts.scale = Vector2i.ONE * 4 * scale_factor
-	hearts.global_position = Vector2i.ZERO
-	
-	location_popup.scale = Vector2i.ONE * 4
-	
-	accuracy_bar.scale = Vector2i.ONE * 4
-	
-	bullet_bar.scale = Vector2i.ONE * 4
-	bullet_bar.global_position.y = 140 + 6 * 4
+	update_scale()
 	
 	show_location_popup()
 	update_coin_count()
@@ -56,7 +53,29 @@ func _physics_process(_delta: float) -> void:
 	location_popup.self_modulate.a = sin(popup_value * PI)
 	
 	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
-	bullet_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85 * 4 - 86
+	bullet_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85 * scale_float - 86
+	
+	margin_container.set_deferred("size", get_viewport().get_visible_rect().size / margin_container.scale)
+	margin_container.set_deferred("position", Vector2.ZERO)
+
+func update_scale() -> void:
+	scale_float = (Global.scale_level + 4) * scale_factor
+	var scale_vector: Vector2 = Vector2i.ONE * scale_float
+	
+	hearts.scale = scale_vector
+	hearts.global_position = Vector2i.ZERO
+	
+	location_popup.scale = scale_vector
+	
+	accuracy_bar.scale = scale_vector
+	accuracy_bar.global_position.y = (-6 if is_combat_hud_on else -46) * scale_float
+	
+	bullet_bar.scale = scale_vector
+	bullet_bar.global_position.y = (35 + 6) * scale_float
+	
+	margin_container.scale = scale_vector / 4
+	
+	crosshair.origin_scale = scale_float
 
 func start_dialogue() -> void:
 	Global.block_movement = true
@@ -79,18 +98,20 @@ func end_dialogue() -> void:
 	animation.play("end_dialogue")
 
 func toggle_combat_hud(on: bool) -> void:
+	is_combat_hud_on = on
+	
 	accuracy_bar.anim_tween = create_tween() \
 		.set_ease(Tween.EASE_OUT if on else Tween.EASE_IN) \
 		.set_trans(Tween.TRANS_BACK)
 	
-	accuracy_bar.anim_tween.tween_property(accuracy_bar, "position:y", (-6 if on else -46) * 4, 0.5)
+	accuracy_bar.anim_tween.tween_property(accuracy_bar, "position:y", (-6 if on else -46) * scale_float, 0.5)
 	
 	for slot: BulletBarSlot in bullet_bar.container.get_children():
 		slot.anim_tween = create_tween() \
 			.set_ease(Tween.EASE_OUT if on else Tween.EASE_IN) \
 			.set_trans(Tween.TRANS_CUBIC)
 		
-		slot.anim_tween.tween_property(slot, "position:y", (0 if on else -40) * 4, 0.5)
+		slot.anim_tween.tween_property(slot, "position:y", (0 if on else -40) * scale_float, 0.5)
 		
 		await get_tree().create_timer(0.05).timeout
 

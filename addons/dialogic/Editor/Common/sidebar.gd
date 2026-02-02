@@ -504,7 +504,10 @@ func _on_search_text_submitted(_new_text: String) -> void:
 #region CONTENT LIST
 
 func update_content_list() -> void:
-	var current_resource: Resource = editors_manager.get_current_editor().current_resource
+	var current_editor = editors_manager.get_current_editor()
+	var current_resource: Resource = null
+	if current_editor:
+		current_resource = editors_manager.get_current_editor().current_resource
 	if not current_resource is DialogicTimeline:
 		%ContentListSection.hide()
 		return

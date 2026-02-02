@@ -36,6 +36,12 @@ func _process(_delta: float) -> void:
 		save_on_exit = false
 		
 		print("ctrl + f1 pressed: save data will be wiped on next project debug")
+	
+	if Input.is_action_just_pressed("exit"):
+		if save_on_exit:
+			save_game()
+		
+		get_tree().quit()
 
 func save_game() -> void:
 	var file: FileAccess = FileAccess.open("user://savegame.data", FileAccess.WRITE)
