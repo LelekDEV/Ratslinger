@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bv717gj3krens"]
+[gd_scene format=3 uid="uid://bv717gj3krens"]
 
 [ext_resource type="Texture2D" uid="uid://dhjnuei0uagtn" path="res://graphics/fx/chomp.png" id="1_h5u0d"]
 
@@ -59,22 +59,6 @@ animations = [{
 "speed": 18.0
 }]
 
-[sub_resource type="Animation" id="Animation_h5u0d"]
-resource_name = "chomp"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_bh6xg"]
 length = 0.001
 tracks/0/type = "value"
@@ -90,21 +74,49 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_h5u0d"]
+resource_name = "chomp"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bmqji"]
 _data = {
 &"RESET": SubResource("Animation_bh6xg"),
 &"chomp": SubResource("Animation_h5u0d")
 }
 
-[node name="ChompFX" type="AnimatedSprite2D"]
+[node name="ChompFX" type="AnimatedSprite2D" unique_id=588783518]
 sprite_frames = SubResource("SpriteFrames_n4c2h")
 animation = &"chomp"
 autoplay = "chomp"
 frame = 6
 frame_progress = 1.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_bmqji")
-}
-autoplay = "chomp"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=92215027]
+libraries/ = SubResource("AnimationLibrary_bmqji")
+autoplay = &"chomp"

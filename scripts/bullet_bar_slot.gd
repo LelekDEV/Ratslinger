@@ -13,6 +13,10 @@ func _physics_process(delta: float) -> void:
 		anim = fmod(anim + 10 * delta, 11)
 		sprite.frame_coords.x = int(anim)
 	
+	elif sprite.frame_coords.y == 3:
+		anim = fmod(anim + 10 * delta, 3)
+		sprite.frame_coords.x = int(anim)
+	
 	elif sprite.frame_coords.y == 4:
 		anim = fmod(anim + 10 * delta, 6)
 		sprite.frame_coords.x = int(anim)

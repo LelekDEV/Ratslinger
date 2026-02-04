@@ -24,7 +24,6 @@ var enemies_to_spawn: int = enemies_total
 var enemies_killed: int = 0
 
 var is_wave_active: bool = false
-var waves_cleared: int = 0
 
 func _ready() -> void:
 	setup_signals()
@@ -44,18 +43,18 @@ func start_wave() -> void:
 	
 	ui.animation.play("wave_start")
 	
-	enemies_total = 5 + waves_cleared
+	enemies_total = 5 + Global.waves_cleared
 	enemies_to_spawn = enemies_total
 	enemies_killed = 0
 	
 	spawn_enemy()
 	ui.update_enemy_count(0, enemies_total)
 	
-	enemy_spawn_timer.wait_time = max(round((8 - log(waves_cleared + 1)) * 100) / 100, 0.5)
+	enemy_spawn_timer.wait_time = max(round((8 - log(Global.waves_cleared + 1)) * 100) / 100, 0.5)
 	enemy_spawn_timer.start()
 	
 	print("Wave %s started, enemy count: %s, spawn inteval: %s" % [
-		waves_cleared + 1, 
+		Global.waves_cleared + 1, 
 		enemies_total,
 		enemy_spawn_timer.wait_time
 	])
@@ -73,7 +72,7 @@ func end_wave() -> void:
 	
 	is_wave_active = false
 	wave_start_interaction_area.visible = true
-	waves_cleared += 1
+	Global.waves_cleared += 1
 
 func setup_signals() -> void:
 	SignalBus.player_shoot.connect(camera.shake)

@@ -1,0 +1,60 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cqnnxp28u37a8"]
+
+[ext_resource type="Shader" uid="uid://dk45yr1hnxit0" path="res://shaders/fire.gdshader" id="1_kk71a"]
+
+[sub_resource type="Gradient" id="Gradient_2hs0m"]
+offsets = PackedFloat32Array(0.34745762, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1jxqw"]
+gradient = SubResource("Gradient_2hs0m")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.53296703, 0.8021978)
+fill_to = Vector2(0.8956044, 0.104395606)
+
+[sub_resource type="Gradient" id="Gradient_dw050"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b26j0"]
+gradient = SubResource("Gradient_dw050")
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_n7ghd"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nvl01"]
+gradient = SubResource("Gradient_n7ghd")
+width = 32
+height = 32
+fill_from = Vector2(0, 0.8504273)
+fill_to = Vector2(0, 0.4957265)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ivps1"]
+frequency = 0.1244
+offset = Vector3(0, -208.96, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_urp6f"]
+width = 32
+height = 32
+noise = SubResource("FastNoiseLite_ivps1")
+
+[resource]
+shader = ExtResource("1_kk71a")
+shader_parameter/debug = false
+shader_parameter/pallet_size = 3
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_urp6f")
+shader_parameter/grad_tex = SubResource("GradientTexture2D_nvl01")
+shader_parameter/frame_grad_1 = SubResource("GradientTexture2D_1jxqw")
+shader_parameter/frame_grad_2 = SubResource("GradientTexture2D_b26j0")
+shader_parameter/mask_color = Color(1, 1, 1, 1)
+shader_parameter/bg_color = Color(0.08235294, 0.039215688, 0.12156863, 0)
+shader_parameter/flame_0 = Color(0.95686275, 0.7529412, 0.2784314, 1)
+shader_parameter/flame_1 = Color(0.95686275, 0.40784314, 0.043137256, 1)
+shader_parameter/flame_2 = Color(0.7058824, 0.13725491, 0.07450981, 1)
+shader_parameter/flame_3 = Color(0, 0, 0, 1)
+shader_parameter/flame_4 = Color(0, 0, 0, 1)
+shader_parameter/scroll_speed = 15.0
+shader_parameter/thresh_f0 = 0.1
+shader_parameter/thresh_f1 = 0.17
+shader_parameter/thresh_f2 = 0.26
+shader_parameter/thresh_f3 = 0.0
+shader_parameter/thresh_f4 = 0.0

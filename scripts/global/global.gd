@@ -12,6 +12,8 @@ var mission_total: int = 5
 var mission_killed: int = 0
 var is_mission_active: bool = false
 
+var waves_cleared: int = 0
+
 var scale_level: int = 0
 
 func _ready() -> void:

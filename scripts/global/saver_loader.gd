@@ -4,7 +4,7 @@ extends Node
 # In order to get data from the root node start with game:
 var gloabal_save_paths: Array = [
 	^"game:player:global_position",
-	^"game:waves_cleared",
+	^"waves_cleared",
 	^"coins",
 	^"mission_target",
 	^"mission_total",

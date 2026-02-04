@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
 [ext_resource type="PackedScene" uid="uid://cbkx546wmeje8" path="res://scenes/shop_layer.tscn" id="2_836xp"]
 [ext_resource type="Script" uid="uid://cvi745bdmkf4h" path="res://scripts/ui.gd" id="2_ijxjl"]
+[ext_resource type="Script" uid="uid://bafvyxexlje1q" path="res://scripts/weather_layer.gd" id="3_4qk7b"]
 [ext_resource type="PackedScene" uid="uid://djd1q01nwytri" path="res://scenes/ui_heart.tscn" id="4_55u7g"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="4_836xp"]
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
@@ -23,9 +24,13 @@
 [ext_resource type="Script" uid="uid://cp448dgxo5kaw" path="res://scripts/animation_handler.gd" id="12_dawlq"]
 [ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/environment/fence.png" id="12_l77qo"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
+[ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
 [ext_resource type="Texture2D" uid="uid://q16ufe8f7bow" path="res://graphics/environment/buildings/rathaus.png" id="18_jrnar"]
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4qk7b"]
+viewport_path = NodePath("Weather/SubViewport")
 
 [sub_resource type="Theme" id="Theme_s3lrj"]
 default_font = ExtResource("4_836xp")
@@ -372,6 +377,26 @@ script = ExtResource("1_o8yes")
 [node name="ShopLayer" parent="." unique_id=1318422254 instance=ExtResource("2_836xp")]
 process_mode = 3
 visible = false
+
+[node name="Weather" type="CanvasLayer" parent="." unique_id=1359549158]
+layer = 0
+scale = Vector2(4, 4)
+transform = Transform2D(4, 0, 0, 4, 0, 0)
+script = ExtResource("3_4qk7b")
+
+[node name="SubViewport" type="SubViewport" parent="Weather" unique_id=440391338]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(288, 162)
+
+[node name="RainParticles" parent="Weather/SubViewport" unique_id=1825388257 instance=ExtResource("14_psga7")]
+position = Vector2(0, -100)
+
+[node name="TextureRect" type="TextureRect" parent="Weather" unique_id=1737692972]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_4qk7b")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1372504453 groups=["ui"]]
 layer = 0

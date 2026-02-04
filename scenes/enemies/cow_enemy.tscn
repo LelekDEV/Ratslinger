@@ -1,9 +1,10 @@
-[gd_scene load_steps=41 format=3 uid="uid://x4kte2qp8tv"]
+[gd_scene format=3 uid="uid://x4kte2qp8tv"]
 
 [ext_resource type="Texture2D" uid="uid://bcjxmy3h3daal" path="res://graphics/characters/enemies/cow/cow.png" id="1_fgglk"]
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_ie652"]
 [ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_47cvi"]
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/enemy.gdshader" id="2_57r5i"]
+[ext_resource type="PackedScene" uid="uid://dimjd58qns2ih" path="res://scenes/fx/fire_fx.tscn" id="5_1nh28"]
 
 [sub_resource type="Curve" id="Curve_1nh28"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
@@ -256,14 +257,14 @@ size = Vector2(9, 20)
 [sub_resource type="CircleShape2D" id="CircleShape2D_57r5i"]
 radius = 7.0
 
-[node name="CowEnemy" type="CharacterBody2D" groups=["enemy"]]
+[node name="CowEnemy" type="CharacterBody2D" unique_id=358544862 groups=["enemy"]]
 collision_mask = 4
 script = ExtResource("1_ie652")
 damage = 2.0
 id = 1
 ai = 1
 
-[node name="PoisonParticles" type="CPUParticles2D" parent="."]
+[node name="PoisonParticles" type="CPUParticles2D" parent="." unique_id=1844486468]
 z_index = 1
 position = Vector2(0, 6)
 emitting = false
@@ -282,39 +283,48 @@ angular_velocity_max = -360.0
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_1nh28")
 
-[node name="BaseSprite" type="AnimatedSprite2D" parent="."]
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=753240947]
 material = SubResource("ShaderMaterial_67sd0")
 sprite_frames = SubResource("SpriteFrames_gfyqs")
 animation = &"kick"
 frame = 8
 frame_progress = 1.0
 
-[node name="CollisionShapeBody" type="CollisionShape2D" parent="."]
+[node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("5_1nh28")]
+visible = false
+position = Vector2(-2, 0)
+
+[node name="CollisionShapeBody" type="CollisionShape2D" parent="." unique_id=456362846]
 position = Vector2(0, 6)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ie652")
 
-[node name="KickArea" type="Area2D" parent="."]
+[node name="KickArea" type="Area2D" parent="." unique_id=833706594]
 position = Vector2(-11, 10)
 
-[node name="CollisionShapeKick" type="CollisionShape2D" parent="KickArea"]
+[node name="CollisionShapeKick" type="CollisionShape2D" parent="KickArea" unique_id=1254505513]
 position = Vector2(-0.5, -3)
 shape = SubResource("RectangleShape2D_cairq")
 
-[node name="HeadshotArea" type="Area2D" parent="." groups=["headshot_area"]]
+[node name="HeadshotArea" type="Area2D" parent="." unique_id=510311204 groups=["headshot_area"]]
 
-[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea"]
+[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea" unique_id=28626784]
 position = Vector2(12, -3)
 shape = SubResource("CircleShape2D_57r5i")
 
-[node name="KickDelay" type="Timer" parent="."]
+[node name="KickDelay" type="Timer" parent="." unique_id=1627823188]
 wait_time = 0.5
 one_shot = true
 
-[node name="PoisonTick" type="Timer" parent="."]
+[node name="PoisonTick" type="Timer" parent="." unique_id=288083698]
 wait_time = 0.75
+one_shot = true
+
+[node name="FireTick" type="Timer" parent="." unique_id=1698206588]
+wait_time = 0.5
 one_shot = true
 
 [connection signal="body_entered" from="KickArea" to="." method="_on_kick_area_body_entered"]
 [connection signal="timeout" from="KickDelay" to="." method="_on_kick_delay_timeout"]
 [connection signal="timeout" from="PoisonTick" to="." method="_on_poison_tick_timeout"]
+[connection signal="timeout" from="FireTick" to="." method="_on_fire_tick_timeout"]

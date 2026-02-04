@@ -1,9 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://cg5tfv8axllw0"]
+[gd_scene format=3 uid="uid://cg5tfv8axllw0"]
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_i1qjg"]
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/enemy.gdshader" id="1_wtnrl"]
 [ext_resource type="Texture2D" uid="uid://do7eubc5sfptt" path="res://graphics/characters/enemies/snake/segments.png" id="2_cndbj"]
 [ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_nekb2"]
+[ext_resource type="PackedScene" uid="uid://dimjd58qns2ih" path="res://scenes/fx/fire_fx.tscn" id="5_3jjv2"]
+[ext_resource type="Shader" uid="uid://dk45yr1hnxit0" path="res://shaders/fire.gdshader" id="6_pry0t"]
+[ext_resource type="Script" uid="uid://cwe4csi6cjc7t" path="res://scripts/lock_rotation.gd" id="6_t8bcc"]
 
 [sub_resource type="Curve" id="Curve_jx7bc"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
@@ -79,13 +82,79 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_djvip"]
+offsets = PackedFloat32Array(0.34745762, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fjb67"]
+gradient = SubResource("Gradient_djvip")
+width = 24
+height = 24
+fill = 1
+fill_from = Vector2(0.53296703, 0.8021978)
+fill_to = Vector2(0.8956044, 0.104395606)
+
+[sub_resource type="Gradient" id="Gradient_n8b5a"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_71s1u"]
+gradient = SubResource("Gradient_n8b5a")
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_6sapb"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3jqav"]
+gradient = SubResource("Gradient_6sapb")
+width = 24
+height = 24
+fill_from = Vector2(0, 0.8504273)
+fill_to = Vector2(0, 0.4957265)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ju1o3"]
+frequency = 0.1244
+offset = Vector3(0, -208.96, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dyasq"]
+width = 24
+height = 24
+noise = SubResource("FastNoiseLite_ju1o3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8p1el"]
+shader = ExtResource("6_pry0t")
+shader_parameter/debug = false
+shader_parameter/pallet_size = 3
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_dyasq")
+shader_parameter/grad_tex = SubResource("GradientTexture2D_3jqav")
+shader_parameter/frame_grad_1 = SubResource("GradientTexture2D_fjb67")
+shader_parameter/frame_grad_2 = SubResource("GradientTexture2D_71s1u")
+shader_parameter/mask_color = Color(1, 1, 1, 1)
+shader_parameter/bg_color = Color(0.08235294, 0.039215688, 0.12156863, 0)
+shader_parameter/flame_0 = Color(0.95686275, 0.7529412, 0.2784314, 1)
+shader_parameter/flame_1 = Color(0.95686275, 0.40784314, 0.043137256, 1)
+shader_parameter/flame_2 = Color(0.7058824, 0.13725491, 0.07450981, 1)
+shader_parameter/flame_3 = Color(0, 0, 0, 1)
+shader_parameter/flame_4 = Color(0, 0, 0, 1)
+shader_parameter/scroll_speed = 15.0
+shader_parameter/thresh_f0 = 0.1
+shader_parameter/thresh_f1 = 0.17
+shader_parameter/thresh_f2 = 0.26
+shader_parameter/thresh_f3 = 0.0
+shader_parameter/thresh_f4 = 0.0
+
+[sub_resource type="Gradient" id="Gradient_w6i6t"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nvngq"]
+gradient = SubResource("Gradient_w6i6t")
+width = 24
+height = 24
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i1qjg"]
 size = Vector2(17, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nekb2"]
 size = Vector2(20, 14)
 
-[node name="SnakeEnemySegment" type="CharacterBody2D" groups=["enemy"]]
+[node name="SnakeEnemySegment" type="CharacterBody2D" unique_id=2106664780 groups=["enemy"]]
 collision_mask = 4
 script = ExtResource("1_i1qjg")
 speed = 150.0
@@ -94,7 +163,7 @@ ai = 2
 cooldown_time = 0.0
 shoot_count = 0
 
-[node name="PoisonParticles" type="CPUParticles2D" parent="."]
+[node name="PoisonParticles" type="CPUParticles2D" parent="." unique_id=2015414767]
 z_index = 1
 position = Vector2(0, 6)
 emitting = false
@@ -113,32 +182,43 @@ angular_velocity_max = -360.0
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_jx7bc")
 
-[node name="BaseSprite" type="AnimatedSprite2D" parent="."]
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=598043648]
 material = SubResource("ShaderMaterial_cndbj")
 sprite_frames = SubResource("SpriteFrames_i1qjg")
-animation = &"tail"
-frame_progress = 0.07610207
+animation = &"body"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("5_3jjv2")]
+visible = false
+material = SubResource("ShaderMaterial_8p1el")
+position = Vector2(-2, -6.5)
+texture = SubResource("GradientTexture2D_nvngq")
+script = ExtResource("6_t8bcc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1622674501]
 position = Vector2(-1.5, 0)
 shape = SubResource("RectangleShape2D_i1qjg")
 
-[node name="HurtArea" type="Area2D" parent="."]
+[node name="HurtArea" type="Area2D" parent="." unique_id=374084615]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=1023454008]
 position = Vector2(-1.5, 0)
 shape = SubResource("RectangleShape2D_i1qjg")
 
-[node name="HeadshotArea" type="Area2D" parent="." groups=["headshot_area"]]
+[node name="HeadshotArea" type="Area2D" parent="." unique_id=924194052 groups=["headshot_area"]]
 
-[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea"]
+[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea" unique_id=628580713]
 position = Vector2(-1.5, 0)
 shape = SubResource("RectangleShape2D_nekb2")
 disabled = true
 
-[node name="PoisonTick" type="Timer" parent="."]
+[node name="PoisonTick" type="Timer" parent="." unique_id=910821209]
 wait_time = 0.75
+one_shot = true
+
+[node name="FireTick" type="Timer" parent="." unique_id=1888768619]
+wait_time = 0.5
 one_shot = true
 
 [connection signal="body_entered" from="HurtArea" to="." method="_on_hurt_area_body_entered"]
 [connection signal="timeout" from="PoisonTick" to="." method="_on_poison_tick_timeout"]
+[connection signal="timeout" from="FireTick" to="." method="_on_fire_tick_timeout"]

@@ -1,7 +1,7 @@
 extends Area2D
 class_name Projectile
 
-@onready var ChompFX: PackedScene = preload("res://scenes/chomp_fx.tscn")
+@onready var ChompFX: PackedScene = preload("res://scenes/fx/chomp_fx.tscn")
 
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
@@ -55,6 +55,9 @@ func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
 	
 	elif type == Type.POISON:
 		enemy.apply_poison()
+	
+	elif type == Type.FIRE:
+		enemy.apply_fire()
 	
 	queue_free()
 

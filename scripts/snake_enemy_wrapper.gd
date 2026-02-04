@@ -52,6 +52,10 @@ func _physics_process(delta: float) -> void:
 	if true in statements:
 		attack()
 
+func apply_offsets(offset: Vector2) -> void:
+	for segment in get_children():
+		segment.get_node("FireFX").position = offset
+
 func attack() -> void:
 	var half_screen: Vector2 = get_viewport_rect().size / 2 / camera.zoom.x
 	var dir_roll = randi_range(0, 3)
@@ -66,10 +70,12 @@ func attack() -> void:
 			global_position.x = camera.global_position.x + half_screen.x + attack_margin
 			global_rotation = 0
 			direction = Vector2.LEFT
+			apply_offsets(Vector2(-2, -6.5))
 		else:
 			global_position.x = camera.global_position.x - half_screen.x - attack_margin
 			global_rotation = PI
 			direction = Vector2.RIGHT
+			apply_offsets(Vector2(-2, 6.5))
 	
 	else:
 		global_position.x = player.global_position.x
@@ -81,10 +87,12 @@ func attack() -> void:
 			global_position.y = camera.global_position.y + half_screen.y + attack_margin
 			global_rotation = PI / 2
 			direction = Vector2.UP
+			apply_offsets(Vector2(-10, 0))
 		else:
 			global_position.y = camera.global_position.y - half_screen.y - attack_margin
 			global_rotation = -PI / 2
 			direction = Vector2.DOWN
+			apply_offsets(Vector2(3, 0))
 	
 	var attack_highlight := AttackHighlight.instantiate()
 		

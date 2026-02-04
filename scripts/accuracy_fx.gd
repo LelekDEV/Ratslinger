@@ -4,7 +4,7 @@ class_name AccuracyFX
 var type: int = 2
 
 static func instantiate() -> AccuracyFX:
-	return preload("res://scenes/accuracy_fx.tscn").instantiate() as AccuracyFX
+	return preload("res://scenes/fx/accuracy_fx.tscn").instantiate() as AccuracyFX
 
 var anim_tween: Tween
 

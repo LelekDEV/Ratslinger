@@ -15,6 +15,8 @@ class_name Player
 @onready var hit_cooldown: Timer = $HitCooldown
 @onready var reload_timer: Timer = $ReloadTimer
 
+@onready var local_fx: Node2D = $LocalFX
+
 @export var gate: StaticBody2D
 
 var max_health: float = 8
@@ -35,6 +37,9 @@ var anim: float = 0
 enum Locations {ARENA, TOWN}
 var location: Locations = Locations.ARENA
 var last_location: Locations = location
+
+func _ready() -> void:
+	base_sprite.spawn_node = local_fx
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
@@ -126,7 +131,9 @@ func handle_movement() -> void:
 	
 	legs_sprite.play("walk" if input.length() > 0 else "idle")
 	
-	if get_global_mouse_position().x > global_position.x:
+	var flip: bool = get_global_mouse_position().x > global_position.x
+	
+	if flip:
 		gun_sprite.flip_v = false
 		base_sprite.flip_h = false
 		legs_sprite.flip_h = false
@@ -141,6 +148,11 @@ func handle_movement() -> void:
 		gun_sprite.position.y = 3.5
 	
 	gun_sprite.global_rotation = get_angle_to(get_global_mouse_position())
+	
+	for fx in local_fx.get_children():
+		if fx.has_meta("flippable_pos"):
+			fx.position = (fx.get_meta("flippable_pos") - floor(Vector2(37, 32) / 2)) * Vector2(1 if flip else -1, 1)
+			fx.visible = true
 	
 	velocity = lerp(velocity, input * speed, acceleration)
 

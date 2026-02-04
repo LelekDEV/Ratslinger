@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://gyh7j0jqrav6"]
+[gd_scene format=3 uid="uid://gyh7j0jqrav6"]
 
 [ext_resource type="Texture2D" uid="uid://2dk8ecpx87lv" path="res://graphics/characters/player/base.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dxs0qhqyyc1af" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://wl55v8ki4emm" path="res://graphics/characters/player/gun.png" id="2_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://g408c8ffeg8k" path="res://graphics/characters/player/legs.png" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/rain_surface.gd" id="4_qlg0r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -114,40 +115,43 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
 size = Vector2(25, 21)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=1248628092]
 collision_mask = 2
 script = ExtResource("1_g2els")
 
-[node name="GunSprite" type="Sprite2D" parent="."]
+[node name="GunSprite" type="Sprite2D" parent="." unique_id=925967007]
 position = Vector2(0.5, 1.5)
 texture = ExtResource("2_qhqgy")
 offset = Vector2(11.5, 0)
 
-[node name="BaseSprite" type="AnimatedSprite2D" parent="."]
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1353984724]
 position = Vector2(0.5, -2)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.817507
+script = ExtResource("4_qlg0r")
 
-[node name="LegsSprite" type="AnimatedSprite2D" parent="."]
+[node name="LegsSprite" type="AnimatedSprite2D" parent="." unique_id=648326409]
 position = Vector2(0.5, -2)
 sprite_frames = SubResource("SpriteFrames_tuyoq")
 animation = &"walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="LocalFX" type="Node2D" parent="." unique_id=1812678735]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1864672048]
 position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_dqkch")
 
-[node name="ShootCooldown" type="Timer" parent="."]
+[node name="ShootCooldown" type="Timer" parent="." unique_id=1869936146]
 wait_time = 0.5
 one_shot = true
 
-[node name="HitCooldown" type="Timer" parent="."]
+[node name="HitCooldown" type="Timer" parent="." unique_id=1368607751]
 wait_time = 0.25
 one_shot = true
 
-[node name="ReloadTimer" type="Timer" parent="."]
+[node name="ReloadTimer" type="Timer" parent="." unique_id=597588891]
 wait_time = 0.2
 one_shot = true
 

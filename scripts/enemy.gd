@@ -13,6 +13,9 @@ class_name Enemy
 @onready var poison_tick: Timer = $PoisonTick
 @onready var poison_particles: CPUParticles2D = $PoisonParticles
 
+@onready var fire_tick: Timer = $FireTick
+@onready var fire_fx: Sprite2D = $FireFX
+
 @export var speed: float = 30
 var acceleration: float = 0.05
 var direction: Vector2
@@ -21,6 +24,7 @@ var direction: Vector2
 var health: float
 
 var poison_value: int = 0
+var fire_value: int = 0
 
 @export var damage: float = 1
 var headshot_mult: float = 2
@@ -177,6 +181,12 @@ func apply_poison() -> void:
 	
 	poison_tick.start()
 
+func apply_fire() -> void:
+	fire_value = 8
+	fire_fx.visible = true
+	
+	fire_tick.start()
+
 func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false, ignore_poison: bool = false) -> void:
 	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 	
@@ -279,3 +289,12 @@ func _on_poison_tick_timeout() -> void:
 	else:
 		poison_particles.emitting = false
 		sprite.material.set_shader_parameter("strip_active", false)
+
+func _on_fire_tick_timeout() -> void:
+	take_damage(0.25, global_position, false, true)
+	fire_value -= 1
+	
+	if fire_value >= 1:
+		fire_tick.start()
+	else:
+		fire_fx.visible = false

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dimjd58qns2ih"]
+
+[ext_resource type="Material" uid="uid://cqnnxp28u37a8" path="res://data/fire_material.tres" id="1_yuc24"]
+
+[sub_resource type="Gradient" id="Gradient_ijxlo"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ollb3"]
+gradient = SubResource("Gradient_ijxlo")
+width = 32
+height = 32
+
+[node name="FireFX" type="Sprite2D" unique_id=452394200]
+material = ExtResource("1_yuc24")
+texture = SubResource("GradientTexture2D_ollb3")

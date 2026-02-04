@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://b74p6grnvdpcy"]
+[gd_scene format=3 uid="uid://b74p6grnvdpcy"]
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_4ra3w"]
 [ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_k7pnw"]
 [ext_resource type="Texture2D" uid="uid://buc76ufd0sp2s" path="res://graphics/characters/enemies/fox/gun.png" id="2_y6uqw"]
 [ext_resource type="Texture2D" uid="uid://cugo8kcyf1q4f" path="res://graphics/characters/enemies/fox/base.png" id="3_c4w8v"]
 [ext_resource type="Material" uid="uid://dlas80bb87afk" path="res://data/flash_shader_material.tres" id="4_k7pnw"]
+[ext_resource type="PackedScene" uid="uid://dimjd58qns2ih" path="res://scenes/fx/fire_fx.tscn" id="6_ow15s"]
 
 [sub_resource type="Curve" id="Curve_ow15s"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
@@ -57,13 +58,13 @@ height = 20.7978
 [sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
 radius = 8.0
 
-[node name="FoxEnemy" type="CharacterBody2D" groups=["enemy"]]
+[node name="FoxEnemy" type="CharacterBody2D" unique_id=1969713233 groups=["enemy"]]
 collision_mask = 4
 script = ExtResource("1_4ra3w")
 max_health = 6.0
 projectile_name = "fox"
 
-[node name="PoisonParticles" type="CPUParticles2D" parent="."]
+[node name="PoisonParticles" type="CPUParticles2D" parent="." unique_id=278218275]
 z_index = 1
 position = Vector2(0, 6)
 emitting = false
@@ -82,42 +83,50 @@ angular_velocity_max = -360.0
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_ow15s")
 
-[node name="GunSprite" type="Sprite2D" parent="."]
+[node name="GunSprite" type="Sprite2D" parent="." unique_id=467258984]
 position = Vector2(0, 3.5)
 texture = ExtResource("2_y6uqw")
 offset = Vector2(8.5, 0)
 
-[node name="BaseSprite" type="AnimatedSprite2D" parent="."]
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1976901040]
 material = ExtResource("4_k7pnw")
 sprite_frames = SubResource("SpriteFrames_7xaro")
 animation = &"idle"
 
-[node name="CollisionShapeBody" type="CollisionShape2D" parent="."]
+[node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("6_ow15s")]
+visible = false
+
+[node name="CollisionShapeBody" type="CollisionShape2D" parent="." unique_id=1502973983]
 position = Vector2(0, 6)
 scale = Vector2(0.770188, 0.865475)
 shape = SubResource("CapsuleShape2D_4ra3w")
 
-[node name="HeadshotArea" type="Area2D" parent="." groups=["headshot_area"]]
+[node name="HeadshotArea" type="Area2D" parent="." unique_id=1149957343 groups=["headshot_area"]]
 
-[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea"]
+[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea" unique_id=192403888]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_5uy6h")
 
-[node name="WalkExtendTimer" type="Timer" parent="."]
+[node name="WalkExtendTimer" type="Timer" parent="." unique_id=773310746]
 wait_time = 0.1
 one_shot = true
 
-[node name="ShootNotionTimer" type="Timer" parent="."]
+[node name="ShootNotionTimer" type="Timer" parent="." unique_id=1214619459]
 wait_time = 0.5
 one_shot = true
 
-[node name="ShootCooldown" type="Timer" parent="."]
+[node name="ShootCooldown" type="Timer" parent="." unique_id=1183267674]
 wait_time = 1.5
 one_shot = true
 
-[node name="PoisonTick" type="Timer" parent="."]
+[node name="PoisonTick" type="Timer" parent="." unique_id=458484820]
 wait_time = 0.75
+one_shot = true
+
+[node name="FireTick" type="Timer" parent="." unique_id=1372577939]
+wait_time = 0.5
 one_shot = true
 
 [connection signal="timeout" from="ShootNotionTimer" to="." method="_on_shoot_notion_timer_timeout"]
 [connection signal="timeout" from="PoisonTick" to="." method="_on_poison_tick_timeout"]
+[connection signal="timeout" from="FireTick" to="." method="_on_fire_tick_timeout"]

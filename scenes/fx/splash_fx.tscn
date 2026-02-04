@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cf04d76oqf6mw"]
+
+[ext_resource type="Texture2D" uid="uid://t5qol1enqtgp" path="res://graphics/environment/weather/rain_splash.png" id="1_utoga"]
+[ext_resource type="Script" uid="uid://d177tss22yqlq" path="res://scripts/basic_fx.gd" id="2_qdlfi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2tl4"]
+atlas = ExtResource("1_utoga")
+region = Rect2(10, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tolja"]
+atlas = ExtResource("1_utoga")
+region = Rect2(5, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lp665"]
+atlas = ExtResource("1_utoga")
+region = Rect2(0, 0, 5, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6n4du"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2tl4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tolja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lp665")
+}],
+"loop": false,
+"name": &"default",
+"speed": 18.0
+}]
+
+[node name="SplashFX" type="AnimatedSprite2D" unique_id=508268601]
+sprite_frames = SubResource("SpriteFrames_6n4du")
+autoplay = "default"
+frame = 2
+frame_progress = 1.0
+script = ExtResource("2_qdlfi")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

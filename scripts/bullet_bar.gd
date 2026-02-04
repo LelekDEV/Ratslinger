@@ -13,11 +13,9 @@ var next_special: Array = []
 func _ready() -> void:
 	SignalBus.player_shoot.connect(free_slot)
 	
-	for i in Projectile.Type.size() - 1:
-		next_special.append(Upgrades.stat_1[i])
-	
-	assign_specials(true)
-	update_textures()
+	setup()
+	await SignalBus.game_loaded
+	setup()
 
 func _physics_process(_delta: float) -> void:
 	var i: int = 0
@@ -33,6 +31,15 @@ func _physics_process(_delta: float) -> void:
 		)
 		
 		i += 1
+
+func setup() -> void:
+	next_special.clear()
+	
+	for i in Projectile.Type.size() - 1:
+		next_special.append(Upgrades.stat_1[i])
+	
+	assign_specials(true)
+	update_textures()
 
 func assign_specials(full: bool = false) -> void:
 	var slot_amount = 6 if full else current_slot
