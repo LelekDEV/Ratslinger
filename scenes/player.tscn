@@ -124,13 +124,15 @@ position = Vector2(0.5, 1.5)
 texture = ExtResource("2_qhqgy")
 offset = Vector2(11.5, 0)
 
-[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1353984724]
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1353984724 node_paths=PackedStringArray("spawn_node")]
 position = Vector2(0.5, -2)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.817507
 script = ExtResource("4_qlg0r")
+use_meta = true
+spawn_node = NodePath("../LocalFX")
 
 [node name="LegsSprite" type="AnimatedSprite2D" parent="." unique_id=648326409]
 position = Vector2(0.5, -2)

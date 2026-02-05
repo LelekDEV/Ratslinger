@@ -5,6 +5,7 @@ extends Node2D
 @export var camera: Camera2D
 @export var death_shadow_rect: ColorRect
 @export var ui: CanvasLayer
+@export var weather_layer: CanvasLayer
 
 var line_start_pos: Vector2
 var line_end_pos: Vector2
@@ -34,6 +35,7 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 	
 	death_shadow_rect.visible = true
 	ui.visible = false
+	weather_layer.visible = false
 	
 	var highlight_nodes: Array = [player, from_projectile]
 	
@@ -42,9 +44,12 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 	else:
 		highlight_nodes.append(from_enemy)
 	
-	for node in highlight_nodes:
+	for node: Node in highlight_nodes:
 		if not node:
 			continue
+		
+		if node.has_node("LocalFX"):
+			node.get_node("LocalFX").visible = false
 		
 		node.z_index = death_shadow_rect.z_index + 1
 		

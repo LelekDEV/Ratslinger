@@ -1,28 +1,36 @@
 extends AnimatedSprite2D
+class_name RainSurface
 
 @onready var SplashFX: PackedScene = preload("res://scenes/fx/splash_fx.tscn")
 
 var frame_points: Array
+var surface_size: Vector2
+
+@export var override_anim: String
+@export var use_meta: bool
 
 var spawn_value: float = 0
 var spawn_treshold: float = 0.1
-var spawn_node: Node
+@export var spawn_node: Node
 
 func _draw() -> void:
 	"""for pos in frame_points[frame].top:
 		if flip_h:
-			draw_circle((pos - floor(Vector2(37, 32) / 2)) * Vector2(-1, 1), 0.5, Color.RED)
+			draw_circle((pos - floor(surface_size / 2)) * Vector2(-1, 1), 0.5, Color.RED)
 		else:
-			draw_circle(pos - floor(Vector2(37, 32) / 2), 0.5, Color.RED)
+			draw_circle(pos - floor(surface_size / 2), 0.5, Color.RED)
 	
 	for pos in frame_points[frame].side:
 		if flip_h:
-			draw_circle((pos - floor(Vector2(37, 32) / 2)) * Vector2(-1, 1), 0.5, Color.DARK_TURQUOISE)
+			draw_circle((pos - floor(surface_size / 2)) * Vector2(-1, 1), 0.5, Color.DARK_TURQUOISE)
 		else:
-			draw_circle(pos - floor(Vector2(37, 32) / 2), 0.5, Color.DARK_TURQUOISE)"""
+			draw_circle(pos - floor(surface_size / 2), 0.5, Color.DARK_TURQUOISE)"""
 
 func _ready() -> void:
 	get_all_points()
+	
+	var first_texture = sprite_frames.get_frame_texture(animation, 0)
+	surface_size = Vector2(first_texture.get_width(), first_texture.get_height())
 
 func _physics_process(delta: float) -> void:
 	spawn_value += delta
@@ -37,8 +45,11 @@ func _physics_process(delta: float) -> void:
 		else:
 			pos = frame_points[frame].side[randi_range(0, frame_points[frame].side.size() - 1)]
 		
-		fx.set_meta("flippable_pos", pos)
-		fx.visible = false
+		if use_meta:
+			fx.set_meta("flippable_pos", pos)
+			fx.visible = false
+		else:
+			fx.position = pos - floor(surface_size / 2)
 		
 		spawn_node.add_child(fx)
 		
@@ -46,15 +57,14 @@ func _physics_process(delta: float) -> void:
 		spawn_treshold = randf_range(0.08, 0.1)
 
 func get_all_points() -> void:
-	var frames = sprite_frames
-	var anim = animation
-	var count = frames.get_frame_count(anim)
+	@warning_ignore("incompatible_ternary")
+	var anim: String = override_anim if override_anim else animation
 	
-	for i in range(count):
-		var texture = frames.get_frame_texture(anim, i)
+	for i in range(sprite_frames.get_frame_count(anim)):
+		var texture = sprite_frames.get_frame_texture(anim, i)
 		frame_points.append(get_edges(texture))
 
-func get_edges(texture: Texture2D) -> Dictionary:
+static func get_edges(texture: Texture2D) -> Dictionary:
 	var points: Dictionary = {
 		"top": [], "side": []
 	}

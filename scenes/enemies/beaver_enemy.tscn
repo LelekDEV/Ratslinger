@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_q56ky"]
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/enemy.gdshader" id="3_si8ge"]
 [ext_resource type="PackedScene" uid="uid://dimjd58qns2ih" path="res://scenes/fx/fire_fx.tscn" id="6_sr0mg"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/rain_surface.gd" id="6_stkr1"]
 
 [sub_resource type="Curve" id="Curve_sr0mg"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
@@ -104,13 +105,18 @@ position = Vector2(0, 4)
 texture = ExtResource("2_cd8fp")
 offset = Vector2(8.5, 0)
 
-[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=619792252]
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=619792252 node_paths=PackedStringArray("spawn_node")]
 material = SubResource("ShaderMaterial_q56ky")
 sprite_frames = SubResource("SpriteFrames_q56ky")
 animation = &"idle"
+script = ExtResource("6_stkr1")
+surface_size = Vector2(30, 30)
+spawn_node = NodePath("../LocalFX")
 
 [node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("6_sr0mg")]
 visible = false
+
+[node name="LocalFX" type="Node2D" parent="." unique_id=1381470661]
 
 [node name="CollisionShapeBody" type="CollisionShape2D" parent="." unique_id=1066058122]
 position = Vector2(0, 4)

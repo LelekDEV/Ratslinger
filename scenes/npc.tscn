@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://lno6nmuf2m2w"]
+[gd_scene format=3 uid="uid://lno6nmuf2m2w"]
 
 [ext_resource type="Texture2D" uid="uid://dt216nyh373om" path="res://graphics/characters/npc/kiddo.png" id="1_abqhh"]
 [ext_resource type="Script" uid="uid://hqfvf7ibnt7h" path="res://scripts/npc.gd" id="1_rv78h"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="2_rv78h"]
 [ext_resource type="Texture2D" uid="uid://dvvdqlpp6aonx" path="res://graphics/characters/npc/mayor.png" id="3_7n8xq"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/rain_surface.gd" id="4_4wlns"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wt5dx"]
 atlas = ExtResource("1_abqhh")
@@ -63,25 +64,29 @@ radius = 15.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wlns"]
 radius = 30.0
 
-[node name="NPC" type="StaticBody2D"]
+[node name="NPC" type="StaticBody2D" unique_id=540230813]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_rv78h")
 id = 1
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1148445637 node_paths=PackedStringArray("spawn_node")]
 sprite_frames = SubResource("SpriteFrames_7n8xq")
-animation = &"mayor"
-frame_progress = 0.55346614
+animation = &"kiddo"
+frame_progress = 0.3132186
+script = ExtResource("4_4wlns")
+spawn_node = NodePath("../LocalFX")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="LocalFX" type="Node2D" parent="." unique_id=2127123408]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=913838682]
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_rv78h")
 
-[node name="InteractionArea" parent="." instance=ExtResource("2_rv78h")]
+[node name="InteractionArea" parent="." unique_id=31512601 instance=ExtResource("2_rv78h")]
 position = Vector2(-3, -13)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1744728279]
 position = Vector2(3, 13)
 shape = SubResource("CircleShape2D_4wlns")
 metadata/_edit_lock_ = true

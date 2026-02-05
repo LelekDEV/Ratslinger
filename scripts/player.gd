@@ -38,9 +38,6 @@ enum Locations {ARENA, TOWN}
 var location: Locations = Locations.ARENA
 var last_location: Locations = location
 
-func _ready() -> void:
-	base_sprite.spawn_node = local_fx
-
 func _physics_process(_delta: float) -> void:
 	handle_movement()
 	handle_shooting()

@@ -16,7 +16,7 @@ class_name Game
 @onready var player_death_handler: Node = $PlayerDeathHandler
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 
-@onready var gate: StaticBody2D = $Buildings/Gate
+@onready var gate: StaticBody2D = $Environment/Gate
 @onready var wave_start_interaction_area: Area2D = $WaveStartInteractionArea
 
 var enemies_total: int = 5

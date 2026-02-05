@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://eu5lrlcgfqbx"]
+
+[ext_resource type="Script" uid="uid://clekccy5ngni1" path="res://scripts/rain_surface_tile.gd" id="1_adg4k"]
+
+[node name="RainSurfaceTile" type="Node2D" unique_id=562308157]
+script = ExtResource("1_adg4k")

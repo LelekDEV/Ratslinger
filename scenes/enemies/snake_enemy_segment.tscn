@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://do7eubc5sfptt" path="res://graphics/characters/enemies/snake/segments.png" id="2_cndbj"]
 [ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_nekb2"]
 [ext_resource type="PackedScene" uid="uid://dimjd58qns2ih" path="res://scenes/fx/fire_fx.tscn" id="5_3jjv2"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/rain_surface.gd" id="5_pry0t"]
 [ext_resource type="Shader" uid="uid://dk45yr1hnxit0" path="res://shaders/fire.gdshader" id="6_pry0t"]
 [ext_resource type="Script" uid="uid://cwe4csi6cjc7t" path="res://scripts/lock_rotation.gd" id="6_t8bcc"]
 
@@ -182,10 +183,13 @@ angular_velocity_max = -360.0
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_jx7bc")
 
-[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=598043648]
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=598043648 node_paths=PackedStringArray("spawn_node")]
 material = SubResource("ShaderMaterial_cndbj")
 sprite_frames = SubResource("SpriteFrames_i1qjg")
 animation = &"body"
+script = ExtResource("5_pry0t")
+surface_size = Vector2(20, 15)
+spawn_node = NodePath("../LocalFX")
 
 [node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("5_3jjv2")]
 visible = false
@@ -193,6 +197,8 @@ material = SubResource("ShaderMaterial_8p1el")
 position = Vector2(-2, -6.5)
 texture = SubResource("GradientTexture2D_nvngq")
 script = ExtResource("6_t8bcc")
+
+[node name="LocalFX" type="Node2D" parent="." unique_id=1316381703]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1622674501]
 position = Vector2(-1.5, 0)

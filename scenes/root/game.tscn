@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://djd1q01nwytri" path="res://scenes/ui_heart.tscn" id="4_55u7g"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="4_836xp"]
 [ext_resource type="Script" uid="uid://do3ehr4w1u0d6" path="res://scripts/camera.gd" id="4_bq78c"]
-[ext_resource type="Texture2D" uid="uid://kk3dfut1xl6v" path="res://graphics/environment/cacti.png" id="4_wcdyl"]
 [ext_resource type="Texture2D" uid="uid://drekyvwt4e2on" path="res://graphics/ui/location_popup.png" id="4_xw82j"]
 [ext_resource type="Texture2D" uid="uid://c0ub0hdeeqktf" path="res://graphics/misc/coin.png" id="6_02ogl"]
 [ext_resource type="Script" uid="uid://dhjd8qg5fcogs" path="res://scripts/ui_label.gd" id="6_f0ccc"]
@@ -22,12 +21,13 @@
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="10_r3fff"]
 [ext_resource type="Script" uid="uid://cp448dgxo5kaw" path="res://scripts/animation_handler.gd" id="12_dawlq"]
-[ext_resource type="Texture2D" uid="uid://ch8e5ex6v1k70" path="res://graphics/environment/fence.png" id="12_l77qo"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 [ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
 [ext_resource type="Texture2D" uid="uid://q16ufe8f7bow" path="res://graphics/environment/buildings/rathaus.png" id="18_jrnar"]
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
+[ext_resource type="TileSet" uid="uid://cbnfobqiceman" path="res://data/environment_tileset.tres" id="26_4qk7b"]
+[ext_resource type="Script" uid="uid://c43tbfovvl81u" path="res://scripts/rain_surface_tilemap.gd" id="28_dybux"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4qk7b"]
 viewport_path = NodePath("Weather/SubViewport")
@@ -320,41 +320,9 @@ _data = [Vector2(0, 1), 0.0, -2.2396998, 0, 0, Vector2(0.6, 0.1), 0.0, 0.0, 0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_836xp"]
-texture = ExtResource("12_l77qo")
-texture_region_size = Vector2i(10, 27)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -13.5, 5, -13.5, 5, 13.5, -5, 13.5)
-1:0/size_in_atlas = Vector2i(5, 1)
-1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-25, -13.5, 25, -13.5, 25, 13.5, -25, 13.5)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8yes"]
-texture = ExtResource("4_wcdyl")
-0:0/size_in_atlas = Vector2i(2, 3)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, -20, 10, -20, 10, 20, -10, 20)
-2:0/size_in_atlas = Vector2i(2, 3)
-2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, -20, 10, -20, 10, 20, -10, 20)
-4:0/size_in_atlas = Vector2i(2, 3)
-4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, -20, 10, -20, 10, 20, -10, 20)
-0:3/0 = 0
-0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-1:3/0 = 0
-1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-2:3/0 = 0
-2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, 6, -6, 6, 6, -6, 6)
-3:3/0 = 0
-3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, 6, -6, 6, 6, -6, 6)
-
-[sub_resource type="TileSet" id="TileSet_bq78c"]
-tile_size = Vector2i(4, 4)
-physics_layer_0/collision_layer = 2
-physics_layer_0/collision_mask = 2
-sources/1 = SubResource("TileSetAtlasSource_o8yes")
-sources/0 = SubResource("TileSetAtlasSource_836xp")
+[sub_resource type="CircleShape2D" id="CircleShape2D_4qk7b"]
+resource_local_to_scene = true
+radius = 15.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_l77qo"]
 distance = -234.0
@@ -549,7 +517,7 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." unique_id=1960160699 node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
-gate = NodePath("../Buildings/Gate")
+gate = NodePath("../Environment/Gate")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=151954985 node_paths=PackedStringArray("gate") groups=["camera"]]
@@ -561,7 +529,7 @@ limit_right = 324
 limit_bottom = 234
 position_smoothing_enabled = true
 script = ExtResource("4_bq78c")
-gate = NodePath("../../Buildings/Gate")
+gate = NodePath("../../Environment/Gate")
 
 [node name="Enemies" type="Node2D" parent="." unique_id=1167283035]
 y_sort_enabled = true
@@ -576,52 +544,58 @@ y_sort_enabled = true
 z_index = 1
 y_sort_enabled = true
 
-[node name="FX" type="Node2D" parent="." unique_id=52843161 groups=["fx"]]
-
-[node name="Buildings" type="Node2D" parent="." unique_id=268704630]
+[node name="Environment" type="Node2D" parent="." unique_id=268704630]
 y_sort_enabled = true
 
-[node name="Shop" parent="Buildings" unique_id=2105327580 instance=ExtResource("9_l77qo")]
+[node name="Shop" parent="Environment" unique_id=2105327580 instance=ExtResource("9_l77qo")]
 position = Vector2(-452, -95)
 
-[node name="Rathaus" parent="Buildings" unique_id=1779372816 instance=ExtResource("9_l77qo")]
+[node name="Rathaus" parent="Environment" unique_id=1779372816 instance=ExtResource("9_l77qo")]
 position = Vector2(-584, -104)
 
-[node name="Sprite2D" parent="Buildings/Rathaus" index="0"]
+[node name="Sprite2D" parent="Environment/Rathaus" index="0"]
 texture = ExtResource("18_jrnar")
 
-[node name="CollisionShape2D" parent="Buildings/Rathaus" index="1"]
+[node name="CollisionShape2D" parent="Environment/Rathaus" index="1"]
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_dawlq")
 
-[node name="CollisionShape2D" parent="Buildings/Rathaus/InteractionArea" index="2"]
+[node name="CollisionShape2D" parent="Environment/Rathaus/InteractionArea" index="2"]
 position = Vector2(0, 15)
 disabled = true
 
-[node name="Gate" parent="Buildings" unique_id=1886308699 instance=ExtResource("10_2mmsw")]
+[node name="Gate" parent="Environment" unique_id=1886308699 instance=ExtResource("10_2mmsw")]
 position = Vector2(-298, 0)
 
-[node name="RiverRect1" type="ColorRect" parent="Buildings" unique_id=1650193637]
+[node name="RiverRect1" type="ColorRect" parent="Environment" unique_id=1650193637]
 offset_left = -694.0
 offset_top = -234.0
 offset_right = -660.0
 offset_bottom = 234.0
 color = Color(0.2016, 0.44751993, 0.48, 1)
 
-[node name="RiverRect2" type="ColorRect" parent="Buildings" unique_id=1883370981]
+[node name="RiverRect2" type="ColorRect" parent="Environment" unique_id=1883370981]
 offset_left = -693.0
 offset_top = -234.0
 offset_right = -661.0
 offset_bottom = 234.0
 color = Color(0.29899997, 0.63245, 0.65, 1)
 
-[node name="TowerSprite1" type="Sprite2D" parent="Buildings" unique_id=946271222]
+[node name="TowerSprite1" type="Sprite2D" parent="Environment" unique_id=946271222]
 position = Vector2(-667, -47)
 texture = ExtResource("19_d8x6a")
 
-[node name="TowerSprite2" type="Sprite2D" parent="Buildings" unique_id=1756406117]
+[node name="TowerSprite2" type="Sprite2D" parent="Environment" unique_id=1756406117]
 position = Vector2(-671, 32)
 texture = ExtResource("19_d8x6a")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Environment" unique_id=1513322276 node_paths=PackedStringArray("spawn_node")]
+tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAACt/+v/AAABAAAAAACf/+v/AAABAAAAAAB+/+v/AAABAAAAAACt/xYAAAABAAAAAACf/xYAAAABAAAAAACR/xYAAAABAAAAAACD/xYAAAABAAAAAAB1/xYAAAABAAAAAABn/xYAAAABAAAAAABi/+v/AAAAAAAAAABe/xYAAAAAAAAAAABe/+v/AAAAAAAAAAA=")
+tile_set = ExtResource("26_4qk7b")
+script = ExtResource("28_dybux")
+spawn_node = NodePath("../../FX")
+
+[node name="FX" type="Node2D" parent="." unique_id=52843161 groups=["fx"]]
 
 [node name="NPC" type="Node2D" parent="." unique_id=1592318965]
 y_sort_enabled = true
@@ -634,9 +608,13 @@ id = 0
 position = Vector2(-584, -50)
 reward_coins_curve = SubResource("Curve_dawlq")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1513322276]
-tile_map_data = PackedByteArray("AADL/8v/AQAAAAAAAADb/83/AQACAAAAAADk/83/AQACAAMAAADu/8z/AQAAAAAAAAD6/87/AQADAAMAAAACAMv/AQAAAAMAAAAIAM7/AQABAAMAAAASAMz/AQACAAAAAAAfAMv/AQAEAAAAAAApAM7/AQACAAMAAAAyAMz/AQACAAMAAAA7AM3/AQAAAAAAAABGAMz/AQACAAAAAABLANj/AQAAAAAAAABHAOP/AQADAAMAAABLAOr/AQABAAMAAABHAO3/AQAAAAMAAABLAPL/AQACAAMAAABHAPn/AQAAAAAAAABMAAMAAQAEAAAAAABIAA8AAQACAAAAAABMABgAAQACAAMAAABIAB4AAQADAAMAAABLACgAAQACAAAAAABFADMAAQAAAAAAAAA6ADEAAQADAAMAAAA0ADIAAQAAAAAAAAAsADEAAQAAAAMAAAAmADQAAQAAAAMAAAAeADEAAQACAAMAAAAVADMAAQACAAAAAAALADMAAQADAAMAAAACADAAAQACAAMAAAAAADYAAQABAAMAAAD3/zMAAQAEAAAAAADu/zIAAQAAAAAAAADg/zMAAQACAAAAAADW/zIAAQACAAMAAADO/zYAAQADAAMAAADJ/zAAAQACAAMAAADF/zUAAQABAAMAAADA/zQAAQAAAAMAAAC4/zIAAQACAAAAAACy/yUAAQAAAAAAAADD/8n/AQADAAMAAAC7/87/AQADAAMAAACz/9X/AQACAAAAAAC2/9v/AAAAAAAAAAC2/+P/AAAAAAAAAAC2/+v/AAAAAAAAAAC2//P/AAAAAAAAAAC2/w4AAAAAAAAAAAC2/xYAAAAAAAAAAAC2/x4AAAAAAAAAAAC2/yYAAAAAAAAAAACt/+v/AAABAAAAAACf/+v/AAABAAAAAAB+/+v/AAABAAAAAACt/xYAAAABAAAAAACf/xYAAAABAAAAAACR/xYAAAABAAAAAACD/xYAAAABAAAAAAB1/xYAAAABAAAAAABn/xYAAAABAAAAAABi/+v/AAAAAAAAAABe/xYAAAAAAAAAAABe/+v/AAAAAAAAAAA=")
-tile_set = SubResource("TileSet_bq78c")
+[node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
+animation = &"mayor"
+frame_progress = 0.9288583
+override_anim = "mayor"
+
+[node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]
+shape = SubResource("CircleShape2D_4qk7b")
 
 [node name="WorldBounds" type="StaticBody2D" parent="." unique_id=1827856613]
 collision_layer = 2
@@ -666,13 +644,14 @@ offset_right = 270.0
 offset_bottom = 180.0
 metadata/_edit_lock_ = true
 
-[node name="PlayerDeathHandler" type="Node2D" parent="." unique_id=1706911077 node_paths=PackedStringArray("camera", "death_shadow_rect", "ui")]
+[node name="PlayerDeathHandler" type="Node2D" parent="." unique_id=1706911077 node_paths=PackedStringArray("camera", "death_shadow_rect", "ui", "weather_layer")]
 process_mode = 3
 z_index = 10
 script = ExtResource("12_xw82j")
 camera = NodePath("../Player/Camera2D")
 death_shadow_rect = NodePath("../DeathShadowRect")
 ui = NodePath("../UI")
+weather_layer = NodePath("../Weather")
 
 [node name="DeathShadowRect" type="ColorRect" parent="." unique_id=1755472873]
 visible = false
@@ -688,4 +667,5 @@ wait_time = 8.0
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 
-[editable path="Buildings/Rathaus"]
+[editable path="Environment/Rathaus"]
+[editable path="NPC/MayorNPC"]
