@@ -7,6 +7,7 @@ class_name Enemy
 @onready var projectiles: Node2D = get_tree().get_first_node_in_group("projectiles")
 @onready var coins: Node2D = get_tree().get_first_node_in_group("coins")
 @onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
+@onready var enemies: Node2D = get_tree().get_first_node_in_group("enemies")
 
 @onready var sprite: AnimatedSprite2D = $BaseSprite
 
@@ -19,6 +20,10 @@ class_name Enemy
 @export var speed: float = 30
 var acceleration: float = 0.05
 var direction: Vector2
+
+var separation_radius: float = 30
+var separation_weight: float = 8
+var separation_vel: Vector2
 
 @export var max_health: float = 8
 var health: float
@@ -53,6 +58,8 @@ enum AI {SHOOTER, KICKER, SEGMENT}
 @export var shoot_count: int = 1
 @export var shoot_spread_deg: float = 0
 @export var projectile_name: String
+
+@export var min_player_distance: float = 80
 
 # 1 - KICKER: remain stationary, trigger a kick attack on player's proximity, used for CowEnemy
 # Used nodes and variables:
@@ -116,11 +123,29 @@ func handle_shooting() -> void:
 		add_child(attack_highlight)
 
 func handle_movement() -> void:
+	separation_vel = Vector2.ZERO
+	
+	for enemy in enemies.get_children():
+		if enemy is not Enemy:
+			continue
+		
+		enemy = enemy as Enemy
+		
+		if enemy.ai != Enemy.AI.SHOOTER:
+			continue
+		
+		var away: Vector2 = global_position - enemy.global_position
+		var dist: float = away.length()
+		
+		if dist > 0 and dist < separation_radius:
+			var strength: float = 1 - (dist / separation_radius)
+			separation_vel += away.normalized() * strength
+	
 	var player_pos: Vector2 = player.global_position
 	direction = (player_pos - global_position).normalized()
 	
-	if global_position.distance_squared_to(player_pos) > 80 ** 2:
-		velocity = lerp(velocity, speed * direction, 0.2)
+	if global_position.distance_squared_to(player_pos) > min_player_distance ** 2:
+		velocity = lerp(velocity, (direction + separation_vel * separation_weight).normalized() * speed, 0.2)
 		
 		if velocity.length() > 0:
 			sprite.play("walk")
