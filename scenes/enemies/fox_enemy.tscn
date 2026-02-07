@@ -94,7 +94,6 @@ material = ExtResource("4_k7pnw")
 sprite_frames = SubResource("SpriteFrames_7xaro")
 animation = &"idle"
 script = ExtResource("6_djc13")
-surface_size = Vector2(30, 30)
 spawn_node = NodePath("../LocalFX")
 
 [node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("6_ow15s")]

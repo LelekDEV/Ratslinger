@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://pgwc06daqnn5"]
+[gd_scene format=3 uid="uid://pgwc06daqnn5"]
 
 [ext_resource type="Script" uid="uid://bm72rju3rprm6" path="res://scripts/projectile.gd" id="1_c8fcr"]
 [ext_resource type="Texture2D" uid="uid://doahe653fy8bv" path="res://graphics/characters/player/bullet.png" id="2_q3m7n"]
@@ -18,6 +18,42 @@ region = Rect2(16, 0, 16, 6)
 atlas = ExtResource("2_q3m7n")
 region = Rect2(32, 0, 16, 6)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_byeak"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(0, 12, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxwu6"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(16, 12, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7nm8"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(32, 12, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6c2e5"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(0, 18, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl1gp"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(16, 18, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejmht"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(32, 18, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_031o2"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(0, 6, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xo60o"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(16, 6, 16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxgir"]
+atlas = ExtResource("2_q3m7n")
+region = Rect2(32, 6, 16, 6)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_jxwu6"]
 animations = [{
 "frames": [{
@@ -33,15 +69,59 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_byeak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxwu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7nm8")
+}],
+"loop": true,
+"name": &"fire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6c2e5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pl1gp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejmht")
+}],
+"loop": true,
+"name": &"poison",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_031o2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xo60o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxgir")
+}],
+"loop": true,
+"name": &"vampire",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q3m7n"]
 radius = 7.0
 
-[node name="Projectile" type="Area2D"]
+[node name="Projectile" type="Area2D" unique_id=1560415016]
 script = ExtResource("1_c8fcr")
 
-[node name="SpecialParticles" type="CPUParticles2D" parent="."]
+[node name="SpecialParticles" type="Node2D" parent="." unique_id=580180604]
+
+[node name="Dark" type="CPUParticles2D" parent="SpecialParticles" unique_id=964126684]
 emitting = false
 amount = 32
 lifetime = 0.5
@@ -54,14 +134,28 @@ scale_amount_max = 2.0
 color = Color(0.8, 0.16, 0.16, 1)
 color_ramp = SubResource("Gradient_q3m7n")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Light" type="CPUParticles2D" parent="SpecialParticles" unique_id=1641616140]
+emitting = false
+amount = 32
+lifetime = 0.5
+lifetime_randomness = 0.25
+emission_shape = 3
+emission_rect_extents = Vector2(0, 1.5)
+particle_flag_align_y = true
+gravity = Vector2(0, 0)
+scale_amount_max = 2.0
+color = Color(0.8, 0.16, 0.16, 1)
+color_ramp = SubResource("Gradient_q3m7n")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=77032614]
 sprite_frames = SubResource("SpriteFrames_jxwu6")
+animation = &"fire"
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=649565456]
 shape = SubResource("CircleShape2D_q3m7n")
 
-[node name="DeathTimer" type="Timer" parent="."]
+[node name="DeathTimer" type="Timer" parent="." unique_id=2019023683]
 wait_time = 5.0
 one_shot = true
 autostart = true

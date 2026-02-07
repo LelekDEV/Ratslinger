@@ -30,6 +30,8 @@ var health: float
 
 var poison_value: int = 0
 var fire_value: int = 0
+@export var fire_resitance: float = 0
+var ignored_fire_uid: StringName
 
 @export var damage: float = 1
 var headshot_mult: float = 2
@@ -71,6 +73,8 @@ var is_vertical: bool = false
 
 signal death
 signal damaged
+signal poison_start
+signal poison_end
 
 func _ready() -> void:
 	match ai:
@@ -88,6 +92,14 @@ func _ready() -> void:
 	
 	sprite.material.set_shader_parameter("flash_active", false)
 	sprite.material.set_shader_parameter("strip_active", false)
+	
+	# uncomment to test pre-spawned enemies properly
+	await get_tree().process_frame
+	
+	Global.all_enemies.append(self)
+
+func _exit_tree() -> void:
+	Global.all_enemies.erase(self)
 
 func _physics_process(_delta: float) -> void:
 	if ai == AI.SHOOTER:
@@ -125,12 +137,7 @@ func handle_shooting() -> void:
 func handle_movement() -> void:
 	separation_vel = Vector2.ZERO
 	
-	for enemy in enemies.get_children():
-		if enemy is not Enemy:
-			continue
-		
-		enemy = enemy as Enemy
-		
+	for enemy: Enemy in Global.all_enemies:
 		if enemy.ai != Enemy.AI.SHOOTER:
 			continue
 		
@@ -198,24 +205,32 @@ func die() -> void:
 	queue_free()
 	if attack_highlight: attack_highlight.queue_free()
 
-func apply_poison() -> void:
-	poison_value = 5
+func apply_poison(only_status: bool = false) -> void:
 	poison_particles.emitting = true
-	
 	sprite.material.set_shader_parameter("strip_active", true)
 	
-	poison_tick.start()
+	if only_status:
+		poison_value = -1
+	else:
+		poison_value = 5
+		poison_tick.start()
+		poison_start.emit()
 
-func apply_fire() -> void:
-	fire_value = 8
+func apply_fire(uid: StringName = Global.get_uid(), ticks: int = 8) -> void:
+	if uid == ignored_fire_uid:
+		return
+	
+	fire_value = ticks
 	fire_fx.visible = true
+	
+	ignored_fire_uid = uid
 	
 	fire_tick.start()
 
 func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false, ignore_poison: bool = false) -> void:
 	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
 	
-	var final_amount = amount * (1.2 if poison_value >= 1 and not ignore_poison else 1.0)
+	var final_amount = amount * (1.2 if (poison_value >= 1 or poison_value == -1) and not ignore_poison else 1.0)
 	health -= final_amount
 	
 	if health <= 0:
@@ -314,12 +329,22 @@ func _on_poison_tick_timeout() -> void:
 	else:
 		poison_particles.emitting = false
 		sprite.material.set_shader_parameter("strip_active", false)
+		poison_end.emit()
 
 func _on_fire_tick_timeout() -> void:
 	take_damage(0.25, global_position, false, true)
 	fire_value -= 1
 	
 	if fire_value >= 1:
+		for enemy: Enemy in Global.all_enemies:
+			if randf_range(0, 1) > enemy.fire_resitance:
+				if ai == AI.SEGMENT and enemy.ai == AI.SEGMENT:
+					if global_position.distance_squared_to(enemy.global_position) <= 20 ** 2:
+						enemy.apply_fire(ignored_fire_uid)
+				else:
+					if global_position.distance_squared_to(enemy.global_position) <= 50 ** 2:
+						enemy.apply_fire(ignored_fire_uid, fire_value)
+		
 		fire_tick.start()
 	else:
 		fire_fx.visible = false

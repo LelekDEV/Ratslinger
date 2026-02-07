@@ -12,6 +12,8 @@ var mission_total: int = 5
 var mission_killed: int = 0
 var is_mission_active: bool = false
 
+var all_enemies: Array
+
 var waves_cleared: int = 0
 
 var scale_level: int = 0
@@ -27,6 +29,9 @@ func _physics_process(_delta: float) -> void:
 		scale_level = max(scale_level - 1, 0)
 		SignalBus.scale_changed.emit()
 
+func get_uid() -> StringName:
+	return str(Time.get_ticks_usec()) + "_" + str(randi())
+
 func roll_mission() -> void:
 	var discluded_id: Array = [Enemy.ID.COW]
 	var roll: int = randi_range(0, Enemy.ID.size() - discluded_id.size() - 1)
@@ -37,7 +42,9 @@ func roll_mission() -> void:
 	
 	@warning_ignore("int_as_enum_without_cast")
 	mission_target = roll
-	
+	update_dialogic_var()
+
+func update_dialogic_var() -> void:
 	Dialogic.VAR.set_variable("mission_enemy_name", ["foxes", "cows", "beavers", "snakes"][mission_target])
 
 func start_mission() -> void:

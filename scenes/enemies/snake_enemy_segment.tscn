@@ -159,10 +159,15 @@ size = Vector2(20, 14)
 collision_mask = 4
 script = ExtResource("1_i1qjg")
 speed = 150.0
+fire_resitance = 0.9
+damage = null
 id = 3
 ai = 2
 cooldown_time = 0.0
 shoot_count = 0
+shoot_spread_deg = null
+projectile_name = null
+min_player_distance = null
 
 [node name="PoisonParticles" type="CPUParticles2D" parent="." unique_id=2015414767]
 z_index = 1
@@ -188,7 +193,6 @@ material = SubResource("ShaderMaterial_cndbj")
 sprite_frames = SubResource("SpriteFrames_i1qjg")
 animation = &"body"
 script = ExtResource("5_pry0t")
-surface_size = Vector2(20, 15)
 spawn_node = NodePath("../LocalFX")
 
 [node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("5_3jjv2")]

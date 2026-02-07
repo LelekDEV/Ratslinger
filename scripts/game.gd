@@ -28,6 +28,7 @@ var is_wave_active: bool = false
 func _ready() -> void:
 	setup_signals()
 	Global.game = self
+	Global.all_enemies.clear()
 	
 	"""update_enemies(5)
 	enemies_to_spawn = 0

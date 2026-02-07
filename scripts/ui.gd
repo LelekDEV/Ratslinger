@@ -45,6 +45,8 @@ func _ready() -> void:
 	
 	await SignalBus.game_loaded
 	
+	Global.update_dialogic_var()
+	
 	update_coin_count()
 	update_enemy_count()
 

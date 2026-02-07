@@ -7,7 +7,8 @@ class_name Projectile
 @onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var special_particles: CPUParticles2D = $SpecialParticles
+@onready var special_particles_dark: CPUParticles2D = $SpecialParticles/Dark
+@onready var special_particles_light: CPUParticles2D = $SpecialParticles/Light
 
 var damage: float = 1
 var knockback: float = 150
@@ -25,10 +26,17 @@ static func instantiate() -> Projectile:
 
 func _ready() -> void:
 	if type != Type.REGULAR:
-		special_particles.emitting = true
+		special_particles_dark.emitting = true
+		special_particles_light.emitting = true
+		special_particles_dark.color = Consts.SPECIAL_BULLETS_COLORS.dark[type]
+		special_particles_light.color = Consts.SPECIAL_BULLETS_COLORS.light[type]
 		
 		if type == Type.VAMPIRE:
-			sprite.self_modulate = Color("d96c8fff")
+			sprite.play("vampire")
+		elif type == Type.FIRE:
+			sprite.play("fire")
+		elif type == Type.POISON:
+			sprite.play("poison")
 
 func _physics_process(delta: float) -> void:
 	velocity = direction * speed * delta

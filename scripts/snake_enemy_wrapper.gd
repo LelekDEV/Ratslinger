@@ -8,6 +8,7 @@ class_name SnakeEnemyWrapper
 var Segment: PackedScene = preload("res://scenes/enemies/snake_enemy_segment.tscn")
 
 var length: int = 20
+var speed: float = 150
 var direction: Vector2 = Vector2.LEFT
 var attack_margin: float = 150
 
@@ -31,13 +32,20 @@ func _ready() -> void:
 			segment.position.x = i * 17 + 3
 		
 		segment.damaged.connect(link_health)
+		segment.poison_start.connect(link_poision.bind(i))
+		segment.poison_end.connect(func():
+			for other in get_children():
+				other.poison_value = 0
+				other.poison_particles.emitting = false
+				other.sprite.material.set_shader_parameter("strip_active", false)
+		)
 		
 		add_child(segment)
 	
 	attack()
 
 func _physics_process(delta: float) -> void:
-	global_position += direction * 150 * delta
+	global_position += direction * speed * delta
 	
 	var half_screen: Vector2 = get_viewport_rect().size / 2 / camera.zoom.x
 	var pixel_length: int = length * 17 + 3
@@ -104,6 +112,15 @@ func attack() -> void:
 	attack_highlight.start_alternate_tween()
 	
 	fx.add_child(attack_highlight)
+
+func link_poision(ignore_i: int) -> void:
+	var i: int = 0
+	
+	for segment in get_children():
+		if i != ignore_i:
+			segment.apply_poison(true)
+		
+		i += 1
 
 func link_health(health: float, caller: Enemy) -> void:
 	var to_die: bool = false
