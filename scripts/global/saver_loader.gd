@@ -9,10 +9,11 @@ var gloabal_save_paths: Array = [
 	^"mission_target",
 	^"mission_total",
 	^"mission_killed",
-	^"is_mission_active"
+	^"is_mission_active",
+	^"rain_value"
 ]
 
-# Save paths relative to Global singleton
+# Save paths relative to Upgrades singleton
 var upgrades_save_paths: Array = [
 	^"levels",
 	^"stat_1"

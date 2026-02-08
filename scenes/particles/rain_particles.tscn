@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cjqkgird8slts"]
 
 [ext_resource type="Shader" uid="uid://bycarpaiaa68a" path="res://shaders/rain_particles.gdshader" id="1_5rha2"]
+[ext_resource type="Script" uid="uid://xuo1if3x5xww" path="res://scripts/rain_particles.gd" id="2_enhe0"]
 
 [sub_resource type="Gradient" id="Gradient_mf4mk"]
 offsets = PackedFloat32Array(1)
@@ -60,3 +61,4 @@ amount = 128
 texture = SubResource("GradientTexture2D_37kl0")
 lifetime = 0.5
 process_material = SubResource("ShaderMaterial_enhe0")
+script = ExtResource("2_enhe0")

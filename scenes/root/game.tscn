@@ -360,6 +360,7 @@ size = Vector2i(288, 162)
 
 [node name="RainParticles" parent="Weather/SubViewport" unique_id=1825388257 instance=ExtResource("14_psga7")]
 position = Vector2(0, -100)
+emitting = false
 
 [node name="TextureRect" type="TextureRect" parent="Weather" unique_id=1737692972]
 offset_right = 40.0
@@ -610,7 +611,7 @@ reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.14035518
+frame_progress = 0.9640412
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]

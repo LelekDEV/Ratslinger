@@ -17,7 +17,7 @@ func _draw() -> void:
 		draw_circle(pos - floor(surface_size / 2), 0.5, Color.DARK_TURQUOISE)"""
 
 func _physics_process(delta: float) -> void:
-	spawn_value += delta
+	spawn_value += delta * Global.get_rain_change_ratio()
 	
 	if spawn_value > spawn_treshold:
 		var fx: AnimatedSprite2D = SplashFX.instantiate()

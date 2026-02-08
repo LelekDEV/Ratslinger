@@ -19,3 +19,5 @@ const SPECIAL_BULLETS_COLORS: Dictionary = {
 	"light": [Color("ff2147"), Color("ff4321"), Color("86b66a")],
 	"dark": [Color("e3001d"), Color("e30000"), Color("63806d")]
 }
+
+const RAIN_CHANGE_TIME: float = 5

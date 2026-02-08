@@ -16,18 +16,39 @@ var all_enemies: Array
 
 var waves_cleared: int = 0
 
+var rain_value: float = -randi_range(0, 600)
+
 var scale_level: int = 0
 
 func _ready() -> void:
 	game = get_tree().get_first_node_in_group("game")
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("scale_in"):
 		scale_level = scale_level + 1
 		SignalBus.scale_changed.emit()
 	elif Input.is_action_just_pressed("scale_out"):
 		scale_level = max(scale_level - 1, 0)
 		SignalBus.scale_changed.emit()
+	
+	if rain_value < 0:
+		rain_value += delta
+		
+		if rain_value > 0:
+			# rain, 2.7 - 5.4 min, ~35%
+			rain_value = randi_range(162, 324)
+	else:
+		rain_value -= delta
+		
+		if rain_value < 0:
+			# clear, 5 - 10 min, ~65%
+			rain_value = -randi_range(300, 600)
+
+func get_rain_change_ratio() -> float:
+	if rain_value < 0:
+		return max(rain_value + Consts.RAIN_CHANGE_TIME, 0) / Consts.RAIN_CHANGE_TIME
+	else:
+		return min(rain_value, Consts.RAIN_CHANGE_TIME) / Consts.RAIN_CHANGE_TIME
 
 func get_uid() -> StringName:
 	return str(Time.get_ticks_usec()) + "_" + str(randi())
