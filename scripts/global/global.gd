@@ -4,8 +4,8 @@ var game: Game
 
 var coins: int = 30
 
-var block_input: bool = false
-var block_movement: bool = false
+var block_input: bool = true
+var block_movement: bool = true
 
 var mission_target: Enemy.ID
 var mission_total: int = 5
@@ -17,6 +17,8 @@ var all_enemies: Array
 var waves_cleared: int = 0
 
 var rain_value: float = -randi_range(0, 600)
+
+var is_title_on: bool = true
 
 var scale_level: int = 0
 

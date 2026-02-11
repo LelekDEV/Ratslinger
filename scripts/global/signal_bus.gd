@@ -11,3 +11,6 @@ signal player_coin_collect
 signal game_loaded
 
 signal scale_changed
+
+signal title_exit
+signal title_exited

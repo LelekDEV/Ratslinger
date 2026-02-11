@@ -1,0 +1,218 @@
+[gd_scene format=3 uid="uid://c2n2sjjatxuwj"]
+
+[ext_resource type="Texture2D" uid="uid://del5jt8l2lkcd" path="res://graphics/title/title_letters.png" id="1_ammj3"]
+[ext_resource type="Script" uid="uid://bcchnp4x6croy" path="res://scripts/title_layer.gd" id="1_nexvx"]
+[ext_resource type="Shader" uid="uid://cstrmxslel2u7" path="res://shaders/flash_smooth.gdshader" id="2_po7b4"]
+[ext_resource type="Shader" uid="uid://eb2ogex8mj3q" path="res://shaders/shine.gdshader" id="4_8tnrn"]
+[ext_resource type="Texture2D" uid="uid://bdo6y3osxex0v" path="res://graphics/title/tail.png" id="4_h3kmk"]
+[ext_resource type="Texture2D" uid="uid://b5k0a0t56hneq" path="res://graphics/title/gun.png" id="4_xkeei"]
+
+[sub_resource type="Curve" id="Curve_xkeei"]
+_data = [Vector2(0, 0), 0.0, 3.3333333, 0, 1, Vector2(0.3, 1), 3.3333333, -1.5000001, 1, 1, Vector2(0.7, 0.4), -1.5000001, -0.6666667, 1, 1, Vector2(1, 0.2), -0.6666667, 0.0, 1, 0]
+point_count = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h3kmk"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_po7b4"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xkeei"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8tnrn"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tnt71"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2dj"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sqnma"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1inmv"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ra5a"]
+shader = ExtResource("2_po7b4")
+shader_parameter/value = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_8tnrn"]
+offsets = PackedFloat32Array(0, 0.15254237, 0.33898306, 0.60169494, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tnt71"]
+gradient = SubResource("Gradient_8tnrn")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ypotn"]
+shader = ExtResource("4_8tnrn")
+shader_parameter/main_color = SubResource("GradientTexture1D_tnt71")
+shader_parameter/shine_progress = 0.0
+shader_parameter/shine_size = 0.1
+shader_parameter/shine_angle = 45.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nexvx"]
+viewport_path = NodePath("SubViewport")
+
+[node name="TitleLayer" type="CanvasLayer" unique_id=1948925533]
+scale = Vector2(3, 3)
+transform = Transform2D(3, 0, 0, 3, 0, 0)
+script = ExtResource("1_nexvx")
+tail_speed_curve = SubResource("Curve_xkeei")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1597891069]
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(300, 110)
+
+[node name="Letters" type="HBoxContainer" parent="SubViewport" unique_id=1306245078]
+offset_top = 25.0
+offset_right = 328.0
+offset_bottom = 72.0
+
+[node name="Letter1" type="Control" parent="SubViewport/Letters" unique_id=535848343]
+custom_minimum_size = Vector2(30, 47)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Letters/Letter1" unique_id=1376623353]
+material = SubResource("ShaderMaterial_h3kmk")
+texture = ExtResource("1_ammj3")
+centered = false
+hframes = 7
+
+[node name="Letter2" type="Control" parent="SubViewport/Letters" unique_id=760072663]
+custom_minimum_size = Vector2(25, 47)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Letters/Letter2" unique_id=848748436]
+material = SubResource("ShaderMaterial_po7b4")
+texture = ExtResource("1_ammj3")
+centered = false
+hframes = 7
+frame = 1
+
+[node name="Letter3" type="Control" parent="SubViewport/Letters" unique_id=1637819876]
+custom_minimum_size = Vector2(84, 47)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Letters/Letter3" unique_id=1256240968]
+material = SubResource("ShaderMaterial_xkeei")
+texture = ExtResource("1_ammj3")
+centered = false
+hframes = 7
+frame = 2
+
+[node name="Letter4" type="Control" parent="SubViewport/Letters" unique_id=118879927]
+custom_minimum_size = Vector2(24, 47)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Letters/Letter4" unique_id=1671107909]
+material = SubResource("ShaderMaterial_8tnrn")
+texture = ExtResource("1_ammj3")
+centered = false
+hframes = 7
+frame = 3
+
+[node name="Letter5" type="Control" parent="SubViewport/Letters" unique_id=368495121]
+custom_minimum_size = Vector2(30, 47)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Letters/Letter5" unique_id=2071423115]
+material = SubResource("ShaderMaterial_tnt71")
+texture = ExtResource("1_ammj3")
+centered = false
+hframes = 7
+frame = 4
+
+[node name="Letter6" type="Control" parent="SubViewport/Letters" unique_id=855930669]
+custom_minimum_size = Vector2(24, 47)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Letters/Letter6" unique_id=554362980]
+material = SubResource("ShaderMaterial_qf2dj")
+texture = ExtResource("1_ammj3")
+centered = false
+hframes = 7
+frame = 5
+
+[node name="Letter7" type="Control" parent="SubViewport/Letters" unique_id=1553649329]
+custom_minimum_size = Vector2(22, 47)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Letters/Letter7" unique_id=2121345498]
+material = SubResource("ShaderMaterial_sqnma")
+texture = ExtResource("1_ammj3")
+centered = false
+hframes = 7
+frame = 6
+
+[node name="Letter8" type="Control" parent="SubViewport/Letters" unique_id=59813499]
+material = SubResource("ShaderMaterial_1inmv")
+custom_minimum_size = Vector2(30, 47)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Letters/Letter8" unique_id=2039375536]
+material = SubResource("ShaderMaterial_0ra5a")
+texture = ExtResource("1_ammj3")
+centered = false
+hframes = 7
+
+[node name="GunSprite" type="Sprite2D" parent="SubViewport" unique_id=1440658924]
+material = SubResource("ShaderMaterial_ypotn")
+position = Vector2(146, 56)
+texture = ExtResource("4_xkeei")
+
+[node name="TailSprite" type="Sprite2D" parent="SubViewport" unique_id=1109919519]
+position = Vector2(113, 58)
+texture = ExtResource("4_h3kmk")
+hframes = 50
+frame = 40
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1038641253]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2118793398]
+offset_right = 300.0
+offset_bottom = 110.0
+texture = SubResource("ViewportTexture_nexvx")
+stretch_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="ButtonContainer" type="VBoxContainer" parent="." unique_id=727756161]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="ButtonContainer" unique_id=772214323]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Play"

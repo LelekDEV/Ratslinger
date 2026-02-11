@@ -6,7 +6,17 @@ extends Sprite2D
 var origin_scale: float = 4
 
 func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	if Global.is_title_on:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		visible = false
+		
+		await SignalBus.title_exited
+		
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		visible = true
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		visible = true
 
 func _process(_delta: float) -> void:
 	global_position = get_global_mouse_position()

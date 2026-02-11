@@ -18,6 +18,7 @@ class_name Game
 
 @onready var gate: StaticBody2D = $Environment/Gate
 @onready var wave_start_interaction_area: Area2D = $WaveStartInteractionArea
+@onready var title_sand_sprite: Sprite2D = $SandSprite3
 
 var enemies_total: int = 5
 var enemies_to_spawn: int = enemies_total
@@ -30,9 +31,9 @@ func _ready() -> void:
 	Global.game = self
 	Global.all_enemies.clear()
 	
-	"""update_enemies(5)
-	enemies_to_spawn = 0
-	for enemy: Enemy in enemies.get_children(): enemy.queue_free()"""
+	await SignalBus.game_loaded
+	
+	title_sand_sprite.global_position.x = int(player.global_position.x)
 
 func _physics_process(_delta: float) -> void:
 	if wave_start_interaction_area.interacting and Input.is_action_just_pressed("interact") and not is_wave_active:

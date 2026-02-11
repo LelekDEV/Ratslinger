@@ -7,10 +7,16 @@ var shake_time: float = 0.2
 var shake_intensity: float = 2.5
 var shake_smoothness: float = 0.8
 
+var intro_tween: Tween
+var intro_value: float = 0
+
 @export var gate: StaticBody2D
 
 func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
+	SignalBus.title_exit.connect(animate_intro)
+	
+	update_scale()
 	
 	await SignalBus.game_loaded
 	
@@ -30,6 +36,19 @@ func _physics_process(_delta: float) -> void:
 		global_position.x = max(-324 + get_viewport_rect().size.x / zoom.x / 2, get_parent().global_position.x)
 	else:
 		global_position = get_parent().global_position
+	
+	if Global.is_title_on:
+		global_position.y = lerp(468.0, get_parent().to_global(Vector2.ZERO).y, intro_value)
+		limit_bottom = 10000000
+	else:
+		limit_bottom = 234
+
+func animate_intro() -> void:
+	intro_tween = create_tween() \
+		.set_ease(Tween.EASE_IN_OUT) \
+		.set_trans(Tween.TRANS_CIRC)
+	
+	intro_tween.tween_property(self, "intro_value", 1, 2)
 
 func update_scale() -> void:
 	zoom = Vector2.ONE * (Global.scale_level + 4)

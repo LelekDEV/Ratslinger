@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://gyh7j0jqrav6" path="res://scenes/player.tscn" id="1_rf1xt"]
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
 [ext_resource type="PackedScene" uid="uid://cbkx546wmeje8" path="res://scenes/shop_layer.tscn" id="2_836xp"]
+[ext_resource type="PackedScene" uid="uid://c2n2sjjatxuwj" path="res://scenes/title_layer.tscn" id="2_dybux"]
 [ext_resource type="Script" uid="uid://cvi745bdmkf4h" path="res://scripts/ui.gd" id="2_ijxjl"]
 [ext_resource type="Script" uid="uid://bafvyxexlje1q" path="res://scripts/weather_layer.gd" id="3_4qk7b"]
 [ext_resource type="PackedScene" uid="uid://djd1q01nwytri" path="res://scenes/ui_heart.tscn" id="4_55u7g"]
@@ -57,78 +58,54 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("DialogueStrips:width")
+tracks/1/path = NodePath("Hearts:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Hearts:modulate")
+tracks/2/path = NodePath("MarginContainer:self_modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("MarginContainer:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_d8x6a"]
-resource_name = "end_dialogue"
+[sub_resource type="Animation" id="Animation_wt5dx"]
+resource_name = "hide_ui"
 step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("DialogueStrips:width")
+tracks/0/path = NodePath("Hearts:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(-2, -2),
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [75.0, 0.0]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Hearts:modulate")
+tracks/1/path = NodePath("MarginContainer:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.75),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("MarginContainer:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.75),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_2mmsw"]
@@ -147,52 +124,40 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0.3), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_wt5dx"]
-resource_name = "start_dialogue"
+[sub_resource type="Animation" id="Animation_d8x6a"]
+resource_name = "show_ui"
 step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("DialogueStrips:width")
+tracks/0/path = NodePath("Hearts:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(-2, -2),
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, 75.0]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Hearts:modulate")
+tracks/1/path = NodePath("MarginContainer:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.75),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("MarginContainer:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.75),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_836xp"]
 _data = {
 &"RESET": SubResource("Animation_l77qo"),
-&"end_dialogue": SubResource("Animation_d8x6a"),
+&"hide_ui": SubResource("Animation_wt5dx"),
 &"player_hit": SubResource("Animation_2mmsw"),
-&"start_dialogue": SubResource("Animation_wt5dx")
+&"show_ui": SubResource("Animation_d8x6a")
 }
 
 [sub_resource type="Animation" id="Animation_s3lrj"]
@@ -309,6 +274,58 @@ _data = {
 &"mission_redeem": SubResource("Animation_dawlq")
 }
 
+[sub_resource type="Animation" id="Animation_a3e4m"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../DialogueStrips:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_dybux"]
+resource_name = "hide_dialogue_strips"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../DialogueStrips:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [75.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_1egfj"]
+resource_name = "show_dialogue_strips"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../DialogueStrips:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [0.0, 75.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a3e4m"]
+_data = {
+&"RESET": SubResource("Animation_a3e4m"),
+&"hide_dialogue_strips": SubResource("Animation_dybux"),
+&"show_dialogue_strips": SubResource("Animation_1egfj")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_r3fff"]
 radius = 30.0
 
@@ -320,7 +337,7 @@ _data = [Vector2(0, 1), 0.0, -2.2396998, 0, 0, Vector2(0.6, 0.1), 0.0, 0.0, 0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4qk7b"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_dybux"]
 resource_local_to_scene = true
 radius = 15.0
 
@@ -341,6 +358,9 @@ size = Vector2(26, 78)
 [node name="Game" type="Node2D" unique_id=1244812287 groups=["game"]]
 y_sort_enabled = true
 script = ExtResource("1_o8yes")
+
+[node name="TitleLayer" parent="." unique_id=1948925533 instance=ExtResource("2_dybux")]
+visible = false
 
 [node name="ShopLayer" parent="." unique_id=1318422254 instance=ExtResource("2_836xp")]
 process_mode = 3
@@ -491,6 +511,9 @@ libraries/ = SubResource("AnimationLibrary_sh5j3")
 [node name="Player3" type="AnimationPlayer" parent="UI/AnimationHandler" unique_id=599942333]
 libraries/ = SubResource("AnimationLibrary_psga7")
 
+[node name="Player4" type="AnimationPlayer" parent="UI/AnimationHandler" unique_id=725324840]
+libraries/ = SubResource("AnimationLibrary_a3e4m")
+
 [node name="SandSprite1" type="Sprite2D" parent="." unique_id=577903870]
 z_index = -2
 texture_repeat = 2
@@ -503,6 +526,15 @@ metadata/_edit_lock_ = true
 z_index = -2
 texture_repeat = 2
 position = Vector2(-648, 0)
+texture = ExtResource("1_ncd4d")
+region_enabled = true
+region_rect = Rect2(0, 0, 648, 468)
+metadata/_edit_lock_ = true
+
+[node name="SandSprite3" type="Sprite2D" parent="." unique_id=371962306]
+z_index = -2
+texture_repeat = 2
+position = Vector2(0, 468)
 texture = ExtResource("1_ncd4d")
 region_enabled = true
 region_rect = Rect2(0, 0, 648, 468)
@@ -611,11 +643,11 @@ reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.9640412
+frame_progress = 0.5418796
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]
-shape = SubResource("CircleShape2D_4qk7b")
+shape = SubResource("CircleShape2D_dybux")
 
 [node name="WorldBounds" type="StaticBody2D" parent="." unique_id=1827856613]
 collision_layer = 2

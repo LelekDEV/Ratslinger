@@ -19,6 +19,7 @@ var scale_factor: float = 1
 var scale_float: float
 
 var is_combat_hud_on: bool = true
+var player_location: Player.Locations = Player.Locations.ARENA
 
 var popup_tween: Tween
 var popup_value: float = 0
@@ -38,6 +39,21 @@ func _ready() -> void:
 	)
 	
 	update_scale()
+	
+	if Global.is_title_on:
+		animation.play("hide_ui")
+		toggle_combat_hud(false)
+		
+		await SignalBus.title_exited
+		
+		animation.play("show_ui")
+		
+		Global.block_movement = false
+		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	
+	if player_location == Player.Locations.ARENA:
+		toggle_combat_hud(true)
+		Global.block_input = false
 	
 	show_location_popup()
 	update_coin_count()
@@ -84,7 +100,8 @@ func start_dialogue() -> void:
 	crosshair.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
-	animation.play("start_dialogue")
+	animation.play("hide_ui")
+	animation.play("show_dialogue_strips")
 
 func end_dialogue() -> void:
 	Global.block_movement = false
@@ -97,7 +114,8 @@ func end_dialogue() -> void:
 			Global.mission_killed, Global.mission_total
 		]
 	
-	animation.play("end_dialogue")
+	animation.play("show_ui")
+	animation.play("hide_dialogue_strips")
 
 func toggle_combat_hud(on: bool) -> void:
 	is_combat_hud_on = on
@@ -174,7 +192,12 @@ func update_hearts_old(health: int) -> void:
 		i += 1
 
 func on_player_location_change(location: Player.Locations) -> void:
+	player_location = location
 	location_popup.frame = location
+	
+	if Global.is_title_on:
+		return
+	
 	show_location_popup()
 	
 	if location == Player.Locations.ARENA:
