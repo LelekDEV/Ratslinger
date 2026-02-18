@@ -13,7 +13,7 @@ enum ID {KIDDO, MAYOR}
 @export var reward_coins_curve: Curve
 
 func _ready() -> void:
-	update()
+	update() 
 	
 	if Engine.is_editor_hint():
 		return
@@ -24,7 +24,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	if interaction_area.interacting and Input.is_action_just_pressed("interact") and not Global.block_movement:
 		match id:
 			ID.KIDDO: Dialogic.start("kiddo")

@@ -45,6 +45,8 @@ func _process(_delta: float) -> void:
 		get_tree().quit()
 
 func save_game() -> void:
+	SignalBus.game_save_queued.emit()
+	
 	var file: FileAccess = FileAccess.open("user://savegame.data", FileAccess.WRITE)
 	var data: Dictionary = {}
 	

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q16ufe8f7bow"
-path="res://.godot/imported/rathaus.png-bce8b25e0f70de4f212632169b11b65d.ctex"
+uid="uid://dokwhkxtigqel"
+path="res://.godot/imported/rathouse_interior.png-e89670b2fbfa70a138815624ad07784d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/environment/buildings/rathaus.png"
-dest_files=["res://.godot/imported/rathaus.png-bce8b25e0f70de4f212632169b11b65d.ctex"]
+source_file="res://graphics/environment/buildings/interiors/rathouse_interior.png"
+dest_files=["res://.godot/imported/rathouse_interior.png-e89670b2fbfa70a138815624ad07784d.ctex"]
 
 [params]
 

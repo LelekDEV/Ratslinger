@@ -1,8 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://dd62w7380cncx"]
+[gd_scene format=3 uid="uid://dd62w7380cncx"]
 
 [ext_resource type="Script" uid="uid://ben8b5g3o6gf6" path="res://scripts/building.gd" id="1_ejq8p"]
-[ext_resource type="Texture2D" uid="uid://cihdedv4dwtsy" path="res://graphics/environment/buildings/shop.png" id="1_n8bkc"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="2_uvy8r"]
+[ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="3_ejq8p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rla3o"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(0, 0, 75, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lm2ef"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(75, 0, 75, 75)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uvy8r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rla3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lm2ef")
+}],
+"loop": true,
+"name": &"buildings",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvy8r"]
 size = Vector2(72, 54.5)
@@ -10,21 +32,23 @@ size = Vector2(72, 54.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ejq8p"]
 size = Vector2(36, 16)
 
-[node name="Building" type="StaticBody2D"]
+[node name="Building" type="StaticBody2D" unique_id=1582154463]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_ejq8p")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_n8bkc")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=271440179]
+sprite_frames = SubResource("SpriteFrames_uvy8r")
+animation = &"buildings"
+frame = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=21281098]
 position = Vector2(0, -0.75)
 shape = SubResource("RectangleShape2D_uvy8r")
 
-[node name="InteractionArea" parent="." instance=ExtResource("2_uvy8r")]
+[node name="InteractionArea" parent="." unique_id=1812858229 instance=ExtResource("2_uvy8r")]
 position = Vector2(0, 27)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1636268621]
 position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_ejq8p")

@@ -3,6 +3,7 @@ class_name Player
 
 @onready var ui: CanvasLayer = get_tree().get_first_node_in_group("ui")
 @onready var projectiles: Node = get_tree().get_first_node_in_group("projectiles")
+@onready var markers: Node2D = get_tree().get_first_node_in_group("markers")
 
 @onready var accuracy_bar: AccuracyBar = get_tree().get_first_node_in_group("accuracy_bar")
 @onready var bullet_bar: BulletBar = get_tree().get_first_node_in_group("bullet_bar")
@@ -34,9 +35,12 @@ var input: Vector2
 
 var anim: float = 0
 
-enum Locations {ARENA, TOWN}
+enum Locations {ARENA, TOWN, TOWN_HALL}
 var location: Locations = Locations.ARENA
 var last_location: Locations = location
+
+func _ready() -> void:
+	SignalBus.game_save_queued.connect(_on_game_save_queued)
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
@@ -86,6 +90,9 @@ func spawn_projectile(direction: Vector2) -> bool:
 	return is_special
 
 func handle_locations() -> void:
+	if location == Locations.TOWN_HALL:
+		return
+
 	if global_position.x > gate.global_position.x:
 		location = Locations.ARENA
 	else:
@@ -192,3 +199,7 @@ func _on_reload_timer_timeout() -> void:
 		reload_timer.start()
 	else:
 		shoot_cooldown.start()
+
+func _on_game_save_queued() -> void:
+	if location == Locations.TOWN_HALL:
+		global_position = markers.points.rat_house_exit_pos

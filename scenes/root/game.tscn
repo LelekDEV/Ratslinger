@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://8qakvdh1gbpa" path="res://graphics/environment/sand_tile.png" id="1_ncd4d"]
 [ext_resource type="Script" uid="uid://h08581xbp5g1" path="res://scripts/game.gd" id="1_o8yes"]
 [ext_resource type="PackedScene" uid="uid://gyh7j0jqrav6" path="res://scenes/player.tscn" id="1_rf1xt"]
+[ext_resource type="PackedScene" uid="uid://bpxoyc0unsk8n" path="res://scenes/rathouse_interior.tscn" id="2_1egfj"]
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
 [ext_resource type="PackedScene" uid="uid://cbkx546wmeje8" path="res://scenes/shop_layer.tscn" id="2_836xp"]
 [ext_resource type="PackedScene" uid="uid://c2n2sjjatxuwj" path="res://scenes/title_layer.tscn" id="2_dybux"]
@@ -25,10 +26,11 @@
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 [ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
-[ext_resource type="Texture2D" uid="uid://q16ufe8f7bow" path="res://graphics/environment/buildings/rathaus.png" id="18_jrnar"]
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
+[ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="24_a3e4m"]
 [ext_resource type="TileSet" uid="uid://cbnfobqiceman" path="res://data/environment_tileset.tres" id="26_4qk7b"]
 [ext_resource type="Script" uid="uid://c43tbfovvl81u" path="res://scripts/rain_surface_tilemap.gd" id="28_dybux"]
+[ext_resource type="Script" uid="uid://cmo05ufm0vqdm" path="res://scripts/markers.gd" id="29_1egfj"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4qk7b"]
 viewport_path = NodePath("Weather/SubViewport")
@@ -329,15 +331,15 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_r3fff"]
 radius = 30.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dawlq"]
-size = Vector2(72, 61)
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1egfj"]
+load_path = "res://.godot/imported/buildings.png-16398df9d57469099cfeae2d72369085.ctex"
 
 [sub_resource type="Curve" id="Curve_dawlq"]
 _data = [Vector2(0, 1), 0.0, -2.2396998, 0, 0, Vector2(0.6, 0.1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
 point_count = 3
 metadata/_snap_enabled = true
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dybux"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3e4m"]
 resource_local_to_scene = true
 radius = 15.0
 
@@ -358,6 +360,9 @@ size = Vector2(26, 78)
 [node name="Game" type="Node2D" unique_id=1244812287 groups=["game"]]
 y_sort_enabled = true
 script = ExtResource("1_o8yes")
+
+[node name="InnerRathouse" parent="." unique_id=157548817 instance=ExtResource("2_1egfj")]
+position = Vector2(-1200, 0)
 
 [node name="TitleLayer" parent="." unique_id=1948925533 instance=ExtResource("2_dybux")]
 visible = false
@@ -424,6 +429,7 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
+metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer" unique_id=1664629954]
 layout_mode = 2
@@ -582,20 +588,12 @@ y_sort_enabled = true
 
 [node name="Shop" parent="Environment" unique_id=2105327580 instance=ExtResource("9_l77qo")]
 position = Vector2(-452, -95)
+texture = ExtResource("24_a3e4m")
 
 [node name="Rathaus" parent="Environment" unique_id=1779372816 instance=ExtResource("9_l77qo")]
-position = Vector2(-584, -104)
-
-[node name="Sprite2D" parent="Environment/Rathaus" index="0"]
-texture = ExtResource("18_jrnar")
-
-[node name="CollisionShape2D" parent="Environment/Rathaus" index="1"]
-position = Vector2(0, 2.5)
-shape = SubResource("RectangleShape2D_dawlq")
-
-[node name="CollisionShape2D" parent="Environment/Rathaus/InteractionArea" index="2"]
-position = Vector2(0, 15)
-disabled = true
+position = Vector2(-584, -96)
+texture = SubResource("CompressedTexture2D_1egfj")
+id = 1
 
 [node name="Gate" parent="Environment" unique_id=1886308699 instance=ExtResource("10_2mmsw")]
 position = Vector2(-298, 0)
@@ -634,20 +632,32 @@ spawn_node = NodePath("../../FX")
 y_sort_enabled = true
 
 [node name="KiddoNPC" parent="NPC" unique_id=1471927015 instance=ExtResource("18_a8jnx")]
-position = Vector2(-500, 50)
+position = Vector2(-450, 50)
 id = 0
 
 [node name="MayorNPC" parent="NPC" unique_id=1886138594 instance=ExtResource("18_a8jnx")]
-position = Vector2(-584, -50)
+position = Vector2(-584, 15)
 reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.5418796
+frame_progress = 0.1007078
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]
-shape = SubResource("CircleShape2D_dybux")
+shape = SubResource("CircleShape2D_a3e4m")
+
+[node name="Markers" type="Node2D" parent="." unique_id=1888461289 groups=["markers"]]
+script = ExtResource("29_1egfj")
+
+[node name="RatHouseSpawnPos" type="Marker2D" parent="Markers" unique_id=887362339]
+position = Vector2(-1200, 59)
+
+[node name="RatHouseExitPos" type="Marker2D" parent="Markers" unique_id=257440908]
+position = Vector2(-584, -68)
+
+[node name="RatHouseCamPos" type="Marker2D" parent="Markers" unique_id=381274108]
+position = Vector2(-1200, 0)
 
 [node name="WorldBounds" type="StaticBody2D" parent="." unique_id=1827856613]
 collision_layer = 2
@@ -700,5 +710,4 @@ wait_time = 8.0
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 
-[editable path="Environment/Rathaus"]
 [editable path="NPC/MayorNPC"]

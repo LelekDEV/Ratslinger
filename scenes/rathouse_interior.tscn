@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://bpxoyc0unsk8n"]
+
+[ext_resource type="Texture2D" uid="uid://dokwhkxtigqel" path="res://graphics/environment/buildings/interiors/rathouse_interior.png" id="1_oxya2"]
+[ext_resource type="Script" uid="uid://j7wexbf37oie" path="res://scripts/rathouse_interior.gd" id="1_schjg"]
+[ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="3_ve1jr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ve1jr"]
+size = Vector2(36, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rhkwo"]
+radius = 4.0
+height = 48.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mqc7"]
+size = Vector2(150, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nd4op"]
+size = Vector2(250, 20)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ve1jr"]
+radius = 1.0
+height = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ve1jr"]
+radius = 6.0827627
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7mqc7"]
+radius = 3.0
+height = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ipej"]
+size = Vector2(34, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qeg0c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sf4b1"]
+size = Vector2(28, 17)
+
+[node name="RathouseInterior" type="Node2D" unique_id=157548817]
+z_index = -1
+script = ExtResource("1_schjg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=830365365]
+texture = ExtResource("1_oxya2")
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=260634001]
+z_index = -1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -321.0
+offset_top = -186.0
+offset_right = 321.0
+offset_bottom = 186.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 1)
+
+[node name="InteractionArea" parent="." unique_id=2062214746 instance=ExtResource("3_ve1jr")]
+position = Vector2(0, 59)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=26219935]
+shape = SubResource("RectangleShape2D_ve1jr")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=710407179]
+collision_layer = 2
+collision_mask = 2
+
+[node name="RopeCollision1" type="CollisionShape2D" parent="StaticBody2D" unique_id=399205291]
+z_index = 1
+position = Vector2(-54, 32)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_rhkwo")
+
+[node name="RopeCollision2" type="CollisionShape2D" parent="StaticBody2D" unique_id=500557508]
+position = Vector2(60, 31)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_rhkwo")
+
+[node name="LeftBound" type="CollisionShape2D" parent="StaticBody2D" unique_id=666586426]
+position = Vector2(127, 0)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_7mqc7")
+
+[node name="RightBound" type="CollisionShape2D" parent="StaticBody2D" unique_id=1415205258]
+position = Vector2(-127, 0)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_7mqc7")
+
+[node name="TopBound" type="CollisionShape2D" parent="StaticBody2D" unique_id=1132351023]
+position = Vector2(0, -77)
+shape = SubResource("RectangleShape2D_nd4op")
+
+[node name="BottomBound" type="CollisionShape2D" parent="StaticBody2D" unique_id=1365161026]
+position = Vector2(0, 77)
+shape = SubResource("RectangleShape2D_nd4op")
+
+[node name="FlagCollision1" type="CollisionShape2D" parent="StaticBody2D" unique_id=140278933]
+position = Vector2(38, -26)
+shape = SubResource("CapsuleShape2D_ve1jr")
+
+[node name="FlagCollision2" type="CollisionShape2D" parent="StaticBody2D" unique_id=295335463]
+position = Vector2(-35, -25)
+shape = SubResource("CapsuleShape2D_ve1jr")
+
+[node name="PlantPotCollision1" type="CollisionShape2D" parent="StaticBody2D" unique_id=1144757289]
+position = Vector2(-69, -23)
+shape = SubResource("CircleShape2D_ve1jr")
+
+[node name="PlantPotCollision2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1661982460]
+position = Vector2(72, -21)
+shape = SubResource("CircleShape2D_ve1jr")
+
+[node name="ChairCollision" type="CollisionShape2D" parent="StaticBody2D" unique_id=1643098658]
+position = Vector2(0, -40)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_7mqc7")
+
+[node name="TableCollision" type="CollisionShape2D" parent="StaticBody2D" unique_id=1096775071]
+position = Vector2(0, -27)
+shape = SubResource("RectangleShape2D_3ipej")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=23435500]
+position = Vector2(-100, -49)
+shape = SubResource("RectangleShape2D_qeg0c")
+
+[node name="InteractionArea2" parent="." unique_id=777438372 instance=ExtResource("3_ve1jr")]
+position = Vector2(-100, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea2" unique_id=1155336740]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_sf4b1")

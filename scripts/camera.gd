@@ -10,6 +10,8 @@ var shake_smoothness: float = 0.8
 var intro_tween: Tween
 var intro_value: float = 0
 
+@onready var markers: Node2D = get_tree().get_first_node_in_group("markers")
+
 @export var gate: StaticBody2D
 
 func _ready() -> void:
@@ -26,6 +28,13 @@ func _ready() -> void:
 	update_scale()
 
 func _physics_process(_delta: float) -> void:
+	if get_parent().location == Player.Locations.TOWN_HALL:
+		global_position = markers.points.rat_house_cam_pos
+		position_smoothing_enabled = false
+		return
+	
+	position_smoothing_enabled = true
+	
 	if shake_tween and shake_tween.is_running():
 		var target: Vector2 = Vector2.RIGHT.rotated(randf_range(-PI, PI)) * sin(shake_value * PI) * shake_intensity
 		offset = lerp(offset, target, 1 - shake_smoothness)

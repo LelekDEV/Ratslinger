@@ -9,6 +9,7 @@ signal player_location_change
 signal player_coin_collect
 
 signal game_loaded
+signal game_save_queued
 
 signal scale_changed
 
