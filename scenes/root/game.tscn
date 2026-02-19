@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://btwriu2gbmrm3" path="res://scripts/dialogue_strips.gd" id="9_wt5dx"]
 [ext_resource type="PackedScene" uid="uid://cxmq3gxpsmp2o" path="res://scenes/gate.tscn" id="10_2mmsw"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="10_r3fff"]
+[ext_resource type="Script" uid="uid://dlwbmyxuygwjb" path="res://scripts/coins_container.gd" id="11_fulw8"]
 [ext_resource type="Script" uid="uid://cp448dgxo5kaw" path="res://scripts/animation_handler.gd" id="12_dawlq"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 [ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
@@ -38,6 +39,60 @@ viewport_path = NodePath("Weather/SubViewport")
 [sub_resource type="Theme" id="Theme_s3lrj"]
 default_font = ExtResource("4_836xp")
 default_font_size = 32
+
+[sub_resource type="Animation" id="Animation_57iyq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ContainerContent:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 10)]
+}
+
+[sub_resource type="Animation" id="Animation_fulw8"]
+resource_name = "slide_in"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ContainerContent:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_c2ull"]
+resource_name = "slide_out"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ContainerContent:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 10)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_57iyq"]
+_data = {
+&"RESET": SubResource("Animation_57iyq"),
+&"slide_in": SubResource("Animation_fulw8"),
+&"slide_out": SubResource("Animation_c2ull")
+}
 
 [sub_resource type="Theme" id="Theme_a8jnx"]
 default_font = ExtResource("4_836xp")
@@ -462,25 +517,39 @@ custom_minimum_size = Vector2(60, 50)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+script = ExtResource("11_fulw8")
 
-[node name="CoinSprite" type="Sprite2D" parent="UI/MarginContainer/CoinsContainer" unique_id=1931979703]
-position = Vector2(36, 15)
+[node name="Timer" type="Timer" parent="UI/MarginContainer/CoinsContainer" unique_id=415128966]
+wait_time = 2.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/MarginContainer/CoinsContainer" unique_id=1235271342]
+libraries/ = SubResource("AnimationLibrary_57iyq")
+
+[node name="ContainerContent" type="Control" parent="UI/MarginContainer/CoinsContainer" unique_id=1255379328]
+anchors_preset = 0
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 50.0
+
+[node name="CoinSprite" type="Sprite2D" parent="UI/MarginContainer/CoinsContainer/ContainerContent" unique_id=1931979703]
+position = Vector2(36, 16)
 scale = Vector2(8, 8)
 texture = ExtResource("6_02ogl")
 region_enabled = true
 region_rect = Rect2(0, 0, 8, 8)
 
-[node name="CoinLabel" type="Label" parent="UI/MarginContainer/CoinsContainer" unique_id=154091310]
+[node name="CoinLabel" type="Label" parent="UI/MarginContainer/CoinsContainer/ContainerContent" unique_id=154091310]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 24.0
-offset_top = -22.0
-offset_right = 614.0
-offset_bottom = 22.0
+offset_left = 44.0
+offset_top = -17.0
+offset_right = 634.0
+offset_bottom = 27.0
 grow_horizontal = 0
 grow_vertical = 2
 theme = SubResource("Theme_a8jnx")
@@ -641,7 +710,7 @@ reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.1007078
+frame_progress = 0.011518154
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]

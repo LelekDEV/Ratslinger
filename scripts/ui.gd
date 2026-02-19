@@ -7,7 +7,7 @@ class_name UI
 
 @onready var enemies_label: Label = $MarginContainer/VBoxContainer/EnemiesLabel
 @onready var mission_label: Label = $MarginContainer/VBoxContainer/MissionLabel
-@onready var coin_label: Label = $MarginContainer/CoinsContainer/CoinLabel
+@onready var coin_label: Label = $MarginContainer/CoinsContainer/ContainerContent/CoinLabel
 
 @onready var accuracy_bar: AccuracyBar = $AccuracyBar
 @onready var bullet_bar: BulletBar = $BulletBar
