@@ -121,9 +121,9 @@ func handle_shooting() -> void:
 		velocity -= direction * recoil
 		
 		if is_special:
-			GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT_SPECIAL, -4)
+			GlobalAudio.play_sfx(AudioConsts.SFX.PLAYER_SHOOT_SPECIAL, -4)
 		else:
-			GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT, -4)
+			GlobalAudio.play_sfx(AudioConsts.SFX.PLAYER_SHOOT, -4)
 		
 		SignalBus.player_shoot.emit(false)
 
@@ -178,7 +178,7 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	health -= amount
 	
 	if health <= 0 and not is_queued_to_die:
-		GlobalAudio.play_sfx(GlobalAudio.SFX.LOSE)
+		GlobalAudio.play_sfx(AudioConsts.SFX.LOSE)
 		SignalBus.player_death.emit(from_projectile, from_enemy)
 		
 		is_queued_to_die = true
@@ -187,7 +187,7 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	
 	ui.update_hearts(health)
 	
-	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
+	GlobalAudio.play_sfx(AudioConsts.SFX.HIT)
 	hit_cooldown.start()
 	
 	return false

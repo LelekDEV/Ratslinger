@@ -27,6 +27,9 @@ var popup_value: float = 0
 func _ready() -> void:
 	SignalBus.player_coin_collect.connect(update_coin_count)
 	
+	SignalBus.accuracy_perfect_entered.connect(animation.play.bind("accuracy_perfect"))
+	SignalBus.accuracy_perfect_early.connect(GlobalAudio.play_sfx.bind(AudioConsts.SFX.PERFECT))
+	
 	SignalBus.scale_changed.connect(update_scale)
 	
 	Dialogic.timeline_started.connect(start_dialogue)

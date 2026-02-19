@@ -59,7 +59,7 @@ func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
 		heal_particles.emitting = true
 		player.add_child(heal_particles)
 		
-		GlobalAudio.play_sfx(GlobalAudio.SFX.PLAYER_SHOOT_VAMPIRE, -12, 1, 0.2)
+		GlobalAudio.play_sfx(AudioConsts.SFX.PLAYER_SHOOT_VAMPIRE, -12, 1, 0.2)
 	
 	elif type == Type.POISON:
 		enemy.apply_poison()
@@ -85,7 +85,7 @@ func _on_area_entered(area: Area2D) -> void:
 	
 	if area.is_in_group("enemy_projectile"):
 		if area.projectile_collide_cooldown.is_stopped():
-			GlobalAudio.play_sfx(GlobalAudio.SFX.BLOCK)
+			GlobalAudio.play_sfx(AudioConsts.SFX.BLOCK)
 			
 			var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOCK)
 			particles.position = global_position

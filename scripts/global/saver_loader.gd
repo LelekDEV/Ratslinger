@@ -19,6 +19,11 @@ var upgrades_save_paths: Array = [
 	^"stat_1"
 ]
 
+# Save paths relative to Settings singleton
+var settings_save_paths: Array = [
+	^"accuracy_flash_accessibility"
+]
+
 var save_on_exit: bool = true
 
 func _ready() -> void:
@@ -56,6 +61,9 @@ func save_game() -> void:
 	for path in upgrades_save_paths:
 		data[path] = Upgrades.get_indexed(path)
 	
+	for path in settings_save_paths:
+		data[path] = Settings.get_indexed(path)
+	
 	file.store_var(data)
 	file.close()
 
@@ -71,6 +79,8 @@ func load_game() -> void:
 			Global.set_indexed(path, data[path])
 		elif path in upgrades_save_paths:
 			Upgrades.set_indexed(path, data[path])
+		elif path in settings_save_paths:
+			Settings.set_indexed(path, data[path])
 	
 	file.close()
 	

@@ -1,25 +1,12 @@
 extends Node
 
-enum SFX {HIT, LOSE, BLOCK,ENEMY_SHOOT, PLAYER_SHOOT, DANGER, COLLECT, SELECT, PLAYER_SHOOT_VAMPIRE, PLAYER_SHOOT_SPECIAL}
-
-func play_sfx(sfx: SFX, volume: int = 0, pitch: float = 1, delay: float = 0) -> void:
+func play_sfx(sfx: AudioStream, volume: int = 0, pitch: float = 1, delay: float = 0) -> void:
 	await get_tree().create_timer(delay).timeout
 	
 	var audio = AudioStreamPlayer.new()
 	
-	match sfx:
-		SFX.HIT: audio.stream = preload("res://audio/sfx/hit.wav")
-		SFX.LOSE: audio.stream = preload("res://audio/sfx/lose.wav")
-		SFX.BLOCK: audio.stream = preload("res://audio/sfx/block.wav")
-		SFX.ENEMY_SHOOT: audio.stream = preload("res://audio/sfx/enemy_shoot.wav")
-		SFX.PLAYER_SHOOT: audio.stream = preload("res://audio/sfx/player_shoot.wav")
-		SFX.DANGER: audio.stream = preload("res://audio/sfx/danger.wav")
-		SFX.COLLECT: audio.stream = preload("res://audio/sfx/collect.wav")
-		SFX.SELECT: audio.stream = preload("res://audio/sfx/select.wav")
-		SFX.PLAYER_SHOOT_VAMPIRE: audio.stream = preload("res://audio/sfx/player_shoot_vampire.wav")
-		SFX.PLAYER_SHOOT_SPECIAL: audio.stream = preload("res://audio/sfx/player_shoot_special.wav")
-	
-	audio.set_meta("sfx", sfx)
+	audio.stream = sfx
+	audio.set_meta("sfx", sfx.resource_path)
 	audio.volume_db = volume
 	audio.pitch_scale = pitch
 	

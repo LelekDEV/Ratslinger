@@ -228,7 +228,7 @@ func apply_fire(uid: StringName = Global.get_uid(), ticks: int = 8) -> void:
 	fire_tick.start()
 
 func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false, ignore_poison: bool = false) -> void:
-	GlobalAudio.play_sfx(GlobalAudio.SFX.HIT)
+	GlobalAudio.play_sfx(AudioConsts.SFX.HIT)
 	
 	var final_amount = amount * (1.2 if (poison_value >= 1 or poison_value == -1) and not ignore_poison else 1.0)
 	health -= final_amount
@@ -291,7 +291,7 @@ func _on_kick_delay_timeout() -> void:
 	player.take_damage(damage, null, self)
 
 func _on_shoot_notion_timer_timeout() -> void:
-	GlobalAudio.play_sfx(GlobalAudio.SFX.ENEMY_SHOOT, -6)
+	GlobalAudio.play_sfx(AudioConsts.SFX.ENEMY_SHOOT, -6)
 	
 	detach_attack_highlight()
 	spawn_shotgun_projectile()

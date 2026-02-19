@@ -78,7 +78,7 @@ func _on_upgrade_button_pressed() -> void:
 		Upgrades.levels[page] += 1
 		Upgrades.stat_1[page] = 10 - level
 		
-		GlobalAudio.play_sfx(GlobalAudio.SFX.SELECT, -4)
+		GlobalAudio.play_sfx(AudioConsts.SFX.SELECT, -4)
 	
 	update_labels()
 

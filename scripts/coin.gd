@@ -56,7 +56,7 @@ func _physics_process(_delta: float) -> void:
 			velocity = lerp(velocity, Vector2.ZERO, 0.05)
 
 func collect() -> void:
-	GlobalAudio.play_sfx(GlobalAudio.SFX.COLLECT, -2, randf_range(0.9, 1.1))
+	GlobalAudio.play_sfx(AudioConsts.SFX.COLLECT, -2, randf_range(0.9, 1.1))
 	Global.coins += 1
 	SignalBus.player_coin_collect.emit()
 	
