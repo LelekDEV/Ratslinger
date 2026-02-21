@@ -9,6 +9,7 @@ var shake_smoothness: float = 0.8
 
 var intro_tween: Tween
 var intro_value: float = 0
+var intro_skip: bool = false
 
 @onready var markers: Node2D = get_tree().get_first_node_in_group("markers")
 
@@ -16,7 +17,10 @@ var intro_value: float = 0
 
 func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
-	SignalBus.title_exit.connect(animate_intro)
+	
+	if not Settings.skip_title:
+		intro_value = 1
+		SignalBus.title_exit.connect(animate_intro)
 	
 	update_scale()
 	

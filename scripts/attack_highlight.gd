@@ -45,6 +45,6 @@ func start_alternate_tween() -> void:
 		.set_ease(Tween.EASE_IN_OUT)
 	
 	for i in range(3):
-		alternate_tween.tween_callback(GlobalAudio.play_sfx.bind(GlobalAudio.SFX.DANGER, -4))
+		alternate_tween.tween_callback(GlobalAudio.play_sfx.bind(AudioConsts.SFX.DANGER, -4))
 		alternate_tween.tween_property(self, "alpha", 1, 0.1)
 		alternate_tween.tween_property(self, "alpha", 0.0 if i == 2 else 0.5, 0.1)

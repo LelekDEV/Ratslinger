@@ -28,7 +28,9 @@ func _ready() -> void:
 	SignalBus.player_coin_collect.connect(update_coin_count)
 	
 	SignalBus.accuracy_perfect_entered.connect(animation.play.bind("accuracy_perfect"))
-	SignalBus.accuracy_perfect_early.connect(GlobalAudio.play_sfx.bind(AudioConsts.SFX.PERFECT))
+	
+	if not SignalBus.accuracy_perfect_early.is_connected(GlobalAudio.play_sfx):
+		SignalBus.accuracy_perfect_early.connect(GlobalAudio.play_sfx.bind(AudioConsts.SFX.PERFECT))
 	
 	SignalBus.scale_changed.connect(update_scale)
 	
@@ -40,6 +42,8 @@ func _ready() -> void:
 			mission_label.text = "No mission active"
 			animation.play("mission_redeem")
 	)
+	
+	ready_load()
 	
 	update_scale()
 	
@@ -61,7 +65,8 @@ func _ready() -> void:
 	show_location_popup()
 	update_coin_count()
 	update_enemy_count()
-	
+
+func ready_load() -> void:
 	await SignalBus.game_loaded
 	
 	Global.update_dialogic_var()

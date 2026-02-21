@@ -4,6 +4,8 @@ class_name Coin
 static func instantiate() -> Coin:
 	return preload("res://scenes/coin.tscn").instantiate() as Coin
 
+@onready var bound_rect: ReferenceRect = get_tree().get_first_node_in_group("coin_bound_rect")
+
 var target_player: Player
 
 var lerp_tween: Tween
@@ -24,6 +26,9 @@ var mode: Modes = Modes.MAGNET
 
 func _ready() -> void:
 	if mode != Modes.ARC:
+		if not bound_rect.get_rect().has_point(global_position):
+			collect()
+		
 		return
 	
 	arc_tween = create_tween() \

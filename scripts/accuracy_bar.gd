@@ -39,10 +39,16 @@ func get_type_from_value(value: float) -> int:
 	return 1
 
 func accuracy_signal() -> void:
-	await get_tree().create_timer(accuracy_tresholds[1] * progress_time - 0.1).timeout
+	const EARLY_OFFSET: float = 0.08
+	
+	await get_tree().create_timer(accuracy_tresholds[1] * progress_time - EARLY_OFFSET).timeout
+	
+	if get_type_from_value(progress_value + EARLY_OFFSET * progress_time) != 2:
+		return
+	
 	SignalBus.accuracy_perfect_early.emit()
 	
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(EARLY_OFFSET).timeout
 	SignalBus.accuracy_perfect_entered.emit()
 
 func start(_miss: bool = false) -> void:

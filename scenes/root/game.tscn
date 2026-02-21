@@ -759,7 +759,7 @@ reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.25772497
+frame_progress = 0.5244731
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]
@@ -798,7 +798,7 @@ shape = SubResource("RectangleShape2D_jrnar")
 position = Vector2(-664, 31)
 shape = SubResource("RectangleShape2D_jrnar")
 
-[node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=1017912923]
+[node name="CoinBoundRect" type="ReferenceRect" parent="." unique_id=1017912923 groups=["coin_bound_rect"]]
 offset_left = -270.0
 offset_top = -180.0
 offset_right = 270.0

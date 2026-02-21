@@ -23,6 +23,12 @@ var sprites_scale_tween: Tween
 var sprites_scale_value: float = 0
 
 func _ready() -> void:
+	await SignalBus.game_loaded
+	
+	if Settings.skip_title:
+		Global.is_title_on = false
+		SignalBus.title_exited.emit()
+	
 	if not Global.is_title_on:
 		return
 	

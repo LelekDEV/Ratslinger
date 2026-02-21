@@ -21,7 +21,8 @@ var upgrades_save_paths: Array = [
 
 # Save paths relative to Settings singleton
 var settings_save_paths: Array = [
-	^"accuracy_flash_accessibility"
+	^"accuracy_flash_accessibility",
+	^"skip_title"
 ]
 
 var save_on_exit: bool = true
