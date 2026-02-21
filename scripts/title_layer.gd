@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@export var tail_speed_curve: Curve
+@export var tail_frame_curve: Curve
 
 @onready var letters: HBoxContainer = $SubViewport/Letters
 @onready var tail_sprite: Sprite2D = $SubViewport/TailSprite
@@ -78,8 +78,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	frame += delta
-	tail_anim += tail_speed_curve.sample(frame) * 0.5
-	tail_sprite.frame = min(int(tail_anim), tail_sprite.hframes - 1)
+	tail_sprite.frame = int(tail_frame_curve.sample(frame))
 	
 	texture_rect.position = \
 		((get_viewport().get_visible_rect().size / scale - texture_rect.size) / 2 + Vector2.ONE * 10) \

@@ -13,7 +13,7 @@ func play_sfx(sfx: AudioStream, volume: int = 0, pitch: float = 1, delay: float 
 	audio.finished.connect(on_audio_finished.bind(audio))
 	
 	for played_audio in get_children():
-		if played_audio.get_meta("sfx") == sfx and played_audio.get_playback_position() < 0.05:
+		if played_audio.get_meta("sfx") == sfx.resource_path and played_audio.get_playback_position() < 0.05:
 			played_audio.stop()
 			played_audio.queue_free()
 	
