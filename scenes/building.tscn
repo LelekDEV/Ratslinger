@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ben8b5g3o6gf6" path="res://scripts/building.gd" id="1_ejq8p"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="2_uvy8r"]
 [ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="3_ejq8p"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/rain_surface.gd" id="3_rla3o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rla3o"]
 atlas = ExtResource("3_ejq8p")
@@ -37,10 +38,14 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_ejq8p")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=271440179]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=271440179 node_paths=PackedStringArray("spawn_node")]
 sprite_frames = SubResource("SpriteFrames_uvy8r")
 animation = &"buildings"
 frame = 1
+script = ExtResource("3_rla3o")
+spawn_node = NodePath("../LocalFX")
+
+[node name="LocalFX" type="Node2D" parent="." unique_id=851241081]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=21281098]
 position = Vector2(0, -0.75)

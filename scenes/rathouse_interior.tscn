@@ -7,6 +7,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ve1jr"]
 size = Vector2(36, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sf4b1"]
+size = Vector2(28, 17)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rhkwo"]
 radius = 4.0
 height = 48.0
@@ -32,9 +35,6 @@ height = 16.0
 size = Vector2(34, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qeg0c"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sf4b1"]
-size = Vector2(28, 17)
 
 [node name="RathouseInterior" type="Node2D" unique_id=157548817]
 z_index = -1
@@ -62,10 +62,19 @@ size_flags_vertical = 4
 color = Color(0, 0, 0, 1)
 
 [node name="InteractionArea" parent="." unique_id=2062214746 instance=ExtResource("3_ve1jr")]
+z_index = 2
 position = Vector2(0, 59)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=26219935]
 shape = SubResource("RectangleShape2D_ve1jr")
+
+[node name="InteractionArea2" parent="." unique_id=777438372 instance=ExtResource("3_ve1jr")]
+visible = false
+position = Vector2(-100, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea2" unique_id=1155336740]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_sf4b1")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=710407179]
 collision_layer = 2
@@ -128,10 +137,3 @@ shape = SubResource("RectangleShape2D_3ipej")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=23435500]
 position = Vector2(-100, -49)
 shape = SubResource("RectangleShape2D_qeg0c")
-
-[node name="InteractionArea2" parent="." unique_id=777438372 instance=ExtResource("3_ve1jr")]
-position = Vector2(-100, -30)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea2" unique_id=1155336740]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_sf4b1")

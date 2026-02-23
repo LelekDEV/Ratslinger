@@ -452,9 +452,6 @@ size = Vector2(26, 78)
 y_sort_enabled = true
 script = ExtResource("1_o8yes")
 
-[node name="InnerRathouse" parent="." unique_id=157548817 instance=ExtResource("2_1egfj")]
-position = Vector2(-1200, 0)
-
 [node name="TitleLayer" parent="." unique_id=1948925533 instance=ExtResource("2_dybux")]
 visible = false
 
@@ -462,7 +459,7 @@ visible = false
 process_mode = 3
 visible = false
 
-[node name="Weather" type="CanvasLayer" parent="." unique_id=1359549158]
+[node name="Weather" type="CanvasLayer" parent="." unique_id=1359549158 groups=["weather_layer"]]
 layer = 0
 scale = Vector2(4, 4)
 transform = Transform2D(4, 0, 0, 4, 0, 0)
@@ -701,6 +698,9 @@ y_sort_enabled = true
 z_index = 1
 y_sort_enabled = true
 
+[node name="InnerRathouse" parent="." unique_id=157548817 instance=ExtResource("2_1egfj")]
+position = Vector2(-1200, 0)
+
 [node name="Environment" type="Node2D" parent="." unique_id=268704630]
 y_sort_enabled = true
 
@@ -709,7 +709,7 @@ position = Vector2(-452, -95)
 texture = ExtResource("24_a3e4m")
 
 [node name="Rathaus" parent="Environment" unique_id=1779372816 instance=ExtResource("9_l77qo")]
-position = Vector2(-584, -96)
+position = Vector2(-584, -95)
 texture = SubResource("CompressedTexture2D_1egfj")
 id = 1
 
@@ -759,7 +759,7 @@ reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.5244731
+frame_progress = 0.56367606
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]

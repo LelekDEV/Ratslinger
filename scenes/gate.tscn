@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cxmq3gxpsmp2o"]
+[gd_scene format=3 uid="uid://cxmq3gxpsmp2o"]
 
 [ext_resource type="Texture2D" uid="uid://coxn8hkpro15a" path="res://graphics/environment/gate_front.png" id="1_xfvdi"]
+[ext_resource type="Script" uid="uid://cq1yth4joycrx" path="res://scripts/rain_surface_sprite.gd" id="2_wi8tm"]
 [ext_resource type="Texture2D" uid="uid://kaxojo37tma2" path="res://graphics/environment/gate_back.png" id="2_xwxio"]
 [ext_resource type="Texture2D" uid="uid://ccpvkydl3si26" path="res://graphics/environment/lock.png" id="3_hudsw"]
 
@@ -84,38 +85,40 @@ _data = {
 &"unlock": SubResource("Animation_hudsw")
 }
 
-[node name="Gate" type="StaticBody2D"]
+[node name="Gate" type="StaticBody2D" unique_id=1402164671]
 collision_layer = 2
 collision_mask = 2
 
-[node name="FrontSprite" type="Sprite2D" parent="."]
+[node name="FrontSprite" type="Sprite2D" parent="." unique_id=510162015 node_paths=PackedStringArray("spawn_node")]
 z_index = 1
 texture = ExtResource("1_xfvdi")
 region_enabled = true
 region_rect = Rect2(0, 0, 46, 75)
+script = ExtResource("2_wi8tm")
+treshold_mod = 2.0
+spawn_node = NodePath(".")
 
-[node name="BackSprite" type="Sprite2D" parent="."]
+[node name="BackSprite" type="Sprite2D" parent="." unique_id=1795218751 node_paths=PackedStringArray("spawn_node")]
 z_index = -1
 texture = ExtResource("2_xwxio")
 region_enabled = true
 region_rect = Rect2(0, 0, 46, 75)
+script = ExtResource("2_wi8tm")
+treshold_mod = 2.0
+spawn_node = NodePath(".")
 
-[node name="LockSprite" type="Sprite2D" parent="."]
+[node name="LockSprite" type="Sprite2D" parent="." unique_id=906606299]
 self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 texture = ExtResource("3_hudsw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1112022673]
 shape = SubResource("RectangleShape2D_hudsw")
 disabled = true
 
-[node name="AnimationPlayer1" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_rqvqh")
-}
-autoplay = "locked"
+[node name="AnimationPlayer1" type="AnimationPlayer" parent="." unique_id=1248181692]
+libraries/ = SubResource("AnimationLibrary_rqvqh")
+autoplay = &"locked"
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_iffko")
-}
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." unique_id=1124913062]
+libraries/ = SubResource("AnimationLibrary_iffko")

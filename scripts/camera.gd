@@ -17,14 +17,18 @@ var intro_skip: bool = false
 
 func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
-	
-	if not Settings.skip_title:
-		intro_value = 1
-		SignalBus.title_exit.connect(animate_intro)
+	SignalBus.title_exit.connect(animate_intro)
 	
 	update_scale()
 	
 	await SignalBus.game_loaded
+	
+	if Settings.skip_title:
+		intro_value = 1
+		global_position = get_parent().global_position
+		
+		reset_physics_interpolation()
+		reset_smoothing()
 	
 	reset_physics_interpolation()
 	reset_smoothing()
@@ -47,6 +51,7 @@ func _physics_process(_delta: float) -> void:
 	
 	if get_parent().global_position.x > gate.global_position.x:
 		global_position.x = max(-324 + get_viewport_rect().size.x / zoom.x / 2, get_parent().global_position.x)
+		global_position.y = get_parent().global_position.y
 	else:
 		global_position = get_parent().global_position
 	

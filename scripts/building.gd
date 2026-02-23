@@ -5,6 +5,8 @@ extends StaticBody2D
 @onready var player_cam: Camera2D = player.get_node("Camera2D")
 
 @onready var shop_layer: CanvasLayer = get_tree().get_first_node_in_group("shop_layer")
+@onready var weather_layer: CanvasLayer = get_tree().get_first_node_in_group("weather_layer")
+
 @onready var interaction_area: Area2D = $InteractionArea
 
 @onready var markers: Node2D = get_tree().get_first_node_in_group("markers")
@@ -49,3 +51,5 @@ func teleport():
 	player.location = Player.Locations.TOWN_HALL
 	player.global_position = markers.points.rat_house_spawn_pos
 	
+	weather_layer.visible = false
+	player.local_fx.visible = false
