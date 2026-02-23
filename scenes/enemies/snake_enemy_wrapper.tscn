@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://df6ql02lr7wrl"]
+[gd_scene format=3 uid="uid://df6ql02lr7wrl"]
 
 [ext_resource type="Script" uid="uid://cnbjd6ypdnc2v" path="res://scripts/snake_enemy_wrapper.gd" id="1_mpec2"]
 
-[node name="SnakeEnemyWrapper" type="Node2D"]
+[node name="SnakeEnemyWrapper" type="Node2D" unique_id=1228539077]
 script = ExtResource("1_mpec2")

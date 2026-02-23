@@ -759,11 +759,17 @@ reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.56367606
+frame_progress = 0.9522478
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]
 shape = SubResource("CircleShape2D_fulw8")
+
+[node name="InteractionArea" parent="NPC/MayorNPC" index="3" unique_id=31512601]
+position = Vector2(0, -13)
+
+[node name="CollisionShape2D" parent="NPC/MayorNPC/InteractionArea" index="2" unique_id=1744728279]
+position = Vector2(0, 13)
 
 [node name="Markers" type="Node2D" parent="." unique_id=1888461289 groups=["markers"]]
 script = ExtResource("29_1egfj")

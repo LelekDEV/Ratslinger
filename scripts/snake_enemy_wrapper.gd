@@ -123,6 +123,9 @@ func link_poision(ignore_i: int) -> void:
 		i += 1
 
 func link_health(health: float, caller: Enemy) -> void:
+	if caller.to_die:
+		return
+	
 	var to_die: bool = false
 	
 	for segment: Enemy in get_children():
@@ -130,6 +133,8 @@ func link_health(health: float, caller: Enemy) -> void:
 		
 		if health <= 0 and segment != caller:
 			segment.drop_coins_enabled = false
+			segment.to_die = true
+			
 			segment.die()
 			
 			to_die = true

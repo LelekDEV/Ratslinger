@@ -23,6 +23,7 @@ class_name Game
 var enemies_total: int = 5
 var enemies_to_spawn: int = enemies_total
 var enemies_killed: int = 0
+var enemies_prediction_weight: float = 0
 
 var is_wave_active: bool = false
 
@@ -55,10 +56,13 @@ func start_wave() -> void:
 	enemy_spawn_timer.wait_time = max(round((8 - log(Global.waves_cleared + 1)) * 100) / 100, 0.5)
 	enemy_spawn_timer.start()
 	
-	print("Wave %s started, enemy count: %s, spawn inteval: %s" % [
+	enemies_prediction_weight = min(0.1 + log(Global.waves_cleared / 2.0 + 1) / 5, 0.75)
+	
+	print("Wave %s started, enemy count: %s, spawn inteval: %s, prediction weight: %s" % [
 		Global.waves_cleared + 1, 
 		enemies_total,
-		enemy_spawn_timer.wait_time
+		enemy_spawn_timer.wait_time,
+		enemies_prediction_weight
 	])
 	
 	is_wave_active = true
@@ -102,6 +106,7 @@ func update_enemies(killed_id: Enemy.ID = -1, killed_amount: int = 1) -> void:
 
 func spawn_enemy() -> void:
 	if enemies_to_spawn <= 0:
+		enemy_spawn_timer.stop()
 		return
 	
 	var enemy_roll: float = randf_range(0, 1)
@@ -109,16 +114,18 @@ func spawn_enemy() -> void:
 	if enemy_roll > 0.2:
 		var enemy: Enemy = FoxEnemy.instantiate() if enemy_roll > 0.5 else BeaverEnemy.instantiate()
 		
-		if randi_range(0, 1) == 0:
-			if randi_range(0, 1) == 0:
+		if randi_range(0, 0) == 0:
+			if randi_range(0, 0) == 0:
 				enemy.global_position.x = -364
-				enemy.global_position.y = randi_range(100, 264) * -1 if randi_range(0, 1) == 0 else 1
+				enemy.global_position.y = randi_range(100, 264) * (-1 if randi_range(0, 1) == 0 else 1)
 			else:
 				enemy.global_position.x = 364
 				enemy.global_position.y = randi_range(-264, 264)
 		else:
 			enemy.global_position.x = randi_range(-364, 364)
 			enemy.global_position.y = -264 if randi_range(0, 1) == 0 else 264
+		
+		enemy.prediction_weight_1 = enemies_prediction_weight
 		
 		enemy.death.connect(update_enemies)
 		enemies.add_child(enemy)

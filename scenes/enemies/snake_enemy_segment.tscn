@@ -159,15 +159,11 @@ size = Vector2(20, 14)
 collision_mask = 4
 script = ExtResource("1_i1qjg")
 speed = 150.0
-fire_resitance = 0.9
-damage = null
+fire_resitance = 0.8
 id = 3
 ai = 2
 cooldown_time = 0.0
 shoot_count = 0
-shoot_spread_deg = null
-projectile_name = null
-min_player_distance = null
 
 [node name="PoisonParticles" type="CPUParticles2D" parent="." unique_id=2015414767]
 z_index = 1

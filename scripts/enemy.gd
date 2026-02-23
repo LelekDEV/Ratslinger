@@ -30,7 +30,7 @@ var health: float
 
 var poison_value: int = 0
 var fire_value: int = 0
-@export var fire_resitance: float = 0
+@export var fire_resitance: float = 0.33
 var ignored_fire_uid: StringName
 
 @export var damage: float = 1
@@ -63,6 +63,13 @@ enum AI {SHOOTER, KICKER, SEGMENT}
 
 @export var min_player_distance: float = 80
 
+# Prediction weights define how much to account for player's velocity on determining where to shoot
+var prediction_weight_1: float = 0.5
+# L to be influenced by wave difficulty scaling
+var prediction_weight_2: float = 0.5
+# L to be influenced by one-shot randomness
+var prediction_vector: Vector2
+
 # 1 - KICKER: remain stationary, trigger a kick attack on player's proximity, used for CowEnemy
 # Used nodes and variables:
 @onready var kick_delay: Timer
@@ -70,6 +77,7 @@ enum AI {SHOOTER, KICKER, SEGMENT}
 # 2 - SEGMENT: moves along other segments that share it's health, hurts player on collision, used for SnakeEnemy
 # Used nodes and variables:
 var is_vertical: bool = false
+var to_die: bool = false
 
 signal death
 signal damaged
@@ -114,7 +122,10 @@ func _physics_process(_delta: float) -> void:
 
 func handle_shooting() -> void:
 	var player_pos: Vector2 = player.global_position
-	direction = (player.global_position - gun_sprite.global_position).normalized()
+	
+	prediction_vector = lerp(prediction_vector, player.velocity * prediction_weight_1 * prediction_weight_2, 0.5)
+	
+	direction = (player.global_position + prediction_vector - gun_sprite.global_position).normalized()
 	
 	gun_sprite.global_rotation = direction.angle()
 	
@@ -123,6 +134,8 @@ func handle_shooting() -> void:
 		attack_highlight.alpha = abs(cos((1 - shoot_notion_timer.time_left / shoot_notion_timer.wait_time) * PI * 3)) * 0.5 + 0.5
 	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
+		prediction_weight_2 = randf_range(0, 0.5)
+		
 		shoot_notion_timer.start()
 		shoot_cooldown.start(cooldown_time * randf_range(0.8, 1.2))
 		
@@ -197,6 +210,9 @@ func spawn_projectile(angle_deg: float = 0) -> void:
 	add_child(particles)
 
 func die() -> void:
+	if to_die:
+		return
+	
 	death.emit(id)
 	
 	if drop_coins_enabled:
@@ -338,12 +354,12 @@ func _on_fire_tick_timeout() -> void:
 	if fire_value >= 1:
 		for enemy: Enemy in Global.all_enemies:
 			if randf_range(0, 1) > enemy.fire_resitance:
-				if ai == AI.SEGMENT and enemy.ai == AI.SEGMENT:
+				if enemy.ai == AI.SEGMENT:
 					if global_position.distance_squared_to(enemy.global_position) <= 20 ** 2:
-						enemy.apply_fire(ignored_fire_uid)
+						enemy.apply_fire(ignored_fire_uid, fire_value)
 				else:
 					if global_position.distance_squared_to(enemy.global_position) <= 50 ** 2:
-						enemy.apply_fire(ignored_fire_uid, fire_value)
+						enemy.apply_fire(ignored_fire_uid)
 		
 		fire_tick.start()
 	else:
