@@ -30,8 +30,11 @@
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
 [ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="24_a3e4m"]
 [ext_resource type="TileSet" uid="uid://cbnfobqiceman" path="res://data/environment_tileset.tres" id="26_4qk7b"]
+[ext_resource type="Script" uid="uid://dmhkp1a1alcm0" path="res://scripts/river.gd" id="27_57iyq"]
+[ext_resource type="Texture2D" uid="uid://cptftt3xu0xix" path="res://graphics/environment/water_tile.png" id="28_c2ull"]
 [ext_resource type="Script" uid="uid://c43tbfovvl81u" path="res://scripts/rain_surface_tilemap.gd" id="28_dybux"]
 [ext_resource type="Script" uid="uid://cmo05ufm0vqdm" path="res://scripts/markers.gd" id="29_1egfj"]
+[ext_resource type="Shader" uid="uid://fftxyux4c5ll" path="res://shaders/river.gdshader" id="29_p3ae7"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4qk7b"]
 viewport_path = NodePath("Weather/SubViewport")
@@ -425,12 +428,25 @@ radius = 30.0
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1egfj"]
 load_path = "res://.godot/imported/buildings.png-16398df9d57469099cfeae2d72369085.ctex"
 
+[sub_resource type="Curve2D" id="Curve2D_c2ull"]
+_data = {
+"points": PackedVector2Array(-7.351169, -20.877735, 7.351169, 20.877735, 0, 0, -3.5908794, -37.912537, 3.5908794, 37.912537, -40, 80, -10.279012, -21.02963, 10.279012, 21.02963, 6, 152, 0, -30.276476, 0, 30.276476, 16, 210, 7.7108645, -12.442224, -7.7108645, 12.442224, 6, 303, 3.8554323, -6.8128395, -3.8554323, 6.8128395, -33.139877, 336.3174, -3.5612028, -2.0096486, 3.5612028, 2.0096486, -32.36879, 352.1247, -48.66977, -10.728519, 48.66977, 10.728519, 32.016937, 376.79944, -2.3939197, -10.687775, 2.3939197, 10.687775, 66.8058, 427.40985, 5.783148, -33.831493, -5.783148, 33.831493, 73.89969, 506.32153, 28.950962, -14.265099, -28.950962, 14.265099, 24.830719, 565.2683, 0, 0, 0, 0, -138, 589)
+}
+point_count = 12
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_57iyq"]
+viewport_path = NodePath("Environment/RiverViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vjquk"]
+shader = ExtResource("29_p3ae7")
+shader_parameter/color = Color(0.29803923, 0.6313726, 0.6509804, 1)
+
 [sub_resource type="Curve" id="Curve_dawlq"]
 _data = [Vector2(0, 1), 0.0, -2.2396998, 0, 0, Vector2(0.6, 0.1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
 point_count = 3
 metadata/_snap_enabled = true
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_fulw8"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_57iyq"]
 resource_local_to_scene = true
 radius = 15.0
 
@@ -716,19 +732,33 @@ id = 1
 [node name="Gate" parent="Environment" unique_id=1886308699 instance=ExtResource("10_2mmsw")]
 position = Vector2(-298, 0)
 
-[node name="RiverRect1" type="ColorRect" parent="Environment" unique_id=1650193637]
-offset_left = -694.0
-offset_top = -234.0
-offset_right = -660.0
-offset_bottom = 234.0
-color = Color(0.2016, 0.44751993, 0.48, 1)
+[node name="RiverViewport" type="SubViewport" parent="Environment" unique_id=363236174]
+transparent_bg = true
+size = Vector2i(200, 600)
 
-[node name="RiverRect2" type="ColorRect" parent="Environment" unique_id=1883370981]
-offset_left = -693.0
-offset_top = -234.0
-offset_right = -661.0
-offset_bottom = 234.0
-color = Color(0.29899997, 0.63245, 0.65, 1)
+[node name="RiverPath" type="Path2D" parent="Environment/RiverViewport" unique_id=1242984792]
+position = Vector2(100, 0)
+curve = SubResource("Curve2D_c2ull")
+script = ExtResource("27_57iyq")
+
+[node name="RiverSpriteMask" type="Sprite2D" parent="Environment" unique_id=1200699497]
+clip_children = 1
+z_index = -1
+position = Vector2(-690, 60)
+texture = SubResource("ViewportTexture_57iyq")
+
+[node name="TileSprite" type="Sprite2D" parent="Environment/RiverSpriteMask" unique_id=137820490]
+texture_repeat = 2
+position = Vector2(1, -1)
+texture = ExtResource("28_c2ull")
+region_enabled = true
+region_rect = Rect2(0, 0, 200, 600)
+
+[node name="RiverSprite" type="Sprite2D" parent="Environment" unique_id=841346288]
+z_index = -1
+material = SubResource("ShaderMaterial_vjquk")
+position = Vector2(-690, 60)
+texture = SubResource("ViewportTexture_57iyq")
 
 [node name="TowerSprite1" type="Sprite2D" parent="Environment" unique_id=946271222]
 position = Vector2(-667, -47)
@@ -759,11 +789,11 @@ reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.1405123
+frame_progress = 0.3505515
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]
-shape = SubResource("CircleShape2D_fulw8")
+shape = SubResource("CircleShape2D_57iyq")
 
 [node name="InteractionArea" parent="NPC/MayorNPC" index="3" unique_id=31512601]
 position = Vector2(0, -13)
