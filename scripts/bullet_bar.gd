@@ -23,7 +23,7 @@ func _physics_process(_delta: float) -> void:
 	for slot in container.get_children():
 		var sprite: Sprite2D = slot.get_node("Sprite2D")
 		
-		sprite.position.y = lerp(sprite.position.y, -4.0 if i == current_slot else 0.0, 0.2)
+		sprite.position.y = Global.fixed_lerp(sprite.position.y, -4.0 if i == current_slot else 0.0, 0.2)
 		sprite.material.set_shader_parameter("is_visible", 
 			i == current_slot and \
 			player.reload_timer.is_stopped() and \

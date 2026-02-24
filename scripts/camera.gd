@@ -45,7 +45,7 @@ func _physics_process(_delta: float) -> void:
 	
 	if shake_tween and shake_tween.is_running():
 		var target: Vector2 = Vector2.RIGHT.rotated(randf_range(-PI, PI)) * sin(shake_value * PI) * shake_intensity
-		offset = lerp(offset, target, 1 - shake_smoothness)
+		offset = Global.fixed_lerp(offset, target, 1 - shake_smoothness)
 	else:
 		offset = Vector2.ZERO
 	
@@ -56,7 +56,7 @@ func _physics_process(_delta: float) -> void:
 		global_position = get_parent().global_position
 	
 	if Global.is_title_on:
-		global_position.y = lerp(468.0, get_parent().to_global(Vector2.ZERO).y, intro_value)
+		global_position.y = Global.fixed_lerp(468.0, get_parent().to_global(Vector2.ZERO).y, intro_value)
 		limit_bottom = 10000000
 	else:
 		limit_bottom = 234

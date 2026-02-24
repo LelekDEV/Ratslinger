@@ -158,7 +158,7 @@ func handle_movement() -> void:
 			fx.position = (fx.get_meta("flippable_pos") - floor(Vector2(37, 32) / 2)) * Vector2(1 if flip else -1, 1)
 			fx.visible = true
 	
-	velocity = lerp(velocity, input * speed, acceleration)
+	velocity = Global.fixed_lerp(velocity, input * speed, acceleration)
 
 func take_knockback(vector: Vector2) -> void:
 	if not hit_cooldown.is_stopped():

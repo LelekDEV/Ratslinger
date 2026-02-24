@@ -21,3 +21,5 @@ const SPECIAL_BULLETS_COLORS: Dictionary = {
 }
 
 const RAIN_CHANGE_TIME: float = 5
+
+const FIXED_LERP_RELATIVE_FPS: float = 144

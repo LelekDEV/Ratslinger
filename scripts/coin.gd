@@ -52,13 +52,13 @@ func _physics_process(_delta: float) -> void:
 	
 	elif mode == Modes.MAGNET:
 		if target_player:
-			global_position = lerp(global_position, target_player.global_position, lerp_value)
+			global_position = Global.fixed_lerp(global_position, target_player.global_position, lerp_value)
 			
 			if round(global_position) == round(target_player.global_position):
 				collect()
 		else:
 			global_position += velocity
-			velocity = lerp(velocity, Vector2.ZERO, 0.05)
+			velocity = Global.fixed_lerp(velocity, Vector2.ZERO, 0.05)
 
 func collect() -> void:
 	GlobalAudio.play_sfx(AudioConsts.SFX.COLLECT, -2, randf_range(0.9, 1.1))

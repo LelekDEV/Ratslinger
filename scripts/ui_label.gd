@@ -9,7 +9,7 @@ var progress: float = -1
 
 func _physics_process(delta: float) -> void:
 	if ":" in text and Global.game.is_wave_active:
-		visible_characters = lerp(len(text), text.split(":")[-1].length(), progress)
+		visible_characters = Global.fixed_lerp(len(text), text.split(":")[-1].length(), progress)
 		progress = min(progress + delta, 1)
 		
 		if Rect2(get_rect().position + rect_offset, get_rect().size).has_point(get_local_mouse_position()):

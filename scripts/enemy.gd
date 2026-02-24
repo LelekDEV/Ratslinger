@@ -116,14 +116,14 @@ func _physics_process(_delta: float) -> void:
 	elif ai == AI.SEGMENT:
 		velocity = Vector2.ZERO
 	else:
-		velocity = lerp(velocity, Vector2.ZERO, 0.3) # called as default logic to prevent infinite sliding from knockback for different AIs
+		velocity = Global.fixed_lerp(velocity, Vector2.ZERO, 0.3) # called as default logic to prevent infinite sliding from knockback for different AIs
 	
 	move_and_slide()
 
 func handle_shooting() -> void:
 	var player_pos: Vector2 = player.global_position
 	
-	prediction_vector = lerp(prediction_vector, player.velocity * prediction_weight_1 * prediction_weight_2, 0.5)
+	prediction_vector = Global.fixed_lerp(prediction_vector, player.velocity * prediction_weight_1 * prediction_weight_2, 0.5)
 	
 	direction = (player.global_position + prediction_vector - gun_sprite.global_position).normalized()
 	
@@ -165,13 +165,13 @@ func handle_movement() -> void:
 	direction = (player_pos - global_position).normalized()
 	
 	if global_position.distance_squared_to(player_pos) > min_player_distance ** 2:
-		velocity = lerp(velocity, (direction + separation_vel * separation_weight).normalized() * speed, 0.2)
+		velocity = Global.fixed_lerp(velocity, (direction + separation_vel * separation_weight).normalized() * speed, 0.2)
 		
 		if velocity.length() > 0:
 			sprite.play("walk")
 			walk_extend_timer.start()
 	else:
-		velocity = lerp(velocity, Vector2.ZERO, 0.2)
+		velocity = Global.fixed_lerp(velocity, Vector2.ZERO, 0.2)
 		
 		if walk_extend_timer.is_stopped():
 			sprite.play("idle")

@@ -46,6 +46,15 @@ func _physics_process(delta: float) -> void:
 			# clear, 5 - 10 min, ~65%
 			rain_value = -randi_range(300, 600)
 
+# THIS IS VERY IMPORTANT!!!
+# Use this func whenever you want to call lerp() in _physics_process() such that:
+# x = lerp(x, ...)
+# All the weights are based on relation as if engine ticks per second was Consts.FIXED_LERP_RELATIVE_FPS
+# The value, as the writing of this is set to 144
+# It may be changed in scripts/global/consts.gd although that's unadvised, since it will result in disregulating all weights
+func fixed_lerp(from: Variant, to: Variant, weight: Variant) -> Variant:
+	return lerp(from, to, 1 - exp(Consts.FIXED_LERP_RELATIVE_FPS * log(1 - weight) * get_physics_process_delta_time()))
+
 func get_rain_change_ratio() -> float:
 	if rain_value < 0:
 		return max(rain_value + Consts.RAIN_CHANGE_TIME, 0) / Consts.RAIN_CHANGE_TIME
