@@ -14,6 +14,7 @@ class_name Player
 
 @onready var shoot_cooldown: Timer = $ShootCooldown
 @onready var hit_cooldown: Timer = $HitCooldown
+@onready var regen_cooldown: Timer = $RegenCooldown
 @onready var reload_timer: Timer = $ReloadTimer
 
 @onready var local_fx: Node2D = $LocalFX
@@ -41,6 +42,7 @@ var last_location: Locations = location
 
 func _ready() -> void:
 	SignalBus.game_save_queued.connect(_on_game_save_queued)
+	take_damage(6)
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
@@ -125,6 +127,8 @@ func handle_shooting() -> void:
 		else:
 			GlobalAudio.play_sfx(AudioConsts.SFX.PLAYER_SHOOT, -4)
 		
+		regen_cooldown.start(5)
+		
 		SignalBus.player_shoot.emit(false)
 
 func handle_movement() -> void:
@@ -188,7 +192,9 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	ui.update_hearts(health)
 	
 	GlobalAudio.play_sfx(AudioConsts.SFX.HIT)
+	
 	hit_cooldown.start()
+	regen_cooldown.start(5)
 	
 	return false
 
@@ -203,3 +209,8 @@ func _on_reload_timer_timeout() -> void:
 func _on_game_save_queued() -> void:
 	if location == Locations.TOWN_HALL:
 		global_position = markers.points.rat_house_exit_pos
+
+func _on_regen_cooldown_timeout() -> void:
+	health = min(health + 0.2, max_health)
+	ui.update_hearts(health)
+	regen_cooldown.start(1)

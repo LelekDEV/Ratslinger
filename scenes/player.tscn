@@ -153,8 +153,13 @@ one_shot = true
 wait_time = 0.25
 one_shot = true
 
+[node name="RegenCooldown" type="Timer" parent="." unique_id=394046335]
+one_shot = true
+autostart = true
+
 [node name="ReloadTimer" type="Timer" parent="." unique_id=597588891]
 wait_time = 0.2
 one_shot = true
 
+[connection signal="timeout" from="RegenCooldown" to="." method="_on_regen_cooldown_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
