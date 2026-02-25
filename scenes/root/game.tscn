@@ -446,7 +446,7 @@ _data = [Vector2(0, 1), 0.0, -2.2396998, 0, 0, Vector2(0.6, 0.1), 0.0, 0.0, 0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_57iyq"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_p3ae7"]
 resource_local_to_scene = true
 radius = 15.0
 
@@ -789,11 +789,11 @@ reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
 animation = &"mayor"
-frame_progress = 0.3505515
+frame_progress = 0.95599794
 override_anim = "mayor"
 
 [node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]
-shape = SubResource("CircleShape2D_57iyq")
+shape = SubResource("CircleShape2D_p3ae7")
 
 [node name="InteractionArea" parent="NPC/MayorNPC" index="3" unique_id=31512601]
 position = Vector2(0, -13)

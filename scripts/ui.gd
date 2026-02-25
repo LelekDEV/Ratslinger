@@ -116,11 +116,7 @@ func end_dialogue() -> void:
 	crosshair.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
-	if Global.is_mission_active:
-		mission_label.text = "Mission - %s killed: %s/%s" % [
-			Dialogic.VAR.get_variable("mission_enemy_name"),
-			Global.mission_killed, Global.mission_total
-		]
+	update_enemy_count()
 	
 	animation.play("show_ui")
 	animation.play("hide_dialogue_strips")

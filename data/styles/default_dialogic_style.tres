@@ -36,6 +36,9 @@ overrides = {
 "box_color_use_global": "false",
 "box_margin_bottom": "80.0",
 "box_size": "Vector2(430, 102)",
+"next_indicator_position_offset": "Vector2(-25, -20)",
+"next_indicator_size": "Vector2(30, 24)",
+"next_indicator_texture": "\"res://graphics/ui/dialogue_next_indicator.png\"",
 "normal_font": "\"res://fonts/teeny_tiny_pixls.ttf\"",
 "text_size": "20.0",
 "text_use_global_font": "false",
@@ -50,7 +53,15 @@ scene = ExtResource("6_10lci")
 script = ExtResource("2_d5o37")
 scene = ExtResource("7_v8lob")
 overrides = {
-"boxes_offset": "Vector2(120, 0)"
+"boxes_min_size": "Vector2(100, 50)",
+"boxes_offset": "Vector2(160, 0)",
+"boxes_stylebox_focused": "\"res://data/styles/choice_panel_focus.tres\"",
+"boxes_stylebox_hovered": "\"res://data/styles/choice_panel_hover.tres\"",
+"boxes_stylebox_normal": "\"res://data/styles/choice_panel_normal.tres\"",
+"font_custom": "\"res://fonts/teeny_tiny_pixls.ttf\"",
+"font_size_custom": "20.0",
+"font_size_use_global": "false",
+"font_use_global": "false"
 }
 
 [sub_resource type="Resource" id="Resource_nvoed"]
@@ -76,4 +87,4 @@ layer_info = {
 "16": SubResource("Resource_nvoed"),
 "17": SubResource("Resource_b71q2")
 }
-metadata/_latest_layer = "15"
+metadata/_latest_layer = "13"

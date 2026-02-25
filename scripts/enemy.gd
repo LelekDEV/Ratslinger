@@ -30,7 +30,9 @@ var health: float
 
 var poison_value: int = 0
 var fire_value: int = 0
-@export var fire_resitance: float = 0.33
+@export var fire_resitance: float = 0.2
+
+var passed_fire_check: bool = false
 var ignored_fire_uid: StringName
 
 @export var damage: float = 1
@@ -40,7 +42,7 @@ var drop_coins_enabled: bool = true
 
 var attack_highlight: AttackHighlight
 
-enum ID {FOX, COW, BEAVER, SNAKE}
+enum ID {NULL = -1, FOX, COW, BEAVER, SNAKE}
 @export var id: ID
 
 # AI options
@@ -353,6 +355,12 @@ func _on_fire_tick_timeout() -> void:
 	
 	if fire_value >= 1:
 		for enemy: Enemy in Global.all_enemies:
+			if enemy.passed_fire_check:
+				continue
+			
+			enemy.passed_fire_check = true
+			enemy.set_deferred("passed_fire_check", false)
+			
 			if randf_range(0, 1) > enemy.fire_resitance:
 				if enemy.ai == AI.SEGMENT:
 					if global_position.distance_squared_to(enemy.global_position) <= 20 ** 2:

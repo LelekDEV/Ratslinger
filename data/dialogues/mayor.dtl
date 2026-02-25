@@ -31,7 +31,7 @@ Anything specific y'come for?
 	Then hear me out,[pause=0.25] 'cause I won't say it twice.
 	A bunch of those pesky {so}{mission_enemy_name}{sc} dominated my yard recently,[pause=0.25] and for the love of The Rat Lord,[pause=0.25] I cannot get rid of those bastards!
 	Make sure they won't ever willingly place a foot here again,[pause=0.25] let {so}{mission_enemy_amount} of them{sc} bite the dust,[pause=0.25] and that shall teach 'em a lesson!
-	You believe you can do it?
+	You believe you can do it? [kill {mission_enemy_amount} {mission_enemy_name}]
 	set {has_asked_for_mission_before} = true
 	label decide_on_mission
 	- Yes

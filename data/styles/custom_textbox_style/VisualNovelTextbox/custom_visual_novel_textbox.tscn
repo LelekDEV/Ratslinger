@@ -8,9 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://cj7ui0n4ohkfr" path="res://graphics/ui/dialogue_box.png" id="4_niius"]
 [ext_resource type="Script" uid="uid://dve1vwse2peji" path="res://addons/dialogic/Modules/Text/node_next_indicator.gd" id="5_40a50"]
 [ext_resource type="Script" uid="uid://bklme8oymw6h7" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/autoadvance_indicator.gd" id="6_07xym"]
-[ext_resource type="Texture2D" uid="uid://b0rpqfg4fhebk" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/next.svg" id="6_uch03"]
 [ext_resource type="Script" uid="uid://bak74s0kcr0ao" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="7_bi7sh"]
 [ext_resource type="Script" uid="uid://dceonlhoodheu" path="res://data/styles/custom_textbox_style/VisualNovelTextbox/scroll_speed_adjuster.gd" id="7_r803l"]
+[ext_resource type="Texture2D" uid="uid://cn53obrrmeiil" path="res://data/styles/custom_textbox_style/VisualNovelTextbox/next.svg" id="9_r803l"]
 [ext_resource type="StyleBox" uid="uid://m7gyepkysu83" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_name_label_panel.tres" id="9_yg8ig"]
 
 [sub_resource type="Animation" id="Animation_au0a2"]
@@ -344,7 +344,7 @@ size_flags_vertical = 8
 mouse_filter = 2
 script = ExtResource("5_40a50")
 show_on_questions = true
-texture = ExtResource("6_uch03")
+texture = ExtResource("9_r803l")
 metadata/_edit_layout_mode = 1
 
 [node name="AutoAdvanceProgressbar" type="ProgressBar" parent="Anchor/AnimationParent/Sizer/DialogTextPanel" unique_id=1001979187]

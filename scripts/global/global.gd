@@ -7,7 +7,7 @@ var coins: int = 30
 var block_input: bool = true
 var block_movement: bool = true
 
-var mission_target: Enemy.ID
+var mission_target: Enemy.ID = Enemy.ID.NULL
 var mission_total: int = 5
 var mission_killed: int = 0
 var is_mission_active: bool = false
@@ -65,15 +65,17 @@ func get_uid() -> StringName:
 	return str(Time.get_ticks_usec()) + "_" + str(randi())
 
 func roll_mission() -> void:
-	var discluded_id: Array = [Enemy.ID.COW]
-	var roll: int = randi_range(0, Enemy.ID.size() - discluded_id.size() - 1)
+	if mission_target != Enemy.ID.NULL:
+		var discluded_id: Array = [Enemy.ID.COW]
+		var roll: int = randi_range(0, Enemy.ID.size() - discluded_id.size() - 2)
+		
+		for id in discluded_id:
+			if roll >= id:
+				roll += 1
+		
+		@warning_ignore("int_as_enum_without_cast")
+		mission_target = roll
 	
-	for id in discluded_id:
-		if roll >= id:
-			roll += 1
-	
-	@warning_ignore("int_as_enum_without_cast")
-	mission_target = roll
 	update_dialogic_var()
 
 func update_dialogic_var() -> void:
