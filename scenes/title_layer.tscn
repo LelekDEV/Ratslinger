@@ -252,4 +252,4 @@ grow_vertical = 0
 scale = Vector2(0.333, 0.333)
 theme = SubResource("Theme_sqnma")
 theme_override_colors/font_color = Color(0.7764706, 0.6313726, 0.39215687, 1)
-text = "version: -"
+text = "version: 0.1.0 (in-dev)"
