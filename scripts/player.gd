@@ -42,7 +42,6 @@ var last_location: Locations = location
 
 func _ready() -> void:
 	SignalBus.game_save_queued.connect(_on_game_save_queued)
-	take_damage(6)
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()

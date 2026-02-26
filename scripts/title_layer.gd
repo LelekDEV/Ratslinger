@@ -7,9 +7,12 @@ extends CanvasLayer
 @onready var gun_sprite: Sprite2D = $SubViewport/GunSprite
 
 @onready var texture_rect: TextureRect = $TextureRect
+@onready var shadow_rect: TextureRect = $ShadowRect
 @onready var color_rect: ColorRect = $ColorRect
 
 @onready var button_container: VBoxContainer = $ButtonContainer
+
+@onready var version_label: Label = $VersionLabel
 
 @onready var all_sprites: Array = find_children("*Sprite*", "Sprite2D")
 
@@ -92,6 +95,11 @@ func _process(delta: float) -> void:
 	
 	color_rect.color.a = 1 - intro_value
 	
+	shadow_rect.size = texture_rect.size
+	shadow_rect.global_position = texture_rect.global_position + Vector2(4, 3)
+	
+	version_label.global_position = Vector2(6, get_viewport().get_visible_rect().size.y - version_label.size.y) / scale
+	
 	button_container.position = Vector2(0, texture_rect.size.y + texture_rect.position.y)
 	button_container.size = get_viewport().get_visible_rect().size / scale - Vector2(0, texture_rect.size.y + texture_rect.position.y)
 	
@@ -107,6 +115,7 @@ func exit() -> void:
 	
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	button_container.visible = false
+	version_label.visible = false
 	
 	sprites_scale_tween = create_tween() \
 		.set_ease(Tween.EASE_IN) \
