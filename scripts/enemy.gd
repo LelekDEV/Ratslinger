@@ -14,6 +14,9 @@ class_name Enemy
 @onready var poison_tick: Timer = $PoisonTick
 @onready var poison_particles: CPUParticles2D = $PoisonParticles
 
+@onready var collision_body: CollisionShape2D = $CollisionShapeBody
+@onready var collision_head: CollisionShape2D = $HeadshotArea/CollisionShapeHead
+
 @onready var fire_tick: Timer = $FireTick
 @onready var fire_fx: Sprite2D = $FireFX
 
@@ -46,7 +49,7 @@ enum ID {NULL = -1, FOX, COW, BEAVER, SNAKE}
 @export var id: ID
 
 # AI options
-enum AI {SHOOTER, KICKER, SEGMENT}
+enum AI {SHOOTER, KICKER, SEGMENT, AIRBORNE}
 @export var ai: AI
 
 # 0 - SHOOTER: follow the player and shoot projectiles, used for FoxEnemy
@@ -81,6 +84,18 @@ var prediction_vector: Vector2
 var is_vertical: bool = false
 var to_die: bool = false
 
+# 3 - AIRBORNE: fly alongside a path to ocasionally land and perform attacks
+@onready var flight_path: Path2D
+@onready var flight_follow: PathFollow2D
+@onready var flight_timer: Timer
+@onready var land_area: Area2D
+
+var target_angle: float
+var target_position: Vector2
+
+var land_tween: Tween
+var land_value: float = 0
+
 signal death
 signal damaged
 signal poison_start
@@ -97,30 +112,117 @@ func _ready() -> void:
 			
 		AI.KICKER:
 			kick_delay = get_node("KickDelay")
+		
+		AI.AIRBORNE:
+			flight_path = get_node("FlightPath")
+			flight_follow = get_node("FlightPath/FlightFollow")
+			attack_highlight = get_node("FlightPath/FlightFollow/AttackHighlight")
+			flight_timer = get_node("FlightTimer")
+			land_area = get_node("LandArea")
 	
 	health = max_health
 	
 	sprite.material.set_shader_parameter("flash_active", false)
 	sprite.material.set_shader_parameter("strip_active", false)
 	
+	process_mode = Node.PROCESS_MODE_DISABLED
 	# uncomment to test pre-spawned enemies properly
 	await get_tree().process_frame
+	process_mode = Node.PROCESS_MODE_INHERIT
 	
 	Global.all_enemies.append(self)
 
 func _exit_tree() -> void:
 	Global.all_enemies.erase(self)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if ai == AI.SHOOTER:
 		handle_movement()
 		handle_shooting()
+	
 	elif ai == AI.SEGMENT:
 		velocity = Vector2.ZERO
+	
+	elif ai == AI.AIRBORNE:
+		if flight_timer.is_stopped():
+			handle_landing()
+		else:
+			handle_flying(delta)
+	
 	else:
 		velocity = Global.fixed_lerp(velocity, Vector2.ZERO, 0.3) # called as default logic to prevent infinite sliding from knockback for different AIs
 	
 	move_and_slide()
+
+func handle_landing() -> void:
+	if not land_tween or not land_tween.is_running():
+		land_tween = create_tween() \
+			.set_trans(Tween.TRANS_CUBIC) \
+			.set_ease(Tween.EASE_IN_OUT)
+		
+		land_tween.tween_property(self, "land_value", 1, 0.5)
+		land_tween.tween_callback(func():
+			if player in land_area.get_overlapping_bodies():
+				player.take_knockback((player.global_position - global_position).normalized() * 150)
+				player.take_damage(damage, null, self)
+		)
+		land_tween.tween_interval(1)
+		land_tween.tween_property(self, "land_value", 0, 0.5)
+		land_tween.tween_callback(func():
+			flight_timer.start()
+			
+			sprite.visible = false
+			collision_body.set_deferred("disabled", true)
+			collision_head.set_deferred("disabled", true)
+		)
+		
+		target_position = flight_follow.global_position
+		global_position.x = target_position.x
+		
+		sprite.visible = true
+		collision_body.set_deferred("disabled", false)
+		collision_head.set_deferred("disabled", false)
+		
+		attack_highlight.start_decay_tween(false)
+	
+	velocity = Global.fixed_lerp(velocity, Vector2.ZERO, 0.3)
+	
+	global_position.y = target_position.y - 300 * (1 - land_value)
+	attack_highlight.global_position = target_position
+
+func handle_flying(delta: float) -> void:
+	flight_path.global_position = Vector2.ZERO
+		
+	if flight_path.curve.point_count == 0:
+		var target: Vector2 = player.global_position + Vector2(10, 0).rotated(target_angle)
+		
+		flight_path.curve.add_point(Vector2.ZERO)
+		flight_path.curve.add_point(target / 2)
+		flight_path.curve.add_point(target)
+	
+	var prev_progress: float = flight_follow.progress
+	var dist_mod: float = min(min((player.global_position - flight_follow.global_position).length(), 100) / 100 + 0.25, 1)
+	flight_follow.progress += speed * dist_mod * delta
+	
+	if flight_follow.progress_ratio == 1:
+		flight_follow.progress = prev_progress
+		target_angle += TAU
+		
+		var target: Vector2 = player.global_position + Vector2(10, 0).rotated(target_angle)
+		var length: float = (target - flight_path.curve.get_point_position(flight_path.curve.point_count - 1)).length()
+		var f_length: float = length * 1
+		
+		flight_path.curve.add_point(target)
+		flight_path.curve.set_point_out(flight_path.curve.point_count - 2, Vector2(f_length, 0).rotated(flight_follow.global_rotation))
+		
+		target_angle += delta * PI * 2
+		
+		velocity = Global.fixed_lerp(velocity, Vector2.ZERO, 0.3)
+	
+	var time_ratio: float = flight_timer.time_left / flight_timer.wait_time
+	attack_highlight.circle_radius = 16 - 10 * time_ratio
+	attack_highlight.alpha = 0.5 - abs(cos(time_ratio * PI * 5)) * 0.5 + 0.5 * (1 - time_ratio)
+	attack_highlight.position = Vector2.ZERO
 
 func handle_shooting() -> void:
 	var player_pos: Vector2 = player.global_position

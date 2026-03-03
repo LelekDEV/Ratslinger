@@ -38,11 +38,11 @@ func _notification(what: int) -> void:
 		get_tree().quit()
 
 func _process(_delta: float) -> void:
-	"""if Input.is_action_just_pressed("wipe_data"):
+	if Input.is_action_just_pressed("wipe_data"):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path("user://savegame.data"))
 		save_on_exit = false
 		
-		print("ctrl + f1 pressed: save data will be wiped on next project debug")"""
+		print("ctrl + f1 pressed: save data will be wiped on next project debug")
 	
 	if Input.is_action_just_pressed("exit"):
 		if save_on_exit:

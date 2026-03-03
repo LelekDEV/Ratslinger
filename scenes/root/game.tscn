@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
+[ext_resource type="PackedScene" uid="uid://bvtiokw0hd2y1" path="res://scenes/enemies/owl_enemy.tscn" id="23_vjquk"]
 [ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="24_a3e4m"]
 [ext_resource type="TileSet" uid="uid://cbnfobqiceman" path="res://data/environment_tileset.tres" id="26_4qk7b"]
 [ext_resource type="Script" uid="uid://dmhkp1a1alcm0" path="res://scripts/river.gd" id="27_57iyq"]
@@ -485,10 +486,6 @@ _data = [Vector2(0, 1), 0.0, -2.2396998, 0, 0, Vector2(0.6, 0.1), 0.0, 0.0, 0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_p3ae7"]
-resource_local_to_scene = true
-radius = 15.0
-
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_l77qo"]
 distance = -234.0
 
@@ -743,6 +740,8 @@ gate = NodePath("../../Environment/Gate")
 [node name="Enemies" type="Node2D" parent="." unique_id=1167283035 groups=["enemies"]]
 y_sort_enabled = true
 
+[node name="OwlEnemy" parent="Enemies" unique_id=1969713233 instance=ExtResource("23_vjquk")]
+
 [node name="Projectiles" type="Node2D" parent="." unique_id=1412819979 groups=["projectiles"]]
 y_sort_enabled = true
 
@@ -832,20 +831,6 @@ id = 0
 position = Vector2(-584, 15)
 reward_coins_curve = SubResource("Curve_dawlq")
 
-[node name="AnimatedSprite2D" parent="NPC/MayorNPC" index="0" unique_id=1148445637]
-animation = &"mayor"
-frame_progress = 0.765288
-override_anim = "mayor"
-
-[node name="CollisionShape2D" parent="NPC/MayorNPC" index="2" unique_id=913838682]
-shape = SubResource("CircleShape2D_p3ae7")
-
-[node name="InteractionArea" parent="NPC/MayorNPC" index="3" unique_id=31512601]
-position = Vector2(0, -13)
-
-[node name="CollisionShape2D" parent="NPC/MayorNPC/InteractionArea" index="2" unique_id=1744728279]
-position = Vector2(0, 13)
-
 [node name="Markers" type="Node2D" parent="." unique_id=1888461289 groups=["markers"]]
 script = ExtResource("29_1egfj")
 
@@ -908,5 +893,3 @@ color = Color(0, 0, 0, 1)
 wait_time = 8.0
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
-
-[editable path="NPC/MayorNPC"]
