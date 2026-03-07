@@ -38,6 +38,7 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 	weather_layer.visible = false
 	
 	var highlight_nodes: Array = [player, from_projectile]
+	const DISCLUDED_NODE_PATHS: Array = ["LocalFX", "FlightPath"]
 	
 	if from_enemy.ai == Enemy.AI.SEGMENT:
 		highlight_nodes.append_array(from_enemy.get_parent().get_children())
@@ -48,8 +49,9 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 		if not node:
 			continue
 		
-		if node.has_node("LocalFX"):
-			node.get_node("LocalFX").visible = false
+		for path in DISCLUDED_NODE_PATHS:
+			if node.has_node(path):
+				node.get_node(path).visible = false
 		
 		node.z_index = death_shadow_rect.z_index + 1
 		

@@ -4,6 +4,7 @@ class_name Game
 @onready var FoxEnemy: PackedScene = preload("res://scenes/enemies/fox_enemy.tscn")
 @onready var BeaverEnemy: PackedScene = preload("res://scenes/enemies/beaver_enemy.tscn")
 @onready var SnakeEnemy: PackedScene = preload("res://scenes/enemies/snake_enemy_wrapper.tscn")
+@onready var OwlEnemy: PackedScene = preload("res://scenes/enemies/owl_enemy.tscn")
 
 @onready var ui: UI = $UI
 
@@ -111,8 +112,13 @@ func spawn_enemy() -> void:
 	
 	var enemy_roll: float = randf_range(0, 1)
 	
-	if enemy_roll > 0.2:
-		var enemy: Enemy = FoxEnemy.instantiate() if enemy_roll > 0.5 else BeaverEnemy.instantiate()
+	# ODDS:
+	# fox ---- 45%
+	# beaver - 30%
+	# snake -- 15%
+	# owl ---- 10%
+	if enemy_roll > 0.25:
+		var enemy: Enemy = FoxEnemy.instantiate() if enemy_roll > 0.55 else BeaverEnemy.instantiate()
 		
 		if randi_range(0, 0) == 0:
 			if randi_range(0, 0) == 0:
@@ -126,6 +132,12 @@ func spawn_enemy() -> void:
 			enemy.global_position.y = -264 if randi_range(0, 1) == 0 else 264
 		
 		enemy.prediction_weight_1 = enemies_prediction_weight
+		
+		enemy.death.connect(update_enemies)
+		enemies.add_child(enemy)
+	
+	elif enemy_roll > 0.15:
+		var enemy: Enemy = OwlEnemy.instantiate()
 		
 		enemy.death.connect(update_enemies)
 		enemies.add_child(enemy)

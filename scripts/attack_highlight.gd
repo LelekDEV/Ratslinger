@@ -48,12 +48,12 @@ func start_decay_tween(destroy: bool = true) -> void:
 	decay_tween.tween_property(self, "alpha", 0, 1.5)
 	if destroy: decay_tween.tween_callback(self.queue_free)
 
-func start_alternate_tween() -> void:
+func start_alternate_tween(play_sound: bool = true) -> void:
 	alternate_tween = create_tween() \
 		.set_trans(Tween.TRANS_SINE) \
 		.set_ease(Tween.EASE_IN_OUT)
 	
 	for i in range(3):
-		alternate_tween.tween_callback(GlobalAudio.play_sfx.bind(AudioConsts.SFX.DANGER, -4))
+		if play_sound: alternate_tween.tween_callback(GlobalAudio.play_sfx.bind(AudioConsts.SFX.DANGER, -4))
 		alternate_tween.tween_property(self, "alpha", 1, 0.1)
 		alternate_tween.tween_property(self, "alpha", 0.0 if i == 2 else 0.5, 0.1)

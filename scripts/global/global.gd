@@ -65,7 +65,7 @@ func get_uid() -> StringName:
 	return str(Time.get_ticks_usec()) + "_" + str(randi())
 
 func roll_mission() -> void:
-	if mission_target != Enemy.ID.NULL:
+	if mission_target == Enemy.ID.NULL:
 		var discluded_id: Array = [Enemy.ID.COW]
 		var roll: int = randi_range(0, Enemy.ID.size() - discluded_id.size() - 2)
 		
@@ -79,7 +79,7 @@ func roll_mission() -> void:
 	update_dialogic_var()
 
 func update_dialogic_var() -> void:
-	Dialogic.VAR.set_variable("mission_enemy_name", ["foxes", "cows", "beavers", "snakes"][mission_target])
+	Dialogic.VAR.set_variable("mission_enemy_name", ["foxes", "cows", "beavers", "snakes", "owls"][mission_target])
 
 func start_mission() -> void:
 	is_mission_active = true

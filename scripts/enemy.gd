@@ -8,6 +8,7 @@ class_name Enemy
 @onready var coins: Node2D = get_tree().get_first_node_in_group("coins")
 @onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
 @onready var enemies: Node2D = get_tree().get_first_node_in_group("enemies")
+@onready var spawners: Node2D = get_tree().get_first_node_in_group("spawners")
 
 @onready var sprite: AnimatedSprite2D = $BaseSprite
 
@@ -45,7 +46,7 @@ var drop_coins_enabled: bool = true
 
 var attack_highlight: AttackHighlight
 
-enum ID {NULL = -1, FOX, COW, BEAVER, SNAKE}
+enum ID {NULL = -1, FOX, COW, BEAVER, SNAKE, OWL}
 @export var id: ID
 
 # AI options
@@ -95,6 +96,7 @@ var target_position: Vector2
 
 var land_tween: Tween
 var land_value: float = 0
+var is_on_land: bool = true
 
 signal death
 signal damaged
@@ -119,16 +121,15 @@ func _ready() -> void:
 			attack_highlight = get_node("FlightPath/FlightFollow/AttackHighlight")
 			flight_timer = get_node("FlightTimer")
 			land_area = get_node("LandArea")
+			is_on_land = false
 	
 	health = max_health
 	
 	sprite.material.set_shader_parameter("flash_active", false)
 	sprite.material.set_shader_parameter("strip_active", false)
 	
-	process_mode = Node.PROCESS_MODE_DISABLED
 	# uncomment to test pre-spawned enemies properly
-	await get_tree().process_frame
-	process_mode = Node.PROCESS_MODE_INHERIT
+	#await get_tree().process_frame
 	
 	Global.all_enemies.append(self)
 
@@ -160,18 +161,34 @@ func handle_landing() -> void:
 			.set_trans(Tween.TRANS_CUBIC) \
 			.set_ease(Tween.EASE_IN_OUT)
 		
-		land_tween.tween_property(self, "land_value", 1, 0.5)
 		land_tween.tween_callback(func():
+			await get_tree().create_timer(0.4).timeout
+			
+			land_area.global_position = target_position
 			if player in land_area.get_overlapping_bodies():
 				player.take_knockback((player.global_position - global_position).normalized() * 150)
 				player.take_damage(damage, null, self)
 		)
+		land_tween.tween_property(self, "land_value", 1, 0.5)
+		land_tween.tween_callback(func():
+			is_on_land = true
+			
+			var spawner := OwlProjectileSpawner.instantiate()
+			spawner.global_position = target_position + Vector2(0, 20)
+			spawner.parent = self
+			spawners.add_child(spawner)
+			
+			await get_tree().create_timer(0.2).timeout
+			spawner.spin_start()
+		)
 		land_tween.tween_interval(1)
+		land_tween.tween_callback(set.bind("is_on_land", false))
 		land_tween.tween_property(self, "land_value", 0, 0.5)
 		land_tween.tween_callback(func():
 			flight_timer.start()
 			
 			sprite.visible = false
+			fire_fx.visible = false
 			collision_body.set_deferred("disabled", true)
 			collision_head.set_deferred("disabled", true)
 		)
@@ -180,6 +197,7 @@ func handle_landing() -> void:
 		global_position.x = target_position.x
 		
 		sprite.visible = true
+		if fire_value > 0: fire_fx.visible = true
 		collision_body.set_deferred("disabled", false)
 		collision_head.set_deferred("disabled", false)
 		
@@ -233,10 +251,6 @@ func handle_shooting() -> void:
 	
 	gun_sprite.global_rotation = direction.angle()
 	
-	if attack_highlight and not shoot_notion_timer.is_stopped():
-		attack_highlight.target = player.global_position if shoot_spread_deg > 0 else direction * 400
-		attack_highlight.alpha = abs(cos((1 - shoot_notion_timer.time_left / shoot_notion_timer.wait_time) * PI * 3)) * 0.5 + 0.5
-	
 	if shoot_cooldown.is_stopped() and global_position.distance_squared_to(player_pos) < 120 ** 2:
 		prediction_weight_2 = randf_range(0, 0.5)
 		
@@ -246,10 +260,14 @@ func handle_shooting() -> void:
 		attack_highlight = AttackHighlight.instantiate()
 		
 		attack_highlight.position = gun_sprite.position
-		attack_highlight.arc_mode = shoot_spread_deg > 0
+		attack_highlight.mode = AttackHighlight.Modes.ARC if shoot_spread_deg > 0 else AttackHighlight.Modes.LINE
 		attack_highlight.arc_spread = shoot_spread_deg / 2
 		
 		add_child(attack_highlight)
+	
+	if attack_highlight and not shoot_notion_timer.is_stopped():
+		attack_highlight.target = player.global_position if shoot_spread_deg > 0 else direction * 400
+		attack_highlight.alpha = abs(cos((1 - shoot_notion_timer.time_left / shoot_notion_timer.wait_time) * PI * 3)) * 0.5 + 0.5
 
 func handle_movement() -> void:
 	separation_vel = Vector2.ZERO
@@ -294,7 +312,7 @@ func spawn_shotgun_projectile() -> void:
 
 func spawn_projectile(angle_deg: float = 0) -> void:
 	var shoot_dir = direction.rotated(deg_to_rad(angle_deg))
-	var shoot_pos = Vector2(16, 16) * shoot_dir * 0
+	var shoot_pos = Vector2(16, 16) * shoot_dir
 	
 	var projectile = EnemyProjectile.instantiate(projectile_name)
 	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT)
@@ -457,7 +475,7 @@ func _on_fire_tick_timeout() -> void:
 	
 	if fire_value >= 1:
 		for enemy: Enemy in Global.all_enemies:
-			if enemy.passed_fire_check:
+			if enemy.passed_fire_check or not enemy.is_on_land:
 				continue
 			
 			enemy.passed_fire_check = true

@@ -38,7 +38,8 @@ radius = 18.0
 collision_mask = 4
 script = ExtResource("1_d0vrg")
 speed = 120.0
-max_health = 5.0
+max_health = 4.0
+id = 4
 ai = 3
 projectile_name = "fox"
 

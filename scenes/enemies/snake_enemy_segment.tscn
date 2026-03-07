@@ -200,7 +200,7 @@ script = ExtResource("6_t8bcc")
 
 [node name="LocalFX" type="Node2D" parent="." unique_id=1316381703]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1622674501]
+[node name="CollisionShapeBody" type="CollisionShape2D" parent="." unique_id=1622674501]
 position = Vector2(-1.5, 0)
 shape = SubResource("RectangleShape2D_i1qjg")
 

@@ -28,7 +28,6 @@
 [ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
-[ext_resource type="PackedScene" uid="uid://bvtiokw0hd2y1" path="res://scenes/enemies/owl_enemy.tscn" id="23_vjquk"]
 [ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="24_a3e4m"]
 [ext_resource type="TileSet" uid="uid://cbnfobqiceman" path="res://data/environment_tileset.tres" id="26_4qk7b"]
 [ext_resource type="Script" uid="uid://dmhkp1a1alcm0" path="res://scripts/river.gd" id="27_57iyq"]
@@ -740,7 +739,8 @@ gate = NodePath("../../Environment/Gate")
 [node name="Enemies" type="Node2D" parent="." unique_id=1167283035 groups=["enemies"]]
 y_sort_enabled = true
 
-[node name="OwlEnemy" parent="Enemies" unique_id=1969713233 instance=ExtResource("23_vjquk")]
+[node name="Spawners" type="Node2D" parent="." unique_id=887974189 groups=["spawners"]]
+y_sort_enabled = true
 
 [node name="Projectiles" type="Node2D" parent="." unique_id=1412819979 groups=["projectiles"]]
 y_sort_enabled = true
