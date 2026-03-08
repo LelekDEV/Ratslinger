@@ -1,0 +1,71 @@
+extends Node2D
+class_name OwlProjectileSpawner
+
+static func instantiate() -> OwlProjectileSpawner:
+	return preload("res://scenes/enemies/spawners/owl_projectile_spawner.tscn").instantiate() as OwlProjectileSpawner
+
+@onready var projectiles: Node2D = get_tree().get_first_node_in_group("projectiles")
+@onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
+
+var parent: Enemy
+
+var spin_tween: Tween
+var spin_value: float = 0
+var spin_shots: Array = []
+var spin_notions: Array = []
+
+func _ready() -> void:
+	var start: float = randf_range(0.6, 0.7)
+	
+	for i in range(3):
+		spin_shots.append(start + 0.2 * 2/3.0 * i)
+		spin_notions.append(spin_shots[-1] - 0.4)
+
+func _physics_process(_delta: float) -> void:
+	global_rotation = TAU * 5 * spin_value
+	
+	for v in spin_shots:
+		if spin_value >= v:
+			GlobalAudio.play_sfx(AudioConsts.SFX.ENEMY_SHOOT, -6)
+			spawn_projectile()
+			
+			spin_shots.erase(v)
+	
+	for v in spin_notions:
+		if spin_value >= v:
+			var highlight := AttackHighlight.instantiate()
+			highlight.global_position = global_position
+			highlight.target = Vector2.RIGHT.rotated(TAU * 5 * v) * 400
+			highlight.start_alternate_tween(false)
+			fx.add_child(highlight)
+			
+			spin_notions.erase(v) 
+
+func spin_start() -> void:
+	spin_tween = create_tween() \
+		.set_trans(Tween.TRANS_QUAD) \
+		.set_ease(Tween.EASE_IN)
+	
+	spin_tween.tween_property(self, "spin_value", 1, 2)
+	spin_tween.tween_callback(queue_free)
+
+func spawn_projectile() -> void:
+	var shoot_dir = Vector2.RIGHT.rotated(global_rotation)
+	var shoot_pos = shoot_dir * 6
+	
+	var projectile = EnemyProjectile.instantiate("fox")
+	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT)
+	
+	projectile.global_position = global_position + shoot_pos
+	projectile.global_rotation = shoot_dir.angle()
+	projectile.direction = shoot_dir
+	
+	projectile.damage = 1
+	if parent: projectile.parent = parent
+	
+	particles.global_position = global_position + shoot_pos
+	particles.global_rotation = shoot_dir.angle()
+	particles.emitting = true  
+	  
+	projectiles.add_child(projectile)
+	fx.add_child(particles)

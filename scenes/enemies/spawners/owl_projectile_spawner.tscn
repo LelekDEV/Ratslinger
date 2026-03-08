@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ddy4o5ykubsn6"]
+
+[ext_resource type="Script" uid="uid://dh5wjkwx0kqrn" path="res://scripts/owl_projectile_spawner.gd" id="1_upfnm"]
+[ext_resource type="Texture2D" uid="uid://daumqpbtbt1rw" path="res://icon.svg" id="1_vng5v"]
+
+[node name="OwlProjectileSpawner" type="Node2D" unique_id=789920141]
+script = ExtResource("1_upfnm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=672226352]
+scale = Vector2(0.1, 0.05)
+texture = ExtResource("1_vng5v")
