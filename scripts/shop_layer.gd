@@ -10,6 +10,8 @@ extends CanvasLayer
 @onready var cost_label: Label = $HBoxContainer/RightContainer/HBoxContainer/CostLabel
 @onready var cash_label: Label = $HBoxContainer/RightContainer/HBoxContainer/CashLabel
 
+@onready var main_container: HBoxContainer = $HBoxContainer
+
 @onready var item_sprites: Array = [
 	$HBoxContainer/LeftContainer/SpriteParent/VampireSprite,
 	$HBoxContainer/LeftContainer/SpriteParent/FireSprite,
@@ -19,8 +21,15 @@ extends CanvasLayer
 enum Pages {VAMPIRE_BULLET, FIRE_BULLET, POISON_BULLET}
 var page: Pages = Pages.VAMPIRE_BULLET
 
+func _ready() -> void:
+	get_viewport().size_changed.connect(update_scale)
+
+func update_scale() -> void:
+	pass
+
 func enter() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	Global.pause_game()
 	
 	visible = true
@@ -28,6 +37,7 @@ func enter() -> void:
 
 func exit() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	Global.resume_game()
 	
 	ui.update_coin_count()

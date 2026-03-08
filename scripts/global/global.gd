@@ -21,8 +21,10 @@ var rain_value: float = -randi_range(0, 600)
 var is_title_on: bool = true
 
 var scale_level: int = 0
+var min_scale_level: int = 0
 
 func _ready() -> void:
+	get_viewport().size_changed.connect(update_min_scale_level)
 	game = get_tree().get_first_node_in_group("game")
 
 func _physics_process(delta: float) -> void:
@@ -30,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		scale_level = scale_level + 1
 		SignalBus.scale_changed.emit()
 	elif Input.is_action_just_pressed("scale_out"):
-		scale_level = max(scale_level - 1, 0)
+		scale_level = max(scale_level - 1, min_scale_level)
 		SignalBus.scale_changed.emit()
 	
 	if rain_value < 0:
@@ -45,6 +47,13 @@ func _physics_process(delta: float) -> void:
 		if rain_value < 0:
 			# clear, 5 - 10 min, ~65%
 			rain_value = -randi_range(300, 600)
+
+func update_min_scale_level() -> void:
+	var min_vector: Vector2 = get_viewport().get_visible_rect().size / Consts.MAX_VISIBLE_SCREEN_SIZE
+	min_scale_level = max(min_vector.x, min_vector.y) - 4
+	scale_level = min_scale_level
+	
+	SignalBus.scale_changed.emit()
 
 # THIS IS VERY IMPORTANT!!!
 # Use this func whenever you want to call lerp() in _physics_process() such that:

@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dceonlhoodheu" path="res://data/styles/custom_textbox_style/VisualNovelTextbox/scroll_speed_adjuster.gd" id="7_r803l"]
 [ext_resource type="Texture2D" uid="uid://cn53obrrmeiil" path="res://data/styles/custom_textbox_style/VisualNovelTextbox/next.svg" id="9_r803l"]
 [ext_resource type="StyleBox" uid="uid://m7gyepkysu83" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_name_label_panel.tres" id="9_yg8ig"]
+[ext_resource type="Script" uid="uid://blhohqfms34x5" path="res://scripts/dialogic_scale_updater.gd" id="13_tbjph"]
 
 [sub_resource type="Animation" id="Animation_au0a2"]
 length = 0.001
@@ -386,3 +387,6 @@ theme_override_font_sizes/font_size = 15
 text = "S"
 script = ExtResource("7_bi7sh")
 name_label_root = NodePath("..")
+
+[node name="ScaleUpdater" type="Node" parent="." unique_id=1343597324]
+script = ExtResource("13_tbjph")
