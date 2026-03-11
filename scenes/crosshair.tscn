@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://lw0lbb371my5"]
+[gd_scene format=3 uid="uid://lw0lbb371my5"]
 
 [ext_resource type="Texture2D" uid="uid://dkbksplau0uha" path="res://graphics/characters/player/crosshair.png" id="1_6blvt"]
 [ext_resource type="Script" uid="uid://bim36bh21eweb" path="res://scripts/crosshair.gd" id="2_norqy"]
@@ -28,12 +28,11 @@ _data = {
 &"blink": SubResource("Animation_norqy")
 }
 
-[node name="Crosshair" type="Sprite2D"]
+[node name="Crosshair" type="Sprite2D" unique_id=1722354436]
+process_mode = 3
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_6blvt")
 script = ExtResource("2_norqy")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ihytv")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=787596105]
+libraries/ = SubResource("AnimationLibrary_ihytv")

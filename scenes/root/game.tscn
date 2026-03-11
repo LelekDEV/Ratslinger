@@ -24,10 +24,13 @@
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="10_r3fff"]
 [ext_resource type="Script" uid="uid://dlwbmyxuygwjb" path="res://scripts/coins_container.gd" id="11_fulw8"]
 [ext_resource type="Script" uid="uid://cp448dgxo5kaw" path="res://scripts/animation_handler.gd" id="12_dawlq"]
+[ext_resource type="PackedScene" uid="uid://d4asl1xkxcc7h" path="res://scenes/shooting_tutorial.tscn" id="12_v23tm"]
 [ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
 [ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
+[ext_resource type="Script" uid="uid://70i5g03s8o8r" path="res://scripts/ui_scale_handler.gd" id="18_hjgq7"]
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
+[ext_resource type="FontFile" uid="uid://cwrysi1envklm" path="res://fonts/bold_pixels.otf" id="23_vjquk"]
 [ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="24_a3e4m"]
 [ext_resource type="TileSet" uid="uid://cbnfobqiceman" path="res://data/environment_tileset.tres" id="26_4qk7b"]
 [ext_resource type="Script" uid="uid://dmhkp1a1alcm0" path="res://scripts/river.gd" id="27_57iyq"]
@@ -35,6 +38,7 @@
 [ext_resource type="Script" uid="uid://c43tbfovvl81u" path="res://scripts/rain_surface_tilemap.gd" id="28_dybux"]
 [ext_resource type="Script" uid="uid://cmo05ufm0vqdm" path="res://scripts/markers.gd" id="29_1egfj"]
 [ext_resource type="Shader" uid="uid://fftxyux4c5ll" path="res://shaders/river.gdshader" id="29_p3ae7"]
+[ext_resource type="Script" uid="uid://bjml88vnde8e0" path="res://scripts/tutorial_handler.gd" id="37_m1gv1"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4qk7b"]
 viewport_path = NodePath("Weather/SubViewport")
@@ -100,6 +104,10 @@ _data = {
 [sub_resource type="Theme" id="Theme_a8jnx"]
 default_font = ExtResource("4_836xp")
 default_font_size = 32
+
+[sub_resource type="Theme" id="Theme_m1gv1"]
+default_font = ExtResource("23_vjquk")
+default_font_size = 0
 
 [sub_resource type="Animation" id="Animation_l77qo"]
 length = 0.001
@@ -650,6 +658,45 @@ theme = SubResource("Theme_a8jnx")
 theme_override_colors/font_color = Color(0.73319995, 0.76596, 0.78, 1)
 text = "0"
 
+[node name="TutorialContainer" type="Control" parent="UI" unique_id=1729089237]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TutorialTintRect" type="ColorRect" parent="UI/TutorialContainer" unique_id=1473091518]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.3)
+metadata/_edit_lock_ = true
+
+[node name="ShootingTutorialLabel" type="Label" parent="UI/TutorialContainer" unique_id=141416162]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -112.0
+offset_right = 320.0
+offset_bottom = -20.0
+grow_vertical = 0
+theme = SubResource("Theme_m1gv1")
+text = "Take aim for your target and shoot! Ideally when your cursor hits green.
+----------
+Perfect bullets have greater speed, knockback and penetrate."
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="ShootingTutorial" parent="UI/TutorialContainer" unique_id=363716660 instance=ExtResource("12_v23tm")]
+
 [node name="AccuracyBar" parent="UI" unique_id=1989509615 instance=ExtResource("6_s3lrj")]
 position = Vector2(0, -24)
 
@@ -665,6 +712,10 @@ hframes = 2
 
 [node name="Crosshair" parent="UI" unique_id=148041615 instance=ExtResource("2_7dpn4")]
 metadata/_edit_lock_ = true
+
+[node name="ScaleHandler" type="Node" parent="UI" unique_id=1913799317]
+process_mode = 3
+script = ExtResource("18_hjgq7")
 
 [node name="AnimationHandler" type="Node" parent="UI" unique_id=1523482957]
 script = ExtResource("12_dawlq")
@@ -722,6 +773,7 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." unique_id=1960160699 node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
+position = Vector2(-500, 0)
 gate = NodePath("../Environment/Gate")
 metadata/_edit_lock_ = true
 
@@ -735,6 +787,20 @@ limit_bottom = 234
 position_smoothing_enabled = true
 script = ExtResource("4_bq78c")
 gate = NodePath("../../Environment/Gate")
+
+[node name="TutorialLabel" type="RichTextLabel" parent="Player" unique_id=667254614]
+offset_left = -40.0
+offset_top = -42.0
+offset_right = 40.0
+offset_bottom = -8.0
+theme = SubResource("Theme_m1gv1")
+theme_override_constants/line_separation = -2
+bbcode_enabled = true
+text = "[wave amp=20 freq=5]Press LMB to shoot![/wave]"
+scroll_active = false
+horizontal_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="Enemies" type="Node2D" parent="." unique_id=1167283035 groups=["enemies"]]
 y_sort_enabled = true
@@ -879,6 +945,15 @@ camera = NodePath("../Player/Camera2D")
 death_shadow_rect = NodePath("../DeathShadowRect")
 ui = NodePath("../UI")
 weather_layer = NodePath("../Weather")
+
+[node name="TutorialHandler" type="Node" parent="." unique_id=1266567336 node_paths=PackedStringArray("tutorial_container")]
+process_mode = 3
+script = ExtResource("37_m1gv1")
+tutorial_container = NodePath("../UI/TutorialContainer")
+
+[node name="ProceedTimer" type="Timer" parent="TutorialHandler" unique_id=2096649920]
+wait_time = 2.0
+one_shot = true
 
 [node name="DeathShadowRect" type="ColorRect" parent="." unique_id=1755472873]
 visible = false

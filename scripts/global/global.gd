@@ -4,6 +4,7 @@ var game: Game
 
 var coins: int = 30
 
+var force_input: bool = false
 var block_input: bool = true
 var block_movement: bool = true
 
@@ -19,6 +20,7 @@ var waves_cleared: int = 0
 var rain_value: float = -randi_range(0, 600)
 
 var is_title_on: bool = true
+var is_tutorial_passed: bool = false
 
 var scale_level: int = 0
 var min_scale_level: int = 0
@@ -97,7 +99,6 @@ func start_mission() -> void:
 func pause_game() -> void:
 	game.process_mode = Node.PROCESS_MODE_DISABLED
 
-func resume_game() -> void:
+func resume_game(to_block_input = true) -> void:
 	game.process_mode = Node.PROCESS_MODE_INHERIT
-	block_input = true
-	#set_deferred("block_input", false)
+	block_input = to_block_input

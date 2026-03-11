@@ -108,7 +108,8 @@ func handle_shooting() -> void:
 	if Input.is_action_just_pressed("shoot") and \
 		shoot_cooldown.is_stopped() and \
 		reload_timer.is_stopped() and \
-		not Global.block_input:
+		not Global.block_input or \
+		Global.force_input:
 		
 		accuracy_bar.reload_bullets = false if bullet_bar.current_slot == 5 else true
 		
@@ -129,6 +130,7 @@ func handle_shooting() -> void:
 		regen_cooldown.start(5)
 		
 		SignalBus.player_shoot.emit(false)
+		Global.force_input = false
 
 func handle_movement() -> void:
 	if Global.block_movement:

@@ -14,6 +14,9 @@ class_name Game
 @onready var camera: Camera2D = $Player/Camera2D
 @onready var crosshair: Sprite2D = $UI/Crosshair
 
+@onready var tutorial_label: RichTextLabel = $Player/TutorialLabel
+@onready var tutorial_handler: Node = $TutorialHandler
+
 @onready var player_death_handler: Node = $PlayerDeathHandler
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 
@@ -36,6 +39,20 @@ func _ready() -> void:
 	await SignalBus.game_loaded
 	
 	title_sand_sprite.global_position.x = int(player.global_position.x)
+
+func setup_signals() -> void:
+	SignalBus.player_shoot.connect(camera.shake)
+	SignalBus.player_shoot.connect(crosshair.on_player_shoot)
+	
+	SignalBus.player_death.connect(player_death_handler.on_player_death)
+	
+	SignalBus.player_location_change.connect(ui.on_player_location_change)
+	SignalBus.player_location_change.connect(on_player_location_change)
+	
+	SignalBus.player_hit.connect(ui.animation.play.bind("player_hit"))
+	SignalBus.player_hit.connect(camera.shake)
+	
+	SignalBus.accuracy_perfect_entered.connect(tutorial_handler.display_shooting_tutorial)
 
 func _physics_process(_delta: float) -> void:
 	if wave_start_interaction_area.interacting and Input.is_action_just_pressed("interact") and not is_wave_active:
@@ -68,6 +85,20 @@ func start_wave() -> void:
 	
 	is_wave_active = true
 	wave_start_interaction_area.visible = false
+	
+	if not Global.is_tutorial_passed:
+		var enter_tween: Tween = create_tween() \
+			.set_ease(Tween.EASE_OUT_IN) \
+			.set_trans(Tween.TRANS_LINEAR)
+		enter_tween.tween_property(tutorial_label, "visible_ratio", 1, 1)
+		
+		await SignalBus.player_shoot
+		await get_tree().create_timer(0.5).timeout
+		
+		var exit_tween: Tween = create_tween() \
+			.set_ease(Tween.EASE_OUT_IN) \
+			.set_trans(Tween.TRANS_LINEAR)
+		exit_tween.tween_property(tutorial_label, "visible_ratio", 0, 1)
 
 func end_wave() -> void:
 	gate.get_node("AnimationPlayer2").play("unlock")
@@ -80,18 +111,6 @@ func end_wave() -> void:
 	is_wave_active = false
 	wave_start_interaction_area.visible = true
 	Global.waves_cleared += 1
-
-func setup_signals() -> void:
-	SignalBus.player_shoot.connect(camera.shake)
-	SignalBus.player_shoot.connect(crosshair.on_player_shoot)
-	
-	SignalBus.player_death.connect(player_death_handler.on_player_death)
-	
-	SignalBus.player_location_change.connect(ui.on_player_location_change)
-	SignalBus.player_location_change.connect(on_player_location_change)
-	
-	SignalBus.player_hit.connect(ui.animation.play.bind("player_hit"))
-	SignalBus.player_hit.connect(camera.shake)
 
 @warning_ignore("int_as_enum_without_cast", "int_as_enum_without_match")
 func update_enemies(killed_id: Enemy.ID = -1, killed_amount: int = 1) -> void:
@@ -117,7 +136,7 @@ func spawn_enemy() -> void:
 	# beaver - 30%
 	# snake -- 15%
 	# owl ---- 10%
-	if enemy_roll > 0.25:
+	if enemy_roll > 0.25 or Global.waves_cleared == 0:
 		var enemy: Enemy = FoxEnemy.instantiate() if enemy_roll > 0.55 else BeaverEnemy.instantiate()
 		
 		if randi_range(0, 0) == 0:

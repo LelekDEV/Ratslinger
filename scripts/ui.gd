@@ -13,6 +13,9 @@ class_name UI
 @onready var bullet_bar: BulletBar = $BulletBar
 @onready var crosshair: Sprite2D = $Crosshair
 
+@onready var shooting_tutorial: Node2D = $TutorialContainer/ShootingTutorial
+@onready var shooting_tutorial_label: Label = $TutorialContainer/ShootingTutorialLabel
+
 @onready var animation: AnimationHandler = $AnimationHandler
 
 var scale_factor: float = 1
@@ -74,15 +77,17 @@ func ready_load() -> void:
 	update_coin_count()
 	update_enemy_count()
 
-func _physics_process(_delta: float) -> void:
+"""func _physics_process(_delta: float) -> void:
 	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
 	location_popup.self_modulate.a = sin(popup_value * PI)
 	
 	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
 	bullet_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85 * scale_float - 86
 	
+	shooting_tutorial.global_position = get_viewport().get_visible_rect().size - Vector2(100, 100)
+	
 	margin_container.set_deferred("size", get_viewport().get_visible_rect().size / margin_container.scale)
-	margin_container.set_deferred("position", Vector2.ZERO)
+	margin_container.set_deferred("position", Vector2.ZERO)"""
 
 func update_scale() -> void:
 	scale_float = (Global.scale_level + 4) * scale_factor
@@ -98,6 +103,8 @@ func update_scale() -> void:
 	
 	bullet_bar.scale = scale_vector
 	bullet_bar.global_position.y = (35 + 6) * scale_float
+	
+	shooting_tutorial.scale = scale_vector
 	
 	margin_container.scale = scale_vector / 4
 	

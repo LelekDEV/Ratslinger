@@ -1,0 +1,361 @@
+[gd_scene format=3 uid="uid://d4asl1xkxcc7h"]
+
+[ext_resource type="Texture2D" uid="uid://cadeexgg1i8ym" path="res://graphics/ui/shooting_tutorial.png" id="1_pk1rd"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_irwt2"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="Animation" id="Animation_irwt2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/CursorSprite1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(127, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/CursorSprite2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(127, 24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/CursorSprite3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(127, 46)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SubViewport/GunSprite1:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SubViewport/ProjectileSprite1:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(60, 9)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SubViewport/ProjectileSprite1:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SubViewport/ProjectileSprite4:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_pk1rd"]
+resource_name = "default"
+length = 3.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/CursorSprite1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(127, 2), Vector2(119, 2), Vector2(119, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/CursorSprite2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(127, 24), Vector2(127, 24), Vector2(111, 24), Vector2(111, 24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/CursorSprite3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(127, 46), Vector2(127, 46), Vector2(104, 46), Vector2(104, 46)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SubViewport/GunSprite1:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2, 0.3, 0.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.2617993877991494, 0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SubViewport/GunSprite2:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.6, 0.70000005, 1, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.2617993877991494, 0.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SubViewport/GunSprite3:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.2, 1.3000001, 1.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.2617993877991494, 0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SubViewport/ProjectileSprite1:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(60, 31), Vector2(60, 31), Vector2(0, 31)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SubViewport/ProjectileSprite2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1.2, 2.2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(60, 53), Vector2(60, 53), Vector2(0, 53), Vector2(0, 53)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SubViewport/ProjectileSprite3:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 31), Vector2(0, 31), Vector2(60, 31)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("SubViewport/ProjectileSprite1:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("SubViewport/ProjectileSprite3:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("SubViewport/ProjectileSprite4:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 53), Vector2(0, 53), Vector2(60, 53)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("SubViewport/ProjectileSprite4:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_irwt2"]
+_data = {
+&"RESET": SubResource("Animation_irwt2"),
+&"default": SubResource("Animation_pk1rd")
+}
+
+[node name="ShootingTutorial" type="Node2D" unique_id=363716660]
+process_mode = 3
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1113700753]
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+
+[node name="StaticSprite" type="Sprite2D" parent="SubViewport" unique_id=2059278004]
+position = Vector2(66, 2)
+texture = ExtResource("1_pk1rd")
+centered = false
+region_enabled = true
+region_rect = Rect2(61, 2, 61, 58)
+
+[node name="ProjectileSprite1" type="Sprite2D" parent="SubViewport" unique_id=1752769792]
+position = Vector2(60, 9)
+texture = ExtResource("1_pk1rd")
+centered = false
+offset = Vector2(-10, -4)
+region_enabled = true
+region_rect = Rect2(39, 5, 5, 5)
+
+[node name="ProjectileSprite2" type="Sprite2D" parent="SubViewport" unique_id=1903076395]
+position = Vector2(60, 53)
+texture = ExtResource("1_pk1rd")
+centered = false
+offset = Vector2(-10, -4)
+region_enabled = true
+region_rect = Rect2(39, 5, 5, 5)
+
+[node name="ProjectileSprite3" type="Sprite2D" parent="SubViewport" unique_id=1136780880]
+position = Vector2(0, 31)
+texture = ExtResource("1_pk1rd")
+centered = false
+offset = Vector2(-10, -4)
+region_enabled = true
+region_rect = Rect2(24, 5, 5, 5)
+
+[node name="ProjectileSprite4" type="Sprite2D" parent="SubViewport" unique_id=557532867]
+position = Vector2(0, 53)
+texture = ExtResource("1_pk1rd")
+centered = false
+offset = Vector2(-10, -4)
+region_enabled = true
+region_rect = Rect2(24, 5, 5, 5)
+
+[node name="GunSprite1" type="Sprite2D" parent="SubViewport" unique_id=261255583]
+position = Vector2(60, 9)
+texture = ExtResource("1_pk1rd")
+centered = false
+offset = Vector2(-10, -4)
+region_enabled = true
+region_rect = Rect2(45, 5, 12, 9)
+
+[node name="GunSprite2" type="Sprite2D" parent="SubViewport" unique_id=1021861785]
+position = Vector2(60, 31)
+texture = ExtResource("1_pk1rd")
+centered = false
+offset = Vector2(-10, -4)
+region_enabled = true
+region_rect = Rect2(45, 5, 12, 9)
+
+[node name="GunSprite3" type="Sprite2D" parent="SubViewport" unique_id=290141866]
+position = Vector2(60, 53)
+texture = ExtResource("1_pk1rd")
+centered = false
+offset = Vector2(-10, -4)
+region_enabled = true
+region_rect = Rect2(45, 5, 12, 9)
+
+[node name="CursorSprite1" type="Sprite2D" parent="SubViewport" unique_id=544584991]
+position = Vector2(127, 2)
+texture = ExtResource("1_pk1rd")
+centered = false
+region_enabled = true
+region_rect = Rect2(122, 2, 3, 15)
+
+[node name="CursorSprite2" type="Sprite2D" parent="SubViewport" unique_id=1405974525]
+position = Vector2(127, 24)
+texture = ExtResource("1_pk1rd")
+centered = false
+region_enabled = true
+region_rect = Rect2(122, 2, 3, 15)
+
+[node name="CursorSprite3" type="Sprite2D" parent="SubViewport" unique_id=1310654410]
+position = Vector2(127, 46)
+texture = ExtResource("1_pk1rd")
+centered = false
+region_enabled = true
+region_rect = Rect2(122, 2, 3, 15)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=306983064]
+texture = SubResource("ViewportTexture_irwt2")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1027419105]
+libraries/ = SubResource("AnimationLibrary_irwt2")
+autoplay = &"default"
