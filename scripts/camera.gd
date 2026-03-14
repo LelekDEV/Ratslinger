@@ -11,6 +11,9 @@ var intro_tween: Tween
 var intro_value: float = 0
 var intro_skip: bool = false
 
+var foreshadow_tween: Tween
+var foreshadow_value: float = 0
+
 @onready var markers: Node2D = get_tree().get_first_node_in_group("markers")
 
 @export var gate: StaticBody2D
@@ -18,6 +21,7 @@ var intro_skip: bool = false
 func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
 	SignalBus.title_exit.connect(animate_intro)
+	Dialogic.signal_event.connect(foreshadow_arena)
 	
 	update_scale()
 	
@@ -56,15 +60,30 @@ func _physics_process(_delta: float) -> void:
 		global_position = get_parent().global_position
 	
 	if Global.is_title_on:
-		global_position.y = Global.fixed_lerp(468.0, get_parent().to_global(Vector2.ZERO).y, intro_value)
+		global_position.y = lerp(468.0, get_parent().to_global(Vector2.ZERO).y, intro_value)
 		limit_bottom = 10000000
 	else:
 		limit_bottom = 234
+	
+	if foreshadow_tween and foreshadow_tween.is_running():
+		global_position.x = lerp(get_parent().global_position.x, 0.0, foreshadow_value)
+
+func foreshadow_arena(signal_name: String) -> void:
+	if signal_name != "foreshadow_arena":
+		return
+	
+	foreshadow_tween = create_tween() \
+		.set_trans(Tween.TRANS_CIRC) \
+		.set_ease(Tween.EASE_IN_OUT)
+	
+	foreshadow_tween.tween_property(self, "foreshadow_value", 1, 1)
+	foreshadow_tween.tween_interval(2)
+	foreshadow_tween.tween_property(self, "foreshadow_value", 0, 1)
 
 func animate_intro() -> void:
 	intro_tween = create_tween() \
-		.set_ease(Tween.EASE_IN_OUT) \
-		.set_trans(Tween.TRANS_CIRC)
+		.set_trans(Tween.TRANS_CIRC) \
+		.set_ease(Tween.EASE_IN_OUT)
 	
 	intro_tween.tween_property(self, "intro_value", 1, 2)
 

@@ -30,6 +30,8 @@
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
 [ext_resource type="Script" uid="uid://70i5g03s8o8r" path="res://scripts/ui_scale_handler.gd" id="18_hjgq7"]
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
+[ext_resource type="Texture2D" uid="uid://52jojmlogoth" path="res://graphics/misc/arrow.png" id="21_or0h2"]
+[ext_resource type="Script" uid="uid://b4645gja13sa0" path="res://scripts/tutorial_arrow.gd" id="22_sy4ad"]
 [ext_resource type="FontFile" uid="uid://cwrysi1envklm" path="res://fonts/bold_pixels.otf" id="23_vjquk"]
 [ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="24_a3e4m"]
 [ext_resource type="TileSet" uid="uid://cbnfobqiceman" path="res://data/environment_tileset.tres" id="26_4qk7b"]
@@ -147,6 +149,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TutorialArrow:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_wt5dx"]
 resource_name = "hide_ui"
@@ -170,6 +184,18 @@ tracks/1/path = NodePath("MarginContainer:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TutorialArrow:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.75),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
@@ -214,6 +240,18 @@ tracks/1/path = NodePath("MarginContainer:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TutorialArrow:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.75),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
@@ -710,6 +748,12 @@ script = ExtResource("9_wt5dx")
 texture = ExtResource("4_xw82j")
 hframes = 2
 
+[node name="TutorialArrow" type="Sprite2D" parent="UI" unique_id=1416047808 node_paths=PackedStringArray("wave_start_area")]
+texture = ExtResource("21_or0h2")
+offset = Vector2(-20, 0)
+script = ExtResource("22_sy4ad")
+wave_start_area = NodePath("../../WaveStartInteractionArea")
+
 [node name="Crosshair" parent="UI" unique_id=148041615 instance=ExtResource("2_7dpn4")]
 metadata/_edit_lock_ = true
 
@@ -773,7 +817,7 @@ texture = ExtResource("8_sh5j3")
 shape = SubResource("CircleShape2D_r3fff")
 
 [node name="Player" parent="." unique_id=1960160699 node_paths=PackedStringArray("gate") groups=["player"] instance=ExtResource("1_rf1xt")]
-position = Vector2(-500, 0)
+position = Vector2(-550, 0)
 gate = NodePath("../Environment/Gate")
 metadata/_edit_lock_ = true
 

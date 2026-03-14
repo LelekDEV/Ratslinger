@@ -10,6 +10,7 @@ config_version=5
 
 [animation]
 
+warnings/check_invalid_track_paths=false
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
@@ -40,6 +41,7 @@ AudioConsts="*uid://ci1iotyb6kjga"
 
 directories/dch_directory={}
 directories/dtl_directory={
+"introduction": "res://data/dialogues/introduction.dtl",
 "kiddo": "res://data/dialogues/kiddo.dtl",
 "mayor": "res://data/dialogues/mayor.dtl"
 }

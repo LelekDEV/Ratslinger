@@ -21,6 +21,7 @@ var rain_value: float = -randi_range(0, 600)
 
 var is_title_on: bool = true
 var is_tutorial_passed: bool = false
+var is_introduction_passed: bool = false
 
 var scale_level: int = 0
 var min_scale_level: int = 0

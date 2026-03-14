@@ -15,6 +15,7 @@ class_name UI
 
 @onready var shooting_tutorial: Node2D = $TutorialContainer/ShootingTutorial
 @onready var shooting_tutorial_label: Label = $TutorialContainer/ShootingTutorialLabel
+@onready var tutorial_arrow: Sprite2D = $TutorialArrow
 
 @onready var animation: AnimationHandler = $AnimationHandler
 
@@ -54,12 +55,20 @@ func _ready() -> void:
 		animation.play("hide_ui")
 		toggle_combat_hud(false)
 		
+		await get_tree().process_frame
+		if not Global.is_introduction_passed:
+			get_node("../NPC/MayorNPC/InteractionArea").animation.play("exit")
+		
 		await SignalBus.title_exited
+		if Global.is_introduction_passed:
+			animation.play("show_ui")
+			Global.block_movement = false
+			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+		else:
+			Dialogic.start("introduction")
 		
-		animation.play("show_ui")
-		
-		Global.block_movement = false
-		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+			await Dialogic.timeline_ended
+			Global.is_introduction_passed = true
 	
 	if player_location == Player.Locations.ARENA:
 		toggle_combat_hud(true)
@@ -105,6 +114,7 @@ func update_scale() -> void:
 	bullet_bar.global_position.y = (35 + 6) * scale_float
 	
 	shooting_tutorial.scale = scale_vector
+	if tutorial_arrow: tutorial_arrow.scale = scale_vector
 	
 	margin_container.scale = scale_vector / 4
 	
@@ -115,7 +125,7 @@ func start_dialogue() -> void:
 	crosshair.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
-	animation.play("hide_ui")
+	if Global.is_introduction_passed: animation.play("hide_ui")
 	animation.play("show_dialogue_strips")
 
 func end_dialogue() -> void:
