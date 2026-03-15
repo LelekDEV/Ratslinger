@@ -86,6 +86,8 @@ func start_wave() -> void:
 	is_wave_active = true
 	wave_start_interaction_area.visible = false
 	
+	SignalBus.wave_started.emit()
+	
 	if not Global.is_tutorial_passed:
 		var enter_tween: Tween = create_tween() \
 			.set_ease(Tween.EASE_OUT_IN) \
@@ -111,6 +113,8 @@ func end_wave() -> void:
 	is_wave_active = false
 	wave_start_interaction_area.visible = true
 	Global.waves_cleared += 1
+	
+	SignalBus.wave_ended.emit()
 
 @warning_ignore("int_as_enum_without_cast", "int_as_enum_without_match")
 func update_enemies(killed_id: Enemy.ID = -1, killed_amount: int = 1) -> void:

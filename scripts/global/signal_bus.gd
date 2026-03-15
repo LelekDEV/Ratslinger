@@ -11,6 +11,9 @@ signal player_coin_collect
 signal accuracy_perfect_entered
 signal accuracy_perfect_early
 
+signal wave_started
+signal wave_ended
+
 signal game_loaded
 signal game_save_queued
 

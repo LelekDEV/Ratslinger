@@ -5,3 +5,5 @@
 [node name="GlobalAudio" type="Node" unique_id=1123679397]
 process_mode = 3
 script = ExtResource("1_uc7ok")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1756469614 groups=["music"]]

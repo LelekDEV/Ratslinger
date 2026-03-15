@@ -48,8 +48,9 @@ func _ready() -> void:
 	)
 	
 	ready_load()
-	
 	update_scale()
+	
+	await SignalBus.game_loaded
 	
 	if Global.is_title_on:
 		animation.play("hide_ui")
@@ -65,6 +66,20 @@ func _ready() -> void:
 			Global.block_movement = false
 			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 		else:
+			Dialogic.start("introduction")
+		
+			await Dialogic.timeline_ended
+			Global.is_introduction_passed = true
+	else:
+		if Global.is_introduction_passed:
+			Global.block_movement = false
+		else:
+			animation.play("hide_ui")
+			toggle_combat_hud(false)
+			
+			await get_tree().process_frame
+			get_node("../NPC/MayorNPC/InteractionArea").animation.play("exit")
+			
 			Dialogic.start("introduction")
 		
 			await Dialogic.timeline_ended

@@ -41,6 +41,7 @@
 [ext_resource type="Script" uid="uid://cmo05ufm0vqdm" path="res://scripts/markers.gd" id="29_1egfj"]
 [ext_resource type="Shader" uid="uid://fftxyux4c5ll" path="res://shaders/river.gdshader" id="29_p3ae7"]
 [ext_resource type="Script" uid="uid://bjml88vnde8e0" path="res://scripts/tutorial_handler.gd" id="37_m1gv1"]
+[ext_resource type="Script" uid="uid://do80blcsew3si" path="res://scripts/music_handler.gd" id="42_l3433"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4qk7b"]
 viewport_path = NodePath("Weather/SubViewport")
@@ -998,6 +999,9 @@ tutorial_container = NodePath("../UI/TutorialContainer")
 [node name="ProceedTimer" type="Timer" parent="TutorialHandler" unique_id=2096649920]
 wait_time = 2.0
 one_shot = true
+
+[node name="MusicHandler" type="Node" parent="." unique_id=801332801]
+script = ExtResource("42_l3433")
 
 [node name="DeathShadowRect" type="ColorRect" parent="." unique_id=1755472873]
 visible = false
