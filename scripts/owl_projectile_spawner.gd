@@ -42,6 +42,8 @@ func _physics_process(_delta: float) -> void:
 			spin_notions.erase(v) 
 
 func spin_start() -> void:
+	await get_tree().create_timer(0.2).timeout
+	
 	spin_tween = create_tween() \
 		.set_trans(Tween.TRANS_QUAD) \
 		.set_ease(Tween.EASE_IN)

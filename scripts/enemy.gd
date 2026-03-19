@@ -176,9 +176,8 @@ func handle_landing() -> void:
 			var spawner := OwlProjectileSpawner.instantiate()
 			spawner.global_position = target_position + Vector2(0, 20)
 			spawner.parent = self
-			spawners.add_child(spawner)
 			
-			await get_tree().create_timer(0.2).timeout
+			spawners.add_child(spawner)
 			spawner.spin_start()
 		)
 		land_tween.tween_interval(1)
