@@ -41,8 +41,8 @@ func _ready() -> void:
 	Dialogic.timeline_started.connect(start_dialogue)
 	Dialogic.timeline_ended.connect(end_dialogue)
 	
-	Dialogic.signal_event.connect(func(signal_name: String):
-		if signal_name == "mission_reward":
+	Dialogic.signal_event.connect(func(signal_data: Dictionary):
+		if signal_data.name == "mission_reward":
 			mission_label.text = "No mission active"
 			animation.play("mission_redeem")
 	)
@@ -71,11 +71,12 @@ func _ready() -> void:
 			await Dialogic.timeline_ended
 			Global.is_introduction_passed = true
 	else:
+		toggle_combat_hud(false)
+		
 		if Global.is_introduction_passed:
 			Global.block_movement = false
 		else:
 			animation.play("hide_ui")
-			toggle_combat_hud(false)
 			
 			await get_tree().process_frame
 			get_node("../NPC/MayorNPC/InteractionArea").animation.play("exit")
@@ -139,6 +140,8 @@ func start_dialogue() -> void:
 	Global.block_movement = true
 	crosshair.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	Global.update_dialogic_var()
 	
 	if Global.is_introduction_passed: animation.play("hide_ui")
 	animation.play("show_dialogue_strips")
@@ -248,3 +251,7 @@ func on_player_location_change(location: Player.Locations) -> void:
 	else:
 		toggle_combat_hud(false)
 		Global.block_input = true
+		
+		if location == Player.Locations.TOWN and Global.builder_value == 1:
+			await get_tree().create_timer(0.5).timeout
+			Dialogic.start("building_repaired")

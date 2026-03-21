@@ -943,6 +943,10 @@ id = 0
 position = Vector2(-584, 15)
 reward_coins_curve = SubResource("Curve_dawlq")
 
+[node name="BuilderNPC" parent="NPC" unique_id=540230813 instance=ExtResource("18_a8jnx")]
+position = Vector2(-459, -44)
+id = 2
+
 [node name="Markers" type="Node2D" parent="." unique_id=1888461289 groups=["markers"]]
 script = ExtResource("29_1egfj")
 

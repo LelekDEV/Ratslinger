@@ -7,20 +7,28 @@ extends Node2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var interaction_area: Area2D = $InteractionArea
 
-enum ID {KIDDO, MAYOR}
+enum ID {KIDDO, MAYOR, BUILDER}
 @export var id: ID
 @export_tool_button("Update properties") var update_action = update
 
 @export var reward_coins_curve: Curve
 
 func _ready() -> void:
-	update() 
+	update()
 	
 	if Engine.is_editor_hint():
 		return
 	
 	if id == ID.MAYOR:
 		Dialogic.signal_event.connect(mission_reward)
+	
+	if not SignalBus.game_restarted.is_connected(update_builder_state):
+		SignalBus.game_restarted.connect(update_builder_state.bind(false))
+	if not SignalBus.wave_ended.is_connected(update_builder_state):
+		SignalBus.wave_ended.connect(update_builder_state.bind(true))
+	
+	await SignalBus.game_loaded
+	update_builder_state(false)
 
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -30,6 +38,7 @@ func _physics_process(_delta: float) -> void:
 		match id:
 			ID.KIDDO: Dialogic.start("kiddo")
 			ID.MAYOR: Dialogic.start("mayor")
+			ID.BUILDER: Dialogic.start("builder")
 		
 		var layout: DialogicLayoutBase = Dialogic.Styles.get_layout_node()
 		
@@ -46,6 +55,20 @@ func _physics_process(_delta: float) -> void:
 		await Dialogic.timeline_ended
 		interaction_area.animation.play("enter")
 
+func update_builder_state(wave_ended: bool) -> void:
+	if id != ID.BUILDER:
+		return
+	
+	if Global.waves_cleared >= Consts.NPC_BUILDER_WAVE_REQUIREMENTS[0]:
+		global_position = Consts.NPC_BUILDER_POSITIONS[0]
+		
+		for building: Building in get_tree().get_nodes_in_group("building"):
+			if building.id == Building.ID.SHOP:
+				building.repair()
+		
+		if wave_ended and Global.builder_value == 0:
+			Global.builder_value = 1
+
 func update() -> void:
 	var _sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 	var c_shape: CollisionShape2D = get_node("CollisionShape2D")
@@ -61,9 +84,14 @@ func update() -> void:
 			_sprite.play("mayor")
 			shape.radius = Consts.NPC_SHAPE_RADIUS[1]
 			c_shape.position = Consts.NPC_SHAPE_POS[1]
+		
+		ID.BUILDER:
+			_sprite.play("builder")
+			shape.radius = Consts.NPC_SHAPE_RADIUS[2]
+			c_shape.position = Consts.NPC_SHAPE_POS[2]
 
-func mission_reward(signal_name: String) -> void:
-	if signal_name != "mission_reward":
+func mission_reward(signal_data: Dictionary) -> void:
+	if signal_data.name != "mission_reward":
 		return
 	
 	Global.mission_target = Enemy.ID.NULL

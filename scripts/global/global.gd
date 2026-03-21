@@ -2,7 +2,7 @@ extends Node
 
 var game: Game
 
-var coins: int = 30
+var coins: int = 10
 
 var force_input: bool = false
 var block_input: bool = true
@@ -17,6 +17,7 @@ var all_enemies: Array
 
 var waves_cleared: int = 0
 
+var builder_value: int = 0
 var rain_value: float = -randi_range(0, 600)
 
 var is_title_on: bool = true
@@ -92,6 +93,8 @@ func roll_mission() -> void:
 
 func update_dialogic_var() -> void:
 	Dialogic.VAR.set_variable("mission_enemy_name", ["foxes", "cows", "beavers", "snakes", "owls"][mission_target])
+	Dialogic.VAR.set_variable("building_waves_left", Consts.NPC_BUILDER_WAVE_REQUIREMENTS[0] - Global.waves_cleared)
+	Dialogic.VAR.set_variable("town_dialog_enabled", Global.waves_cleared < Consts.NPC_BUILDER_WAVE_REQUIREMENTS[0])
 
 func start_mission() -> void:
 	is_mission_active = true

@@ -1,4 +1,5 @@
 extends Camera2D
+class_name Camera
 
 var shake_tween: Tween
 var shake_value: float = 0
@@ -11,17 +12,56 @@ var intro_tween: Tween
 var intro_value: float = 0
 var intro_skip: bool = false
 
-var foreshadow_tween: Tween
-var foreshadow_value: float = 0
-
 @onready var markers: Node2D = get_tree().get_first_node_in_group("markers")
 
 @export var gate: StaticBody2D
 
+class PositionOverride:
+	var camera: Camera
+	var pos: Vector2
+	var tween: Tween
+	var value: float
+	var ignore_x: bool
+	var ignore_y: bool
+	var meta: StringName
+	
+	func _init(_camera: Camera, _pos: Vector2, _ignore_x: bool, _ignore_y: bool, _meta: StringName = &"") -> void:
+		camera = _camera
+		pos = _pos
+		ignore_x = _ignore_x
+		ignore_y = _ignore_y
+		meta = _meta
+		
+		initiate_tween()
+		camera.position_overrides.append(self)
+	
+	func initiate_tween() -> void:
+		tween = camera.create_tween() \
+			.set_trans(Tween.TRANS_CIRC) \
+			.set_ease(Tween.EASE_IN_OUT)
+	
+	func end() -> void:
+		if not tween.is_valid(): initiate_tween()
+		tween.tween_callback(camera.position_overrides.erase.bind(self))
+	
+	func interval(time: float) -> void:
+		if not tween.is_valid(): initiate_tween()
+		tween.tween_interval(time)
+	
+	func enter(time: float) -> void:
+		if not tween.is_valid(): initiate_tween()
+		tween.tween_property(self, "value", 1, time)
+	
+	func exit(time: float) -> void:
+		if not tween.is_valid(): initiate_tween()
+		tween.tween_property(self, "value", 0, time)
+
+var position_overrides: Array
+
 func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
 	SignalBus.title_exit.connect(animate_intro)
-	Dialogic.signal_event.connect(foreshadow_arena)
+	Dialogic.signal_event.connect(alter_overrides)
 	
 	update_scale()
 	
@@ -65,20 +105,44 @@ func _physics_process(_delta: float) -> void:
 	else:
 		limit_bottom = 234
 	
-	if foreshadow_tween and foreshadow_tween.is_running():
-		global_position.x = lerp(get_parent().global_position.x, 0.0, foreshadow_value)
+	var last_pos: Vector2 = get_parent().global_position
+	for override: PositionOverride in position_overrides:
+		if not override.ignore_x:
+			global_position.x = lerp(last_pos.x, override.pos.x, override.value)
+			last_pos.x = global_position.x
+		if not override.ignore_x:
+			global_position.y = lerp(last_pos.y, override.pos.y, override.value)
+			last_pos.y = global_position.y
 
-func foreshadow_arena(signal_name: String) -> void:
-	if signal_name != "foreshadow_arena":
+func alter_overrides(signal_data: Dictionary) -> void:
+	if signal_data.name != "camera_override":
 		return
 	
-	foreshadow_tween = create_tween() \
-		.set_trans(Tween.TRANS_CIRC) \
-		.set_ease(Tween.EASE_IN_OUT)
-	
-	foreshadow_tween.tween_property(self, "foreshadow_value", 1, 1)
-	foreshadow_tween.tween_interval(2)
-	foreshadow_tween.tween_property(self, "foreshadow_value", 0, 1)
+	match signal_data.type:
+		"arena":
+			var override := PositionOverride.new(self, Consts.CAMERA_POSITIONS.arena, false, true)
+			override.enter(1)
+			override.interval(2)
+			override.exit(1)
+			override.end()
+		
+		"shop":
+			var override := PositionOverride.new(self, Consts.CAMERA_POSITIONS.shop, false, false)
+			override.enter(1)
+			override.interval(2)
+			override.exit(1)
+			override.end()
+		
+		"mayor_enter":
+			var override := PositionOverride.new(self, Consts.CAMERA_POSITIONS.mayor, false, true)
+			override.enter(1)
+			# This is needed for further reuse of the override
+			override.meta = &"mayor"
+		
+		"mayor_exit":
+			var override: PositionOverride = position_overrides.filter(func(o): return o.meta == &"mayor")[0]
+			override.exit(1)
+			override.end()
 
 func animate_intro() -> void:
 	intro_tween = create_tween() \

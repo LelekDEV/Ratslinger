@@ -1,0 +1,7 @@
+Hello boss. The construction is about to finish!
+if {building_waves_left} == 1.0:
+	Defend about {so}1 more wave{sc} and we shall call it a day.
+else:
+	Defend about {so}{building_waves_left} more waves{sc} and we shall call it a day.
+*If I only make a sense of this blueprint...*
+*...I stood here for 2 hours looking at it...*

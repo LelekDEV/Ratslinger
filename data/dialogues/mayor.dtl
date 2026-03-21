@@ -9,7 +9,7 @@ Anything specific y'come for?
 			Amazing job...
 			Of course,[pause=0.25] the reward that y'come for.
 			[wait time="0.5"]
-			[signal arg="mission_reward"]
+			[signal arg_type="dict" arg="{"name":"mission_reward"}"]
 			[wait time="6.0"]
 			That's your regular pricing,[pause=0.25] {so}30 silver coins{sc} calculated to a single penny.
 			If you'd like more,[pause=0.25] I'm sure I can find another one for you,[pause=0.25] just say a word.
@@ -40,6 +40,15 @@ Anything specific y'come for?
 		So go for it,[pause=0.25] as you might know,[pause=0.25] money doesn't grow on trees...
 	- No
 		Hmph... Let me know when you're ready to take it.
+- The town | [if {town_dialog_enabled} == true]
+	Hmmh, y'see, this town used to stand full of it's mightiness, but now it's in trouble.
+	Just take a look at all those ruined buildings...
+	[wait time="1.0"]
+	[signal arg_type="dict" arg="{"name":"camera_override","type":"shop"}"]
+	[wait time="4.5"]
+	Good news is, the more waves you defend, the better those buildings will stand!
+	Whilst ya do your bloody reckoning builders work hard to bring this town it's old shape.
+	So get back on duty and you'll see it blossoming!
 - Nothing
 	label goodbye
 	Well,[pause=0.25] go get back to work then. It won't do itself.

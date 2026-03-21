@@ -13,6 +13,10 @@ func _ready() -> void:
 		GlobalAudio.music_player.stream = preload("res://audio/music/town.wav")
 		GlobalAudio.music_player.play()
 	)
+	if not SignalBus.player_death.is_connected(_on_player_death):
+		SignalBus.player_death.connect(_on_player_death)
+	if not SignalBus.game_restarted.is_connected(_on_game_restarted):
+		SignalBus.game_restarted.connect(_on_game_restarted)
 	
 	await SignalBus.game_loaded
 	if Global.is_title_on: await SignalBus.title_exited
@@ -28,3 +32,11 @@ func _physics_process(_delta: float) -> void:
 	else:
 		# fade from -300 to -50
 		GlobalAudio.music_player.volume_db = linear_to_db(clamp(-db_to_linear(12) * (player.global_position.x + 50) / 250, 0, db_to_linear(12)))
+
+func _on_player_death(_from_projectile: EnemyProjectile, _from_enemy: Enemy) -> void:
+	GlobalAudio.music_player.stop()
+
+func _on_game_restarted() -> void:
+	GlobalAudio.music_player.stream = preload("res://audio/music/town.wav")
+	GlobalAudio.music_player.volume_db = 12
+	GlobalAudio.music_player.play()

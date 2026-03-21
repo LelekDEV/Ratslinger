@@ -2,7 +2,7 @@ Greetings champ.
 Looks like it's 'bout time you become the new sheriff of this town.
 See that arena over there?
 [wait time="1.0"]
-[signal arg="foreshadow_arena"]
+[signal arg_type="dict" arg="{"name":"camera_override","type":"arena"}"]
 [wait time="4.5"]
 This is where you'll enter a bloodbath with whatever animals come.
 You shall protect our lil' town from any intruders.

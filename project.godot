@@ -41,6 +41,8 @@ AudioConsts="*uid://ci1iotyb6kjga"
 
 directories/dch_directory={}
 directories/dtl_directory={
+"builder": "res://data/dialogues/builder.dtl",
+"building_repaired": "res://data/dialogues/building_repaired.dtl",
 "introduction": "res://data/dialogues/introduction.dtl",
 "kiddo": "res://data/dialogues/kiddo.dtl",
 "mayor": "res://data/dialogues/mayor.dtl"
@@ -50,13 +52,16 @@ layout/style_directory={
 "default_dialogic_style": "res://data/styles/default_dialogic_style.tres"
 }
 variables={
+"building_waves_left": 0,
 "has_asked_for_mission_before": false,
 "mission_enemy_amount": 5,
 "mission_enemy_left": 0,
 "mission_enemy_name": "foxes",
+"repaired_building": "The shop",
 "repelled_kiddo": false,
 "sc": "[/color]",
-"so": "[color=#fce4b1]"
+"so": "[color=#fce4b1]",
+"town_dialog_enabled": true
 }
 layout/style_list=["res://data/styles/default_dialogic_style.tres"]
 layout/default_style="res://data/styles/default_dialogic_style.tres"

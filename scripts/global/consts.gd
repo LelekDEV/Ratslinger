@@ -12,8 +12,17 @@ const ITEM_DESC: Array = [
 	"Inflicts damaging and weakening poison"
 ]
 
-const NPC_SHAPE_RADIUS: Array = [10, 15]
-const NPC_SHAPE_POS: Array = [Vector2(-5, 3), Vector2(0, 1)]
+const NPC_SHAPE_RADIUS: Array = [10, 15, 12]
+const NPC_SHAPE_POS: Array = [Vector2(-5, 3), Vector2(0, 1), Vector2(-10, 1)]
+
+const NPC_BUILDER_POSITIONS = [Vector2(-10000, 0), Vector2(-459, -44)]
+const NPC_BUILDER_WAVE_REQUIREMENTS = [3]
+
+const CAMERA_POSITIONS: Dictionary = {
+	"arena": Vector2.ZERO,
+	"shop": Vector2(-452, -75),
+	"mayor": Vector2(-584, 15)
+}
 
 const SPECIAL_BULLETS_COLORS: Dictionary = {
 	"light": [Color("ff2147"), Color("ff4321"), Color("86b66a")],

@@ -1,5 +1,6 @@
 @tool
 extends StaticBody2D
+class_name Building
 
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var player_cam: Camera2D = player.get_node("Camera2D")
@@ -38,14 +39,28 @@ func _physics_process(_delta: float) -> void:
 			ID.TOWN_HALL:
 				teleport()
 
+func repair() -> void:
+	var sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
+	var interaction_collision: CollisionShape2D = get_node("InteractionArea/CollisionShape2D")
+	
+	sprite.animation = &"regular"
+	sprite.frame = id
+	interaction_collision.set_deferred("disabled", false)
+
 func update() -> void:
 	var sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
+	var interaction_collision: CollisionShape2D = get_node("InteractionArea/CollisionShape2D")
 	
 	match id:
 		ID.SHOP:
-			sprite.frame = 1
+			sprite.animation = &"ruined"
+			interaction_collision.disabled = true
+		
 		ID.TOWN_HALL:
-			sprite.frame = 0
+			sprite.animation = &"regular"
+			interaction_collision.disabled = false
+	
+	sprite.frame = id
 	
 func teleport():
 	player.location = Player.Locations.TOWN_HALL

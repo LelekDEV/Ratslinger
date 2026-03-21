@@ -12,6 +12,7 @@ var gloabal_save_paths: Array = [
 	^"is_mission_active",
 	^"is_tutorial_passed",
 	^"is_introduction_passed",
+	^"builder_value",
 	^"rain_value"
 ]
 
