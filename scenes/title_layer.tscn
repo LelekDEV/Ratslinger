@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://bkmrxo7r8tv01" path="res://graphics/title/buttons/play_normal.png" id="7_tnt71"]
 [ext_resource type="Texture2D" uid="uid://donjyfc7b0wwl" path="res://graphics/title/buttons/play_hover.png" id="8_qf2dj"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="9_1inmv"]
+[ext_resource type="Texture2D" uid="uid://ufuejfa7yyhy" path="res://graphics/title/buttons/small.png" id="9_sqnma"]
+[ext_resource type="PackedScene" uid="uid://cy6ckfgpks0t" path="res://scenes/settings_dialog.tscn" id="11_0ra5a"]
 
 [sub_resource type="Curve" id="Curve_8tnrn"]
 _limits = [0.0, 49.0, 0.0, 2.0]
@@ -76,6 +78,22 @@ shader_parameter/shine_angle = 45.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_nexvx"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ra5a"]
+atlas = ExtResource("9_sqnma")
+region = Rect2(0, 0, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqnma"]
+atlas = ExtResource("9_sqnma")
+region = Rect2(0, 26, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypotn"]
+atlas = ExtResource("9_sqnma")
+region = Rect2(26, 0, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8aism"]
+atlas = ExtResource("9_sqnma")
+region = Rect2(26, 26, 26, 26)
 
 [sub_resource type="Theme" id="Theme_sqnma"]
 default_font = ExtResource("9_1inmv")
@@ -225,6 +243,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 8
 alignment = 1
 
 [node name="PlayButton" type="TextureButton" parent="ButtonContainer" unique_id=328573696]
@@ -241,6 +260,40 @@ texture = ExtResource("7_tnt71")
 centered = false
 offset = Vector2(4, 3)
 
+[node name="SmallContainer" type="HBoxContainer" parent="ButtonContainer" unique_id=1160003174]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+
+[node name="SettingsButton" type="TextureButton" parent="ButtonContainer/SmallContainer" unique_id=736669760]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_0ra5a")
+texture_hover = SubResource("AtlasTexture_sqnma")
+
+[node name="ShadowSprite" type="Sprite2D" parent="ButtonContainer/SmallContainer/SettingsButton" unique_id=1225926161]
+self_modulate = Color(0, 0, 0, 0.35000002)
+z_index = -1
+texture = SubResource("AtlasTexture_0ra5a")
+centered = false
+offset = Vector2(4, 3)
+
+[node name="ExitButton" type="TextureButton" parent="ButtonContainer/SmallContainer" unique_id=446288750]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_ypotn")
+texture_hover = SubResource("AtlasTexture_8aism")
+
+[node name="ShadowSprite" type="Sprite2D" parent="ButtonContainer/SmallContainer/ExitButton" unique_id=235665249]
+self_modulate = Color(0, 0, 0, 0.35000002)
+z_index = -1
+texture = SubResource("AtlasTexture_0ra5a")
+centered = false
+offset = Vector2(4, 3)
+
 [node name="VersionLabel" type="Label" parent="." unique_id=229788767]
 z_index = -1
 anchors_preset = 2
@@ -253,3 +306,9 @@ scale = Vector2(0.333, 0.333)
 theme = SubResource("Theme_sqnma")
 theme_override_colors/font_color = Color(0.7764706, 0.6313726, 0.39215687, 1)
 text = "version: 0.1.0+"
+
+[node name="SettingsDialog" parent="." unique_id=898375089 instance=ExtResource("11_0ra5a")]
+position = Vector2i(0, 36)
+visible = false
+
+[connection signal="confirmed" from="SettingsDialog" to="." method="_on_settings_dialog_confirmed"]

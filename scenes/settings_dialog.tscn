@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cy6ckfgpks0t"]
+
+[ext_resource type="Script" uid="uid://da5d4yxvd8yma" path="res://scripts/settings_dialog.gd" id="1_00hgc"]
+
+[node name="SettingsDialog" type="ConfirmationDialog" unique_id=53157231]
+oversampling_override = 1.0
+title = ""
+size = Vector2i(500, 200)
+visible = true
+borderless = true
+always_on_top = true
+ok_button_text = "Apply"
+script = ExtResource("1_00hgc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1017117440]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 492.0
+offset_bottom = 151.0
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=766790702]
+layout_mode = 2
+text = "-- SETTINGS --"
+horizontal_alignment = 1
+
+[node name="FramerateContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1311288496]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/FramerateContainer" unique_id=16765892]
+layout_mode = 2
+text = "Framerate (max): "
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/FramerateContainer" unique_id=342703671]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 30.0
+max_value = 240.0
+value = 30.0
+tick_count = 8
+ticks_on_borders = true
+
+[node name="ValueLabel" type="Label" parent="VBoxContainer/FramerateContainer" unique_id=1849254018]
+layout_mode = 2
+text = "- FPS"
+
+[connection signal="value_changed" from="VBoxContainer/FramerateContainer/HSlider" to="." method="_on_framerate_slider_value_changed"]

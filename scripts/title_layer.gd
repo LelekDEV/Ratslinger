@@ -12,6 +12,8 @@ extends CanvasLayer
 
 @onready var button_container: VBoxContainer = $ButtonContainer
 
+@onready var settings_dialog: AcceptDialog = $SettingsDialog
+
 @onready var version_label: Label = $VersionLabel
 
 @onready var all_sprites: Array = find_children("*Sprite*", "Sprite2D")
@@ -26,6 +28,8 @@ var sprites_scale_tween: Tween
 var sprites_scale_value: float = 0
 
 func _ready() -> void:
+	SignalBus.scale_changed.connect(update_scale)
+	
 	await SignalBus.game_loaded
 	
 	if Settings.skip_title:
@@ -36,6 +40,8 @@ func _ready() -> void:
 		return
 	
 	button_container.get_child(0).connect("pressed", exit)
+	button_container.get_child(1).get_child(0).connect("pressed", settings_dialog.popup_centered)
+	button_container.get_child(1).get_child(1).connect("pressed", SaverLoader.exit)
 	visible = true
 	
 	for letter in letters.get_children():
@@ -86,6 +92,8 @@ func _ready() -> void:
 	intro_tween.tween_callback(button_container.set.bind("visible", true))
 
 func _process(delta: float) -> void:
+	var scale_float: float = (Global.scale_level / 2.0 + 3) / 3.0
+	
 	frame += delta
 	tail_sprite.frame = int(tail_frame_curve.sample(frame))
 	
@@ -98,7 +106,7 @@ func _process(delta: float) -> void:
 	shadow_rect.size = texture_rect.size
 	shadow_rect.global_position = texture_rect.global_position + Vector2(4, 3)
 	
-	version_label.global_position = Vector2(6, get_viewport().get_visible_rect().size.y - version_label.size.y) / scale
+	version_label.global_position = Vector2(6 * scale_float, get_viewport().get_visible_rect().size.y - version_label.size.y * scale_float) / scale
 	
 	button_container.position = Vector2(0, texture_rect.size.y + texture_rect.position.y)
 	button_container.size = get_viewport().get_visible_rect().size / scale - Vector2(0, texture_rect.size.y + texture_rect.position.y)
@@ -109,6 +117,14 @@ func _process(delta: float) -> void:
 				sprite.visible = false
 			else:
 				sprite.scale = Vector2.ONE / ((sprites_scale_value * 100) + 1)
+
+func update_scale() -> void:
+	# This formula is a bit different from the one used in UI for instance
+	# I find it better looking for here
+	var scale_float: float = Global.scale_level / 2.0 + 3
+	var scale_vector: Vector2 = Vector2i.ONE * scale_float
+	
+	scale = scale_vector
 
 func exit() -> void:
 	SignalBus.title_exit.emit()
@@ -146,3 +162,7 @@ func anim_gun() -> void:
 		.set_trans(Tween.TRANS_LINEAR)
 	
 	shine_tween.tween_method(func(value: float): gun_sprite.material.set_shader_parameter("shine_progress", value), 0.0, 1.0, 1)
+
+func _on_settings_dialog_confirmed() -> void:
+	Engine.physics_ticks_per_second = settings_dialog.framerate_slider.value
+	Engine.max_fps = settings_dialog.framerate_slider.value

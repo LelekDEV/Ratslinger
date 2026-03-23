@@ -33,9 +33,9 @@ Fullscreen="res://scripts/global/fullscreen.gd"
 Upgrades="*res://scripts/global/upgrades.gd"
 Consts="*res://scripts/global/consts.gd"
 Dialogic="*uid://ds2q0uclmolvu"
-SaverLoader="uid://dfus07kijh5g4"
 Settings="*uid://c423w728w8d64"
 AudioConsts="*uid://ci1iotyb6kjga"
+SaverLoader="*uid://dfus07kijh5g4"
 
 [dialogic]
 
