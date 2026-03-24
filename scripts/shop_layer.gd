@@ -21,12 +21,6 @@ extends CanvasLayer
 enum Pages {VAMPIRE_BULLET, FIRE_BULLET, POISON_BULLET}
 var page: Pages = Pages.VAMPIRE_BULLET
 
-func _ready() -> void:
-	get_viewport().size_changed.connect(update_scale)
-
-func update_scale() -> void:
-	pass
-
 func enter() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS

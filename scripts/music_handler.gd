@@ -15,8 +15,8 @@ func _ready() -> void:
 	)
 	if not SignalBus.player_death.is_connected(_on_player_death):
 		SignalBus.player_death.connect(_on_player_death)
-	if not SignalBus.game_restarted.is_connected(_on_game_restarted):
-		SignalBus.game_restarted.connect(_on_game_restarted)
+	if not SignalBus.game_restart.is_connected(_on_game_restart):
+		SignalBus.game_restart.connect(_on_game_restart)
 	
 	await SignalBus.game_loaded
 	if Global.is_title_on: await SignalBus.title_exited
@@ -36,7 +36,7 @@ func _physics_process(_delta: float) -> void:
 func _on_player_death(_from_projectile: EnemyProjectile, _from_enemy: Enemy) -> void:
 	GlobalAudio.music_player.stop()
 
-func _on_game_restarted() -> void:
+func _on_game_restart() -> void:
 	GlobalAudio.music_player.stream = preload("res://audio/music/town.wav")
 	GlobalAudio.music_player.volume_db = 12
 	GlobalAudio.music_player.play()

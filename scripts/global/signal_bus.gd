@@ -16,7 +16,7 @@ signal wave_ended
 
 signal game_loaded
 signal game_save_queued
-signal game_restarted
+signal game_restart
 
 signal scale_changed
 

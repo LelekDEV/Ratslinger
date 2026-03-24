@@ -30,6 +30,8 @@ var sprites_scale_value: float = 0
 func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
 	
+	update_scale()
+	
 	await SignalBus.game_loaded
 	
 	if Settings.skip_title:

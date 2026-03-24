@@ -22,12 +22,13 @@ func _ready() -> void:
 	if id == ID.MAYOR:
 		Dialogic.signal_event.connect(mission_reward)
 	
-	if not SignalBus.game_restarted.is_connected(update_builder_state):
-		SignalBus.game_restarted.connect(update_builder_state.bind(false))
+	if not SignalBus.game_restart.is_connected(update_builder_state):
+		SignalBus.game_restart.connect(update_builder_state.bind(false))
 	if not SignalBus.wave_ended.is_connected(update_builder_state):
 		SignalBus.wave_ended.connect(update_builder_state.bind(true))
 	
 	await SignalBus.game_loaded
+	
 	update_builder_state(false)
 
 func _physics_process(_delta: float) -> void:
@@ -58,6 +59,9 @@ func _physics_process(_delta: float) -> void:
 func update_builder_state(wave_ended: bool) -> void:
 	if id != ID.BUILDER:
 		return
+	
+	if not is_inside_tree():
+		await tree_entered
 	
 	if Global.waves_cleared >= Consts.NPC_BUILDER_WAVE_REQUIREMENTS[0]:
 		global_position = Consts.NPC_BUILDER_POSITIONS[0]

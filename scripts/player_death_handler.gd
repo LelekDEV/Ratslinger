@@ -84,5 +84,9 @@ func on_player_death(from_projectile: EnemyProjectile, from_enemy: Enemy) -> voi
 	await get_tree().create_timer(1.5).timeout
 	
 	get_tree().paused = false
+	
+	Global.is_game_restarted = true
+	Global.is_title_restarted = false
+	
 	get_tree().reload_current_scene()
-	SignalBus.game_restarted.emit()
+	SignalBus.game_restart.emit()

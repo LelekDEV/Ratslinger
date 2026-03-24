@@ -36,8 +36,14 @@ func _ready() -> void:
 	Global.game = self
 	Global.all_enemies.clear()
 	
+	if Global.is_game_restarted:
+		GlobalAudio.music_player.stop()
+		SaverLoader.load_game()
+		
+		title_sand_sprite.global_position.x = int(player.global_position.x)
+		return
+		
 	await SignalBus.game_loaded
-	
 	title_sand_sprite.global_position.x = int(player.global_position.x)
 
 func setup_signals() -> void:

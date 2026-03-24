@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://lw0lbb371my5" path="res://scenes/crosshair.tscn" id="2_7dpn4"]
 [ext_resource type="PackedScene" uid="uid://cbkx546wmeje8" path="res://scenes/shop_layer.tscn" id="2_836xp"]
 [ext_resource type="PackedScene" uid="uid://c2n2sjjatxuwj" path="res://scenes/title_layer.tscn" id="2_dybux"]
+[ext_resource type="PackedScene" uid="uid://c2jjfe8i5x8mh" path="res://scenes/pause_layer.tscn" id="2_g8bb0"]
 [ext_resource type="Script" uid="uid://cvi745bdmkf4h" path="res://scripts/ui.gd" id="2_ijxjl"]
 [ext_resource type="Script" uid="uid://bafvyxexlje1q" path="res://scripts/weather_layer.gd" id="3_4qk7b"]
 [ext_resource type="PackedScene" uid="uid://djd1q01nwytri" path="res://scenes/ui_heart.tscn" id="4_55u7g"]
@@ -549,6 +550,11 @@ size = Vector2(26, 78)
 [node name="Game" type="Node2D" unique_id=1244812287 groups=["game"]]
 y_sort_enabled = true
 script = ExtResource("1_o8yes")
+
+[node name="PauseLayer" parent="." unique_id=1919008111 node_paths=PackedStringArray("croshair") instance=ExtResource("2_g8bb0")]
+layer = 2
+visible = false
+croshair = NodePath("../UI/Crosshair")
 
 [node name="TitleLayer" parent="." unique_id=1948925533 instance=ExtResource("2_dybux")]
 visible = false

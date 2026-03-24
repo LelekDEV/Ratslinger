@@ -24,6 +24,9 @@ var is_title_on: bool = true
 var is_tutorial_passed: bool = false
 var is_introduction_passed: bool = false
 
+var is_game_restarted: bool = false
+var is_title_restarted: bool = false
+
 var scale_level: int = 0
 var min_scale_level: int = 0
 

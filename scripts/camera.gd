@@ -65,6 +65,10 @@ func _ready() -> void:
 	
 	update_scale()
 	
+	if Global.is_game_restarted:
+		reset_physics_interpolation.call_deferred()
+		reset_smoothing.call_deferred()
+	
 	await SignalBus.game_loaded
 	
 	if Settings.skip_title:

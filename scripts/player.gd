@@ -42,6 +42,13 @@ var last_location: Locations = location
 
 func _ready() -> void:
 	SignalBus.game_save_queued.connect(_on_game_save_queued)
+	
+	if Global.is_game_restarted and not Global.is_title_restarted:
+		global_position = Vector2.ZERO
+	
+	if Global.is_title_on:
+		Global.block_movement = true
+		Global.block_input = true
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
