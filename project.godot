@@ -23,6 +23,10 @@ run/main_scene="res://scenes/root/game.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://ctxjr3ex2jpo1"
+
 [autoload]
 
 SignalBus="*res://scripts/global/signal_bus.gd"

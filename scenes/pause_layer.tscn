@@ -74,6 +74,26 @@ text = "[tornado radius=5 freq=2]- PAUSED-[/tornado]"
 scroll_active = false
 horizontal_alignment = 1
 
+[node name="ActionLabel" type="Label" parent="." unique_id=1452067646]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = 29.0
+offset_right = 46.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_y6x75")
+theme_override_font_sizes/font_size = 32
+text = "Resume"
+horizontal_alignment = 1
+vertical_alignment = 2
+visible_characters = 0
+visible_ratio = 0.0
+
 [node name="ButtonContainer" type="HBoxContainer" parent="." unique_id=988746367]
 anchors_preset = 15
 anchor_right = 1.0
