@@ -38,7 +38,7 @@ func _ready() -> void:
 	arc_tween.tween_property(self, "arc_value", 1, 0.5)
 	arc_tween.tween_callback(collect)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if mode == Modes.ARC:
 		var v: float = arc_value * PI + PI
 		var r: float = circle_rot
@@ -57,7 +57,7 @@ func _physics_process(_delta: float) -> void:
 			if round(global_position) == round(target_player.global_position):
 				collect()
 		else:
-			global_position += velocity
+			global_position += velocity * delta * Consts.FIXED_LERP_RELATIVE_FPS
 			velocity = Global.fixed_lerp(velocity, Vector2.ZERO, 0.05)
 
 func collect() -> void:

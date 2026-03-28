@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/enemy.gd" id="1_d0vrg"]
 [ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_64a2j"]
+[ext_resource type="Texture2D" uid="uid://2mdj62f7p8k2" path="res://graphics/characters/enemies/owl/base.png" id="4_d0vrg"]
 [ext_resource type="Material" uid="uid://dlas80bb87afk" path="res://data/flash_shader_material.tres" id="4_inb6d"]
-[ext_resource type="Texture2D" uid="uid://daumqpbtbt1rw" path="res://icon.svg" id="4_yri55"]
 [ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/rain_surface.gd" id="6_cde3v"]
 [ext_resource type="PackedScene" uid="uid://cm32epdmwv6c5" path="res://scenes/attack_highlight.tscn" id="7_d0vrg"]
 [ext_resource type="PackedScene" uid="uid://dimjd58qns2ih" path="res://scenes/fx/fire_fx.tscn" id="7_s84ig"]
@@ -12,25 +12,79 @@
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_64a2j"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(0, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nq628"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(60, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inb6d"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(120, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rl1vy"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(180, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cde3v"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(240, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s84ig"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(300, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50hdj"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(360, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elpym"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(420, 0, 60, 50)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_7xaro"]
 animations = [{
 "frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_64a2j")
+}, {
 "duration": 1.0,
-"texture": ExtResource("4_yri55")
+"texture": SubResource("AtlasTexture_nq628")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inb6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rl1vy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cde3v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s84ig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50hdj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elpym")
 }],
-"loop": true,
-"name": &"idle",
-"speed": 3.0
+"loop": false,
+"name": &"fly_down_and_up",
+"speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ra3w"]
-height = 20.7978
+radius = 12.709785
+height = 25.41957
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
-radius = 8.0
+radius = 13.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d0vrg"]
-radius = 18.0
+radius = 24.0
 
 [sub_resource type="Curve2D" id="Curve2D_yri55"]
 
@@ -63,12 +117,9 @@ scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_ow15s")
 
 [node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1976901040 node_paths=PackedStringArray("spawn_node")]
-visible = false
 material = ExtResource("4_inb6d")
-scale = Vector2(0.1, 0.2)
 sprite_frames = SubResource("SpriteFrames_7xaro")
-animation = &"idle"
-frame_progress = 0.3972366
+animation = &"fly_down_and_up"
 script = ExtResource("6_cde3v")
 spawn_node = NodePath("../LocalFX")
 

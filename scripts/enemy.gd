@@ -122,6 +122,7 @@ func _ready() -> void:
 			flight_timer = get_node("FlightTimer")
 			land_area = get_node("LandArea")
 			is_on_land = false
+			sprite.visible = false
 	
 	health = max_health
 	
@@ -129,7 +130,9 @@ func _ready() -> void:
 	sprite.material.set_shader_parameter("strip_active", false)
 	
 	# uncomment to test pre-spawned enemies properly
+	#process_mode = Node.PROCESS_MODE_DISABLED
 	#await get_tree().process_frame
+	#process_mode = Node.PROCESS_MODE_INHERIT
 	
 	Global.all_enemies.append(self)
 
@@ -157,6 +160,8 @@ func _physics_process(delta: float) -> void:
 
 func handle_landing() -> void:
 	if not land_tween or not land_tween.is_running():
+		sprite.play("fly_down_and_up")
+		
 		land_tween = create_tween() \
 			.set_trans(Tween.TRANS_CUBIC) \
 			.set_ease(Tween.EASE_IN_OUT)
@@ -237,7 +242,7 @@ func handle_flying(delta: float) -> void:
 		velocity = Global.fixed_lerp(velocity, Vector2.ZERO, 0.3)
 	
 	var time_ratio: float = flight_timer.time_left / flight_timer.wait_time
-	attack_highlight.circle_radius = 16 - 10 * time_ratio
+	attack_highlight.circle_radius = 24 - 16 * time_ratio
 	attack_highlight.alpha = 0.5 - abs(cos(time_ratio * PI * 5)) * 0.5 + 0.5 * (1 - time_ratio)
 	attack_highlight.position = Vector2.ZERO
 

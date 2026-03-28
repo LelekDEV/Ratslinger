@@ -7,6 +7,8 @@ static func instantiate() -> OwlProjectileSpawner:
 @onready var projectiles: Node2D = get_tree().get_first_node_in_group("projectiles")
 @onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
 
+@onready var sprite: Sprite2D = $Sprite2D
+
 var parent: Enemy
 
 var spin_tween: Tween
@@ -15,7 +17,7 @@ var spin_shots: Array = []
 var spin_notions: Array = []
 
 func _ready() -> void:
-	var start: float = randf_range(0.6, 0.7)
+	var start: float = randf_range(0.5, 0.6)
 	
 	for i in range(3):
 		spin_shots.append(start + 0.2 * 2/3.0 * i)
@@ -40,9 +42,14 @@ func _physics_process(_delta: float) -> void:
 			fx.add_child(highlight)
 			
 			spin_notions.erase(v) 
+	
+	var shader_value: float = max(spin_value - 0.9, 0)
+	sprite.material.set_shader_parameter("progress_scatter", shader_value * 60)
+	sprite.material.set_shader_parameter("progress_rotation", shader_value * 100)
+	sprite.material.set_shader_parameter("progress_fade", shader_value * 10)
 
 func spin_start() -> void:
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.6).timeout
 	
 	spin_tween = create_tween() \
 		.set_trans(Tween.TRANS_QUAD) \
