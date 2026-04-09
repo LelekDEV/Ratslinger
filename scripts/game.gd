@@ -126,6 +126,17 @@ func end_wave() -> void:
 func update_enemies(killed_id: Enemy.ID = -1, killed_amount: int = 1) -> void:
 	enemies_killed += killed_amount
 	
+	if killed_id != -1:
+		var enemy_name: String
+		match killed_id:
+			Enemy.ID.FOX: enemy_name = "Fox"
+			Enemy.ID.BEAVER: enemy_name = "Beaver"
+			Enemy.ID.SNAKE: enemy_name = "Snake"
+			Enemy.ID.OWL: enemy_name = "Owl"
+			_: return
+	
+		Global.enemy_stats[enemy_name]["kills"] += killed_amount
+	
 	if killed_id == Global.mission_target:
 		Global.mission_killed += killed_amount
 	

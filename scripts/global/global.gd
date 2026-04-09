@@ -15,6 +15,13 @@ var is_mission_active: bool = false
 
 var all_enemies: Array
 
+var enemy_stats: Dictionary = {
+	"Fox": { "encountered": false, "kills": 0 },
+	"Beaver": { "encountered": false, "kills": 0 },
+	"Snake": { "encountered": false, "kills": 0 },
+	"Owl": { "encountered": false, "kills": 0 }
+}
+
 var waves_cleared: int = 0
 
 var builder_value: int = 0

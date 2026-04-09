@@ -135,6 +135,7 @@ func _ready() -> void:
 	#process_mode = Node.PROCESS_MODE_INHERIT
 	
 	Global.all_enemies.append(self)
+	mark_encountered()
 
 func _exit_tree() -> void:
 	Global.all_enemies.erase(self)
@@ -496,3 +497,16 @@ func _on_fire_tick_timeout() -> void:
 		fire_tick.start()
 	else:
 		fire_fx.visible = false
+
+func mark_encountered() -> void:
+	var enemy_name: String
+	match id:
+		ID.FOX: enemy_name = "Fox"
+		ID.BEAVER: enemy_name = "Beaver"
+		ID.SNAKE: enemy_name = "Snake"
+		ID.OWL: enemy_name = "Owl"
+		_ : return
+
+	var stats = Global.enemy_stats.get(enemy_name, {"encountered": false, "kills": 0})
+	stats["encountered"] = true
+	Global.enemy_stats[enemy_name] = stats
