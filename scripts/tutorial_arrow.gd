@@ -15,7 +15,7 @@ func _physics_process(delta: float) -> void:
 	anim = fmod(anim + delta * 6, TAU)
 	offset.x = -20 + sin(anim) * 3
 	
-	visible = not wave_start_area.interacting and not Global.game.is_wave_active
+	visible = not wave_start_area.interacting and not Global.game.is_wave_active and not player.location == Player.Locations.TOWN_HALL
 	
 	var c_size = get_viewport().get_visible_rect().size / camera.zoom
 	var c_rect = Rect2(camera.get_screen_center_position() - c_size / 2, c_size)

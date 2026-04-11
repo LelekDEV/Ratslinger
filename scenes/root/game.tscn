@@ -42,7 +42,6 @@
 [ext_resource type="Script" uid="uid://c43tbfovvl81u" path="res://scripts/rain_surface_tilemap.gd" id="28_dybux"]
 [ext_resource type="Script" uid="uid://cmo05ufm0vqdm" path="res://scripts/markers.gd" id="29_1egfj"]
 [ext_resource type="Shader" uid="uid://fftxyux4c5ll" path="res://shaders/river.gdshader" id="29_p3ae7"]
-[ext_resource type="PackedScene" uid="uid://bvs0r5xaha0p5" path="res://scenes/book_stand.tscn" id="31_s417v"]
 [ext_resource type="Script" uid="uid://bjml88vnde8e0" path="res://scripts/tutorial_handler.gd" id="37_m1gv1"]
 [ext_resource type="Script" uid="uid://do80blcsew3si" path="res://scripts/music_handler.gd" id="42_l3433"]
 
@@ -554,6 +553,7 @@ y_sort_enabled = true
 script = ExtResource("1_o8yes")
 
 [node name="BestiaryLayer" parent="." unique_id=229625304 groups=["bestiary_layer"] instance=ExtResource("2_yylqm")]
+layer = 2
 visible = false
 
 [node name="PauseLayer" parent="." unique_id=1919008111 node_paths=PackedStringArray("croshair") instance=ExtResource("2_g8bb0")]
@@ -879,9 +879,6 @@ position = Vector2(-1200, 0)
 
 [node name="Environment" type="Node2D" parent="." unique_id=268704630]
 y_sort_enabled = true
-
-[node name="BookStand" parent="Environment" unique_id=2095459408 instance=ExtResource("31_s417v")]
-position = Vector2(200, 0)
 
 [node name="Shop" parent="Environment" unique_id=2105327580 instance=ExtResource("9_l77qo")]
 position = Vector2(-452, -95)

@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dokwhkxtigqel" path="res://graphics/environment/buildings/interiors/rathouse_interior.png" id="1_oxya2"]
 [ext_resource type="Script" uid="uid://j7wexbf37oie" path="res://scripts/rathouse_interior.gd" id="1_schjg"]
 [ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/interaction_area.tscn" id="3_ve1jr"]
+[ext_resource type="PackedScene" uid="uid://bvs0r5xaha0p5" path="res://scenes/book_stand.tscn" id="4_7mqc7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ve1jr"]
 size = Vector2(36, 16)
@@ -137,3 +138,6 @@ shape = SubResource("RectangleShape2D_3ipej")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=23435500]
 position = Vector2(-100, -49)
 shape = SubResource("RectangleShape2D_qeg0c")
+
+[node name="BookStand" parent="." unique_id=2095459408 instance=ExtResource("4_7mqc7")]
+position = Vector2(7, -27)

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bb0r860nunlrq" path="res://graphics/bestiary/Book.png" id="3_j3mqr"]
 [ext_resource type="Script" uid="uid://cvrqj7nsebxg6" path="res://scripts/bestiary_arrows.gd" id="4_j3mqr"]
 [ext_resource type="Texture2D" uid="uid://daqhddbsa0mv4" path="res://graphics/bestiary/exit.png" id="5_j3mqr"]
+[ext_resource type="FontFile" uid="uid://b3vd4byjlxrqy" path="res://fonts/teeny_tiny_pixls.ttf" id="6_2cel7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mq4o6"]
 atlas = ExtResource("3_j3mqr")
@@ -187,6 +188,9 @@ animations = [{
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wideg"]
 
+[sub_resource type="Theme" id="Theme_mq4o6"]
+default_font = ExtResource("6_2cel7")
+
 [node name="BestiaryLayer" type="CanvasLayer" unique_id=229625304 node_paths=PackedStringArray("book_animation")]
 process_mode = 3
 script = ExtResource("1_8u4y0")
@@ -218,9 +222,9 @@ metadata/_edit_use_anchors_ = true
 [node name="BookRoot" type="Node2D" parent="Control" unique_id=719676519]
 position = Vector2(250, 108)
 
-[node name="RightPage" type="Sprite2D" parent="Control/BookRoot" unique_id=833871090 groups=["right_page"]]
+[node name="RightPage" type="Sprite2D" parent="Control/BookRoot" unique_id=833871090]
 z_index = 1
-position = Vector2(415, 130)
+position = Vector2(424, 130)
 
 [node name="BookStand" type="Sprite2D" parent="Control/BookRoot" unique_id=1805330257]
 scale = Vector2(3, 3)
@@ -234,7 +238,7 @@ sprite_frames = SubResource("SpriteFrames_aig2i")
 animation = &"FirstPage"
 centered = false
 
-[node name="LeftPage" type="Sprite2D" parent="Control/BookRoot" unique_id=335608684 groups=["left_page"]]
+[node name="LeftPage" type="Sprite2D" parent="Control/BookRoot" unique_id=335608684]
 position = Vector2(170, 130)
 
 [node name="Arrows" type="Node2D" parent="Control" unique_id=682568544]
@@ -242,9 +246,11 @@ position = Vector2(470, 560)
 script = ExtResource("4_j3mqr")
 
 [node name="Button1" type="Button" parent="Control/Arrows" unique_id=1613623432 groups=["left_arrow"]]
+self_modulate = Color(1, 1, 1, 0)
 offset_right = 26.0
 offset_bottom = 26.0
 scale = Vector2(2, 2)
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_j3mqr")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2cel7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2cel7")
@@ -264,6 +270,7 @@ centered = false
 flip_h = true
 
 [node name="Button2" type="Button" parent="Control/Arrows" unique_id=2099545751 groups=["right_arrow"]]
+self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -273,6 +280,7 @@ offset_bottom = 26.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_j3mqr")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_u0fk6")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_g005f")
@@ -290,12 +298,14 @@ animation = &"ArrowButton"
 centered = false
 
 [node name="Button" type="Button" parent="Control" unique_id=2096678074]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 36.0
 offset_bottom = 36.0
 scale = Vector2(2, 2)
+focus_mode = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/Button" unique_id=1191745917]
 sprite_frames = SubResource("SpriteFrames_lqwxb")
@@ -303,18 +313,45 @@ animation = &"ExitButton"
 centered = false
 
 [node name="LeftLabel" type="Node2D" parent="Control" unique_id=1010128548]
-position = Vector2(400, 270)
+position = Vector2(394, 270)
 
 [node name="DescLabel" type="Label" parent="Control/LeftLabel" unique_id=894206524 groups=["left_page_label"]]
 offset_top = 35.0
-offset_right = 110.0
+offset_right = 146.0
 offset_bottom = 125.0
+theme = SubResource("Theme_mq4o6")
+theme_override_colors/font_color = Color(0.23921569, 0.047058824, 0.09803922, 1)
 text = "Description"
+autowrap_mode = 1
 
-[node name="NameLabel" type="Label" parent="Control/LeftLabel" unique_id=1628959298]
+[node name="NameLabel" type="Label" parent="Control/LeftLabel" unique_id=1628959298 groups=["left_page_label"]]
 offset_right = 100.0
 offset_bottom = 35.0
+theme = SubResource("Theme_mq4o6")
+theme_override_colors/font_color = Color(0.23921569, 0.047058824, 0.09803922, 1)
 text = "FOX"
+
+[node name="RightLabel" type="Node2D" parent="Control" unique_id=1473488808]
+position = Vector2(560, 270)
+
+[node name="DescLabel" type="Label" parent="Control/RightLabel" unique_id=563511798 groups=["left_page_label"]]
+offset_left = -16.0
+offset_top = 35.0
+offset_right = 142.0
+offset_bottom = 125.0
+theme = SubResource("Theme_mq4o6")
+theme_override_colors/font_color = Color(0.23921569, 0.047058824, 0.09803922, 1)
+text = "Description"
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="NameLabel" type="Label" parent="Control/RightLabel" unique_id=1131490551 groups=["left_page_label"]]
+offset_right = 142.0
+offset_bottom = 35.0
+theme = SubResource("Theme_mq4o6")
+theme_override_colors/font_color = Color(0.23921569, 0.047058824, 0.09803922, 1)
+text = "FOX"
+horizontal_alignment = 2
 
 [connection signal="animation_finished" from="Control/BookRoot/BookAnim" to="." method="_on_book_animation_finished"]
 [connection signal="pressed" from="Control/Arrows/Button1" to="Control/Arrows" method="_on_button_left_pressed"]

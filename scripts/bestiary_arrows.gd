@@ -14,10 +14,10 @@ func _ready():
 
 	
 func _on_button_right_pressed() -> void:
-	print("Right pressed")
+	# print("Right pressed")
 	bestiary_layer.flip_page_data(2)
 
 
 func _on_button_left_pressed() -> void:
-	print("Left pressed")
+	# print("Left pressed")
 	bestiary_layer.flip_page_data(-2)

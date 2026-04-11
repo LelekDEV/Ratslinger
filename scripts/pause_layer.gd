@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var settings_dialog: ConfirmationDialog = get_tree().get_first_node_in_group("settings_dialog")
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var shop_layer: CanvasLayer = get_tree().get_first_node_in_group("shop_layer")
+@onready var bestiary_layer: CanvasLayer = get_tree().get_first_node_in_group("bestiary_layer")
 
 @onready var paused_label: RichTextLabel = $PausedLabel
 @onready var action_label: Label = $ActionLabel
@@ -65,7 +66,7 @@ func _physics_process(_delta: float) -> void:
 func resume() -> void:
 	visible = false
 	
-	if not (shop_layer.visible or Dialogic.current_timeline):
+	if not (shop_layer.visible or bestiary_layer.visible or Dialogic.current_timeline):
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
 	if not Dialogic.current_timeline:
