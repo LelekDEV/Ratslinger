@@ -3,10 +3,8 @@ extends CanvasLayer
 @onready var left_page = get_tree().get_first_node_in_group("left_page")
 @onready var right_page = get_tree().get_first_node_in_group("right_page")
 
-@onready var left_name_label = $LeftPage/NameLabel
-@onready var left_desc_label = $LeftPage/DescLabel
-@onready var right_name_label = $RightPage/NameLabel
-@onready var right_desc_label = $RightPage/DescLabel
+@onready var left_name_label = $Control/LeftLabel/NameLabel
+@onready var left_desc_label = $Control/LeftLabel/DescLabel
 
 var enemies: Array = [
 	{ "name": "Fox", "description": "A quick forest predator.", "sprite": preload("res://graphics/characters/enemies/fox/fox_frame.png") },
@@ -142,7 +140,7 @@ func _on_exit_button_pressed() -> void:
 	visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
-	Global.resume_game()
+	Global.resume_game(false)
 
 	is_busy = false
 

@@ -1,28 +1,25 @@
 [gd_scene format=3 uid="uid://t1m2fvy7trg6"]
 
-[ext_resource type="Script" uid="uid://s4i2tmbc0x0f" path="res://scripts/bestiary.gd" id="1_8u4y0"]
+[ext_resource type="Script" uid="uid://cu0rr2pibyea" path="res://scripts/bestiary.gd" id="1_8u4y0"]
 [ext_resource type="Texture2D" uid="uid://banoe477svldk" path="res://graphics/bestiary/book_stand.png" id="1_smylb"]
 [ext_resource type="Texture2D" uid="uid://bb0r860nunlrq" path="res://graphics/bestiary/Book.png" id="3_j3mqr"]
-[ext_resource type="Script" uid="uid://c6wm02y5ilu5f" path="res://scripts/bestiary_arrows.gd" id="4_j3mqr"]
+[ext_resource type="Script" uid="uid://cvrqj7nsebxg6" path="res://scripts/bestiary_arrows.gd" id="4_j3mqr"]
 [ext_resource type="Texture2D" uid="uid://daqhddbsa0mv4" path="res://graphics/bestiary/exit.png" id="5_j3mqr"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2cel7"]
-load_path = "res://.godot/imported/Book.png-0bfc5981c30a8cd8d4182a83534110cf.ctex"
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_mq4o6"]
-atlas = SubResource("CompressedTexture2D_2cel7")
+atlas = ExtResource("3_j3mqr")
 region = Rect2(0, 0, 124, 106)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ccu45"]
-atlas = SubResource("CompressedTexture2D_2cel7")
+atlas = ExtResource("3_j3mqr")
 region = Rect2(124, 0, 124, 106)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n57n3"]
-atlas = SubResource("CompressedTexture2D_2cel7")
+atlas = ExtResource("3_j3mqr")
 region = Rect2(248, 0, 124, 106)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oyl77"]
-atlas = SubResource("CompressedTexture2D_2cel7")
+atlas = ExtResource("3_j3mqr")
 region = Rect2(372, 0, 124, 106)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aig2i"]
@@ -234,9 +231,7 @@ centered = false
 position = Vector2(110, 10)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_aig2i")
-animation = &"TurnBack"
-frame = 4
-frame_progress = 1.0
+animation = &"FirstPage"
 centered = false
 
 [node name="LeftPage" type="Sprite2D" parent="Control/BookRoot" unique_id=335608684 groups=["left_page"]]

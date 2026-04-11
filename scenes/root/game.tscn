@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c2n2sjjatxuwj" path="res://scenes/title_layer.tscn" id="2_dybux"]
 [ext_resource type="PackedScene" uid="uid://c2jjfe8i5x8mh" path="res://scenes/pause_layer.tscn" id="2_g8bb0"]
 [ext_resource type="Script" uid="uid://cvi745bdmkf4h" path="res://scripts/ui.gd" id="2_ijxjl"]
+[ext_resource type="PackedScene" uid="uid://t1m2fvy7trg6" path="res://scenes/bestiary.tscn" id="2_yylqm"]
 [ext_resource type="Script" uid="uid://bafvyxexlje1q" path="res://scripts/weather_layer.gd" id="3_4qk7b"]
 [ext_resource type="PackedScene" uid="uid://djd1q01nwytri" path="res://scenes/ui_heart.tscn" id="4_55u7g"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="4_836xp"]
@@ -41,6 +42,7 @@
 [ext_resource type="Script" uid="uid://c43tbfovvl81u" path="res://scripts/rain_surface_tilemap.gd" id="28_dybux"]
 [ext_resource type="Script" uid="uid://cmo05ufm0vqdm" path="res://scripts/markers.gd" id="29_1egfj"]
 [ext_resource type="Shader" uid="uid://fftxyux4c5ll" path="res://shaders/river.gdshader" id="29_p3ae7"]
+[ext_resource type="PackedScene" uid="uid://bvs0r5xaha0p5" path="res://scenes/book_stand.tscn" id="31_s417v"]
 [ext_resource type="Script" uid="uid://bjml88vnde8e0" path="res://scripts/tutorial_handler.gd" id="37_m1gv1"]
 [ext_resource type="Script" uid="uid://do80blcsew3si" path="res://scripts/music_handler.gd" id="42_l3433"]
 
@@ -551,6 +553,9 @@ size = Vector2(26, 78)
 y_sort_enabled = true
 script = ExtResource("1_o8yes")
 
+[node name="BestiaryLayer" parent="." unique_id=229625304 groups=["bestiary_layer"] instance=ExtResource("2_yylqm")]
+visible = false
+
 [node name="PauseLayer" parent="." unique_id=1919008111 node_paths=PackedStringArray("croshair") instance=ExtResource("2_g8bb0")]
 layer = 2
 visible = false
@@ -874,6 +879,9 @@ position = Vector2(-1200, 0)
 
 [node name="Environment" type="Node2D" parent="." unique_id=268704630]
 y_sort_enabled = true
+
+[node name="BookStand" parent="Environment" unique_id=2095459408 instance=ExtResource("31_s417v")]
+position = Vector2(200, 0)
 
 [node name="Shop" parent="Environment" unique_id=2105327580 instance=ExtResource("9_l77qo")]
 position = Vector2(-452, -95)
