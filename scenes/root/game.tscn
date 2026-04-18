@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
 [ext_resource type="Script" uid="uid://70i5g03s8o8r" path="res://scripts/ui_scale_handler.gd" id="18_hjgq7"]
+[ext_resource type="PackedScene" uid="uid://chssvjrfmrtwq" path="res://scenes/boss_healthbar.tscn" id="18_s417v"]
 [ext_resource type="Texture2D" uid="uid://c2axess4e6nxh" path="res://graphics/environment/buildings/tower.png" id="19_d8x6a"]
 [ext_resource type="Texture2D" uid="uid://52jojmlogoth" path="res://graphics/misc/arrow.png" id="21_or0h2"]
 [ext_resource type="Script" uid="uid://b4645gja13sa0" path="res://scripts/tutorial_arrow.gd" id="22_sy4ad"]
@@ -341,6 +342,52 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(0.7764706, 0.6313726, 0.39215687, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../BossHealthbar:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_s417v"]
+resource_name = "bossfight_end"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../BossHealthbar:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yylqm"]
+resource_name = "bossfight_start"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../BossHealthbar:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_f0ccc"]
 resource_name = "mission_complete"
@@ -379,6 +426,8 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_psga7"]
 _data = {
 &"RESET": SubResource("Animation_psga7"),
+&"bossfight_end": SubResource("Animation_s417v"),
+&"bossfight_start": SubResource("Animation_yylqm"),
 &"mission_complete": SubResource("Animation_f0ccc"),
 &"mission_redeem": SubResource("Animation_dawlq")
 }
@@ -547,6 +596,21 @@ distance = -324.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jrnar"]
 size = Vector2(26, 78)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_yylqm"]
+distance = -140.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_s417v"]
+normal = Vector2(0, 1)
+distance = -140.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_osimy"]
+normal = Vector2(-1, 0)
+distance = -210.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dt87u"]
+normal = Vector2(1, 0)
+distance = -210.0
 
 [node name="Game" type="Node2D" unique_id=1244812287 groups=["game"]]
 y_sort_enabled = true
@@ -752,6 +816,10 @@ position = Vector2(0, -24)
 
 [node name="BulletBar" parent="UI" unique_id=178394332 instance=ExtResource("7_b3wgx")]
 position = Vector2(-86, 41)
+
+[node name="BossHealthbar" parent="UI" unique_id=1255319267 instance=ExtResource("18_s417v")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(576, 628)
 
 [node name="DialogueStrips" type="Node2D" parent="UI" unique_id=263507374]
 script = ExtResource("9_wt5dx")
@@ -991,12 +1059,35 @@ shape = SubResource("RectangleShape2D_jrnar")
 position = Vector2(-664, 31)
 shape = SubResource("RectangleShape2D_jrnar")
 
+[node name="BottomShapeBoss" type="CollisionShape2D" parent="WorldBounds" unique_id=780430830 groups=["bossfight_bound_shape"]]
+shape = SubResource("WorldBoundaryShape2D_yylqm")
+disabled = true
+
+[node name="TopShapeBoss" type="CollisionShape2D" parent="WorldBounds" unique_id=1818864735 groups=["bossfight_bound_shape"]]
+shape = SubResource("WorldBoundaryShape2D_s417v")
+disabled = true
+
+[node name="RightShapeBoss" type="CollisionShape2D" parent="WorldBounds" unique_id=1167341226 groups=["bossfight_bound_shape"]]
+shape = SubResource("WorldBoundaryShape2D_osimy")
+disabled = true
+
+[node name="LeftShapeBoss" type="CollisionShape2D" parent="WorldBounds" unique_id=633529507 groups=["bossfight_bound_shape"]]
+shape = SubResource("WorldBoundaryShape2D_dt87u")
+disabled = true
+
 [node name="CoinBoundRect" type="ReferenceRect" parent="." unique_id=1017912923 groups=["coin_bound_rect"]]
 offset_left = -270.0
 offset_top = -180.0
 offset_right = 270.0
 offset_bottom = 180.0
 metadata/_edit_lock_ = true
+
+[node name="BossfightBoundRect" type="ReferenceRect" parent="." unique_id=1065261698 groups=["bossfight_bound_rect"]]
+offset_left = -210.0
+offset_top = -140.0
+offset_right = 210.0
+offset_bottom = 140.0
+border_color = Color(0.5525335, 0.17760001, 0.74, 1)
 
 [node name="PlayerDeathHandler" type="Node2D" parent="." unique_id=1706911077 node_paths=PackedStringArray("camera", "death_shadow_rect", "ui", "weather_layer")]
 process_mode = 3

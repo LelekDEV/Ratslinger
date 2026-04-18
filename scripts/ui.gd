@@ -13,6 +13,8 @@ class_name UI
 @onready var bullet_bar: BulletBar = $BulletBar
 @onready var crosshair: Sprite2D = $Crosshair
 
+@onready var boss_healthbar: Node2D = $BossHealthbar
+
 @onready var shooting_tutorial: Node2D = $TutorialContainer/ShootingTutorial
 @onready var shooting_tutorial_label: Label = $TutorialContainer/ShootingTutorialLabel
 @onready var tutorial_arrow: Sprite2D = $TutorialArrow
@@ -135,6 +137,8 @@ func update_scale() -> void:
 	margin_container.scale = scale_vector / 4
 	
 	crosshair.origin_scale = scale_float
+	
+	boss_healthbar.scale = scale_vector / 4
 
 func start_dialogue() -> void:
 	Global.block_movement = true

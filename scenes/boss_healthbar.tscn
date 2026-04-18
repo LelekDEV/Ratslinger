@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://chssvjrfmrtwq"]
+
+[ext_resource type="Script" uid="uid://mg0pmgkslagi" path="res://scripts/boss_healthbar.gd" id="1_r8nml"]
+
+[node name="BossHealthbar" type="Node2D" unique_id=1255319267 groups=["boss_healthbar"]]
+script = ExtResource("1_r8nml")

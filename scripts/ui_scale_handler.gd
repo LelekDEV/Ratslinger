@@ -19,3 +19,5 @@ func _physics_process(_delta: float) -> void:
 	
 	parent.margin_container.set_deferred("size", get_viewport().get_visible_rect().size / parent.margin_container.scale)
 	parent.margin_container.set_deferred("position", Vector2.ZERO)
+	
+	parent.boss_healthbar.global_position = get_viewport().get_visible_rect().size * Vector2(0.5, 1) - Vector2(0, 20)

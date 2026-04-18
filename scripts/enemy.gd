@@ -15,9 +15,6 @@ class_name Enemy
 @onready var poison_tick: Timer = $PoisonTick
 @onready var poison_particles: CPUParticles2D = $PoisonParticles
 
-@onready var collision_body: CollisionShape2D = $CollisionShapeBody
-@onready var collision_head: CollisionShape2D = $HeadshotArea/CollisionShapeHead
-
 @onready var fire_tick: Timer = $FireTick
 @onready var fire_fx: Sprite2D = $FireFX
 
@@ -43,6 +40,8 @@ var ignored_fire_uid: StringName
 var headshot_mult: float = 2
 
 var drop_coins_enabled: bool = true
+@export var coin_range_min: int = 1
+@export var coin_range_max: int = 2
 
 var attack_highlight: AttackHighlight
 
@@ -82,6 +81,7 @@ var prediction_vector: Vector2
 
 # 2 - SEGMENT: moves along other segments that share it's health, hurts player on collision, used for SnakeEnemy
 # Used nodes and variables:
+@onready var hurt_area: Area2D
 var is_vertical: bool = false
 var to_die: bool = false
 
@@ -90,6 +90,13 @@ var to_die: bool = false
 @onready var flight_follow: PathFollow2D
 @onready var flight_timer: Timer
 @onready var land_area: Area2D
+
+# These exist in every enemy (as either CollisionShape2D or CollisionPolygon2D)
+# but are only referenced by variables if ai is set to AIRBORNE,
+# hence will only be set in that case.
+# If ever needed for different ai simply add initialization in _ready()
+@onready var collision_body: CollisionShape2D
+@onready var collision_head: CollisionShape2D
 
 var target_angle: float
 var target_position: Vector2
@@ -121,8 +128,20 @@ func _ready() -> void:
 			attack_highlight = get_node("FlightPath/FlightFollow/AttackHighlight")
 			flight_timer = get_node("FlightTimer")
 			land_area = get_node("LandArea")
+			
 			is_on_land = false
 			sprite.visible = false
+			
+			collision_body = get_node("CollisionShapeBody")
+			collision_head = get_node("HeadshotArea/CollisionShapeHead")
+		
+		AI.SEGMENT:
+			hurt_area = get_node("HurtArea")
+			
+			SignalBus.player_immunity_ended.connect(func():
+				if hurt_area.overlaps_body(player):
+					_on_hurt_area_body_entered(player)
+			)
 	
 	health = max_health
 	
@@ -343,10 +362,15 @@ func die() -> void:
 	death.emit(id)
 	
 	if drop_coins_enabled:
-		drop_coins(randi_range(1, 2))
+		drop_coins(randi_range(coin_range_min, coin_range_max))
 	
 	queue_free()
 	if attack_highlight: attack_highlight.queue_free()
+
+func disable_poison() -> void:
+	poison_value = 0
+	poison_particles.emitting = false
+	sprite.material.set_shader_parameter("strip_active", false)
 
 func apply_poison(only_status: bool = false) -> void:
 	poison_particles.emitting = true
@@ -390,6 +414,9 @@ func drop_coins(amount: int) -> void:
 		
 		coin.global_position = global_position
 		coin.velocity = Vector2.RIGHT.rotated(randf_range(0, TAU)) * 0.5
+		
+		if amount >= 50:
+			coin.velocity *= randf_range(1, 2)
 		
 		coins.call_deferred("add_child", coin)
 

@@ -5,7 +5,7 @@ extends Node
 func _ready() -> void:
 	SignalBus.wave_started.connect(func():
 		GlobalAudio.music_player.stop()
-		GlobalAudio.music_player.stream = preload("res://audio/music/battle.wav")
+		GlobalAudio.music_player.stream = preload("res://audio/music/boss.wav") if Global.game.is_boss_active else preload("res://audio/music/battle.wav")
 		GlobalAudio.music_player.play()
 	)
 	SignalBus.wave_ended.connect(func():
@@ -27,7 +27,9 @@ func _ready() -> void:
 	GlobalAudio.music_player.play()
 
 func _physics_process(_delta: float) -> void:
-	if Global.game.is_wave_active:
+	if Global.game.is_boss_active:
+		GlobalAudio.music_player.volume_db = -6
+	elif Global.game.is_wave_active:
 		GlobalAudio.music_player.volume_db = -14
 	else:
 		# fade from -300 to -50

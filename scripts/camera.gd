@@ -1,6 +1,11 @@
 extends Camera2D
 class_name Camera
 
+@onready var bossfight_bound: ReferenceRect = get_tree().get_first_node_in_group("bossfight_bound_rect")
+@onready var markers: Node2D = get_tree().get_first_node_in_group("markers")
+
+@export var gate: StaticBody2D
+
 var shake_tween: Tween
 var shake_value: float = 0
 
@@ -11,10 +16,6 @@ var shake_smoothness: float = 0.8
 var intro_tween: Tween
 var intro_value: float = 0
 var intro_skip: bool = false
-
-@onready var markers: Node2D = get_tree().get_first_node_in_group("markers")
-
-@export var gate: StaticBody2D
 
 class PositionOverride:
 	var camera: Camera
@@ -100,14 +101,23 @@ func _physics_process(_delta: float) -> void:
 	if get_parent().global_position.x > gate.global_position.x:
 		global_position.x = max(-324 + get_viewport_rect().size.x / zoom.x / 2, get_parent().global_position.x)
 		global_position.y = get_parent().global_position.y
+		
+		if Global.game.is_boss_active:
+			limit_left   = int(-bossfight_bound.size.x / 2)
+			limit_top    = int(-bossfight_bound.size.y / 2)
+			limit_right  = int(bossfight_bound.size.x / 2)
+			limit_bottom = int(bossfight_bound.size.y / 2)
+		else:
+			limit_left   = -10000000
+			limit_top    = -234
+			limit_right  = 324
+			limit_bottom = 234
 	else:
 		global_position = get_parent().global_position
 	
 	if Global.is_title_on:
 		global_position.y = lerp(468.0, get_parent().to_global(Vector2.ZERO).y, intro_value)
 		limit_bottom = 10000000
-	else:
-		limit_bottom = 234
 	
 	var last_pos: Vector2 = get_parent().global_position
 	for override: PositionOverride in position_overrides:

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://vxg0o2q4joaj"]
+
+[ext_resource type="Script" uid="uid://bsaycptweeki6" path="res://scripts/snake_boss.gd" id="1_175it"]
+
+[node name="SnakeBoss" type="Node2D" unique_id=98906692]
+script = ExtResource("1_175it")

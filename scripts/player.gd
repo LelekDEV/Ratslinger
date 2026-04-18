@@ -222,3 +222,6 @@ func _on_regen_cooldown_timeout() -> void:
 	health = min(health + 0.2, max_health)
 	ui.update_hearts(health)
 	regen_cooldown.start(1)
+
+func _on_hit_cooldown_timeout() -> void:
+	SignalBus.player_immunity_ended.emit()

@@ -39,6 +39,10 @@ func _ready() -> void:
 	update_scale()
 
 func _physics_process(_delta: float) -> void:
+	#print(get_node("../SnakeBoss").move_value)
+	#if get_node("../Enemies").get_child_count() != 0:
+	#	print(get_node("../Enemies").get_child(0).move_value)
+	
 	if Input.is_action_just_pressed("pause") and not Global.is_title_on:
 		if visible:
 			resume()

@@ -161,5 +161,6 @@ autostart = true
 wait_time = 0.2
 one_shot = true
 
+[connection signal="timeout" from="HitCooldown" to="." method="_on_hit_cooldown_timeout"]
 [connection signal="timeout" from="RegenCooldown" to="." method="_on_regen_cooldown_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

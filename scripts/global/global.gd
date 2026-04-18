@@ -111,8 +111,10 @@ func start_mission() -> void:
 	mission_killed = 0
 
 func pause_game() -> void:
+	get_tree().paused = true
 	game.process_mode = Node.PROCESS_MODE_DISABLED
 
 func resume_game(to_block_input = true) -> void:
+	get_tree().paused = false
 	game.process_mode = Node.PROCESS_MODE_INHERIT
 	block_input = to_block_input

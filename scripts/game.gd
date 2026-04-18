@@ -6,6 +6,8 @@ class_name Game
 @onready var SnakeEnemy: PackedScene = preload("res://scenes/enemies/snake_enemy_wrapper.tscn")
 @onready var OwlEnemy: PackedScene = preload("res://scenes/enemies/owl_enemy.tscn")
 
+@onready var _SnakeBoss: PackedScene = preload("res://scenes/enemies/boss/snake_boss.tscn")
+
 @onready var ui: UI = $UI
 
 @onready var enemies: Node = $Enemies
@@ -24,12 +26,15 @@ class_name Game
 @onready var wave_start_interaction_area: Area2D = $WaveStartInteractionArea
 @onready var title_sand_sprite: Sprite2D = $SandSprite3
 
+@onready var bossfight_bound_shapes: Array = get_tree().get_nodes_in_group("bossfight_bound_shape")
+
 var enemies_total: int = 5
 var enemies_to_spawn: int = enemies_total
 var enemies_killed: int = 0
 var enemies_prediction_weight: float = 0
 
 var is_wave_active: bool = false
+var is_boss_active: bool = false
 
 func _ready() -> void:
 	setup_signals()
@@ -61,7 +66,7 @@ func setup_signals() -> void:
 	SignalBus.accuracy_perfect_entered.connect(tutorial_handler.display_shooting_tutorial)
 
 func _physics_process(_delta: float) -> void:
-	if wave_start_interaction_area.interacting and Input.is_action_just_pressed("interact") and not is_wave_active:
+	if wave_start_interaction_area.interacting and Input.is_action_just_pressed("interact") and not is_wave_active and not is_boss_active:
 		start_wave()
 
 func start_wave() -> void:
@@ -70,26 +75,41 @@ func start_wave() -> void:
 	
 	ui.animation.play("wave_start")
 	
-	enemies_total = 5 + Global.waves_cleared
-	enemies_to_spawn = enemies_total
-	enemies_killed = 0
+	# Test boss here
+	# if true:
+	if Global.waves_cleared % 15 == 0 and Global.waves_cleared >= 15:
+		is_boss_active = true
+		
+		for shape: CollisionShape2D in bossfight_bound_shapes:
+			shape.set_deferred("disabled", false)
+		
+		ui.animation.play("bossfight_start")
+		
+		var boss: SnakeBoss = _SnakeBoss.instantiate()
+		add_child(boss)
 	
-	spawn_enemy()
-	ui.update_enemy_count(0, enemies_total)
+	else:
+		enemies_total = 5 + Global.waves_cleared
+		enemies_to_spawn = enemies_total
+		enemies_killed = 0
+		
+		spawn_enemy()
+		ui.update_enemy_count(0, enemies_total)
+		
+		enemy_spawn_timer.wait_time = max(round((8 - log(Global.waves_cleared + 1)) * 100) / 100, 0.5)
+		enemy_spawn_timer.start()
+		
+		enemies_prediction_weight = min(0.1 + log(Global.waves_cleared / 2.0 + 1) / 5, 0.75)
+		
+		print("Wave %s started, enemy count: %s, spawn inteval: %s, prediction weight: %s" % [
+			Global.waves_cleared + 1, 
+			enemies_total,
+			enemy_spawn_timer.wait_time,
+			enemies_prediction_weight
+		])
+		
+		is_wave_active = true
 	
-	enemy_spawn_timer.wait_time = max(round((8 - log(Global.waves_cleared + 1)) * 100) / 100, 0.5)
-	enemy_spawn_timer.start()
-	
-	enemies_prediction_weight = min(0.1 + log(Global.waves_cleared / 2.0 + 1) / 5, 0.75)
-	
-	print("Wave %s started, enemy count: %s, spawn inteval: %s, prediction weight: %s" % [
-		Global.waves_cleared + 1, 
-		enemies_total,
-		enemy_spawn_timer.wait_time,
-		enemies_prediction_weight
-	])
-	
-	is_wave_active = true
 	wave_start_interaction_area.visible = false
 	
 	SignalBus.wave_started.emit()
@@ -109,6 +129,14 @@ func start_wave() -> void:
 		exit_tween.tween_property(tutorial_label, "visible_ratio", 0, 1)
 
 func end_wave() -> void:
+	if is_boss_active:
+		for shape: CollisionShape2D in bossfight_bound_shapes:
+			shape.set_deferred("disabled", true)
+		
+		ui.animation.play("bossfight_end")
+		
+		is_boss_active = false
+	
 	gate.get_node("AnimationPlayer2").play("unlock")
 	gate.get_node("CollisionShape2D").set_deferred("disabled", true)
 	
