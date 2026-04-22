@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://cmxi8baxfskxj"]
+
+[ext_resource type="Script" uid="uid://b5wn3k66nvurg" path="res://scripts/map.gd" id="1_be0no"]
+[ext_resource type="Texture2D" uid="uid://201cfogusyb8" path="res://graphics/map/map.png" id="1_paxxb"]
+[ext_resource type="Texture2D" uid="uid://04fvr50lvjji" path="res://graphics/map/gate_map.png" id="2_gldc4"]
+[ext_resource type="Texture2D" uid="uid://bpcnxc0gxg8sh" path="res://graphics/map/shop_map.png" id="4_blm8a"]
+[ext_resource type="Texture2D" uid="uid://dsdvtrov1mdfn" path="res://graphics/map/rathouse_map.png" id="5_mlgqr"]
+[ext_resource type="Texture2D" uid="uid://ynx2ba1icbt8" path="res://graphics/map/fence_map.png" id="6_wslke"]
+[ext_resource type="Texture2D" uid="uid://d3vsix342tv65" path="res://graphics/map/second_fence.png" id="7_gw3fx"]
+[ext_resource type="Texture2D" uid="uid://by8lvuk1au0m5" path="res://graphics/map/mayor_map.png" id="8_n1psn"]
+[ext_resource type="Texture2D" uid="uid://c008raewouecm" path="res://graphics/map/rat_map.png" id="9_c00ee"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7tei"]
+atlas = ExtResource("9_c00ee")
+region = Rect2(0, 0, 22, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c70he"]
+atlas = ExtResource("9_c00ee")
+region = Rect2(22, 0, 22, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mo32q"]
+atlas = ExtResource("9_c00ee")
+region = Rect2(44, 0, 22, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6k6j1"]
+atlas = ExtResource("9_c00ee")
+region = Rect2(66, 0, 22, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m335s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7tei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c70he")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mo32q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6k6j1")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
+}]
+
+[node name="Map" type="CanvasLayer" unique_id=1954318359]
+visible = false
+script = ExtResource("1_be0no")
+
+[node name="Control" type="Control" parent="." unique_id=40806065]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MapPos" type="Node2D" parent="Control" unique_id=1116130327]
+position = Vector2(570, 330)
+
+[node name="MapSprite" type="Sprite2D" parent="Control/MapPos" unique_id=1986697107 groups=["map_sprite"]]
+scale = Vector2(9, 8)
+texture = ExtResource("1_paxxb")
+
+[node name="GateSprite" type="Sprite2D" parent="Control/MapPos" unique_id=667778020]
+z_index = 1
+position = Vector2(28, 12)
+scale = Vector2(2, 2)
+texture = ExtResource("2_gldc4")
+
+[node name="ShopSprite" type="Sprite2D" parent="Control/MapPos" unique_id=18725075]
+z_index = 1
+position = Vector2(-80, -65)
+scale = Vector2(2, 2)
+texture = ExtResource("4_blm8a")
+
+[node name="RatHouseSprite" type="Sprite2D" parent="Control/MapPos" unique_id=682886157]
+position = Vector2(-167, -67)
+scale = Vector2(2, 2)
+texture = ExtResource("5_mlgqr")
+
+[node name="FenceSprite" type="Sprite2D" parent="Control/MapPos" unique_id=1715401245]
+position = Vector2(-37, -57)
+scale = Vector2(2, 2)
+texture = ExtResource("6_wslke")
+
+[node name="FenceSprite2" type="Sprite2D" parent="Control/MapPos" unique_id=1947536408]
+position = Vector2(2, -57)
+scale = Vector2(2, 2)
+texture = ExtResource("6_wslke")
+
+[node name="SecondFence" type="Sprite2D" parent="Control/MapPos" unique_id=458046248]
+position = Vector2(29, -57)
+scale = Vector2(2, 2)
+texture = ExtResource("7_gw3fx")
+
+[node name="SecondFence2" type="Sprite2D" parent="Control/MapPos" unique_id=488584577]
+position = Vector2(29, -85)
+scale = Vector2(2, 2)
+texture = ExtResource("7_gw3fx")
+
+[node name="FenceSprite3" type="Sprite2D" parent="Control/MapPos" unique_id=820085032]
+position = Vector2(-123, -57)
+scale = Vector2(2, 2)
+texture = ExtResource("6_wslke")
+
+[node name="SecondFence3" type="Sprite2D" parent="Control/MapPos" unique_id=1495557557]
+position = Vector2(29, -29)
+scale = Vector2(2, 2)
+texture = ExtResource("7_gw3fx")
+
+[node name="MayorSprite" type="Sprite2D" parent="Control/MapPos" unique_id=449196597]
+position = Vector2(-170, 22)
+scale = Vector2(2, 2)
+texture = ExtResource("8_n1psn")
+
+[node name="SecondFence4" type="Sprite2D" parent="Control/MapPos" unique_id=1673750726]
+position = Vector2(29, -113)
+scale = Vector2(2, 2)
+texture = ExtResource("7_gw3fx")
+
+[node name="SecondFence5" type="Sprite2D" parent="Control/MapPos" unique_id=2049009526]
+position = Vector2(29, 62)
+scale = Vector2(2, 2)
+texture = ExtResource("7_gw3fx")
+
+[node name="SecondFence6" type="Sprite2D" parent="Control/MapPos" unique_id=1620104593]
+position = Vector2(29, 90)
+scale = Vector2(2, 2)
+texture = ExtResource("7_gw3fx")
+
+[node name="SecondFence7" type="Sprite2D" parent="Control/MapPos" unique_id=277502657]
+position = Vector2(29, 118)
+scale = Vector2(2, 2)
+texture = ExtResource("7_gw3fx")
+
+[node name="SecondFence8" type="Sprite2D" parent="Control/MapPos" unique_id=1199316277]
+position = Vector2(29, 146)
+scale = Vector2(2, 2)
+texture = ExtResource("7_gw3fx")
+
+[node name="MapPlayer" type="AnimatedSprite2D" parent="Control/MapPos" unique_id=1200635391 groups=["player_map_sprite"]]
+position = Vector2(-100, 0)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_m335s")
+animation = &"Walk"
+autoplay = "Walk"
+frame_progress = 0.9694503

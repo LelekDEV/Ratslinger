@@ -131,7 +131,7 @@ func _on_exit_button_pressed() -> void:
 	visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
-	Global.resume_game(false)
+	Global.resume_game()
 
 	is_busy = false
 
