@@ -149,7 +149,6 @@ color_ramp = SubResource("Gradient_q3m7n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=77032614]
 sprite_frames = SubResource("SpriteFrames_jxwu6")
-animation = &"fire"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=649565456]

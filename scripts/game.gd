@@ -13,20 +13,24 @@ class_name Game
 @onready var enemies: Node = $Enemies
 
 @onready var player: Player = $Player
-@onready var camera: Camera2D = $Player/Camera2D
+@onready var camera: Camera = $Player/Camera2D
 @onready var crosshair: Sprite2D = $UI/Crosshair
 
 @onready var tutorial_label: RichTextLabel = $Player/TutorialLabel
 @onready var tutorial_handler: Node = $TutorialHandler
 
-@onready var player_death_handler: Node = $PlayerDeathHandler
+@onready var death_anim_handler: Node = $DeathAnimHandler
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 
 @onready var gate: StaticBody2D = $Environment/Gate
 @onready var wave_start_interaction_area: Area2D = $WaveStartInteractionArea
 @onready var title_sand_sprite: Sprite2D = $SandSprite3
 
+@onready var bossfight_bound: ReferenceRect = $BossfightBoundRect
 @onready var bossfight_bound_shapes: Array = get_tree().get_nodes_in_group("bossfight_bound_shape")
+
+@onready var sand_spike_spawner: Node2D = $Environment/SandSpikeSpawner
+@onready var cutscene_audio: AudioStreamPlayer = $CutsceneAudio
 
 var enemies_total: int = 5
 var enemies_to_spawn: int = enemies_total
@@ -35,6 +39,8 @@ var enemies_prediction_weight: float = 0
 
 var is_wave_active: bool = false
 var is_boss_active: bool = false
+
+var is_cutscene_on: bool = false
 
 func _ready() -> void:
 	setup_signals()
@@ -50,12 +56,17 @@ func _ready() -> void:
 		
 	await SignalBus.game_loaded
 	title_sand_sprite.global_position.x = int(player.global_position.x)
+	
+	# boss testing...
+	#Global.waves_cleared = 15
 
 func setup_signals() -> void:
-	SignalBus.player_shoot.connect(camera.shake)
+	SignalBus.player_shoot.connect(camera.shake.bind(0.2, 2.5, 0.8))
 	SignalBus.player_shoot.connect(crosshair.on_player_shoot)
 	
-	SignalBus.player_death.connect(player_death_handler.on_player_death)
+	SignalBus.player_death.connect(death_anim_handler.on_player_death)
+	SignalBus.boss_death.connect(death_anim_handler.on_boss_death)
+	SignalBus.boss_death.connect(on_boss_death)
 	
 	SignalBus.player_location_change.connect(ui.on_player_location_change)
 	SignalBus.player_location_change.connect(on_player_location_change)
@@ -69,19 +80,76 @@ func _physics_process(_delta: float) -> void:
 	if wave_start_interaction_area.interacting and Input.is_action_just_pressed("interact") and not is_wave_active and not is_boss_active:
 		start_wave()
 
+func boss_cutscene() -> void:
+	is_cutscene_on = true
+	wave_start_interaction_area.visible = false
+	
+	# should probably change the name to start_cutscene lol
+	ui.start_dialogue()
+	ui.toggle_combat_hud(false)
+	Global.block_input = true
+	
+	await get_tree().create_timer(1, false).timeout
+	
+	cutscene_audio.play()
+	get_tree().create_timer(7.4, false).timeout.connect(cutscene_audio.stop)
+	
+	camera.shake_time = 8.5
+	camera.shake_intensity = 1.5
+	camera.shake()
+	
+	for spike: SandSpike in sand_spike_spawner.get_children():
+		spike.appear(spike.order_value / 90)
+	
+	var h_size: Vector2 = bossfight_bound.size / 2
+	
+	# ISSUE: is not updated dynamically, very niche screen-size mismatch possible
+	var override_1 := Camera.PositionOverride.new(
+		camera, 
+		-h_size + get_viewport_rect().size.normalized() * 100, 
+		false, false
+	)
+	override_1.enter(1)
+	override_1.interval(2)
+	override_1.exit(1)
+	override_1.end()
+	
+	await get_tree().create_timer(4, false).timeout
+	
+	var override_2 := Camera.PositionOverride.new(
+		camera, 
+		h_size - get_viewport_rect().size.normalized() * 100,
+		false, false
+	)
+	override_2.enter(1)
+	override_2.interval(2)
+	override_2.exit(1)
+	override_2.end()
+	
+	await get_tree().create_timer(4, false).timeout
+	
+	ui.end_dialogue()
+	ui.toggle_combat_hud(true)
+	Global.block_input = false
+
 func start_wave() -> void:
 	gate.get_node("LockSprite").self_modulate.a = 1
 	gate.get_node("CollisionShape2D").set_deferred("disabled", false)
 	
 	ui.animation.play("wave_start")
 	
-	# Test boss here
-	# if true:
 	if Global.waves_cleared % 15 == 0 and Global.waves_cleared >= 15:
+		boss_cutscene()
+		await get_tree().create_timer(10, false).timeout
+		
+		is_cutscene_on = false
 		is_boss_active = true
 		
 		for shape: CollisionShape2D in bossfight_bound_shapes:
 			shape.set_deferred("disabled", false)
+		
+		for spike: SandSpike in sand_spike_spawner.get_children():
+			spike.collision.set_deferred("disabled", false)
 		
 		ui.animation.play("bossfight_start")
 		
@@ -217,6 +285,11 @@ func spawn_enemy() -> void:
 		enemies.add_child(enemy)
 	
 	enemies_to_spawn -= 1
+
+func on_boss_death(_from_projectile: Projectile) -> void:
+	for spike: SandSpike in sand_spike_spawner.get_children():
+		spike.collision.set_deferred("disabled", true)
+		spike.reset()
 
 func on_player_location_change(_location: Player.Locations) -> void:
 	"""if location == Player.Locations.ARENA:

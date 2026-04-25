@@ -168,9 +168,13 @@ func animate_intro() -> void:
 func update_scale() -> void:
 	zoom = Vector2.ONE * (Global.scale_level + 4)
 
-func shake(miss: bool = false) -> void:
+func shake(miss: bool = false, t: float = 0, i: float = 0, s: float = 0) -> void:
 	if miss:
 		return
+	
+	if t: shake_time = t
+	if i: shake_intensity = i
+	if s: shake_smoothness = s
 	
 	shake_tween = create_tween()
 	

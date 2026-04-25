@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 	global_position += velocity
 
 func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
-	enemy.take_damage(damage * enemy.headshot_mult if is_critical else 1.0, global_position, is_critical)
+	enemy.take_damage(damage * enemy.headshot_mult if is_critical else 1.0, global_position, is_critical, false, self)
 	enemy.velocity += direction * knockback
 	
 	if type == Type.VAMPIRE:
@@ -66,6 +66,9 @@ func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
 	
 	elif type == Type.FIRE:
 		enemy.apply_fire()
+	
+	if not enemy.free_on_death and enemy.health <= 0:
+		await SignalBus.boss_death_anim_ended
 	
 	queue_free()
 

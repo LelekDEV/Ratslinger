@@ -166,6 +166,7 @@ id = 3
 ai = 2
 cooldown_time = 0.0
 shoot_count = 0
+free_on_death = false
 
 [node name="PoisonParticles" type="CPUParticles2D" parent="." unique_id=2015414767]
 z_index = 1

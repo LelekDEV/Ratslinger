@@ -108,10 +108,15 @@ func free_segments() -> void:
 		wrapper.queue_free()
 	wrappers.clear()
 
-func update_health(value: float, _caller: Enemy) -> void:
+func update_health(value: float, _caller: Enemy, projectile: Projectile = null) -> void:
 	health = value
 	
 	if value <= 0:
+		SignalBus.boss_death.emit(projectile)
+		GlobalAudio.play_sfx(AudioConsts.SFX.BOSS_DEATH, 0, 0.65)
+		
+		await SignalBus.boss_death_anim_ended
+		
 		Global.game.end_wave()
 		boss_healthbar.target_health = 0
 		

@@ -28,7 +28,7 @@
 [ext_resource type="Script" uid="uid://dlwbmyxuygwjb" path="res://scripts/coins_container.gd" id="11_fulw8"]
 [ext_resource type="Script" uid="uid://cp448dgxo5kaw" path="res://scripts/animation_handler.gd" id="12_dawlq"]
 [ext_resource type="PackedScene" uid="uid://d4asl1xkxcc7h" path="res://scenes/shooting_tutorial.tscn" id="12_v23tm"]
-[ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/player_death_handler.gd" id="12_xw82j"]
+[ext_resource type="Script" uid="uid://c3ngnqrj3wq4k" path="res://scripts/death_anim_handler.gd" id="12_xw82j"]
 [ext_resource type="PackedScene" uid="uid://cjqkgird8slts" path="res://scenes/particles/rain_particles.tscn" id="14_psga7"]
 [ext_resource type="PackedScene" uid="uid://lno6nmuf2m2w" path="res://scenes/npc.tscn" id="18_a8jnx"]
 [ext_resource type="Script" uid="uid://70i5g03s8o8r" path="res://scripts/ui_scale_handler.gd" id="18_hjgq7"]
@@ -45,8 +45,10 @@
 [ext_resource type="Script" uid="uid://cmo05ufm0vqdm" path="res://scripts/markers.gd" id="29_1egfj"]
 [ext_resource type="Shader" uid="uid://fftxyux4c5ll" path="res://shaders/river.gdshader" id="29_p3ae7"]
 [ext_resource type="Script" uid="uid://bjml88vnde8e0" path="res://scripts/tutorial_handler.gd" id="37_m1gv1"]
+[ext_resource type="Script" uid="uid://6wxtgdvdmdn0" path="res://scripts/sand_spike_spawner.gd" id="42_dt87u"]
 [ext_resource type="Script" uid="uid://do80blcsew3si" path="res://scripts/music_handler.gd" id="42_l3433"]
 [ext_resource type="PackedScene" uid="uid://bvs0r5xaha0p5" path="res://scenes/book_stand.tscn" id="46_s417v"]
+[ext_resource type="AudioStream" uid="uid://sts3sksabhkn" path="res://audio/cutscene/quake.wav" id="49_xovr5"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4qk7b"]
 viewport_path = NodePath("Weather/SubViewport")
@@ -1013,6 +1015,9 @@ tile_set = ExtResource("26_4qk7b")
 script = ExtResource("28_dybux")
 spawn_node = NodePath("../../FX")
 
+[node name="SandSpikeSpawner" type="Node2D" parent="Environment" unique_id=660207643]
+script = ExtResource("42_dt87u")
+
 [node name="FX" type="Node2D" parent="." unique_id=52843161 groups=["fx"]]
 
 [node name="NPC" type="Node2D" parent="." unique_id=1592318965]
@@ -1093,7 +1098,7 @@ offset_right = 210.0
 offset_bottom = 140.0
 border_color = Color(0.5525335, 0.17760001, 0.74, 1)
 
-[node name="PlayerDeathHandler" type="Node2D" parent="." unique_id=1706911077 node_paths=PackedStringArray("camera", "death_shadow_rect", "ui", "weather_layer")]
+[node name="DeathAnimHandler" type="Node2D" parent="." unique_id=1706911077 node_paths=PackedStringArray("camera", "death_shadow_rect", "ui", "weather_layer")]
 process_mode = 3
 z_index = 10
 script = ExtResource("12_xw82j")
@@ -1128,5 +1133,9 @@ wait_time = 8.0
 
 [node name="BookStand" parent="." unique_id=2095459408 instance=ExtResource("46_s417v")]
 position = Vector2(-350, -40)
+
+[node name="CutsceneAudio" type="AudioStreamPlayer" parent="." unique_id=802166022]
+stream = ExtResource("49_xovr5")
+volume_db = 2.0
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var map_sprite: Sprite2D = get_tree().get_first_node_in_group("map_sprite")
-@onready var player_marker: Sprite2D = get_tree().get_first_node_in_group("player_map_sprite")
+@onready var player_marker: AnimatedSprite2D = get_tree().get_first_node_in_group("player_map_sprite")
 
 var map_size: Vector2 = Vector2.ZERO
 var map_visibility: bool = false
@@ -18,7 +18,7 @@ func _input(event):
 		map_visibility = !map_visibility
 		visible = map_visibility
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if player == null or map_sprite == null:
 		return
 

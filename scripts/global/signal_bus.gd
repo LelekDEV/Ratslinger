@@ -14,6 +14,8 @@ signal accuracy_perfect_early
 
 signal wave_started
 signal wave_ended
+signal boss_death
+signal boss_death_anim_ended
 
 signal game_loaded
 signal game_save_queued

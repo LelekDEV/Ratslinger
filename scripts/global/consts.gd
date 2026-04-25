@@ -38,3 +38,5 @@ const FIXED_LERP_RELATIVE_FPS: float = 144
 
 const MAX_VISIBLE_SCREEN_SIZE: int = 320
 const DEFAULT_RES := Vector2(1152, 648)
+
+const ORIG_PLAYER_Z_IDX: int = 0

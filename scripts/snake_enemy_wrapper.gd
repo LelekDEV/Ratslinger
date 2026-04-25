@@ -129,7 +129,8 @@ func _ready() -> void:
 		segment.poison_start.connect(link_poision.bind(i))
 		segment.poison_end.connect(link_disable_poison)
 		
-		segment.damaged.connect(parent.update_health)
+		if type != Type.REGULAR:
+			segment.damaged.connect(parent.update_health)
 		
 		add_child(segment)
 	
@@ -317,7 +318,7 @@ func link_poision(ignore_i: int) -> void:
 		
 		i += 1
 
-func link_health(health: float, caller: Enemy) -> void:
+func link_health(health: float, caller: Enemy, _projectile: Projectile = null) -> void:
 	if caller.to_die:
 		return
 	
@@ -334,6 +335,6 @@ func link_health(health: float, caller: Enemy) -> void:
 			
 			to_die = true
 	
-	if to_die:
+	if to_die and not type in [Type.BOSS_RAPID, Type.BOSS_SPIKED]:
 		death.emit(Enemy.ID.SNAKE)
 		queue_free()

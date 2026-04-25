@@ -44,7 +44,7 @@ func _ready() -> void:
 	SignalBus.game_save_queued.connect(_on_game_save_queued)
 	
 	if Global.is_game_restarted and not Global.is_title_restarted:
-		global_position = Vector2.ZERO
+		set_deferred("global_position", Vector2.ZERO)
 	
 	if Global.is_title_on:
 		Global.block_movement = true
@@ -186,7 +186,9 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	
 	SignalBus.player_hit.emit()
 	
-	ignored_hitter = from_enemy
+	if from_enemy.ai != Enemy.AI.SEGMENT:
+		ignored_hitter = from_enemy
+	
 	health -= amount
 	
 	if health <= 0 and not is_queued_to_die:
@@ -201,7 +203,7 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	
 	GlobalAudio.play_sfx(AudioConsts.SFX.HIT)
 	
-	hit_cooldown.start()
+	hit_cooldown.start(0.5 if Global.game.is_boss_active else 0.25)
 	regen_cooldown.start(5)
 	
 	return false

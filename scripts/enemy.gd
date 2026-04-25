@@ -68,6 +68,9 @@ enum AI {SHOOTER, KICKER, SEGMENT, AIRBORNE}
 
 @export var min_player_distance: float = 80
 
+@export var invincible: bool = false
+@export var free_on_death: bool = true
+
 # Prediction weights define how much to account for player's velocity on determining where to shoot
 var prediction_weight_1: float = 0.5
 # L to be influenced by wave difficulty scaling
@@ -356,7 +359,7 @@ func spawn_projectile(angle_deg: float = 0) -> void:
 	add_child(particles)
 
 func die() -> void:
-	if to_die:
+	if to_die or invincible:
 		return
 	
 	death.emit(id)
@@ -364,7 +367,7 @@ func die() -> void:
 	if drop_coins_enabled:
 		drop_coins(randi_range(coin_range_min, coin_range_max))
 	
-	queue_free()
+	if free_on_death: queue_free()
 	if attack_highlight: attack_highlight.queue_free()
 
 func disable_poison() -> void:
@@ -394,7 +397,7 @@ func apply_fire(uid: StringName = Global.get_uid(), ticks: int = 8) -> void:
 	
 	fire_tick.start()
 
-func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false, ignore_poison: bool = false) -> void:
+func take_damage(amount: float, hit_position: Vector2 = global_position, is_critical: bool = false, ignore_poison: bool = false, projectile: Projectile = null) -> void:
 	GlobalAudio.play_sfx(AudioConsts.SFX.HIT)
 	
 	var final_amount = amount * (1.2 if (poison_value >= 1 or poison_value == -1) and not ignore_poison else 1.0)
@@ -406,7 +409,7 @@ func take_damage(amount: float, hit_position: Vector2 = global_position, is_crit
 	hit_flash()
 	spawn_damage_fx(final_amount, hit_position, is_critical)
 	
-	damaged.emit(health, self)
+	damaged.emit(health, self, projectile)
 
 func drop_coins(amount: int) -> void:
 	for i in range(amount):
@@ -448,7 +451,7 @@ func spawn_damage_fx(amount: float, hit_position: Vector2, is_critical: bool) ->
 
 func hit_flash() -> void:
 	sprite.material.set_shader_parameter("flash_active", true)
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.1, false).timeout
 	sprite.material.set_shader_parameter("flash_active", false)
 
 func _on_kick_area_body_entered(body: Node2D) -> void:

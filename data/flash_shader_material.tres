@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dlas80bb87afk"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dlas80bb87afk"]
 
 [ext_resource type="Shader" uid="uid://bjffpecbie5lq" path="res://shaders/enemy.gdshader" id="1_bs51n"]
 
