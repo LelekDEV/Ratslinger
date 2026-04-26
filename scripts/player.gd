@@ -17,6 +17,8 @@ class_name Player
 @onready var regen_cooldown: Timer = $RegenCooldown
 @onready var reload_timer: Timer = $ReloadTimer
 
+@onready var squeeze_lock: SqueezeLock = $SqueezeLock
+
 @onready var local_fx: Node2D = $LocalFX
 
 @export var gate: StaticBody2D
@@ -28,6 +30,8 @@ var ignored_hitter: Enemy
 var is_dead: bool = false
 var is_queued_to_die: bool = false
 
+var is_squeezed: bool = false
+
 var speed: float = 75
 var acceleration: float = 0.05
 var recoil: float = 50
@@ -36,6 +40,9 @@ var input: Vector2
 
 var anim: float = 0
 
+var squeeze_anim_tween: Tween
+var squeeze_anim_value: float = 0
+
 enum Locations {ARENA, TOWN, TOWN_HALL}
 var location: Locations = Locations.ARENA
 var last_location: Locations = location
@@ -43,17 +50,23 @@ var last_location: Locations = location
 func _ready() -> void:
 	SignalBus.game_save_queued.connect(_on_game_save_queued)
 	
+	squeeze_lock.right_key_pressed.connect(squeeze_anim)
+	
 	if Global.is_game_restarted and not Global.is_title_restarted:
 		set_deferred("global_position", Vector2.ZERO)
 	
 	if Global.is_title_on:
 		Global.block_movement = true
 		Global.block_input = true
+	
+	await get_tree().create_timer(2).timeout
+	enter_squeeze()
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
 	handle_shooting()
 	handle_locations()
+	handle_squeeze()
 	
 	move_and_slide()
 
@@ -115,7 +128,8 @@ func handle_shooting() -> void:
 	if Input.is_action_just_pressed("shoot") and \
 		shoot_cooldown.is_stopped() and \
 		reload_timer.is_stopped() and \
-		not Global.block_input or \
+		not Global.block_input and \
+		not is_squeezed or \
 		Global.force_input:
 		
 		accuracy_bar.reload_bullets = false if bullet_bar.current_slot == 5 else true
@@ -140,7 +154,7 @@ func handle_shooting() -> void:
 		Global.force_input = false
 
 func handle_movement() -> void:
-	if Global.block_movement:
+	if Global.block_movement or is_squeezed:
 		input = Vector2.ZERO
 	else:
 		input = Input.get_vector("left", "right", "up", "down")
@@ -148,6 +162,7 @@ func handle_movement() -> void:
 	legs_sprite.play("walk" if input.length() > 0 else "idle")
 	
 	var flip: bool = get_global_mouse_position().x > global_position.x
+	if is_squeezed: flip = true
 	
 	if flip:
 		gun_sprite.flip_v = false
@@ -171,6 +186,43 @@ func handle_movement() -> void:
 			fx.visible = true
 	
 	velocity = Global.fixed_lerp(velocity, input * speed, acceleration)
+
+func handle_squeeze() -> void:
+	base_sprite.offset.y = (1 - abs(squeeze_anim_value - 1)) * -5
+
+func squeeze_anim() -> void:
+	if squeeze_anim_tween:
+		squeeze_anim_tween.kill()
+	
+	squeeze_anim_value = 0
+	
+	squeeze_anim_tween = create_tween() \
+		.set_ease(Tween.EASE_OUT_IN) \
+		.set_trans(Tween.TRANS_CUBIC)
+	
+	squeeze_anim_tween.tween_property(self, "squeeze_anim_value", 2, 0.25)
+	if not squeeze_lock.is_locked: squeeze_anim_tween.tween_callback(exit_squeeze)
+
+func enter_squeeze() -> void:
+	is_squeezed = true
+	gun_sprite.visible = false
+	legs_sprite.visible = false
+	
+	base_sprite.play("squeeze")
+	
+	squeeze_lock.lock()
+
+func exit_squeeze() -> void:
+	is_squeezed = false
+	gun_sprite.visible = true
+	legs_sprite.visible = true
+	
+	base_sprite.play("idle")
+	
+	var particles: CPUParticles2D = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOOD)
+	particles.global_position = global_position
+	particles.emitting = true
+	get_tree().get_root().add_child(particles)
 
 func take_knockback(vector: Vector2) -> void:
 	if not hit_cooldown.is_stopped():

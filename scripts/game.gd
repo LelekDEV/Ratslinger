@@ -77,7 +77,12 @@ func setup_signals() -> void:
 	SignalBus.accuracy_perfect_entered.connect(tutorial_handler.display_shooting_tutorial)
 
 func _physics_process(_delta: float) -> void:
-	if wave_start_interaction_area.interacting and Input.is_action_just_pressed("interact") and not is_wave_active and not is_boss_active:
+	if wave_start_interaction_area.interacting and \
+		Input.is_action_just_pressed("interact") and \
+		not is_wave_active and \
+		not is_boss_active and \
+		not is_cutscene_on:
+		
 		start_wave()
 
 func boss_cutscene() -> void:

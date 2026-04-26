@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cb4w1r51ouhpi"]
+
+[ext_resource type="Script" uid="uid://b8683fn26wyxx" path="res://scripts/squeeze_lock.gd" id="1_2qmtt"]
+[ext_resource type="Texture2D" uid="uid://nq1faup4dkq3" path="res://graphics/ui/keyboard.png" id="2_5mmkf"]
+
+[node name="SqueezeLock" type="Node2D" unique_id=1317408974]
+script = ExtResource("1_2qmtt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=719212766]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Key1" type="Control" parent="HBoxContainer" unique_id=1328810870]
+visible = false
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/Key1" unique_id=419661129]
+texture = ExtResource("2_5mmkf")
+region_enabled = true
+region_rect = Rect2(1, 34, 13, 12)
+
+[node name="Key2" type="Control" parent="HBoxContainer" unique_id=947346202]
+visible = false
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/Key2" unique_id=447657839]
+texture = ExtResource("2_5mmkf")
+region_enabled = true
+region_rect = Rect2(97, 66, 13, 12)
+
+[node name="Key3" type="Control" parent="HBoxContainer" unique_id=160866807]
+visible = false
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/Key3" unique_id=21689969]
+texture = ExtResource("2_5mmkf")
+region_enabled = true
+region_rect = Rect2(33, 66, 13, 12)
