@@ -941,9 +941,6 @@ y_sort_enabled = true
 [node name="Projectiles" type="Node2D" parent="." unique_id=1412819979 groups=["projectiles"]]
 y_sort_enabled = true
 
-[node name="Bullets" type="Node2D" parent="." unique_id=1731328154 groups=["bullets"]]
-y_sort_enabled = true
-
 [node name="Coins" type="Node2D" parent="." unique_id=1787759229 groups=["coins"]]
 z_index = 1
 y_sort_enabled = true

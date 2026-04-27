@@ -3,7 +3,8 @@ extends Node
 @onready var music_player: AudioStreamPlayer = $MusicPlayer
 
 func play_sfx(sfx: AudioStream, volume: int = 0, pitch: float = 1, delay: float = 0) -> void:
-	await get_tree().create_timer(delay).timeout
+	if delay > 0:
+		await get_tree().create_timer(delay).timeout
 	
 	var audio = AudioStreamPlayer.new()
 	
@@ -23,7 +24,7 @@ func play_sfx(sfx: AudioStream, volume: int = 0, pitch: float = 1, delay: float 
 			played_audio.queue_free()
 	
 	add_child(audio)
-	audio.play()
+	audio.play(max(-delay, 0))
 
 func on_audio_finished(audio: AudioStreamPlayer) -> void:
 	audio.queue_free()

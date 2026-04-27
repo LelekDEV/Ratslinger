@@ -3,6 +3,9 @@ class_name SnakeBoss
 
 @onready var enemies: Node2D = get_tree().get_first_node_in_group("enemies")
 @onready var boss_healthbar: Node2D = get_tree().get_first_node_in_group("boss_healthbar")
+@onready var bound: ReferenceRect = get_tree().get_first_node_in_group("bossfight_bound_rect")
+
+const BOUND_MARGIN = 20
 
 var move_tween: Tween
 var move_value: float = 0
@@ -16,17 +19,39 @@ var speed_value: float = 50
 var max_health: float = 100
 var health: float = max_health
 
+var minion_progress_left: float = 100
+
 var is_attacking: bool = true
 
 func _ready() -> void:
 	await get_tree().create_timer(2, false).timeout
 	is_attacking = false
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not is_attacking:
-		rapid_attack(int((1 - health / max_health) * 3 + 3))
+		rapid_attack(int((1 - health / max_health) * 3 + 3 + 0.1))
 	
 	boss_healthbar.target_health = health
+	
+	minion_progress_left -= (1 - health / max_health + 0.2) * delta * 10
+	
+	while minion_progress_left <= 0:
+		var serpent := Serpent.instantiate()
+		var body: Node2D = serpent.get_node("SubViewport/SerpentBody")
+		var pos: Vector2i = bound.size / 2 + Vector2.ONE * BOUND_MARGIN
+		
+		if randi_range(0, 1) == 0:
+			body.start_pos.x = -pos.x if randi_range(0, 1) == 0 else pos.x
+			body.start_pos.y = randi_range(-pos.y, pos.y)
+		else:
+			body.start_pos.x = randi_range(-pos.x, pos.x)
+			body.start_pos.y = -pos.y if randi_range(0, 1) == 0 else pos.y
+		
+		serpent.visible = false
+		
+		add_child(serpent)
+		
+		minion_progress_left += 100
 
 func rapid_attack(count: int) -> void:
 	is_attacking = true

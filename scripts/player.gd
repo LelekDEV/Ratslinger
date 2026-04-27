@@ -59,8 +59,8 @@ func _ready() -> void:
 		Global.block_movement = true
 		Global.block_input = true
 	
-	await get_tree().create_timer(2).timeout
-	enter_squeeze()
+	#await get_tree().create_timer(2).timeout
+	#enter_squeeze()
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
@@ -202,6 +202,8 @@ func squeeze_anim() -> void:
 	
 	squeeze_anim_tween.tween_property(self, "squeeze_anim_value", 2, 0.25)
 	if not squeeze_lock.is_locked: squeeze_anim_tween.tween_callback(exit_squeeze)
+	
+	GlobalAudio.play_sfx(AudioConsts.SFX.BLOCK, -4, 1.2)
 
 func enter_squeeze() -> void:
 	is_squeezed = true
@@ -223,6 +225,8 @@ func exit_squeeze() -> void:
 	particles.global_position = global_position
 	particles.emitting = true
 	get_tree().get_root().add_child(particles)
+	
+	GlobalAudio.play_sfx(AudioConsts.SFX.HISS, -10, 1.2)
 
 func take_knockback(vector: Vector2) -> void:
 	if not hit_cooldown.is_stopped():
@@ -238,7 +242,7 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	
 	SignalBus.player_hit.emit()
 	
-	if from_enemy.ai != Enemy.AI.SEGMENT:
+	if from_enemy and from_enemy.ai != Enemy.AI.SEGMENT:
 		ignored_hitter = from_enemy
 	
 	health -= amount

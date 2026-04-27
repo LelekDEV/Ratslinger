@@ -40,7 +40,7 @@ func animate(from_projectile: Node2D, from_enemy: Enemy) -> void:
 	weather_layer.visible = false
 	
 	var highlight_nodes: Array = [player, from_projectile]
-	const DISCLUDED_NODE_PATHS: Array = ["LocalFX", "FlightPath"]
+	const DISCLUDED_NODE_PATHS: Array = ["LocalFX", "FireFX", "FlightPath"]
 	
 	if from_enemy:
 		if from_enemy.ai == Enemy.AI.SEGMENT:

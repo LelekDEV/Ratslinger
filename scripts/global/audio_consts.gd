@@ -15,6 +15,8 @@ class SFX:
 	const COLLECT = preload("res://audio/sfx/collect.wav")
 	const DANGER = preload("res://audio/sfx/danger.wav")
 	const ENEMY_SHOOT = preload("res://audio/sfx/enemy_shoot.wav")
+	const HISS = preload("res://audio/sfx/hiss.mp3")
+	const HISS_SOFT = preload("res://audio/sfx/hiss_soft.mp3")
 	const HIT = preload("res://audio/sfx/hit.wav")
 	const LOSE = preload("res://audio/sfx/lose.wav")
 	const PERFECT = preload("res://audio/sfx/perfect.wav")
