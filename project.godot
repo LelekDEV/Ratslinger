@@ -16,8 +16,8 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Ratslinger"
-config/description="A"
-config/version="0.1.0"
+config/description="Ratslinger is a game where the player becomes a sheriff of a ruined wild-west rat town. The goal is to defend waves of animals that appear after interacting in the middle of the arena. Killed enemies drop coins that are used to buy upgrades that grant special abilities from the shop. The player can also interact with NPCs in the town to obtain side-missions and learn more about lore. The game uses cartoony pixel-art graphics presented from a top-down perspective."
+config/version="0.3.0"
 config/tags=PackedStringArray("sci++")
 run/main_scene="res://scenes/root/game.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
