@@ -37,6 +37,7 @@ var save_paths: Dictionary = {
 var save_on_exit: bool = true
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	call_deferred("load_game")
 
 func _notification(what: int) -> void:

@@ -36,7 +36,9 @@ const BOSS_COLLISIONS = {
 	&"h_head": preload("res://scenes/enemies/boss/collision/h_head.tscn"),
 	&"v_body": preload("res://scenes/enemies/boss/collision/v_body.tscn"),
 	&"v_head_d": preload("res://scenes/enemies/boss/collision/v_head_d.tscn"),
-	&"v_head_u": preload("res://scenes/enemies/boss/collision/v_head_u.tscn")
+	&"v_head_u": preload("res://scenes/enemies/boss/collision/v_head_u.tscn"),
+	&"h_tail": preload("res://scenes/enemies/boss/collision/h_body.tscn"),
+	&"v_tail": preload("res://scenes/enemies/boss/collision/v_body.tscn")
 }
 
 enum Type {REGULAR, BOSS_RAPID, BOSS_SPIKED}
@@ -75,6 +77,7 @@ func _ready() -> void:
 			
 			Type.BOSS_RAPID:
 				segment = BossSegment.instantiate()
+				var sprite: AnimatedSprite2D = segment.get_node("BaseSprite")
 				var type_name: StringName
 				
 				if i == 0:
@@ -86,26 +89,40 @@ func _ready() -> void:
 						type_name = &"v_head_u"
 					
 					segment.damage = 2
+				
+				elif i == length - 1:
+					if direction.y == 0:
+						type_name = &"h_tail"
+					else:
+						type_name = &"v_tail"
+						sprite.flip_h = not i % 2
+						sprite.flip_v = direction.y > 0
+					
+					if direction.y == 0:
+						segment.position = Vector2((1 - i) * 22 - 53, 15)
+					else:
+						segment.position = Vector2(1, (1 - i) * 22 - 56)
+				
 				else:
 					if direction.y == 0:
 						type_name = &"h_body"
 					else:
 						type_name = &"v_body"
-						segment.get_node("BaseSprite").flip_h = not i % 2
+						sprite.flip_h = not i % 2
 					
 					if direction.y == 0:
 						segment.position = Vector2((1 - i) * 22 - 40, 15)
 					else:
 						segment.position = Vector2(0.5, (1 - i) * 22 - 46)
 				
-				segment.get_node("BaseSprite").play(type_name)
+				sprite.play(type_name)
 				
 				var collision: Node2D = BOSS_COLLISIONS[type_name].instantiate()
 				#collision.z_index = 100
 				
 				if direction == Vector2.LEFT:
 					segment.position.x *= -1
-					segment.get_node("BaseSprite").flip_h = true
+					sprite.flip_h = true
 					
 					if type_name == &"h_head":
 						# I am pretty sure the bottom line is exactly how it shouldn't be done.
@@ -119,8 +136,11 @@ func _ready() -> void:
 				if direction.x == 0:
 					segment.is_vertical = true
 				
+				if type_name == &"h_tail":
+					sprite.flip_h = not sprite.flip_h
+				
 				segment.get_node("HurtArea").add_child(collision)
-				if type_name == &"h_body" or type_name == &"v_body":
+				if type_name in [&"h_body", &"v_body", &"h_tail", &"v_tail"]:
 					segment.add_child(collision.duplicate())
 				else:
 					segment.get_node("HeadshotArea").add_child(collision.duplicate())

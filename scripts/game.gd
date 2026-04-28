@@ -32,6 +32,8 @@ class_name Game
 @onready var sand_spike_spawner: Node2D = $Environment/SandSpikeSpawner
 @onready var cutscene_audio: AudioStreamPlayer = $CutsceneAudio
 
+@onready var boss_card_animation: AnimationPlayer = $BossCardLayer/AnimationPlayer
+
 var enemies_total: int = 5
 var enemies_to_spawn: int = enemies_total
 var enemies_killed: int = 0
@@ -41,6 +43,8 @@ var is_wave_active: bool = false
 var is_boss_active: bool = false
 
 var is_cutscene_on: bool = false
+
+signal exit_boss_card
 
 func _ready() -> void:
 	setup_signals()
@@ -58,7 +62,7 @@ func _ready() -> void:
 	title_sand_sprite.global_position.x = int(player.global_position.x)
 	
 	# boss testing...
-	#Global.waves_cleared = 15
+	#Global.waves_cleared = 14
 
 func setup_signals() -> void:
 	SignalBus.player_shoot.connect(camera.shake.bind(0.2, 2.5, 0.8))
@@ -84,6 +88,29 @@ func _physics_process(_delta: float) -> void:
 		not is_cutscene_on:
 		
 		start_wave()
+	
+	if Input.is_action_just_pressed("exit_boss_card"):
+		exit_boss_card.emit()
+	
+	'''if Input.is_action_just_pressed("spawn_enemy_1"):
+		var enemy: Enemy = FoxEnemy.instantiate()
+		enemy.death.connect(update_enemies)
+		enemies.add_child(enemy)
+	
+	if Input.is_action_just_pressed("spawn_enemy_2"):
+		var enemy: Enemy = BeaverEnemy.instantiate()
+		enemy.death.connect(update_enemies)
+		enemies.add_child(enemy)
+	
+	if Input.is_action_just_pressed("spawn_enemy_3"):
+		var enemy: SnakeEnemyWrapper = SnakeEnemy.instantiate()
+		enemy.death.connect(update_enemies)
+		enemies.add_child(enemy)
+	
+	if Input.is_action_just_pressed("spawn_enemy_4"):
+		var enemy: Enemy = OwlEnemy.instantiate()
+		enemy.death.connect(update_enemies)
+		enemies.add_child(enemy)'''
 
 func boss_cutscene() -> void:
 	is_cutscene_on = true
@@ -133,6 +160,12 @@ func boss_cutscene() -> void:
 	
 	await get_tree().create_timer(4, false).timeout
 	
+	boss_card_animation.play("enter")
+	await boss_card_animation.animation_finished
+	await exit_boss_card
+	boss_card_animation.play("exit")
+	await boss_card_animation.animation_finished
+	
 	ui.end_dialogue()
 	ui.toggle_combat_hud(true)
 	Global.block_input = false
@@ -143,9 +176,8 @@ func start_wave() -> void:
 	
 	ui.animation.play("wave_start")
 	
-	if Global.waves_cleared % 15 == 0 and Global.waves_cleared >= 15:
-		boss_cutscene()
-		await get_tree().create_timer(10, false).timeout
+	if Global.waves_cleared % 15 == 14 and Global.waves_cleared >= 14:
+		await boss_cutscene()
 		
 		is_cutscene_on = false
 		is_boss_active = true

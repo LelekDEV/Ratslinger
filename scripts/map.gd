@@ -13,10 +13,10 @@ var world_max: Vector2 = Vector2(648, 468)
 func _ready():
 	map_size = map_sprite.texture.get_size() * map_sprite.scale
 
-func _input(event):
+'''func _input(event):
 	if event.is_action_pressed("Map"):
 		map_visibility = !map_visibility
-		visible = map_visibility
+		visible = map_visibility'''
 
 func _physics_process(_delta):
 	if player == null or map_sprite == null:

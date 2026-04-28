@@ -305,7 +305,7 @@ grow_vertical = 0
 scale = Vector2(0.333, 0.333)
 theme = SubResource("Theme_sqnma")
 theme_override_colors/font_color = Color(0.7764706, 0.6313726, 0.39215687, 1)
-text = "version: 0.2.0+ (indev)"
+text = "version: 0.3.0 (indev)"
 
 [node name="SettingsDialog" parent="." unique_id=898375089 instance=ExtResource("11_0ra5a")]
 position = Vector2i(0, 36)

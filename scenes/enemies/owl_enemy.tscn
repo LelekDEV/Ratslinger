@@ -12,42 +12,49 @@
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_64a2j"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0vrg"]
 atlas = ExtResource("4_d0vrg")
 region = Rect2(0, 0, 60, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nq628"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_64a2j"]
 atlas = ExtResource("4_d0vrg")
 region = Rect2(60, 0, 60, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_inb6d"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nq628"]
 atlas = ExtResource("4_d0vrg")
 region = Rect2(120, 0, 60, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rl1vy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_inb6d"]
 atlas = ExtResource("4_d0vrg")
 region = Rect2(180, 0, 60, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cde3v"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rl1vy"]
 atlas = ExtResource("4_d0vrg")
 region = Rect2(240, 0, 60, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s84ig"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cde3v"]
 atlas = ExtResource("4_d0vrg")
 region = Rect2(300, 0, 60, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_50hdj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s84ig"]
 atlas = ExtResource("4_d0vrg")
 region = Rect2(360, 0, 60, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_elpym"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_50hdj"]
 atlas = ExtResource("4_d0vrg")
 region = Rect2(420, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elpym"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(480, 0, 60, 50)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7xaro"]
 animations = [{
 "frames": [{
 "duration": 3.0,
+"texture": SubResource("AtlasTexture_d0vrg")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_64a2j")
 }, {
 "duration": 1.0,
@@ -62,13 +69,19 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cde3v")
 }, {
-"duration": 1.0,
+"duration": 0.75,
 "texture": SubResource("AtlasTexture_s84ig")
 }, {
-"duration": 1.0,
+"duration": 0.75,
 "texture": SubResource("AtlasTexture_50hdj")
 }, {
-"duration": 1.0,
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_elpym")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_50hdj")
+}, {
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_elpym")
 }],
 "loop": false,
@@ -120,6 +133,9 @@ scale_amount_curve = SubResource("Curve_ow15s")
 material = ExtResource("4_inb6d")
 sprite_frames = SubResource("SpriteFrames_7xaro")
 animation = &"fly_down_and_up"
+autoplay = "fly_down_and_up"
+frame = 8
+frame_progress = 1.0
 script = ExtResource("6_cde3v")
 spawn_node = NodePath("../LocalFX")
 

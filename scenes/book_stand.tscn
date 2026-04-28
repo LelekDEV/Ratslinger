@@ -16,11 +16,13 @@ collision_mask = 2
 script = ExtResource("1_qaftc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1832084496]
+visible = false
 texture = ExtResource("2_qaftc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1226887332]
 position = Vector2(-0.5, -10)
 shape = SubResource("RectangleShape2D_otkk7")
+disabled = true
 
 [node name="InteractionArea" parent="." unique_id=169532335 instance=ExtResource("1_pci50")]
 
