@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var shop_layer: CanvasLayer = get_tree().get_first_node_in_group("shop_layer")
 @onready var bestiary_layer: CanvasLayer = get_tree().get_first_node_in_group("bestiary_layer")
+@onready var settings_layer: CanvasLayer = get_tree().get_first_node_in_group("settings_layer")
 
 @onready var paused_label: RichTextLabel = $PausedLabel
 @onready var action_label: Label = $ActionLabel
@@ -17,7 +18,9 @@ func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
 	
 	button_container.get_child(0).connect("pressed", resume)
-	button_container.get_child(1).connect("pressed", settings_dialog.popup_centered)
+	#usunto
+	#button_container.get_child(1).connect("pressed", settings_dialog.popup_centered)
+	button_container.get_child(1).connect("pressed", settings_layer.enter)
 	button_container.get_child(2).connect("pressed", func():
 		get_tree().paused = false
 		
@@ -39,7 +42,11 @@ func _ready() -> void:
 	update_scale()
 
 func _physics_process(_delta: float) -> void:
-	if Input.is_action_just_pressed("pause") and not Global.is_title_on and not Global.game.is_cutscene_on:
+	if Input.is_action_just_pressed("pause") and \
+		not Global.is_title_on and \
+		not Global.game.is_cutscene_on and \
+		not settings_layer.visible:
+		
 		if visible:
 			resume()
 		else:

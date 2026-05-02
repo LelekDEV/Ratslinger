@@ -26,7 +26,12 @@ var save_paths: Dictionary = {
 	],
 	Settings: [
 		^"accuracy_flash_accessibility",
-		^"skip_title"
+		^"skip_title",
+		^"music_volume",
+		^"sfx_volume",
+		^"screen_shake",
+		^"on_death_action",
+		^"boss_card"
 	],
 	Engine: [
 		^"physics_ticks_per_second",
@@ -37,6 +42,8 @@ var save_paths: Dictionary = {
 var save_on_exit: bool = true
 
 func _ready() -> void:
+	SignalBus.player_death.connect(func(_from_projectile, _from_enemy): save_game())
+	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	call_deferred("load_game")
 
@@ -52,10 +59,7 @@ func _process(_delta: float) -> void:
 		print("ctrl + f1 pressed: save data will be wiped on next project debug")
 	
 	if Input.is_action_just_pressed("exit"):
-		if save_on_exit:
-			save_game()
-		
-		get_tree().quit()
+		exit()
 
 func exit() -> void:
 	if save_on_exit:

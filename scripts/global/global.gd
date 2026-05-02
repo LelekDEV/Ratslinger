@@ -23,6 +23,7 @@ var enemy_stats: Dictionary = {
 }
 
 var waves_cleared: int = 0
+var death_wave: int = -1
 
 var builder_value: int = 0
 var rain_value: float = -randi_range(0, 600)

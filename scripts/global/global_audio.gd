@@ -12,6 +12,7 @@ func play_sfx(sfx: AudioStream, volume: int = 0, pitch: float = 1, delay: float 
 	audio.set_meta("sfx", sfx.resource_path)
 	audio.volume_db = volume
 	audio.pitch_scale = pitch
+	audio.bus = &"SFX"
 	
 	audio.finished.connect(on_audio_finished.bind(audio))
 	

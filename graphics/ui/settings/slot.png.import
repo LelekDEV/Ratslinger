@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c84sgy8kvdheb"
-path="res://.godot/imported/magazine.png-2a5511df88256a62fd52009d8d1f2aed.ctex"
+uid="uid://ds3a0dgrq47rt"
+path="res://.godot/imported/slot.png-dd7d7c01cb988f048d6048f68f528449.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/title/magazine.png"
-dest_files=["res://.godot/imported/magazine.png-2a5511df88256a62fd52009d8d1f2aed.ctex"]
+source_file="res://graphics/ui/settings/slot.png"
+dest_files=["res://.godot/imported/slot.png-dd7d7c01cb988f048d6048f68f528449.ctex"]
 
 [params]
 

@@ -1,0 +1,735 @@
+[gd_scene format=3 uid="uid://vt4jaf8dc6wk"]
+
+[ext_resource type="Script" uid="uid://b75w8f7p5gsnn" path="res://scripts/settings_layer.gd" id="1_frj6i"]
+[ext_resource type="Texture2D" uid="uid://c84sgy8kvdheb" path="res://graphics/ui/settings/wheel.png" id="1_gosq6"]
+[ext_resource type="FontFile" uid="uid://cwrysi1envklm" path="res://fonts/bold_pixels.otf" id="2_6mji4"]
+[ext_resource type="Texture2D" uid="uid://ds3a0dgrq47rt" path="res://graphics/ui/settings/slot.png" id="3_7v23u"]
+[ext_resource type="Script" uid="uid://civewhru3yt7a" path="res://scripts/settings_option.gd" id="4_1fviu"]
+[ext_resource type="Texture2D" uid="uid://c8ftwa2j3nbtf" path="res://graphics/ui/settings/buttons.png" id="5_7k32y"]
+
+[sub_resource type="Theme" id="Theme_frj6i"]
+default_font = ExtResource("2_6mji4")
+default_font_size = 0
+
+[sub_resource type="Gradient" id="Gradient_7k32y"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1fviu"]
+gradient = SubResource("Gradient_7k32y")
+width = 8
+height = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7k32y"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1fviu"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dwm7h"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.6)
+corner_detail = 1
+
+[sub_resource type="Gradient" id="Gradient_1fviu"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 0.2)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dwm7h"]
+gradient = SubResource("Gradient_1fviu")
+width = 4
+height = 8
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fviu"]
+atlas = ExtResource("5_7k32y")
+region = Rect2(0, 0, 59, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwm7h"]
+atlas = ExtResource("5_7k32y")
+region = Rect2(65, 0, 59, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k32y"]
+atlas = ExtResource("5_7k32y")
+region = Rect2(0, 19, 65, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiact"]
+atlas = ExtResource("5_7k32y")
+region = Rect2(65, 19, 65, 19)
+
+[node name="SettingsLayer" type="CanvasLayer" unique_id=1592751903 groups=["settings_layer"]]
+process_mode = 3
+layer = 2
+script = ExtResource("1_frj6i")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2102839107]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="WheelSprite" type="Sprite2D" parent="." unique_id=150332613]
+position = Vector2(1152, 324)
+scale = Vector2(8, 8)
+texture = ExtResource("1_gosq6")
+hframes = 3
+frame = 1
+
+[node name="Slots" type="Node2D" parent="." unique_id=1663184355]
+position = Vector2(1152, 324)
+
+[node name="SlotsSprite1" type="Sprite2D" parent="Slots" unique_id=941264406]
+position = Vector2(-120, 40)
+scale = Vector2(8, 8)
+texture = ExtResource("3_7v23u")
+region_rect = Rect2(152, 28, 16, 15)
+
+[node name="SlotsSprite2" type="Sprite2D" parent="Slots" unique_id=54479612]
+position = Vector2(-120, -80)
+scale = Vector2(8, 8)
+texture = ExtResource("3_7v23u")
+region_rect = Rect2(152, 28, 16, 15)
+
+[node name="SlotsSprite3" type="Sprite2D" parent="Slots" unique_id=129803213]
+position = Vector2(0, -144)
+scale = Vector2(8, 8)
+texture = ExtResource("3_7v23u")
+region_rect = Rect2(152, 28, 16, 15)
+
+[node name="SlotsSprite4" type="Sprite2D" parent="Slots" unique_id=266007591]
+position = Vector2(120, -80)
+scale = Vector2(8, 8)
+texture = ExtResource("3_7v23u")
+region_rect = Rect2(152, 28, 16, 15)
+
+[node name="SlotsSprite5" type="Sprite2D" parent="Slots" unique_id=1658710360]
+position = Vector2(120, 40)
+scale = Vector2(8, 8)
+texture = ExtResource("3_7v23u")
+region_rect = Rect2(152, 28, 16, 15)
+
+[node name="SlotsSprite6" type="Sprite2D" parent="Slots" unique_id=516682621]
+position = Vector2(0, 112)
+scale = Vector2(8, 8)
+texture = ExtResource("3_7v23u")
+region_rect = Rect2(152, 28, 16, 15)
+
+[node name="Options" type="Node2D" parent="." unique_id=325145596]
+
+[node name="Option1" type="Node2D" parent="Options" unique_id=273567066]
+script = ExtResource("4_1fviu")
+setting_path = NodePath("music_volume")
+
+[node name="LabelParent" type="Node2D" parent="Options/Option1" unique_id=1043594125]
+
+[node name="Label" type="Label" parent="Options/Option1/LabelParent" unique_id=1947374011]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "Music volume"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Options/Option1/LabelParent" unique_id=1494369993]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -8.0
+offset_right = -208.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "70%"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HSlider" type="HSlider" parent="Options/Option1/LabelParent" unique_id=1085649149]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 16.0
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0.5)
+focus_mode = 0
+theme_override_icons/grabber = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_highlight = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_disabled = SubResource("GradientTexture2D_1fviu")
+theme_override_styles/slider = SubResource("StyleBoxFlat_7k32y")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_1fviu")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_dwm7h")
+value = 70.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Underline" type="ColorRect" parent="Options/Option1/LabelParent" unique_id=1282421596]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 60.0
+offset_bottom = 64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Overline" type="ColorRect" parent="Options/Option1/LabelParent" unique_id=1107477710]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -68.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Option2" type="Node2D" parent="Options" unique_id=1862013790]
+position = Vector2(0, 150)
+script = ExtResource("4_1fviu")
+setting_path = NodePath("sfx_volume")
+
+[node name="LabelParent" type="Node2D" parent="Options/Option2" unique_id=495566954]
+
+[node name="Label" type="Label" parent="Options/Option2/LabelParent" unique_id=568708461]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "SFX volume"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Options/Option2/LabelParent" unique_id=1727397558]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -8.0
+offset_right = -208.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "70%"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HSlider" type="HSlider" parent="Options/Option2/LabelParent" unique_id=1754422319]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 16.0
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0.5)
+focus_mode = 0
+theme_override_icons/grabber = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_highlight = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_disabled = SubResource("GradientTexture2D_1fviu")
+theme_override_styles/slider = SubResource("StyleBoxFlat_7k32y")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_1fviu")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_dwm7h")
+value = 70.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Underline" type="ColorRect" parent="Options/Option2/LabelParent" unique_id=94103479]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 60.0
+offset_bottom = 64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Overline" type="ColorRect" parent="Options/Option2/LabelParent" unique_id=844400665]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -68.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Option3" type="Node2D" parent="Options" unique_id=1571500181]
+position = Vector2(0, 300)
+script = ExtResource("4_1fviu")
+setting_path = NodePath("screen_shake")
+
+[node name="LabelParent" type="Node2D" parent="Options/Option3" unique_id=33249841]
+
+[node name="Label" type="Label" parent="Options/Option3/LabelParent" unique_id=73993563]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "Screen shake"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Options/Option3/LabelParent" unique_id=278026354]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -8.0
+offset_right = -208.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "100%"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HSlider" type="HSlider" parent="Options/Option3/LabelParent" unique_id=1552894515]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 16.0
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0.5)
+focus_mode = 0
+theme_override_icons/grabber = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_highlight = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_disabled = SubResource("GradientTexture2D_1fviu")
+theme_override_styles/slider = SubResource("StyleBoxFlat_7k32y")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_1fviu")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_dwm7h")
+value = 100.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Underline" type="ColorRect" parent="Options/Option3/LabelParent" unique_id=736873394]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 60.0
+offset_bottom = 64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Overline" type="ColorRect" parent="Options/Option3/LabelParent" unique_id=1332109556]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -68.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Option4" type="Node2D" parent="Options" unique_id=1731021845]
+position = Vector2(0, 450)
+script = ExtResource("4_1fviu")
+setting_path = NodePath("on_death_action")
+type = 1
+select_options = Array[String](["skip cutscenes", "restart", "nothing"])
+
+[node name="LabelParent" type="Node2D" parent="Options/Option4" unique_id=1417155076]
+
+[node name="Label" type="Label" parent="Options/Option4/LabelParent" unique_id=550658667]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "On death action"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Options/Option4/LabelParent" unique_id=1754388990]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = -8.0
+offset_right = -108.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "skip cutscenes"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HSlider" type="HSlider" parent="Options/Option4/LabelParent" unique_id=1264620488]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 16.0
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0.5)
+focus_mode = 0
+theme_override_icons/grabber = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_highlight = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_disabled = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/tick = SubResource("GradientTexture2D_dwm7h")
+theme_override_styles/slider = SubResource("StyleBoxFlat_7k32y")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_1fviu")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_dwm7h")
+max_value = 2.0
+tick_count = 3
+ticks_on_borders = true
+ticks_position = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Underline" type="ColorRect" parent="Options/Option4/LabelParent" unique_id=716148432]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 60.0
+offset_bottom = 64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Overline" type="ColorRect" parent="Options/Option4/LabelParent" unique_id=72164733]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -68.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Option5" type="Node2D" parent="Options" unique_id=945370779]
+position = Vector2(0, 600)
+script = ExtResource("4_1fviu")
+setting_path = NodePath("boss_card")
+type = 1
+select_options = Array[String](["enabled", "disabled"])
+
+[node name="LabelParent" type="Node2D" parent="Options/Option5" unique_id=1465986995]
+
+[node name="Label" type="Label" parent="Options/Option5/LabelParent" unique_id=942189028]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -264.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0.5)
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "Boss card"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Options/Option5/LabelParent" unique_id=1110241269]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = -8.0
+offset_right = -108.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "enabled"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HSlider" type="HSlider" parent="Options/Option5/LabelParent" unique_id=1847096415]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 16.0
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0.5)
+focus_mode = 0
+theme_override_icons/grabber = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_highlight = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_disabled = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/tick = SubResource("GradientTexture2D_dwm7h")
+theme_override_styles/slider = SubResource("StyleBoxFlat_7k32y")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_1fviu")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_dwm7h")
+max_value = 1.0
+tick_count = 2
+ticks_on_borders = true
+ticks_position = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Underline" type="ColorRect" parent="Options/Option5/LabelParent" unique_id=1775180336]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 60.0
+offset_bottom = 64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Overline" type="ColorRect" parent="Options/Option5/LabelParent" unique_id=219131840]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -68.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Option6" type="Node2D" parent="Options" unique_id=2131811297]
+position = Vector2(0, 750)
+script = ExtResource("4_1fviu")
+setting_path = NodePath("physics_ticks_per_second")
+setting_path_extra = NodePath("max_fps")
+use_engine_singleton = true
+value_suffix = " FPS"
+
+[node name="LabelParent" type="Node2D" parent="Options/Option6" unique_id=1465343675]
+
+[node name="Label" type="Label" parent="Options/Option6/LabelParent" unique_id=455125490]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "Max framerate"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Options/Option6/LabelParent" unique_id=576048231]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -8.0
+offset_right = -208.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_frj6i")
+theme_override_font_sizes/font_size = 64
+text = "100%"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HSlider" type="HSlider" parent="Options/Option6/LabelParent" unique_id=1875651484]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 16.0
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0.5)
+focus_mode = 0
+theme_override_icons/grabber = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_highlight = SubResource("GradientTexture2D_1fviu")
+theme_override_icons/grabber_disabled = SubResource("GradientTexture2D_1fviu")
+theme_override_styles/slider = SubResource("StyleBoxFlat_7k32y")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_1fviu")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_dwm7h")
+min_value = 30.0
+max_value = 240.0
+value = 60.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Underline" type="ColorRect" parent="Options/Option6/LabelParent" unique_id=93748644]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 60.0
+offset_bottom = 64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Overline" type="ColorRect" parent="Options/Option6/LabelParent" unique_id=763650544]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -68.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(1, 0)
+color = Color(1, 1, 1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonContainer" type="VBoxContainer" parent="." unique_id=1872777635]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 43.0
+offset_bottom = -486.0
+grow_vertical = 2
+scale = Vector2(4, 4)
+alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="ApplyButton" type="TextureButton" parent="ButtonContainer" unique_id=1270430771]
+layout_mode = 2
+focus_mode = 0
+texture_normal = SubResource("AtlasTexture_1fviu")
+texture_hover = SubResource("AtlasTexture_dwm7h")
+
+[node name="CancelButton" type="TextureButton" parent="ButtonContainer" unique_id=494877092]
+layout_mode = 2
+focus_mode = 0
+texture_normal = SubResource("AtlasTexture_7k32y")
+texture_hover = SubResource("AtlasTexture_qiact")
+
+[connection signal="pressed" from="ButtonContainer/ApplyButton" to="." method="_on_apply_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

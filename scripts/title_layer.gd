@@ -2,6 +2,8 @@ extends CanvasLayer
 
 @export var tail_frame_curve: Curve
 
+@onready var settings_layer: CanvasLayer = get_tree().get_first_node_in_group("settings_layer")
+
 @onready var letters: HBoxContainer = $SubViewport/Letters
 @onready var tail_sprite: Sprite2D = $SubViewport/TailSprite
 @onready var gun_sprite: Sprite2D = $SubViewport/GunSprite
@@ -11,8 +13,6 @@ extends CanvasLayer
 @onready var color_rect: ColorRect = $ColorRect
 
 @onready var button_container: VBoxContainer = $ButtonContainer
-
-@onready var settings_dialog: AcceptDialog = $SettingsDialog
 
 @onready var version_label: Label = $VersionLabel
 
@@ -42,7 +42,7 @@ func _ready() -> void:
 		return
 	
 	button_container.get_child(0).connect("pressed", exit)
-	button_container.get_child(1).get_child(0).connect("pressed", settings_dialog.popup_centered)
+	button_container.get_child(1).get_child(0).connect("pressed", settings_layer.enter)
 	button_container.get_child(1).get_child(1).connect("pressed", SaverLoader.exit)
 	visible = true
 	
@@ -164,7 +164,3 @@ func anim_gun() -> void:
 		.set_trans(Tween.TRANS_LINEAR)
 	
 	shine_tween.tween_method(func(value: float): gun_sprite.material.set_shader_parameter("shine_progress", value), 0.0, 1.0, 1)
-
-func _on_settings_dialog_confirmed() -> void:
-	Engine.physics_ticks_per_second = settings_dialog.framerate_slider.value
-	Engine.max_fps = settings_dialog.framerate_slider.value

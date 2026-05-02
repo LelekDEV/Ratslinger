@@ -50,15 +50,25 @@ func _ready() -> void:
 	setup_signals()
 	Global.game = self
 	Global.all_enemies.clear()
+	Fullscreen.transition_rect = get_tree().get_first_node_in_group("fullscreen_transition_rect")
 	
 	if Global.is_game_restarted:
 		GlobalAudio.music_player.stop()
 		SaverLoader.load_game()
 		
 		title_sand_sprite.global_position.x = int(player.global_position.x)
-		return
 		
+		await get_tree().process_frame
+		if Global.waves_cleared == Global.death_wave and Settings.on_death_action == 1:
+			start_wave()
+		
+		return
+	
 	await SignalBus.game_loaded
+	# L this actually only emits when the game is loaded the first time.
+	# I'll workaround with a frame delay for restarting waves since I don't want to damage existing structure.
+	# There's 13 references to 'game_loaded' in the whole project, ouch...
+	
 	title_sand_sprite.global_position.x = int(player.global_position.x)
 	
 	# boss testing...
@@ -92,7 +102,7 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("exit_boss_card"):
 		exit_boss_card.emit()
 	
-	'''if Input.is_action_just_pressed("spawn_enemy_1"):
+	"""if Input.is_action_just_pressed("spawn_enemy_1"):
 		var enemy: Enemy = FoxEnemy.instantiate()
 		enemy.death.connect(update_enemies)
 		enemies.add_child(enemy)
@@ -110,7 +120,23 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("spawn_enemy_4"):
 		var enemy: Enemy = OwlEnemy.instantiate()
 		enemy.death.connect(update_enemies)
-		enemies.add_child(enemy)'''
+		enemies.add_child(enemy)"""
+
+func boss_card() -> void:
+	if Settings.boss_card == 0 and not (Global.waves_cleared == Global.death_wave and Settings.on_death_action == 1):
+		Global.block_input = true
+		Global.block_movement = true
+		is_cutscene_on = true
+		
+		boss_card_animation.play("enter")
+		await boss_card_animation.animation_finished
+		await exit_boss_card
+		boss_card_animation.play("exit")
+		await boss_card_animation.animation_finished
+		
+		Global.block_input = false
+		Global.block_movement = false
+		is_cutscene_on = false
 
 func boss_cutscene() -> void:
 	is_cutscene_on = true
@@ -160,15 +186,17 @@ func boss_cutscene() -> void:
 	
 	await get_tree().create_timer(4, false).timeout
 	
-	boss_card_animation.play("enter")
-	await boss_card_animation.animation_finished
-	await exit_boss_card
-	boss_card_animation.play("exit")
-	await boss_card_animation.animation_finished
+	await boss_card()
 	
 	ui.end_dialogue()
 	ui.toggle_combat_hud(true)
 	Global.block_input = false
+
+func boss_cutscene_skip() -> void:
+	for spike: SandSpike in sand_spike_spawner.get_children():
+		spike.appear(0, true)
+	
+	await boss_card()
 
 func start_wave() -> void:
 	gate.get_node("LockSprite").self_modulate.a = 1
@@ -177,7 +205,10 @@ func start_wave() -> void:
 	ui.animation.play("wave_start")
 	
 	if Global.waves_cleared % 15 == 14 and Global.waves_cleared >= 14:
-		await boss_cutscene()
+		if Global.waves_cleared == Global.death_wave and Settings.on_death_action <= 1:
+			await boss_cutscene_skip()
+		else:
+			await boss_cutscene()
 		
 		is_cutscene_on = false
 		is_boss_active = true

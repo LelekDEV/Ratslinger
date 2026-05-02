@@ -93,7 +93,7 @@ func _physics_process(_delta: float) -> void:
 	position_smoothing_enabled = true
 	
 	if shake_tween and shake_tween.is_running():
-		var target: Vector2 = Vector2.RIGHT.rotated(randf_range(-PI, PI)) * sin(shake_value * PI) * shake_intensity
+		var target: Vector2 = Vector2.RIGHT.rotated(randf_range(-PI, PI)) * sin(shake_value * PI) * shake_intensity * Settings.screen_shake / 100
 		offset = Global.fixed_lerp(offset, target, 1 - shake_smoothness)
 	else:
 		offset = Vector2.ZERO

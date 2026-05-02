@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://2on6pkejauvo" path="res://scenes/accuracy_bar.tscn" id="6_s3lrj"]
 [ext_resource type="PackedScene" uid="uid://dga30tbdq47t5" path="res://scenes/bullet_bar.tscn" id="7_b3wgx"]
 [ext_resource type="Texture2D" uid="uid://d2h3vkx4lum10" path="res://graphics/characters/enemies/boss/card_name.png" id="7_hhndo"]
+[ext_resource type="PackedScene" uid="uid://vt4jaf8dc6wk" path="res://scenes/settings_layer.tscn" id="8_hhndo"]
 [ext_resource type="Texture2D" uid="uid://bykgmcn3ihdkj" path="res://graphics/environment/crossmark.png" id="8_sh5j3"]
 [ext_resource type="PackedScene" uid="uid://dd62w7380cncx" path="res://scenes/building.tscn" id="9_l77qo"]
 [ext_resource type="Script" uid="uid://btwriu2gbmrm3" path="res://scripts/dialogue_strips.gd" id="9_wt5dx"]
@@ -819,6 +820,8 @@ texture = ExtResource("7_hhndo")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BossCardLayer" unique_id=109873032]
 libraries/ = SubResource("AnimationLibrary_ncowb")
 
+[node name="SettingsLayer" parent="." unique_id=1592751903 instance=ExtResource("8_hhndo")]
+
 [node name="TitleLayer" parent="." unique_id=1948925533 instance=ExtResource("2_dybux")]
 visible = false
 
@@ -846,6 +849,7 @@ emitting = false
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("ViewportTexture_4qk7b")
+metadata/_edit_lock_ = true
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1372504453 groups=["ui"]]
 layer = 0
@@ -1294,6 +1298,7 @@ offset_top = -140.0
 offset_right = 210.0
 offset_bottom = 140.0
 border_color = Color(0.5525335, 0.17760001, 0.74, 1)
+metadata/_edit_lock_ = true
 
 [node name="DeathAnimHandler" type="Node2D" parent="." unique_id=1706911077 node_paths=PackedStringArray("camera", "death_shadow_rect", "ui", "weather_layer")]
 process_mode = 3
@@ -1331,5 +1336,6 @@ wait_time = 8.0
 [node name="CutsceneAudio" type="AudioStreamPlayer" parent="." unique_id=802166022]
 stream = ExtResource("49_xovr5")
 volume_db = 2.0
+bus = &"SFX"
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

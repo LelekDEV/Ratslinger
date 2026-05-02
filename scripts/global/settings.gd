@@ -3,6 +3,16 @@ extends Node
 var accuracy_flash_accessibility: bool = true
 var skip_title: bool = false
 
+var music_volume: float = 100
+var sfx_volume: float = 100
+var screen_shake: float = 100
+var on_death_action: int = 0
+var boss_card: int = 0
+
+func _ready() -> void:
+	await SignalBus.game_loaded
+	update()
+
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("toggle_accessibility"):
 		accuracy_flash_accessibility = not accuracy_flash_accessibility
@@ -15,3 +25,7 @@ func _process(_delta: float) -> void:
 		GlobalAudio.play_sfx(AudioConsts.SFX.TURN_ON if skip_title else AudioConsts.SFX.TURN_OFF, -4)
 		
 		print("Settings: 'skip_title' set to '" + str(skip_title) + "'")
+
+func update() -> void:
+	AudioServer.set_bus_volume_linear(1, music_volume / 100)
+	AudioServer.set_bus_volume_linear(2, sfx_volume / 100)

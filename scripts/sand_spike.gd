@@ -18,11 +18,11 @@ func reset() -> void:
 	appear_value = 0
 	sprite.offset.y = 20
 
-func appear(wait_time: float = 0) -> void:
+func appear(wait_time: float = 0, immediately = false) -> void:
 	await get_tree().create_timer(wait_time, false).timeout
 	
 	appear_tween = create_tween() \
 		.set_ease(Tween.EASE_IN_OUT) \
 		.set_trans(Tween.TRANS_LINEAR)
 	
-	appear_tween.tween_property(self, "appear_value", 1, 1.5)
+	appear_tween.tween_property(self, "appear_value", 1, 1.5 * int(not immediately))

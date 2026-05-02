@@ -250,6 +250,7 @@ func take_damage(amount: float, from_projectile: EnemyProjectile = null, from_en
 	if health <= 0 and not is_queued_to_die:
 		GlobalAudio.play_sfx(AudioConsts.SFX.LOSE)
 		SignalBus.player_death.emit(from_projectile, from_enemy)
+		Global.death_wave = Global.waves_cleared
 		
 		is_queued_to_die = true
 		
