@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://2on6pkejauvo"]
+
+[ext_resource type="Script" uid="uid://cb7nt15q0i2lx" path="res://scripts/ui/components/accuracy_bar.gd" id="1_lfime"]
+[ext_resource type="Texture2D" uid="uid://b2dlbk050xl8v" path="res://graphics/ui/hud/combat/accuracy_bar.png" id="1_nc87v"]
+[ext_resource type="Texture2D" uid="uid://fw2h68gmsdfb" path="res://graphics/ui/hud/combat/accuracy_cursor.png" id="2_tdin3"]
+[ext_resource type="Shader" uid="uid://1lld1d5krmy8" path="res://shaders/outline.gdshader" id="3_ymnd8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jpu5p"]
+shader = ExtResource("3_ymnd8")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_visible = false
+shader_parameter/thickness = 1.0
+
+[node name="AccuracyBar" type="Node2D" unique_id=1594001584 groups=["accuracy_bar"]]
+script = ExtResource("1_lfime")
+
+[node name="BarSprite" type="Sprite2D" parent="." unique_id=2112649743]
+position = Vector2(-42.5, 17.5)
+texture = ExtResource("1_nc87v")
+
+[node name="CursorSprite" type="Sprite2D" parent="." unique_id=1782413900]
+material = SubResource("ShaderMaterial_jpu5p")
+position = Vector2(-85, 29.5)
+texture = ExtResource("2_tdin3")
+region_rect = Rect2(0, 0, 5, 30)

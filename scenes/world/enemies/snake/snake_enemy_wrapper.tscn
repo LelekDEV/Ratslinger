@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://df6ql02lr7wrl"]
+
+[ext_resource type="Script" uid="uid://cnbjd6ypdnc2v" path="res://scripts/gameplay/entities/snake_enemy_wrapper.gd" id="1_v2psm"]
+
+[node name="SnakeEnemyWrapper" type="Node2D" unique_id=1228539077]
+script = ExtResource("1_v2psm")

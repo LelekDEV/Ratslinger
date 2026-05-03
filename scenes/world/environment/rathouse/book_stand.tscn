@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bvs0r5xaha0p5"]
+
+[ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/world/interaction/interaction_area.tscn" id="1_pci50"]
+[ext_resource type="Script" uid="uid://c0gid33crph2p" path="res://scripts/gameplay/environment/book_stand.gd" id="1_qaftc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pci50"]
+size = Vector2(29, 19)
+
+[node name="BookStand" type="Node2D" unique_id=1765377363]
+script = ExtResource("1_qaftc")
+
+[node name="InteractionArea" parent="." unique_id=169532335 instance=ExtResource("1_pci50")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=772488521]
+position = Vector2(-0.5, 15.5)
+shape = SubResource("RectangleShape2D_pci50")

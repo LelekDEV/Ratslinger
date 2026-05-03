@@ -1,0 +1,199 @@
+[gd_scene format=3 uid="uid://bvtiokw0hd2y1"]
+
+[ext_resource type="Script" uid="uid://dcaaflxnumfnk" path="res://scripts/gameplay/entities/enemy.gd" id="1_d0vrg"]
+[ext_resource type="Texture2D" uid="uid://bxep8csmawu82" path="res://graphics/fx/particles/poison_particle.png" id="2_64a2j"]
+[ext_resource type="Texture2D" uid="uid://2mdj62f7p8k2" path="res://graphics/characters/enemies/owl/base.png" id="4_d0vrg"]
+[ext_resource type="Material" uid="uid://dlas80bb87afk" path="res://data/materials/flash_shader_material.tres" id="4_inb6d"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/systems/weather/rain_surface.gd" id="6_cde3v"]
+[ext_resource type="PackedScene" uid="uid://cm32epdmwv6c5" path="res://scenes/fx/combat/attack_highlight.tscn" id="7_d0vrg"]
+[ext_resource type="PackedScene" uid="uid://dimjd58qns2ih" path="res://scenes/fx/combat/fire_fx.tscn" id="7_s84ig"]
+
+[sub_resource type="Curve" id="Curve_ow15s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.2078657, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0vrg"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(0, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64a2j"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(60, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nq628"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(120, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inb6d"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(180, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rl1vy"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(240, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cde3v"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(300, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s84ig"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(360, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50hdj"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(420, 0, 60, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elpym"]
+atlas = ExtResource("4_d0vrg")
+region = Rect2(480, 0, 60, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7xaro"]
+animations = [{
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_d0vrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64a2j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nq628")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inb6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rl1vy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cde3v")
+}, {
+"duration": 0.75,
+"texture": SubResource("AtlasTexture_s84ig")
+}, {
+"duration": 0.75,
+"texture": SubResource("AtlasTexture_50hdj")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_elpym")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_50hdj")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_elpym")
+}],
+"loop": false,
+"name": &"fly_down_and_up",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ra3w"]
+radius = 12.709785
+height = 25.41957
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
+radius = 13.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d0vrg"]
+radius = 24.0
+
+[sub_resource type="Curve2D" id="Curve2D_yri55"]
+
+[node name="OwlEnemy" type="CharacterBody2D" unique_id=1969713233 groups=["enemy"]]
+collision_mask = 4
+script = ExtResource("1_d0vrg")
+speed = 120.0
+max_health = 4.0
+id = 4
+ai = 3
+projectile_name = "fox"
+
+[node name="PoisonParticles" type="CPUParticles2D" parent="." unique_id=278218275]
+z_index = 1
+position = Vector2(0, 6)
+emitting = false
+amount = 4
+texture = ExtResource("2_64a2j")
+lifetime = 0.65
+emission_shape = 3
+emission_rect_extents = Vector2(16, 8)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 60.0
+angular_velocity_min = -360.0
+angular_velocity_max = -360.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_ow15s")
+
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1976901040 node_paths=PackedStringArray("spawn_node")]
+material = ExtResource("4_inb6d")
+sprite_frames = SubResource("SpriteFrames_7xaro")
+animation = &"fly_down_and_up"
+autoplay = "fly_down_and_up"
+frame = 8
+frame_progress = 1.0
+script = ExtResource("6_cde3v")
+spawn_node = NodePath("../LocalFX")
+
+[node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("7_s84ig")]
+visible = false
+
+[node name="LocalFX" type="Node2D" parent="." unique_id=2028712184]
+
+[node name="CollisionShapeBody" type="CollisionShape2D" parent="." unique_id=1502973983]
+position = Vector2(0, 6)
+scale = Vector2(0.770188, 0.865475)
+shape = SubResource("CapsuleShape2D_4ra3w")
+disabled = true
+
+[node name="HeadshotArea" type="Area2D" parent="." unique_id=1149957343 groups=["headshot_area"]]
+
+[node name="CollisionShapeHead" type="CollisionShape2D" parent="HeadshotArea" unique_id=192403888]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_5uy6h")
+disabled = true
+
+[node name="LandArea" type="Area2D" parent="." unique_id=35801551]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LandArea" unique_id=1094095206]
+shape = SubResource("CircleShape2D_d0vrg")
+
+[node name="FlightPath" type="Path2D" parent="." unique_id=1279494362]
+curve = SubResource("Curve2D_yri55")
+
+[node name="FlightFollow" type="PathFollow2D" parent="FlightPath" unique_id=258791193]
+rotation = 3.1415927
+loop = false
+
+[node name="AttackHighlight" parent="FlightPath/FlightFollow" unique_id=484819452 instance=ExtResource("7_d0vrg")]
+alpha = 0.0
+mode = 2
+
+[node name="FlightTimer" type="Timer" parent="." unique_id=1589664597]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="ShootNotionTimer" type="Timer" parent="." unique_id=1214619459]
+wait_time = 0.5
+one_shot = true
+
+[node name="ShootCooldown" type="Timer" parent="." unique_id=1183267674]
+wait_time = 1.5
+one_shot = true
+
+[node name="PoisonTick" type="Timer" parent="." unique_id=458484820]
+wait_time = 0.75
+one_shot = true
+
+[node name="FireTick" type="Timer" parent="." unique_id=1372577939]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="ShootNotionTimer" to="." method="_on_shoot_notion_timer_timeout"]
+[connection signal="timeout" from="PoisonTick" to="." method="_on_poison_tick_timeout"]
+[connection signal="timeout" from="FireTick" to="." method="_on_fire_tick_timeout"]

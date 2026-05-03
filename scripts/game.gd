@@ -1,12 +1,12 @@
 extends Node2D
 class_name Game
 
-@onready var FoxEnemy: PackedScene = preload("res://scenes/enemies/fox_enemy.tscn")
-@onready var BeaverEnemy: PackedScene = preload("res://scenes/enemies/beaver_enemy.tscn")
-@onready var SnakeEnemy: PackedScene = preload("res://scenes/enemies/snake_enemy_wrapper.tscn")
-@onready var OwlEnemy: PackedScene = preload("res://scenes/enemies/owl_enemy.tscn")
+@onready var FoxEnemy: PackedScene = preload("res://scenes/world/enemies/common/fox_enemy.tscn")
+@onready var BeaverEnemy: PackedScene = preload("res://scenes/world/enemies/common/beaver_enemy.tscn")
+@onready var SnakeEnemy: PackedScene = preload("res://scenes/world/enemies/snake/snake_enemy_wrapper.tscn")
+@onready var OwlEnemy: PackedScene = preload("res://scenes/world/enemies/common/owl_enemy.tscn")
 
-@onready var _SnakeBoss: PackedScene = preload("res://scenes/enemies/boss/snake_boss.tscn")
+@onready var _SnakeBoss: PackedScene = preload("res://scenes/world/enemies/boss/snake_boss.tscn")
 
 @onready var ui: UI = $UI
 
@@ -59,6 +59,10 @@ func _ready() -> void:
 		title_sand_sprite.global_position.x = int(player.global_position.x)
 		
 		await get_tree().process_frame
+		
+		Global.coins = Global.death_coins
+		ui.update_coin_count()
+		
 		if Global.waves_cleared == Global.death_wave and Settings.on_death_action == 1:
 			start_wave()
 		
@@ -72,7 +76,7 @@ func _ready() -> void:
 	title_sand_sprite.global_position.x = int(player.global_position.x)
 	
 	# boss testing...
-	#Global.waves_cleared = 14
+	Global.waves_cleared = 15
 
 func setup_signals() -> void:
 	SignalBus.player_shoot.connect(camera.shake.bind(0.2, 2.5, 0.8))
@@ -203,6 +207,8 @@ func start_wave() -> void:
 	gate.get_node("CollisionShape2D").set_deferred("disabled", false)
 	
 	ui.animation.play("wave_start")
+	
+	Global.death_coins = Global.coins
 	
 	if Global.waves_cleared % 15 == 14 and Global.waves_cleared >= 14:
 		if Global.waves_cleared == Global.death_wave and Settings.on_death_action <= 1:

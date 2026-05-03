@@ -1,0 +1,359 @@
+[gd_scene format=3 uid="uid://t1m2fvy7trg6"]
+
+[ext_resource type="Script" uid="uid://cu0rr2pibyea" path="res://scripts/ui/root/bestiary_layer.gd" id="1_8u4y0"]
+[ext_resource type="Texture2D" uid="uid://banoe477svldk" path="res://graphics/bestiary/book_stand.png" id="1_smylb"]
+[ext_resource type="Texture2D" uid="uid://bb0r860nunlrq" path="res://graphics/bestiary/Book.png" id="3_j3mqr"]
+[ext_resource type="Script" uid="uid://cvrqj7nsebxg6" path="res://scripts/ui/bestiary_arrows.gd" id="4_j3mqr"]
+[ext_resource type="Texture2D" uid="uid://daqhddbsa0mv4" path="res://graphics/bestiary/exit.png" id="5_j3mqr"]
+[ext_resource type="FontFile" uid="uid://b3vd4byjlxrqy" path="res://fonts/teeny_tiny_pixls.ttf" id="6_2cel7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mq4o6"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(0, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccu45"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(124, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n57n3"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(248, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyl77"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(372, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aig2i"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(496, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eapyg"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(620, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfiq4"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(744, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_viudg"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(868, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0etnm"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(992, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3mqr"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(1116, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cel7"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(1240, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0fk6"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(1364, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1xbv"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(1488, 0, 124, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tv8b"]
+atlas = ExtResource("3_j3mqr")
+region = Rect2(992, 0, 124, 106)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aig2i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mq4o6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccu45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n57n3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyl77")
+}],
+"loop": false,
+"name": &"FirstPage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aig2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eapyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfiq4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_viudg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0etnm")
+}],
+"loop": false,
+"name": &"LastPage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3mqr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2cel7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0fk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1xbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tv8b")
+}],
+"loop": false,
+"name": &"TurnBack",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j3mqr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2cel7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cel7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j3mqr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mq4o6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oyl77"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aig2i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eapyg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfiq4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_viudg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0etnm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjo4i"]
+atlas = ExtResource("5_j3mqr")
+region = Rect2(26, 0, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g005f"]
+atlas = ExtResource("5_j3mqr")
+region = Rect2(0, 0, 26, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lqwxb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjo4i")
+}],
+"loop": true,
+"name": &"ArrowButton",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g005f")
+}],
+"loop": true,
+"name": &"ExitButton",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u0fk6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g005f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jjo4i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vxfeb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3jqp3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6v5mc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q6r20"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wideg"]
+
+[sub_resource type="Theme" id="Theme_mq4o6"]
+default_font = ExtResource("6_2cel7")
+
+[node name="BestiaryLayer" type="CanvasLayer" unique_id=229625304 node_paths=PackedStringArray("book_animation")]
+process_mode = 3
+script = ExtResource("1_8u4y0")
+book_animation = NodePath("Control/BookRoot/BookAnim")
+
+[node name="Control" type="Control" parent="." unique_id=1689960469]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=917078560]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="BookRoot" type="Node2D" parent="Control" unique_id=719676519]
+position = Vector2(250, 108)
+
+[node name="RightPage" type="Sprite2D" parent="Control/BookRoot" unique_id=833871090]
+z_index = 1
+position = Vector2(424, 130)
+
+[node name="BookStand" type="Sprite2D" parent="Control/BookRoot" unique_id=1805330257]
+scale = Vector2(3, 3)
+texture = ExtResource("1_smylb")
+centered = false
+
+[node name="BookAnim" type="AnimatedSprite2D" parent="Control/BookRoot" unique_id=828123394 groups=["book_animation"]]
+position = Vector2(110, 10)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_aig2i")
+animation = &"FirstPage"
+centered = false
+
+[node name="LeftPage" type="Sprite2D" parent="Control/BookRoot" unique_id=335608684]
+position = Vector2(170, 130)
+
+[node name="Arrows" type="Node2D" parent="Control" unique_id=682568544]
+position = Vector2(470, 560)
+script = ExtResource("4_j3mqr")
+
+[node name="Button1" type="Button" parent="Control/Arrows" unique_id=1613623432 groups=["left_arrow"]]
+self_modulate = Color(1, 1, 1, 0)
+offset_right = 26.0
+offset_bottom = 26.0
+scale = Vector2(2, 2)
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_j3mqr")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2cel7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2cel7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_j3mqr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_mq4o6")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oyl77")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_aig2i")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_eapyg")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_bfiq4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_viudg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0etnm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/Arrows/Button1" unique_id=1253793193]
+sprite_frames = SubResource("SpriteFrames_lqwxb")
+animation = &"ArrowButton"
+centered = false
+flip_h = true
+
+[node name="Button2" type="Button" parent="Control/Arrows" unique_id=2099545751 groups=["right_arrow"]]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_right = 126.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_j3mqr")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_u0fk6")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_g005f")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_jjo4i")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_vxfeb")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_3jqp3")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6v5mc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_q6r20")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wideg")
+icon_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/Arrows/Button2" unique_id=174180300]
+sprite_frames = SubResource("SpriteFrames_lqwxb")
+animation = &"ArrowButton"
+centered = false
+
+[node name="Button" type="Button" parent="Control" unique_id=2096678074]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 36.0
+offset_bottom = 36.0
+scale = Vector2(2, 2)
+focus_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/Button" unique_id=1191745917]
+sprite_frames = SubResource("SpriteFrames_lqwxb")
+animation = &"ExitButton"
+centered = false
+
+[node name="LeftLabel" type="Node2D" parent="Control" unique_id=1010128548]
+position = Vector2(394, 270)
+
+[node name="DescLabel" type="Label" parent="Control/LeftLabel" unique_id=894206524 groups=["left_page_label"]]
+offset_top = 35.0
+offset_right = 146.0
+offset_bottom = 125.0
+theme = SubResource("Theme_mq4o6")
+theme_override_colors/font_color = Color(0.23921569, 0.047058824, 0.09803922, 1)
+text = "Description"
+autowrap_mode = 1
+
+[node name="NameLabel" type="Label" parent="Control/LeftLabel" unique_id=1628959298 groups=["left_page_label"]]
+offset_right = 100.0
+offset_bottom = 35.0
+theme = SubResource("Theme_mq4o6")
+theme_override_colors/font_color = Color(0.23921569, 0.047058824, 0.09803922, 1)
+text = "FOX"
+
+[node name="RightLabel" type="Node2D" parent="Control" unique_id=1473488808]
+position = Vector2(560, 270)
+
+[node name="DescLabel" type="Label" parent="Control/RightLabel" unique_id=563511798 groups=["left_page_label"]]
+offset_left = -16.0
+offset_top = 35.0
+offset_right = 142.0
+offset_bottom = 125.0
+theme = SubResource("Theme_mq4o6")
+theme_override_colors/font_color = Color(0.23921569, 0.047058824, 0.09803922, 1)
+text = "Description"
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="NameLabel" type="Label" parent="Control/RightLabel" unique_id=1131490551 groups=["left_page_label"]]
+offset_right = 142.0
+offset_bottom = 35.0
+theme = SubResource("Theme_mq4o6")
+theme_override_colors/font_color = Color(0.23921569, 0.047058824, 0.09803922, 1)
+text = "FOX"
+horizontal_alignment = 2
+
+[connection signal="animation_finished" from="Control/BookRoot/BookAnim" to="." method="_on_book_animation_finished"]
+[connection signal="pressed" from="Control/Arrows/Button1" to="Control/Arrows" method="_on_button_left_pressed"]
+[connection signal="pressed" from="Control/Arrows/Button2" to="Control/Arrows" method="_on_button_right_pressed"]
+[connection signal="pressed" from="Control/Button" to="." method="_on_exit_button_pressed"]

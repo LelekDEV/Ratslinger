@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://dd62w7380cncx"]
+
+[ext_resource type="Script" uid="uid://ben8b5g3o6gf6" path="res://scripts/gameplay/environment/building.gd" id="1_ejq8p"]
+[ext_resource type="PackedScene" uid="uid://oow8c78pp03y" path="res://scenes/world/interaction/interaction_area.tscn" id="2_uvy8r"]
+[ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="3_ejq8p"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/systems/weather/rain_surface.gd" id="3_rla3o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lm2ef"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(75, 0, 75, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rla3o"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(0, 0, 75, 75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5uvq"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(150, 0, 75, 88)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uvy8r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lm2ef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rla3o")
+}],
+"loop": true,
+"name": &"regular",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5uvq")
+}],
+"loop": true,
+"name": &"ruined",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvy8r"]
+size = Vector2(72, 54.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejq8p"]
+size = Vector2(36, 16)
+
+[node name="Building" type="StaticBody2D" unique_id=1582154463 groups=["building"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_ejq8p")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=271440179 node_paths=PackedStringArray("spawn_node")]
+sprite_frames = SubResource("SpriteFrames_uvy8r")
+animation = &"regular"
+script = ExtResource("3_rla3o")
+spawn_node = NodePath("../LocalFX")
+
+[node name="LocalFX" type="Node2D" parent="." unique_id=851241081]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=21281098]
+position = Vector2(0, -0.75)
+shape = SubResource("RectangleShape2D_uvy8r")
+
+[node name="InteractionArea" parent="." unique_id=1812858229 instance=ExtResource("2_uvy8r")]
+position = Vector2(0, 27)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1636268621]
+position = Vector2(0, 8.5)
+shape = SubResource("RectangleShape2D_ejq8p")
+disabled = true

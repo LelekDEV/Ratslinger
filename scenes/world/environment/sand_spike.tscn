@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://b6kg2n8b880ar"]
+
+[ext_resource type="Script" uid="uid://xstg5pmw7a31" path="res://scripts/gameplay/environment/sand_spike.gd" id="1_ura7k"]
+[ext_resource type="Texture2D" uid="uid://duvja5y0vtwjj" path="res://graphics/environment/sand_spike.png" id="1_y20s5"]
+[ext_resource type="Script" uid="uid://cq1yth4joycrx" path="res://scripts/systems/weather/rain_surface_sprite.gd" id="3_87alq"]
+[ext_resource type="Shader" uid="uid://chg0yku3g84vs" path="res://shaders/sand_particles.gdshader" id="3_lv1pj"]
+
+[sub_resource type="Gradient" id="Gradient_lv1pj"]
+colors = PackedColorArray(0.8901961, 0.69411767, 0.38431373, 1, 0.89, 0.69553494, 0.3827, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_87alq"]
+gradient = SubResource("Gradient_lv1pj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_87alq"]
+shader = ExtResource("3_lv1pj")
+shader_parameter/direction = Vector3(0, -1, 0)
+shader_parameter/spread = 90.0
+shader_parameter/flatness = 0.0
+shader_parameter/inherit_emitter_velocity_ratio = 0.0
+shader_parameter/initial_linear_velocity_min = 50.0
+shader_parameter/initial_linear_velocity_max = 50.0
+shader_parameter/directional_velocity_min = 1.0
+shader_parameter/directional_velocity_max = 1.0
+shader_parameter/angular_velocity_min = 0.0
+shader_parameter/angular_velocity_max = 0.0
+shader_parameter/orbit_velocity_min = 0.0
+shader_parameter/orbit_velocity_max = 0.0
+shader_parameter/radial_velocity_min = 0.0
+shader_parameter/radial_velocity_max = 0.0
+shader_parameter/linear_accel_min = 0.0
+shader_parameter/linear_accel_max = 0.0
+shader_parameter/radial_accel_min = 0.0
+shader_parameter/radial_accel_max = 0.0
+shader_parameter/tangent_accel_min = 0.0
+shader_parameter/tangent_accel_max = 0.0
+shader_parameter/damping_min = 0.0
+shader_parameter/damping_max = 300.0
+shader_parameter/initial_angle_min = 0.0
+shader_parameter/initial_angle_max = 0.0
+shader_parameter/scale_min = 1.0
+shader_parameter/scale_max = 1.0
+shader_parameter/hue_variation_min = 0.0
+shader_parameter/hue_variation_max = 0.0
+shader_parameter/anim_speed_min = 0.0
+shader_parameter/anim_speed_max = 0.0
+shader_parameter/anim_offset_min = 0.0
+shader_parameter/anim_offset_max = 0.0
+shader_parameter/lifetime_randomness = 0.0
+shader_parameter/emission_shape_offset = Vector3(0, 0, 0)
+shader_parameter/emission_shape_scale = Vector3(1, 1, 1)
+shader_parameter/velocity_pivot = Vector3(0, 0, 0)
+shader_parameter/color_value = Color(1, 1, 1, 1)
+shader_parameter/gravity = Vector3(0, 500, 0)
+shader_parameter/color_ramp = SubResource("GradientTexture1D_87alq")
+shader_parameter/ground_level = 5.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lv1pj"]
+size = Vector2(6, 15)
+
+[node name="SandSpike" type="Node2D" unique_id=1149604259]
+script = ExtResource("1_ura7k")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=41680573]
+clip_children = 1
+offset_left = -5.0
+offset_top = -10.0
+offset_right = 5.0
+offset_bottom = 10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ColorRect" unique_id=3021225 node_paths=PackedStringArray("spawn_node")]
+position = Vector2(5, 10)
+texture = ExtResource("1_y20s5")
+offset = Vector2(0, 20)
+hframes = 3
+script = ExtResource("3_87alq")
+spawn_node = NodePath(".")
+
+[node name="CPUParticles2D" type="GPUParticles2D" parent="." unique_id=1636663043]
+position = Vector2(0, 8)
+emitting = false
+fixed_fps = 0
+draw_order = 0
+process_material = SubResource("ShaderMaterial_87alq")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1002819020]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=929680347]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_lv1pj")
+disabled = true

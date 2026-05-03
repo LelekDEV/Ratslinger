@@ -3,6 +3,7 @@ extends Node
 var game: Game
 
 var coins: int = 10
+var death_coins: int
 
 var force_input: bool = false
 var block_input: bool = true
@@ -39,7 +40,9 @@ var scale_level: int = 0
 var min_scale_level: int = 0
 
 func _ready() -> void:
+	SignalBus.game_save_queued.connect(func(): if game.is_wave_active or game.is_boss_active: coins = death_coins)
 	get_viewport().size_changed.connect(update_min_scale_level)
+	
 	game = get_tree().get_first_node_in_group("game")
 
 func _physics_process(delta: float) -> void:

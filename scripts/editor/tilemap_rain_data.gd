@@ -4,7 +4,7 @@ extends EditorScript
 # EDITOR SCRIPT: used to calculate splash points on tileset sprites
 # ctrl + shift + x to update
 func _run() -> void:
-	var tileset: TileSet = load("res://data/environment_tileset.tres")
+	var tileset: TileSet = load("res://data/tilesets/environment_tileset.tres")
 	
 	for i in range(tileset.get_source_count()):
 		var source: TileSetSource = tileset.get_source(i)

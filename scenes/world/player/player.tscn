@@ -1,0 +1,199 @@
+[gd_scene format=3 uid="uid://gyh7j0jqrav6"]
+
+[ext_resource type="Texture2D" uid="uid://2dk8ecpx87lv" path="res://graphics/characters/player/base.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://dxs0qhqyyc1af" path="res://scripts/gameplay/entities/player.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://wl55v8ki4emm" path="res://graphics/characters/player/gun.png" id="2_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://g408c8ffeg8k" path="res://graphics/characters/player/legs.png" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/systems/weather/rain_surface.gd" id="4_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://ck3rrnjmf4vj8" path="res://graphics/characters/player/squeeze.png" id="4_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://cb4w1r51ouhpi" path="res://scenes/world/interaction/squeeze_lock.tscn" id="7_fjrip"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(37, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(74, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
+atlas = ExtResource("4_tuyoq")
+region = Rect2(0, 0, 35, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
+atlas = ExtResource("4_tuyoq")
+region = Rect2(35, 0, 35, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1ej7"]
+atlas = ExtResource("4_tuyoq")
+region = Rect2(70, 0, 35, 35)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qlg0r"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_g2els")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v2ag")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jej6c")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_f1ej7")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jej6c")
+}],
+"loop": true,
+"name": &"squeeze",
+"speed": 6.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(0, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(37, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(74, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(111, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(222, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(185, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(148, 0, 37, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tuyoq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlg0r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
+size = Vector2(25, 21)
+
+[node name="Player" type="CharacterBody2D" unique_id=1248628092]
+collision_mask = 2
+script = ExtResource("1_g2els")
+
+[node name="GunSprite" type="Sprite2D" parent="." unique_id=925967007]
+position = Vector2(0.5, 1.5)
+texture = ExtResource("2_qhqgy")
+offset = Vector2(11.5, 0)
+
+[node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1353984724 node_paths=PackedStringArray("spawn_node")]
+position = Vector2(0.5, -2)
+sprite_frames = SubResource("SpriteFrames_qlg0r")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("4_qlg0r")
+use_meta = true
+spawn_node = NodePath("../LocalFX")
+
+[node name="LegsSprite" type="AnimatedSprite2D" parent="." unique_id=648326409]
+position = Vector2(0.5, -2)
+sprite_frames = SubResource("SpriteFrames_tuyoq")
+animation = &"walk"
+
+[node name="LocalFX" type="Node2D" parent="." unique_id=1812678735]
+
+[node name="SqueezeLock" parent="." unique_id=1317408974 instance=ExtResource("7_fjrip")]
+position = Vector2(0, 25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1864672048]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_dqkch")
+
+[node name="ShootCooldown" type="Timer" parent="." unique_id=1869936146]
+wait_time = 0.5
+one_shot = true
+
+[node name="HitCooldown" type="Timer" parent="." unique_id=1368607751]
+wait_time = 0.25
+one_shot = true
+
+[node name="RegenCooldown" type="Timer" parent="." unique_id=394046335]
+one_shot = true
+autostart = true
+
+[node name="ReloadTimer" type="Timer" parent="." unique_id=597588891]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="HitCooldown" to="." method="_on_hit_cooldown_timeout"]
+[connection signal="timeout" from="RegenCooldown" to="." method="_on_regen_cooldown_timeout"]
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
