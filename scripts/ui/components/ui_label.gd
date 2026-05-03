@@ -4,9 +4,6 @@ extends Label
 
 var progress: float = -1
 
-"""func _draw() -> void:
-	draw_rect(Rect2(get_rect().position + rect_offset, get_rect().size), Color.RED, false, 2)"""
-
 func _physics_process(delta: float) -> void:
 	if Global.game.is_boss_active:
 		visible_characters = lerp(len(text), 0, progress)

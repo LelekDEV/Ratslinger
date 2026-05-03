@@ -13,19 +13,6 @@ var spawn_value: float = 0
 var spawn_treshold: float = 0.1
 @export var spawn_node: Node
 
-func _draw() -> void:
-	"""for pos in points.top:
-		if flip_h:
-			draw_circle((pos - floor(surface_size / 2)) * Vector2(-1, 1), 0.5, Color.RED)
-		else:
-			draw_circle(pos - floor(surface_size / 2), 0.5, Color.RED)
-	
-	for pos in points.side:
-		if flip_h:
-			draw_circle((pos - floor(surface_size / 2)) * Vector2(-1, 1), 0.5, Color.DARK_TURQUOISE)
-		else:
-			draw_circle(pos - floor(surface_size / 2), 0.5, Color.DARK_TURQUOISE)"""
-
 func _ready() -> void:
 	update_data()
 

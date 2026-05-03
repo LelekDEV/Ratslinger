@@ -18,8 +18,6 @@ func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
 	
 	button_container.get_child(0).connect("pressed", resume)
-	#usunto
-	#button_container.get_child(1).connect("pressed", settings_dialog.popup_centered)
 	button_container.get_child(1).connect("pressed", settings_layer.enter)
 	button_container.get_child(2).connect("pressed", func():
 		get_tree().paused = false

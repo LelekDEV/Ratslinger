@@ -58,9 +58,6 @@ func _ready() -> void:
 	if Global.is_title_on:
 		Global.block_movement = true
 		Global.block_input = true
-	
-	#await get_tree().create_timer(2).timeout
-	#enter_squeeze()
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()

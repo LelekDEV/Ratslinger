@@ -104,18 +104,6 @@ func ready_load() -> void:
 	update_coin_count()
 	update_enemy_count()
 
-"""func _physics_process(_delta: float) -> void:
-	location_popup.global_position = get_viewport().get_visible_rect().size / 2 + Vector2(0, popup_value * -100 - 80)
-	location_popup.self_modulate.a = sin(popup_value * PI)
-	
-	accuracy_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85
-	bullet_bar.global_position.x = get_viewport().get_visible_rect().size.x - 85 * scale_float - 86
-	
-	shooting_tutorial.global_position = get_viewport().get_visible_rect().size - Vector2(100, 100)
-	
-	margin_container.set_deferred("size", get_viewport().get_visible_rect().size / margin_container.scale)
-	margin_container.set_deferred("position", Vector2.ZERO)"""
-
 func update_scale() -> void:
 	scale_float = (Global.scale_level + 4) * scale_factor
 	var scale_vector: Vector2 = Vector2i.ONE * scale_float

@@ -9,13 +9,6 @@ var surface_size: Vector2
 var spawn_value: float = 0
 var spawn_treshold: float = 0.1
 
-func _draw() -> void:
-	"""for pos in points.top:
-		draw_circle(pos - floor(surface_size / 2), 0.5, Color.RED)
-	
-	for pos in points.side:
-		draw_circle(pos - floor(surface_size / 2), 0.5, Color.DARK_TURQUOISE)"""
-
 func _physics_process(delta: float) -> void:
 	spawn_value += delta * Global.get_rain_change_ratio()
 	

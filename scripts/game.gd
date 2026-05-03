@@ -87,7 +87,6 @@ func setup_signals() -> void:
 	SignalBus.boss_death.connect(on_boss_death)
 	
 	SignalBus.player_location_change.connect(ui.on_player_location_change)
-	SignalBus.player_location_change.connect(on_player_location_change)
 	
 	SignalBus.player_hit.connect(ui.animation.play.bind("player_hit"))
 	SignalBus.player_hit.connect(camera.shake)
@@ -105,26 +104,6 @@ func _physics_process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("exit_boss_card"):
 		exit_boss_card.emit()
-	
-	"""if Input.is_action_just_pressed("spawn_enemy_1"):
-		var enemy: Enemy = FoxEnemy.instantiate()
-		enemy.death.connect(update_enemies)
-		enemies.add_child(enemy)
-	
-	if Input.is_action_just_pressed("spawn_enemy_2"):
-		var enemy: Enemy = BeaverEnemy.instantiate()
-		enemy.death.connect(update_enemies)
-		enemies.add_child(enemy)
-	
-	if Input.is_action_just_pressed("spawn_enemy_3"):
-		var enemy: SnakeEnemyWrapper = SnakeEnemy.instantiate()
-		enemy.death.connect(update_enemies)
-		enemies.add_child(enemy)
-	
-	if Input.is_action_just_pressed("spawn_enemy_4"):
-		var enemy: Enemy = OwlEnemy.instantiate()
-		enemy.death.connect(update_enemies)
-		enemies.add_child(enemy)"""
 
 func boss_card() -> void:
 	if Settings.boss_card == 0 and not (Global.waves_cleared == Global.death_wave and Settings.on_death_action == 1):
@@ -364,14 +343,6 @@ func on_boss_death(_from_projectile: Projectile) -> void:
 	for spike: SandSpike in sand_spike_spawner.get_children():
 		spike.collision.set_deferred("disabled", true)
 		spike.reset()
-
-func on_player_location_change(_location: Player.Locations) -> void:
-	"""if location == Player.Locations.ARENA:
-		enemy_spawn_timer.paused = false
-		enemies.process_mode = Node.PROCESS_MODE_INHERIT
-	else:
-		enemy_spawn_timer.paused = true
-		enemies.process_mode = Node.PROCESS_MODE_DISABLED"""
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
