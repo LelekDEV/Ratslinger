@@ -84,7 +84,7 @@ func load_slot() -> void:
 	if current_slot == 1:
 		current_slot -= 1
 		
-		await get_tree().create_timer(0.2).timeout
+		await get_tree().create_timer(0.2, false).timeout
 		container.get_child(0).get_node("Sprite2D").frame_coords.y = 0
 	else:
 		current_slot -= 1

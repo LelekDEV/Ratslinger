@@ -94,7 +94,7 @@ func animate(from_projectile: Node2D, from_enemy: Enemy) -> void:
 	camera.shake_intensity = 7.5
 	camera.shake()
 	
-	await get_tree().create_timer(0.75).timeout
+	await get_tree().create_timer(0.75, true).timeout
 	
 	line_tween = create_tween()
 	
@@ -103,7 +103,7 @@ func animate(from_projectile: Node2D, from_enemy: Enemy) -> void:
 	
 	line_tween.tween_property(self, "line_end_pos", line_start_pos + line_direction * 200, 2)
 	
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1.5, true).timeout
 	
 	is_anim_on = false
 

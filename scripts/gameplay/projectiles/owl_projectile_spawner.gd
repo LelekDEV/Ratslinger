@@ -49,7 +49,7 @@ func _physics_process(_delta: float) -> void:
 	sprite.material.set_shader_parameter("progress_fade", shader_value * 10)
 
 func spin_start() -> void:
-	await get_tree().create_timer(0.6).timeout
+	await get_tree().create_timer(0.6, false).timeout
 	
 	spin_tween = create_tween() \
 		.set_trans(Tween.TRANS_QUAD) \

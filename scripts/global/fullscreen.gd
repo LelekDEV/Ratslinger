@@ -17,5 +17,5 @@ func _process(_delta: float) -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		
 		transition_rect.visible = true
-		await get_tree().process_frame
+		await get_tree().physics_frame
 		transition_rect.visible = false

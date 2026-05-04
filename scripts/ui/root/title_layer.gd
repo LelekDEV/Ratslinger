@@ -82,9 +82,9 @@ func _ready() -> void:
 		
 		flash_tween.tween_method(func(value: float): sprite.material.set_shader_parameter("value", value), 1.0, 0.0, 0.5)
 		
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(0.25, true).timeout
 	
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.5, true).timeout
 	
 	intro_tween = create_tween() \
 		.set_ease(Tween.EASE_IN_OUT) \
@@ -141,13 +141,13 @@ func exit() -> void:
 	
 	sprites_scale_tween.tween_property(self, "sprites_scale_value", 1, 1)
 	
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(2, true).timeout
 	
 	Global.is_title_on = false
 	SignalBus.title_exited.emit()
 
 func anim_gun() -> void:
-	await get_tree().create_timer(0.35).timeout
+	await get_tree().create_timer(0.35, true).timeout
 	
 	var gun_tween: Tween = create_tween() \
 		.set_ease(Tween.EASE_OUT) \
@@ -157,7 +157,7 @@ func anim_gun() -> void:
 	gun_tween.tween_property(gun_sprite, "position:y", 56, 1.5)
 	gun_tween.tween_property(gun_sprite, "rotation", 0, 1.5)
 	
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(1, true).timeout
 	
 	var shine_tween: Tween = create_tween() \
 		.set_ease(Tween.EASE_IN_OUT) \

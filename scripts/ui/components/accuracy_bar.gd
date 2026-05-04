@@ -41,21 +41,21 @@ func get_type_from_value(value: float) -> int:
 func accuracy_signal() -> void:
 	const EARLY_OFFSET: float = 0.08
 	
-	await get_tree().create_timer(accuracy_tresholds[1] * progress_time - EARLY_OFFSET).timeout
+	await get_tree().create_timer(accuracy_tresholds[1] * progress_time - EARLY_OFFSET, false).timeout
 	
 	if get_type_from_value(progress_value + EARLY_OFFSET * progress_time) != 2:
 		return
 	
 	SignalBus.accuracy_perfect_early.emit()
 	
-	await get_tree().create_timer(EARLY_OFFSET).timeout
+	await get_tree().create_timer(EARLY_OFFSET, false).timeout
 	SignalBus.accuracy_perfect_entered.emit()
 
 func start(_miss: bool = false) -> void:
 	if started: return
 	started = true
 	
-	await get_tree().process_frame
+	await get_tree().physics_frame
 	started = false
 	
 	if progress_tween:

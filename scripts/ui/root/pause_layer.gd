@@ -45,7 +45,8 @@ func _physics_process(_delta: float) -> void:
 		not Global.is_title_on and \
 		not Global.game.is_cutscene_on and \
 		not settings_layer.visible and \
-		not tutorial_handler.is_shooting_tutorial_queued:
+		not tutorial_handler.is_shooting_tutorial_queued and \
+		not Global.is_dialogue_on:
 		
 		if visible:
 			resume()

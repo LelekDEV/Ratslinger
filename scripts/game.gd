@@ -58,7 +58,7 @@ func _ready() -> void:
 		
 		title_sand_sprite.global_position.x = int(player.global_position.x)
 		
-		await get_tree().process_frame
+		await get_tree().physics_frame
 		
 		Global.coins = Global.death_coins
 		ui.update_coin_count()
@@ -244,7 +244,7 @@ func start_wave() -> void:
 		enter_tween.tween_property(tutorial_label, "visible_ratio", 1, 1)
 		
 		await SignalBus.player_shoot
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.5, false).timeout
 		
 		var exit_tween: Tween = create_tween() \
 			.set_ease(Tween.EASE_OUT_IN) \

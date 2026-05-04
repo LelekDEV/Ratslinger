@@ -4,7 +4,7 @@ extends Node
 
 func play_sfx(sfx: AudioStream, volume: int = 0, pitch: float = 1, delay: float = 0) -> void:
 	if delay > 0:
-		await get_tree().create_timer(delay).timeout
+		await get_tree().create_timer(delay, true).timeout
 	
 	var audio = AudioStreamPlayer.new()
 	

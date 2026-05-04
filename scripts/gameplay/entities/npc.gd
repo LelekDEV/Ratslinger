@@ -113,4 +113,4 @@ func mission_reward(signal_data: Dictionary) -> void:
 		
 		coins.add_child(coin)
 		
-		await get_tree().create_timer(reward_coins_curve.sample((i + 1) / 30.0) * 0.5).timeout
+		await get_tree().create_timer(reward_coins_curve.sample((i + 1) / 30.0) * 0.5, false).timeout

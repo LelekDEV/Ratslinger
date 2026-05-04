@@ -30,6 +30,8 @@ var builder_value: int = 0
 var rain_value: float = -randi_range(0, 600)
 
 var is_title_on: bool = true
+var is_dialogue_on: bool = false
+
 var is_tutorial_passed: bool = false
 var is_introduction_passed: bool = false
 

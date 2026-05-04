@@ -58,7 +58,7 @@ func _ready() -> void:
 		animation.play("hide_ui")
 		toggle_combat_hud(false)
 		
-		await get_tree().process_frame
+		await get_tree().physics_frame
 		if not Global.is_introduction_passed:
 			get_node("../NPC/MayorNPC/InteractionArea").animation.play("exit")
 		
@@ -80,7 +80,7 @@ func _ready() -> void:
 		else:
 			animation.play("hide_ui")
 			
-			await get_tree().process_frame
+			await get_tree().physics_frame
 			get_node("../NPC/MayorNPC/InteractionArea").animation.play("exit")
 			
 			Dialogic.start("introduction")
@@ -129,6 +129,7 @@ func update_scale() -> void:
 	boss_healthbar.scale = scale_vector / 4
 
 func start_dialogue() -> void:
+	Global.is_dialogue_on = true
 	Global.block_movement = true
 	crosshair.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -139,6 +140,7 @@ func start_dialogue() -> void:
 	animation.play("show_dialogue_strips")
 
 func end_dialogue() -> void:
+	Global.is_dialogue_on = false
 	Global.block_movement = false
 	crosshair.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
@@ -164,7 +166,7 @@ func toggle_combat_hud(on: bool) -> void:
 		
 		slot.anim_tween.tween_property(slot, "position:y", (0 if on else -40) * scale_float, 0.5)
 		
-		await get_tree().create_timer(0.05).timeout
+		await get_tree().create_timer(0.05, false).timeout
 
 func update_coin_count() -> void:
 	coin_label.text = str(Global.coins)
@@ -245,5 +247,5 @@ func on_player_location_change(location: Player.Locations) -> void:
 		Global.block_input = true
 		
 		if location == Player.Locations.TOWN and Global.builder_value == 1:
-			await get_tree().create_timer(0.5).timeout
+			await get_tree().create_timer(0.5, false).timeout
 			Dialogic.start("building_repaired")

@@ -153,7 +153,7 @@ func _ready() -> void:
 	
 	# uncomment to test pre-spawned enemies properly
 	#process_mode = Node.PROCESS_MODE_DISABLED
-	#await get_tree().process_frame
+	#await get_tree().physics_frame
 	#process_mode = Node.PROCESS_MODE_INHERIT
 	
 	Global.all_enemies.append(self)
@@ -190,7 +190,7 @@ func handle_landing() -> void:
 			.set_ease(Tween.EASE_IN_OUT)
 		
 		land_tween.tween_callback(func():
-			await get_tree().create_timer(0.4).timeout
+			await get_tree().create_timer(0.4, false).timeout
 			
 			land_area.global_position = target_position
 			if player in land_area.get_overlapping_bodies():
