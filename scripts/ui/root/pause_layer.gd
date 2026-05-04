@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var shop_layer: CanvasLayer = get_tree().get_first_node_in_group("shop_layer")
 @onready var bestiary_layer: CanvasLayer = get_tree().get_first_node_in_group("bestiary_layer")
 @onready var settings_layer: CanvasLayer = get_tree().get_first_node_in_group("settings_layer")
+@onready var tutorial_handler: TutorialHandler = get_tree().get_first_node_in_group("tutorial_handler")
 
 @onready var paused_label: RichTextLabel = $PausedLabel
 @onready var action_label: Label = $ActionLabel
@@ -43,7 +44,8 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause") and \
 		not Global.is_title_on and \
 		not Global.game.is_cutscene_on and \
-		not settings_layer.visible:
+		not settings_layer.visible and \
+		not tutorial_handler.is_shooting_tutorial_queued:
 		
 		if visible:
 			resume()

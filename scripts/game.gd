@@ -76,11 +76,15 @@ func _ready() -> void:
 	title_sand_sprite.global_position.x = int(player.global_position.x)
 	
 	# boss testing...
-	Global.waves_cleared = 15
+	#Global.waves_cleared = 14
+	
+	# tutorial testing
+	#Global.is_tutorial_passed = false
 
 func setup_signals() -> void:
 	SignalBus.player_shoot.connect(camera.shake.bind(0.2, 2.5, 0.8))
 	SignalBus.player_shoot.connect(crosshair.on_player_shoot)
+	SignalBus.player_shoot.connect(tutorial_handler.display_shooting_tutorial)
 	
 	SignalBus.player_death.connect(death_anim_handler.on_player_death)
 	SignalBus.boss_death.connect(death_anim_handler.on_boss_death)
@@ -90,8 +94,6 @@ func setup_signals() -> void:
 	
 	SignalBus.player_hit.connect(ui.animation.play.bind("player_hit"))
 	SignalBus.player_hit.connect(camera.shake)
-	
-	SignalBus.accuracy_perfect_entered.connect(tutorial_handler.display_shooting_tutorial)
 
 func _physics_process(_delta: float) -> void:
 	if wave_start_interaction_area.interacting and \

@@ -1335,7 +1335,7 @@ death_shadow_rect = NodePath("../DeathShadowRect")
 ui = NodePath("../UI")
 weather_layer = NodePath("../Weather")
 
-[node name="TutorialHandler" type="Node" parent="." unique_id=1266567336 node_paths=PackedStringArray("tutorial_container")]
+[node name="TutorialHandler" type="Node" parent="." unique_id=1266567336 node_paths=PackedStringArray("tutorial_container") groups=["tutorial_handler"]]
 process_mode = 3
 script = ExtResource("37_m1gv1")
 tutorial_container = NodePath("../UI/TutorialContainer")
