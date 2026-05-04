@@ -1362,6 +1362,5 @@ wait_time = 8.0
 [node name="CutsceneAudio" type="AudioStreamPlayer" parent="." unique_id=802166022]
 stream = ExtResource("49_xovr5")
 volume_db = 2.0
-bus = &"SFX"
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
