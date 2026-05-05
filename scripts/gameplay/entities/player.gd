@@ -34,7 +34,7 @@ var is_squeezed: bool = false
 
 var speed: float = 75
 var acceleration: float = 0.05
-var recoil: float = 50
+var recoil_values: Array = [50.0, 120.0]
 
 var input: Vector2
 
@@ -74,16 +74,26 @@ func _physics_process(_delta: float) -> void:
 
 func switch_gun(new_gun: Guns) -> void:
 	gun = new_gun
+	
+	var frame: int = base_sprite.frame
+	var progress: float = base_sprite.frame_progress
+	
 	match gun:
 		Guns.REVOLVER:
-			pass
+			gun_sprite.play("revolver")
+			gun_sprite.z_index = 0
+			gun_sprite.offset.x = 11.5
+			
+			base_sprite.play("default")
 		
 		Guns.SHOTGUN:
-			gun_sprite.play("shotgun", 0)
+			gun_sprite.play("shotgun_shoot", 0)
 			gun_sprite.z_index = 1
 			gun_sprite.offset.x = 3.5
 			
 			base_sprite.play("handless")
+	
+	base_sprite.set_frame_and_progress(frame, progress)
 
 func reload_bullets(full: bool = false) -> void:
 	accuracy_bar.reload_bullets = false
@@ -93,6 +103,10 @@ func reload_bullets(full: bool = false) -> void:
 	bullet_bar.assign_specials(full)
 	
 	reload_timer.start()
+	
+	if gun == Guns.SHOTGUN:
+		if full: await get_tree().create_timer(0.35, false).timeout
+		gun_sprite.play("shotgun_reload")
 
 func spawn_projectile(direction: Vector2) -> bool:
 	var is_special: bool = false
@@ -154,6 +168,10 @@ func handle_locations() -> void:
 	last_location = location
 
 func handle_shooting() -> void:
+	if Input.is_action_just_pressed("switch_gun"):
+		@warning_ignore("int_as_enum_without_cast")
+		switch_gun((gun + 1) % Guns.size())
+	
 	if Input.is_action_just_pressed("shoot") and \
 		shoot_cooldown.is_stopped() and \
 		reload_timer.is_stopped() and \
@@ -170,6 +188,12 @@ func handle_shooting() -> void:
 		var direction: Vector2 = get_local_mouse_position().normalized()
 		var is_special: bool = spawn_projectile(direction)
 		
+		var recoil: float
+		
+		match gun:
+			Guns.REVOLVER: recoil = recoil_values[0]
+			Guns.SHOTGUN: recoil = recoil_values[1] / (int(accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 2) + 1)
+		
 		velocity -= direction * recoil
 		
 		if is_special:
@@ -180,7 +204,7 @@ func handle_shooting() -> void:
 		regen_cooldown.start(5)
 		
 		if gun == Guns.SHOTGUN:
-			gun_sprite.play("shotgun")
+			gun_sprite.play("shotgun_shoot")
 		
 		SignalBus.player_shoot.emit(false)
 		Global.force_input = false

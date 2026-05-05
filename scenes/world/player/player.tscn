@@ -14,6 +14,18 @@
 atlas = ExtResource("2_qhqgy")
 region = Rect2(0, 0, 12, 9)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmd7n"]
+atlas = ExtResource("3_hmd7n")
+region = Rect2(0, 11, 30, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0ph6"]
+atlas = ExtResource("3_hmd7n")
+region = Rect2(30, 11, 30, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgbfc"]
+atlas = ExtResource("3_hmd7n")
+region = Rect2(60, 11, 30, 11)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_jrspx"]
 atlas = ExtResource("3_hmd7n")
 region = Rect2(60, 0, 30, 11)
@@ -37,6 +49,26 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmd7n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0ph6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgbfc")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_k0ph6")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hmd7n")
+}],
+"loop": false,
+"name": &"shotgun_reload",
+"speed": 12.0
+}, {
+"frames": [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_jrspx")
 }, {
@@ -47,7 +79,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_k1yqu")
 }],
 "loop": false,
-"name": &"shotgun",
+"name": &"shotgun_shoot",
 "speed": 12.0
 }]
 
@@ -225,8 +257,8 @@ script = ExtResource("1_g2els")
 [node name="GunSprite" type="AnimatedSprite2D" parent="." unique_id=499867434]
 position = Vector2(0.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_ylip5")
-animation = &"shotgun"
-frame = 2
+animation = &"shotgun_reload"
+frame = 4
 frame_progress = 1.0
 offset = Vector2(11.5, 0)
 

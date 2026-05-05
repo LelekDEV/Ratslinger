@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://bm72rju3rprm6" path="res://scripts/gameplay/projectiles/projectile.gd" id="1_mxh2e"]
 [ext_resource type="Texture2D" uid="uid://dwckxd2jnqba6" path="res://graphics/characters/player/shotgun_projectile.png" id="2_mxh2e"]
 
-[sub_resource type="Gradient" id="Gradient_q3m7n"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_mxh2e"]
 atlas = ExtResource("2_mxh2e")
 region = Rect2(0, 0, 39, 38)
@@ -21,6 +18,54 @@ region = Rect2(78, 0, 39, 38)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pabwu"]
 atlas = ExtResource("2_mxh2e")
 region = Rect2(117, 0, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uk03"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(0, 76, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_53j78"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(39, 76, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uguv8"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(78, 76, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcpew"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(117, 76, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01smh"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(0, 114, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e62rq"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(39, 114, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emb50"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(78, 114, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgfna"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(117, 114, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3afvn"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(0, 38, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2kgg"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(39, 38, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v045b"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(78, 38, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rxx7"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(117, 38, 39, 38)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jxwu6"]
 animations = [{
@@ -40,6 +85,57 @@ animations = [{
 "loop": false,
 "name": &"default",
 "speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3uk03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_53j78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uguv8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gcpew")
+}],
+"loop": false,
+"name": &"fire",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01smh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e62rq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emb50")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgfna")
+}],
+"loop": false,
+"name": &"poison",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3afvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2kgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v045b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rxx7")
+}],
+"loop": false,
+"name": &"vampire",
+"speed": 18.0
 }]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_mxh2e"]
@@ -48,34 +144,6 @@ points = PackedVector2Array(-18, 0, -8, -15, 15, -25, 27, 0, 15, 25, -8, 15)
 [node name="ShootgunProjectile" type="Area2D" unique_id=1560415016]
 script = ExtResource("1_mxh2e")
 action = 1
-
-[node name="SpecialParticles" type="Node2D" parent="." unique_id=580180604]
-
-[node name="Dark" type="CPUParticles2D" parent="SpecialParticles" unique_id=964126684]
-emitting = false
-amount = 32
-lifetime = 0.5
-lifetime_randomness = 0.25
-emission_shape = 3
-emission_rect_extents = Vector2(0, 1.5)
-particle_flag_align_y = true
-gravity = Vector2(0, 0)
-scale_amount_max = 2.0
-color = Color(0.8, 0.16, 0.16, 1)
-color_ramp = SubResource("Gradient_q3m7n")
-
-[node name="Light" type="CPUParticles2D" parent="SpecialParticles" unique_id=1641616140]
-emitting = false
-amount = 32
-lifetime = 0.5
-lifetime_randomness = 0.25
-emission_shape = 3
-emission_rect_extents = Vector2(0, 1.5)
-particle_flag_align_y = true
-gravity = Vector2(0, 0)
-scale_amount_max = 2.0
-color = Color(0.8, 0.16, 0.16, 1)
-color_ramp = SubResource("Gradient_q3m7n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=77032614]
 sprite_frames = SubResource("SpriteFrames_jxwu6")

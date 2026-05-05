@@ -7,8 +7,8 @@ class_name Projectile
 @onready var fx: Node2D = get_tree().get_first_node_in_group("fx")
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var special_particles_dark: CPUParticles2D = $SpecialParticles/Dark
-@onready var special_particles_light: CPUParticles2D = $SpecialParticles/Light
+@onready var special_particles_dark: CPUParticles2D
+@onready var special_particles_light: CPUParticles2D
 
 var damage: float = 1
 var knockback: float = 150
@@ -32,14 +32,16 @@ static func instantiate(is_shotgun: bool = false) -> Projectile:
 		return preload("res://scenes/world/projectiles/projectile.tscn").instantiate() as Projectile
 
 func _ready() -> void:
+	if action == Action.REGULAR:
+		special_particles_dark = $SpecialParticles/Dark
+		special_particles_light = $SpecialParticles/Light
+	
 	if type != Type.REGULAR:
-		special_particles_dark.emitting = true
-		special_particles_light.emitting = true
-		special_particles_dark.color = Consts.SPECIAL_BULLETS_COLORS.dark[type]
-		special_particles_light.color = Consts.SPECIAL_BULLETS_COLORS.light[type]
-		
-		if action == Action.STATIONARY:
-			return
+		if action == Action.REGULAR:
+			special_particles_dark.emitting = true
+			special_particles_light.emitting = true
+			special_particles_dark.color = Consts.SPECIAL_BULLETS_COLORS.dark[type]
+			special_particles_light.color = Consts.SPECIAL_BULLETS_COLORS.light[type]
 		
 		if type == Type.VAMPIRE:
 			sprite.play("vampire")
