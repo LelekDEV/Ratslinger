@@ -2,11 +2,54 @@
 
 [ext_resource type="Texture2D" uid="uid://2dk8ecpx87lv" path="res://graphics/characters/player/base.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dxs0qhqyyc1af" path="res://scripts/gameplay/entities/player.gd" id="1_g2els"]
-[ext_resource type="Texture2D" uid="uid://wl55v8ki4emm" path="res://graphics/characters/player/gun.png" id="2_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://wl55v8ki4emm" path="res://graphics/characters/player/revolver.png" id="2_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://ugkmlcrupjtn" path="res://graphics/characters/player/shotgun.png" id="3_hmd7n"]
 [ext_resource type="Texture2D" uid="uid://g408c8ffeg8k" path="res://graphics/characters/player/legs.png" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/systems/weather/rain_surface.gd" id="4_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://ck3rrnjmf4vj8" path="res://graphics/characters/player/squeeze.png" id="4_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://clhtwnivxpeov" path="res://graphics/characters/player/base_handless.png" id="5_hmd7n"]
 [ext_resource type="PackedScene" uid="uid://cb4w1r51ouhpi" path="res://scenes/world/interaction/squeeze_lock.tscn" id="7_fjrip"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpit1"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(0, 0, 12, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrspx"]
+atlas = ExtResource("3_hmd7n")
+region = Rect2(60, 0, 30, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtk06"]
+atlas = ExtResource("3_hmd7n")
+region = Rect2(30, 0, 30, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1yqu"]
+atlas = ExtResource("3_hmd7n")
+region = Rect2(0, 0, 30, 11)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ylip5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpit1")
+}],
+"loop": true,
+"name": &"revolver",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_jrspx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtk06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1yqu")
+}],
+"loop": false,
+"name": &"shotgun",
+"speed": 12.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -18,6 +61,18 @@ region = Rect2(37, 0, 37, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("1_3vyb7")
+region = Rect2(74, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x6wru"]
+atlas = ExtResource("5_hmd7n")
+region = Rect2(0, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hapl5"]
+atlas = ExtResource("5_hmd7n")
+region = Rect2(37, 0, 37, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5qep"]
+atlas = ExtResource("5_hmd7n")
 region = Rect2(74, 0, 37, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
@@ -48,7 +103,24 @@ animations = [{
 "texture": SubResource("AtlasTexture_qhqgy")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"default",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_x6wru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hapl5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5qep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hapl5")
+}],
+"loop": true,
+"name": &"handless",
 "speed": 6.0
 }, {
 "frames": [{
@@ -150,16 +222,18 @@ size = Vector2(25, 21)
 collision_mask = 2
 script = ExtResource("1_g2els")
 
-[node name="GunSprite" type="Sprite2D" parent="." unique_id=925967007]
+[node name="GunSprite" type="AnimatedSprite2D" parent="." unique_id=499867434]
 position = Vector2(0.5, 1.5)
-texture = ExtResource("2_qhqgy")
+sprite_frames = SubResource("SpriteFrames_ylip5")
+animation = &"shotgun"
+frame = 2
+frame_progress = 1.0
 offset = Vector2(11.5, 0)
 
 [node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1353984724 node_paths=PackedStringArray("spawn_node")]
 position = Vector2(0.5, -2)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"idle"
-autoplay = "idle"
+autoplay = "default"
 script = ExtResource("4_qlg0r")
 use_meta = true
 spawn_node = NodePath("../LocalFX")

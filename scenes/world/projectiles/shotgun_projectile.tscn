@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://k3ovpotth80g"]
+
+[ext_resource type="Script" uid="uid://bm72rju3rprm6" path="res://scripts/gameplay/projectiles/projectile.gd" id="1_mxh2e"]
+[ext_resource type="Texture2D" uid="uid://dwckxd2jnqba6" path="res://graphics/characters/player/shotgun_projectile.png" id="2_mxh2e"]
+
+[sub_resource type="Gradient" id="Gradient_q3m7n"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxh2e"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(0, 0, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87f07"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(39, 0, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6pq5"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(78, 0, 39, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pabwu"]
+atlas = ExtResource("2_mxh2e")
+region = Rect2(117, 0, 39, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jxwu6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxh2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87f07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6pq5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pabwu")
+}],
+"loop": false,
+"name": &"default",
+"speed": 18.0
+}]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_mxh2e"]
+points = PackedVector2Array(-18, 0, -8, -15, 15, -25, 27, 0, 15, 25, -8, 15)
+
+[node name="ShootgunProjectile" type="Area2D" unique_id=1560415016]
+script = ExtResource("1_mxh2e")
+action = 1
+
+[node name="SpecialParticles" type="Node2D" parent="." unique_id=580180604]
+
+[node name="Dark" type="CPUParticles2D" parent="SpecialParticles" unique_id=964126684]
+emitting = false
+amount = 32
+lifetime = 0.5
+lifetime_randomness = 0.25
+emission_shape = 3
+emission_rect_extents = Vector2(0, 1.5)
+particle_flag_align_y = true
+gravity = Vector2(0, 0)
+scale_amount_max = 2.0
+color = Color(0.8, 0.16, 0.16, 1)
+color_ramp = SubResource("Gradient_q3m7n")
+
+[node name="Light" type="CPUParticles2D" parent="SpecialParticles" unique_id=1641616140]
+emitting = false
+amount = 32
+lifetime = 0.5
+lifetime_randomness = 0.25
+emission_shape = 3
+emission_rect_extents = Vector2(0, 1.5)
+particle_flag_align_y = true
+gravity = Vector2(0, 0)
+scale_amount_max = 2.0
+color = Color(0.8, 0.16, 0.16, 1)
+color_ramp = SubResource("Gradient_q3m7n")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=77032614]
+sprite_frames = SubResource("SpriteFrames_jxwu6")
+autoplay = "default"
+frame = 3
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=649565456]
+shape = SubResource("ConvexPolygonShape2D_mxh2e")
+
+[node name="DeathTimer" type="Timer" parent="." unique_id=2019023683]
+wait_time = 0.25
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

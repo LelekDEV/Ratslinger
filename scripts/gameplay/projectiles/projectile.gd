@@ -21,8 +21,15 @@ var penetrating: bool = false
 enum Type {REGULAR = -1, VAMPIRE, FIRE, POISON}
 var type: Type = Type.REGULAR
 
-static func instantiate() -> Projectile:
-	return preload("res://scenes/world/projectiles/projectile.tscn").instantiate() as Projectile
+enum Action {REGULAR, STATIONARY}
+@export var action: Action
+var ignored_enemies: Array
+
+static func instantiate(is_shotgun: bool = false) -> Projectile:
+	if is_shotgun:
+		return preload("res://scenes/world/projectiles/shotgun_projectile.tscn").instantiate()
+	else:
+		return preload("res://scenes/world/projectiles/projectile.tscn").instantiate() as Projectile
 
 func _ready() -> void:
 	if type != Type.REGULAR:
@@ -30,6 +37,9 @@ func _ready() -> void:
 		special_particles_light.emitting = true
 		special_particles_dark.color = Consts.SPECIAL_BULLETS_COLORS.dark[type]
 		special_particles_light.color = Consts.SPECIAL_BULLETS_COLORS.light[type]
+		
+		if action == Action.STATIONARY:
+			return
 		
 		if type == Type.VAMPIRE:
 			sprite.play("vampire")
@@ -39,10 +49,27 @@ func _ready() -> void:
 			sprite.play("poison")
 
 func _physics_process(delta: float) -> void:
-	velocity = direction * speed * delta
-	global_position += velocity
+	if action == Action.REGULAR:
+		velocity = direction * speed * delta
+		global_position += velocity
+
+func block_and_destroy(projectile: EnemyProjectile) -> void:
+	GlobalAudio.play_sfx(AudioConsts.SFX.BLOCK)
+	
+	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOCK)
+	particles.position = global_position
+	particles.emitting = true
+	get_tree().root.add_child(particles)
+	
+	if not penetrating and action == Action.REGULAR:
+		queue_free()
+	
+	projectile.queue_free()
 
 func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
+	if enemy in ignored_enemies:
+		return
+	
 	enemy.take_damage(damage * enemy.headshot_mult if is_critical else 1.0, global_position, is_critical, false, self)
 	enemy.velocity += direction * knockback
 	
@@ -67,10 +94,13 @@ func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
 	elif type == Type.FIRE:
 		enemy.apply_fire()
 	
-	if not enemy.free_on_death and enemy.health <= 0:
-		await SignalBus.boss_death_anim_ended
+	if action == Action.REGULAR:
+		if not enemy.free_on_death and enemy.health <= 0:
+			await SignalBus.boss_death_anim_ended
+		
+		queue_free()
 	
-	queue_free()
+	ignored_enemies.append(enemy)
 
 func _on_death_timer_timeout() -> void:
 	queue_free()
@@ -87,16 +117,13 @@ func _on_area_entered(area: Area2D) -> void:
 		return
 	
 	if area.is_in_group("enemy_projectile"):
-		if area.projectile_collide_cooldown.is_stopped():
-			GlobalAudio.play_sfx(AudioConsts.SFX.BLOCK)
-			
-			var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOCK)
-			particles.position = global_position
-			particles.emitting = true
-			get_tree().root.add_child(particles)
-			
-			if not penetrating: queue_free()
-			area.queue_free()
+		if area.projectile_collide_cooldown.is_stopped() or action == Action.STATIONARY:
+			block_and_destroy(area)
 		
 	elif area.is_in_group("headshot_area"):
-		damage_and_destroy(area.get_parent(), true)
+		match action:
+			Action.REGULAR: damage_and_destroy(area.get_parent(), true)
+			Action.STATIONARY: damage_and_destroy(area.get_parent(), false)
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	sprite.visible = false

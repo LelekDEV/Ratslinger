@@ -35,20 +35,20 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t0w65"]
 size = Vector2(4, 4)
 
-[node name="BeaverProjectile" type="Area2D" groups=["enemy_projectile"]]
+[node name="BeaverProjectile" type="Area2D" unique_id=1672165381 groups=["enemy_projectile"]]
 script = ExtResource("1_sirks")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=381545199]
 sprite_frames = SubResource("SpriteFrames_q6r6c")
 animation = &"shoot"
 autoplay = "shoot"
 frame_progress = 0.07827358
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1344834320]
 position = Vector2(2, 0)
 shape = SubResource("RectangleShape2D_t0w65")
 
-[node name="ProjectileCollideCooldown" type="Timer" parent="."]
+[node name="ProjectileCollideCooldown" type="Timer" parent="." unique_id=1067013305]
 wait_time = 0.1
 one_shot = true
 autostart = true

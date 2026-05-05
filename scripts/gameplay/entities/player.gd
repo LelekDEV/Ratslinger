@@ -8,7 +8,7 @@ class_name Player
 @onready var accuracy_bar: AccuracyBar = get_tree().get_first_node_in_group("accuracy_bar")
 @onready var bullet_bar: BulletBar = get_tree().get_first_node_in_group("bullet_bar")
 
-@onready var gun_sprite: Sprite2D = $GunSprite
+@onready var gun_sprite: AnimatedSprite2D = $GunSprite
 @onready var base_sprite: AnimatedSprite2D = $BaseSprite
 @onready var legs_sprite: AnimatedSprite2D = $LegsSprite
 
@@ -47,6 +47,9 @@ enum Locations {ARENA, TOWN, TOWN_HALL}
 var location: Locations = Locations.ARENA
 var last_location: Locations = location
 
+enum Guns {REVOLVER, SHOTGUN}
+var gun: Guns = Guns.REVOLVER
+
 func _ready() -> void:
 	SignalBus.game_save_queued.connect(_on_game_save_queued)
 	
@@ -58,6 +61,8 @@ func _ready() -> void:
 	if Global.is_title_on:
 		Global.block_movement = true
 		Global.block_input = true
+	
+	switch_gun(Guns.SHOTGUN)
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
@@ -66,6 +71,19 @@ func _physics_process(_delta: float) -> void:
 	handle_squeeze()
 	
 	move_and_slide()
+
+func switch_gun(new_gun: Guns) -> void:
+	gun = new_gun
+	match gun:
+		Guns.REVOLVER:
+			pass
+		
+		Guns.SHOTGUN:
+			gun_sprite.play("shotgun", 0)
+			gun_sprite.z_index = 1
+			gun_sprite.offset.x = 3.5
+			
+			base_sprite.play("handless")
 
 func reload_bullets(full: bool = false) -> void:
 	accuracy_bar.reload_bullets = false
@@ -78,10 +96,25 @@ func reload_bullets(full: bool = false) -> void:
 
 func spawn_projectile(direction: Vector2) -> bool:
 	var is_special: bool = false
-	var shoot_pos = Vector2(16, 16) * direction + Vector2(0, 2)
+	var shoot_offset: Vector2 = Vector2(0, 2 + int(gun == Guns.SHOTGUN) * 3)
+	var shoot_pos := Vector2.ONE * (16 + int(gun == Guns.SHOTGUN) * 8) * direction + shoot_offset
 	
-	var projectile = Projectile.instantiate()
-	var particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT)
+	var projectile: Projectile
+	
+	match gun:
+		Guns.REVOLVER: projectile = Projectile.instantiate()
+		Guns.SHOTGUN: projectile = Projectile.instantiate(true)
+	
+	var particles: CPUParticles2D
+	
+	match gun:
+		Guns.REVOLVER:
+			particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT)
+			particles.position = shoot_pos
+		
+		Guns.SHOTGUN: 
+			particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT_HEAVY)
+			particles.position = Vector2.ONE * 8 * direction + shoot_offset
 	
 	projectile.global_position = global_position + shoot_pos
 	projectile.global_rotation = direction.angle()
@@ -98,7 +131,6 @@ func spawn_projectile(direction: Vector2) -> bool:
 		if type != Projectile.Type.REGULAR:
 			is_special = true
 	
-	particles.position = shoot_pos
 	particles.global_rotation = direction.angle()
 	particles.emitting = true
 	
@@ -147,6 +179,9 @@ func handle_shooting() -> void:
 		
 		regen_cooldown.start(5)
 		
+		if gun == Guns.SHOTGUN:
+			gun_sprite.play("shotgun")
+		
 		SignalBus.player_shoot.emit(false)
 		Global.force_input = false
 
@@ -170,11 +205,7 @@ func handle_movement() -> void:
 		base_sprite.flip_h = true
 		legs_sprite.flip_h = true
 	
-	if base_sprite.frame == 2:
-		gun_sprite.position.y = 4.5
-	else:
-		gun_sprite.position.y = 3.5
-	
+	gun_sprite.position.y = 3.5 + int(base_sprite.frame == 2) + int(gun == Guns.SHOTGUN) * 3
 	gun_sprite.global_rotation = get_angle_to(get_global_mouse_position())
 	
 	for fx in local_fx.get_children():
