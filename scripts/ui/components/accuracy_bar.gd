@@ -15,10 +15,25 @@ var anim_value: float = 0
 var started: bool = false
 var reload_bullets: bool = false
 
-var accuracy_tresholds: Array = [0.25, 0.45, 0.55, 0.75]
+# I'm not sure whether consts would be better as snake_case or SCREAMING_SNAKE_CASE.
+# I'll just leave it there
+const accuracy_tresholds: Array = [
+	{"v": 0.25, "t": 0},
+	{"v": 0.45, "t": 1},
+	{"v": 0.55, "t": 2},
+	{"v": 0.75, "t": 1},
+	{"v": 1.0, "t": 0}
+]
+
+var first_perfect_value: float
 
 func _ready() -> void:
 	SignalBus.player_shoot.connect(start)
+	
+	for i in range(accuracy_tresholds.size()):
+		if accuracy_tresholds[i].t == 2:
+			first_perfect_value = accuracy_tresholds[i - 1].v
+			return
 
 func _physics_process(_delta: float) -> void:
 	cursor_sprite.position.x = 0.5 - 85.5 * progress_value
@@ -29,19 +44,19 @@ func _physics_process(_delta: float) -> void:
 		cursor_sprite.material.set_shader_parameter("is_visible", false)
 
 func get_type_from_value(value: float) -> int:
-	if value < accuracy_tresholds[0] or value > accuracy_tresholds[3] and value != 1:
-		return 0
-	elif value < accuracy_tresholds[1] or value > accuracy_tresholds[2] and value != 1:
+	if value == 1:
 		return 1
-	elif value != 1:
-		return 2
 	
-	return 1
+	for i in range(accuracy_tresholds.size() - 2, -1, -1):
+		if value > accuracy_tresholds[i].v:
+			return accuracy_tresholds[i + 1].t
+	
+	return accuracy_tresholds[0].t
 
 func accuracy_signal() -> void:
 	const EARLY_OFFSET: float = 0.08
 	
-	await get_tree().create_timer(accuracy_tresholds[1] * progress_time - EARLY_OFFSET, false).timeout
+	await get_tree().create_timer(first_perfect_value * progress_time - EARLY_OFFSET, false).timeout
 	
 	if get_type_from_value(progress_value + EARLY_OFFSET * progress_time) != 2:
 		return
