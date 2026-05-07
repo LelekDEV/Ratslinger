@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://dtv6ju2mwiuwi"]
+
+[ext_resource type="Script" uid="uid://c1cby76vp0218" path="res://scripts/ui/root/statistics.gd" id="1_xriy6"]
+[ext_resource type="PackedScene" uid="uid://dsej57pl7mm5e" path="res://scenes/ui/components/panel.tscn" id="2_b0ib4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6vly"]
+bg_color = Color(0.9098039, 0.6745098, 0.3254902, 1)
+border_color = Color(0.9098039, 0.6745098, 0.3254902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xriy6"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+bg_color = Color(0.16470589, 0.07450981, 0.039215688, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0ib4"]
+bg_color = Color(0.67, 0.45895, 0.20100002, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dn2o"]
+bg_color = Color(1, 0.6125001, 0.06999999, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62ioo"]
+bg_color = Color(0.79607844, 0.54509807, 0.23529412, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2atf4"]
+bg_color = Color(1, 0.77254903, 0.43529412, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_color = Color(0.9098039, 0.6745098, 0.3254902, 1)
+
+[node name="Statistics" type="CanvasLayer" unique_id=344172419]
+script = ExtResource("1_xriy6")
+
+[node name="Control" type="Control" parent="." unique_id=1054776571]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="Control" unique_id=839116065]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.1
+anchor_right = 0.85
+anchor_bottom = 0.9
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y6vly")
+
+[node name="VScrollBar" type="VScrollBar" parent="Control/Panel" unique_id=526727422]
+z_index = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.99000007
+anchor_top = 0.125
+anchor_right = 1.006
+anchor_bottom = 1.0020001
+offset_left = 0.86395264
+offset_right = -0.03845215
+offset_bottom = -0.23687744
+grow_vertical = 2
+theme_override_styles/scroll = SubResource("StyleBoxFlat_xriy6")
+theme_override_styles/grabber = SubResource("StyleBoxFlat_b0ib4")
+theme_override_styles/grabber_highlight = SubResource("StyleBoxFlat_7dn2o")
+theme_override_styles/grabber_pressed = SubResource("StyleBoxFlat_62ioo")
+max_value = 115.0
+page = 15.0
+custom_step = 5.0
+
+[node name="Control" type="Control" parent="Control" unique_id=1106752033]
+clip_contents = true
+layout_mode = 1
+anchor_left = 0.15
+anchor_top = 0.2
+anchor_right = 0.85
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Control" unique_id=850402166]
+layout_mode = 0
+offset_right = 806.0
+offset_bottom = 540.0
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Panel" parent="Control/Control/VBoxContainer" unique_id=509730733 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel2" parent="Control/Control/VBoxContainer" unique_id=196793120 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel3" parent="Control/Control/VBoxContainer" unique_id=1564517420 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel4" parent="Control/Control/VBoxContainer" unique_id=1244661394 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel5" parent="Control/Control/VBoxContainer" unique_id=175307496 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel6" parent="Control/Control/VBoxContainer" unique_id=41988001 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel7" parent="Control/Control/VBoxContainer" unique_id=2119253764 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel8" parent="Control/Control/VBoxContainer" unique_id=976123543 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel9" parent="Control/Control/VBoxContainer" unique_id=1990806109 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel10" parent="Control/Control/VBoxContainer" unique_id=839334598 instance=ExtResource("2_b0ib4")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel2" type="Panel" parent="Control" unique_id=141308077]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.1
+anchor_right = 0.85
+anchor_bottom = 0.2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2atf4")
+
+[connection signal="mouse_entered" from="Control/Control" to="." method="_on_control_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Control" to="." method="_on_control_mouse_exited"]

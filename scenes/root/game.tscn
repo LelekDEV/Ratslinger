@@ -52,6 +52,7 @@
 [ext_resource type="Script" uid="uid://6wxtgdvdmdn0" path="res://scripts/gameplay/environment/sand_spike_spawner.gd" id="42_dt87u"]
 [ext_resource type="Script" uid="uid://do80blcsew3si" path="res://scripts/systems/audio/music_handler.gd" id="42_l3433"]
 [ext_resource type="AudioStream" uid="uid://sts3sksabhkn" path="res://audio/cutscene/quake.wav" id="49_xovr5"]
+[ext_resource type="PackedScene" uid="uid://dtv6ju2mwiuwi" path="res://scenes/ui/layers/statistics.tscn" id="53_ncowb"]
 
 [sub_resource type="Animation" id="Animation_0pks0"]
 length = 0.001
@@ -1363,5 +1364,8 @@ wait_time = 8.0
 stream = ExtResource("49_xovr5")
 volume_db = 2.0
 bus = &"SFX"
+
+[node name="Statistics" parent="." unique_id=344172419 instance=ExtResource("53_ncowb")]
+visible = false
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

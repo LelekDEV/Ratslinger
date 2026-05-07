@@ -107,7 +107,9 @@ func save_values() -> void:
 		# It is not my fault if the program uses 1.00069 times more resources by using strings
 		
 		# Also, that approach wouldn't work since built-in Singleton paths are weird.
-		# If you wan't to have a custom one it's time to hardcode another bool :3
+		# If you wan't to have a custom one it's time to hardcode another bool :(
+		
+		# pablo jest kontrybutorem losowej biblioteki pearla na githubie
 		
 		var slider: HSlider = option.get_node("LabelParent/HSlider")
 		
