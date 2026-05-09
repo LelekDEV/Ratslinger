@@ -41,6 +41,11 @@ var is_title_restarted: bool = false
 var scale_level: int = 0
 var min_scale_level: int = 0
 
+# If you create any resources at run-time (typically on ready),
+# you can add them here for easy global access.
+# Not the most elegant solution but will do
+var resources: Dictionary = {}
+
 func _ready() -> void:
 	SignalBus.game_save_queued.connect(func(): if game.is_wave_active or game.is_boss_active: coins = death_coins)
 	get_viewport().size_changed.connect(update_min_scale_level)

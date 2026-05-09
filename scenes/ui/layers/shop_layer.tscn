@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://i7x4xt1158xc" path="res://scripts/ui/components/button.gd" id="3_jccsb"]
 [ext_resource type="FontFile" uid="uid://sgwyci3gbawn" path="res://fonts/fffforward.ttf" id="3_rsgqm"]
 [ext_resource type="Texture2D" uid="uid://c0ub0hdeeqktf" path="res://graphics/misc/coin.png" id="5_jccsb"]
+[ext_resource type="Script" uid="uid://ehf6n3feeim3" path="res://scripts/ui/components/shop_info.gd" id="5_xofhk"]
 
 [sub_resource type="Theme" id="Theme_uf4kc"]
 default_font = ExtResource("3_rsgqm")
@@ -130,6 +131,18 @@ shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/is_visible = false
 shader_parameter/thickness = 1.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xofhk"]
+shader = SubResource("Shader_jccsb")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_visible = false
+shader_parameter/thickness = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfii6"]
+shader = SubResource("Shader_jccsb")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_visible = false
+shader_parameter/thickness = 1.0
+
 [sub_resource type="Theme" id="Theme_jccsb"]
 default_font = ExtResource("3_rsgqm")
 default_font_size = 32
@@ -146,6 +159,31 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(1, 1, 1, 0.75000006)
 anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xofhk"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+bg_color = Color(0.2, 0.2, 0.2, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfii6"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
 
 [node name="ShopLayer" type="CanvasLayer" unique_id=1769604085 groups=["shop_layer"]]
 script = ExtResource("1_mucha")
@@ -215,48 +253,94 @@ action_mode = 0
 text = ">"
 script = ExtResource("3_jccsb")
 
-[node name="SpriteParent" type="Control" parent="HBoxContainer/LeftContainer" unique_id=1928614469]
+[node name="ShopSpriteParent" type="Control" parent="HBoxContainer/LeftContainer" unique_id=1928614469]
+visible = false
 custom_minimum_size = Vector2(520, 420)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="BackSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent" unique_id=727477055]
+[node name="BackSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ShopSpriteParent" unique_id=727477055]
 scale = Vector2(4, 4)
 texture = ExtResource("2_fj35d")
 centered = false
 hframes = 5
+vframes = 2
 
-[node name="VampireSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent" unique_id=594440478]
+[node name="VampireSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ShopSpriteParent" unique_id=594440478]
 material = SubResource("ShaderMaterial_yjygl")
 scale = Vector2(4, 4)
 texture = ExtResource("2_fj35d")
 centered = false
 hframes = 5
+vframes = 2
 frame = 2
 
-[node name="FireSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent" unique_id=1017705694]
+[node name="FireSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ShopSpriteParent" unique_id=1017705694]
 material = SubResource("ShaderMaterial_djswy")
 scale = Vector2(4, 4)
 texture = ExtResource("2_fj35d")
 centered = false
 hframes = 5
+vframes = 2
 frame = 4
 
-[node name="PoisonSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent" unique_id=1293504629]
+[node name="PoisonSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ShopSpriteParent" unique_id=1293504629]
 material = SubResource("ShaderMaterial_fx51c")
 scale = Vector2(4, 4)
 texture = ExtResource("2_fj35d")
 centered = false
 hframes = 5
+vframes = 2
 frame = 3
 
-[node name="FrontSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/SpriteParent" unique_id=297779964]
+[node name="FrontSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ShopSpriteParent" unique_id=297779964]
 scale = Vector2(4, 4)
 texture = ExtResource("2_fj35d")
 centered = false
 hframes = 5
+vframes = 2
 frame = 1
+
+[node name="ForgeSpriteParent" type="Control" parent="HBoxContainer/LeftContainer" unique_id=522238012]
+custom_minimum_size = Vector2(520, 420)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BackSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ForgeSpriteParent" unique_id=2130506595]
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 5
+vframes = 2
+frame = 5
+
+[node name="ShotgunSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ForgeSpriteParent" unique_id=726382064]
+material = SubResource("ShaderMaterial_xofhk")
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 5
+vframes = 2
+frame = 7
+
+[node name="BlunderboostSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ForgeSpriteParent" unique_id=487674296]
+material = SubResource("ShaderMaterial_nfii6")
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 5
+vframes = 2
+frame = 8
+
+[node name="FrontSprite" type="Sprite2D" parent="HBoxContainer/LeftContainer/ForgeSpriteParent" unique_id=943922896]
+scale = Vector2(4, 4)
+texture = ExtResource("2_fj35d")
+centered = false
+hframes = 5
+vframes = 2
+frame = 6
 
 [node name="RightContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1968237817]
 custom_minimum_size = Vector2(400, 0)
@@ -264,14 +348,22 @@ layout_mode = 2
 theme_override_constants/separation = 60
 alignment = 1
 
-[node name="TitleLabel" type="Label" parent="HBoxContainer/RightContainer" unique_id=1325781784]
+[node name="BulletInfoContainer" type="VBoxContainer" parent="HBoxContainer/RightContainer" unique_id=1482374354 node_paths=PackedStringArray("title_label", "desc_label")]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 60
+script = ExtResource("5_xofhk")
+title_label = NodePath("TitleLabel")
+desc_label = NodePath("DescLabel")
+
+[node name="TitleLabel" type="Label" parent="HBoxContainer/RightContainer/BulletInfoContainer" unique_id=1325781784]
 layout_mode = 2
 size_flags_vertical = 0
 theme = SubResource("Theme_jccsb")
 text = "Vampiric Bullet"
 horizontal_alignment = 1
 
-[node name="DescLabel" type="Label" parent="HBoxContainer/RightContainer" unique_id=894829277]
+[node name="DescLabel" type="Label" parent="HBoxContainer/RightContainer/BulletInfoContainer" unique_id=894829277]
 layout_mode = 2
 size_flags_vertical = 0
 theme = SubResource("Theme_jccsb")
@@ -279,6 +371,60 @@ text = "Heals HP on hit.
 Level: not bought
 Replaces: every 10th bullet"
 horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TitleLabelWeapon" type="Label" parent="HBoxContainer/RightContainer" unique_id=525970413]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_jccsb")
+text = "Shotgun"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="WeaponInfoParent" type="Control" parent="HBoxContainer/RightContainer" unique_id=501512260]
+clip_contents = true
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="WeaponInfoContainer" type="VBoxContainer" parent="HBoxContainer/RightContainer/WeaponInfoParent" unique_id=1700675033 node_paths=PackedStringArray("title_label", "desc_label", "desc_label_extra", "accuracy_layout_sprite")]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 712.0
+theme_override_constants/separation = 60
+script = ExtResource("5_xofhk")
+title_label = NodePath("../../TitleLabelWeapon")
+desc_label = NodePath("DescLabel")
+desc_label_extra = NodePath("DescLabelExtra")
+accuracy_layout_sprite = NodePath("AccuracyLayoutParent/Sprite2D")
+
+[node name="DescLabel" type="Label" parent="HBoxContainer/RightContainer/WeaponInfoParent/WeaponInfoContainer" unique_id=935709790]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_jccsb")
+theme_override_constants/paragraph_spacing = 30
+text = "Traits: penetrating, multi-target, static projectile
+Range: low
+Knockback: medium
+Recoil: high
+Accuracy layout:"
+autowrap_mode = 3
+
+[node name="AccuracyLayoutParent" type="Control" parent="HBoxContainer/RightContainer/WeaponInfoParent/WeaponInfoContainer" unique_id=1685942548]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/RightContainer/WeaponInfoParent/WeaponInfoContainer/AccuracyLayoutParent" unique_id=752617068]
+scale = Vector2(4, 4)
+
+[node name="DescLabelExtra" type="Label" parent="HBoxContainer/RightContainer/WeaponInfoParent/WeaponInfoContainer" unique_id=736710981]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_jccsb")
+theme_override_constants/paragraph_spacing = 30
+text = "Perfect shots: less recoil
+Supports special bullets: on perfect shots"
 autowrap_mode = 3
 
 [node name="UpgradeButton" type="Button" parent="HBoxContainer/RightContainer" unique_id=2024386900]
@@ -294,25 +440,25 @@ action_mode = 0
 text = "buy"
 script = ExtResource("3_jccsb")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/RightContainer" unique_id=1452098611]
+[node name="CoinsContainer" type="HBoxContainer" parent="HBoxContainer/RightContainer" unique_id=1452098611]
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="CostLabel" type="Label" parent="HBoxContainer/RightContainer/HBoxContainer" unique_id=1249926858]
+[node name="CostLabel" type="Label" parent="HBoxContainer/RightContainer/CoinsContainer" unique_id=1249926858]
 layout_mode = 2
 size_flags_horizontal = 4
 theme = SubResource("Theme_jccsb")
 text = "Cost: 10"
 horizontal_alignment = 1
 
-[node name="SpriteParent" type="Control" parent="HBoxContainer/RightContainer/HBoxContainer" unique_id=2127248217]
+[node name="SpriteParent" type="Control" parent="HBoxContainer/RightContainer/CoinsContainer" unique_id=2127248217]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="CoinSprite" type="Sprite2D" parent="HBoxContainer/RightContainer/HBoxContainer/SpriteParent" unique_id=1985466033]
+[node name="CoinSprite" type="Sprite2D" parent="HBoxContainer/RightContainer/CoinsContainer/SpriteParent" unique_id=1985466033]
 position = Vector2(0, -10)
 scale = Vector2(8, 8)
 texture = ExtResource("5_jccsb")
@@ -320,12 +466,23 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 8, 8)
 
-[node name="CashLabel" type="Label" parent="HBoxContainer/RightContainer/HBoxContainer" unique_id=1730608123]
+[node name="CashLabel" type="Label" parent="HBoxContainer/RightContainer/CoinsContainer" unique_id=1730608123]
 layout_mode = 2
 size_flags_horizontal = 4
 theme = SubResource("Theme_jccsb")
 text = "Cash: 10"
 horizontal_alignment = 1
+
+[node name="VScrollBar" type="VScrollBar" parent="HBoxContainer" unique_id=2023178784]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/scroll = SubResource("StyleBoxFlat_xofhk")
+theme_override_styles/grabber = SubResource("StyleBoxFlat_nfii6")
+theme_override_styles/grabber_highlight = SubResource("StyleBoxFlat_nfii6")
+theme_override_styles/grabber_pressed = SubResource("StyleBoxFlat_nfii6")
+max_value = 120.0
+page = 20.0
 
 [connection signal="pressed" from="HBoxContainer/LeftContainer/HBoxContainer/ExitButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftContainer/HBoxContainer/PreviousButton" to="." method="_on_previous_button_pressed"]

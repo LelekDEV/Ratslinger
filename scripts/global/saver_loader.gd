@@ -22,7 +22,8 @@ var save_paths: Dictionary = {
 	],
 	Upgrades: [
 		^"levels",
-		^"stat_1"
+		^"stat_1",
+		^"unlocked_weapons"
 	],
 	Settings: [
 		^"accuracy_flash_accessibility",

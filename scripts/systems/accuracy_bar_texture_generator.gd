@@ -21,7 +21,11 @@ func _ready() -> void:
 	update_texture()
 
 func update_texture() -> void:
-	sprite.texture = generate(parent.accuracy_tresholds)
+	var texture: Texture2D = generate(parent.accuracy_tresholds)
+	sprite.texture = texture
+	
+	if not Engine.is_editor_hint():
+		Global.resources.accuracy_texture_test = texture
 
 func generate(accuracy_tresholds: Array) -> Texture2D:
 	var src: Image = preload("res://graphics/ui/hud/combat/accuracy_zones.png").get_image()

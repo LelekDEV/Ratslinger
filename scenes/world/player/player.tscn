@@ -257,9 +257,7 @@ script = ExtResource("1_g2els")
 [node name="GunSprite" type="AnimatedSprite2D" parent="." unique_id=499867434]
 position = Vector2(0.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_ylip5")
-animation = &"shotgun_reload"
-frame = 4
-frame_progress = 1.0
+animation = &"revolver"
 offset = Vector2(11.5, 0)
 
 [node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1353984724 node_paths=PackedStringArray("spawn_node")]

@@ -9,6 +9,9 @@ var surface_size: Vector2
 var spawn_value: float = 0
 var spawn_treshold: float = 0.1
 
+func _ready() -> void:
+	assert(points.has_all(["top", "side"]), "Failed to read tile-set rain splash points data. Run res://scripts/editor/tilemap_rain_data.gd to update them.")
+
 func _physics_process(delta: float) -> void:
 	spawn_value += delta * Global.get_rain_change_ratio()
 	

@@ -5,17 +5,17 @@ extends CanvasLayer
 @onready var control: Control = $Control/Control
 
 var mouse_inside: bool = false
-		
+
 func _process(_delta: float) -> void:
 	set_up_panels() # not the most optimal thing but it will do for now
 	v_box.position.y = lerp(0.0, control.size.y - v_box.size.y, v_scroll_panel.value / 100.0)
 
 func set_up_panels() -> void:
-	var enemies_cleared = (
-	Global.enemy_stats["Fox"]["kills"] +
-	Global.enemy_stats["Beaver"]["kills"] +
-	Global.enemy_stats["Snake"]["kills"] +
-	Global.enemy_stats["Owl"]["kills"]
+	var enemies_cleared: int = (
+		Global.enemy_stats["Fox"]["kills"] +
+		Global.enemy_stats["Beaver"]["kills"] +
+		Global.enemy_stats["Snake"]["kills"] +
+		Global.enemy_stats["Owl"]["kills"]
 	)
 
 	var panel_texts = [
@@ -42,18 +42,15 @@ func set_up_panels() -> void:
 func _input(event: InputEvent) -> void:
 	if mouse_inside:
 		if event is InputEventMouseButton and event.pressed:
-
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				v_scroll_panel.value += 5
-
+			
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				v_scroll_panel.value -= 5
 
 func _on_control_mouse_entered() -> void:
 	mouse_inside = true
 	print(mouse_inside)
-
-
 
 func _on_control_mouse_exited() -> void:
 	mouse_inside = false

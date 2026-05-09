@@ -73,6 +73,9 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func switch_gun(new_gun: Guns) -> void:
+	if new_gun == Guns.SHOTGUN and not Upgrades.unlocked_weapons[0]:
+		return
+	
 	gun = new_gun
 	
 	var frame: int = base_sprite.frame
@@ -104,9 +107,8 @@ func reload_bullets(full: bool = false) -> void:
 	
 	reload_timer.start()
 	
-	if gun == Guns.SHOTGUN:
-		if full: await get_tree().create_timer(0.35, false).timeout
-		gun_sprite.play("shotgun_reload")
+	if full: await get_tree().create_timer(0.35, false).timeout
+	if gun == Guns.SHOTGUN: gun_sprite.play("shotgun_reload")
 
 func spawn_projectile(direction: Vector2) -> bool:
 	var is_special: bool = false

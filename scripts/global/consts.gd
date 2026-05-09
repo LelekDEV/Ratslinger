@@ -3,14 +3,37 @@ extends Node
 const ITEM_NAMES: Array = [
 	"Vampiric Bullet",
 	"Inferno Bullet",
-	"Poison Bullet"
+	"Poison Bullet",
+	"Shotgun",
+	"Blunderboost"
 ]
 
 const ITEM_DESC: Array = [
 	"Heals HP on hit.",
 	"Sets enemies on fire that can spread.",
-	"Inflicts damaging and weakening poison"
+	"Inflicts damaging and weakening poison.",
+	[
+		"""Traits: penetrating, multi-target, static projectile
+		Range: low
+		Knockback: medium
+		Recoil: high
+		Accuracy layout:""",
+		"""Perfect shots: less recoil
+		Supports special bullets: on perfect shots"""
+	],
+	[
+		"""Traits: damageless, penetrating, multi-target, reversed direction
+		Range: medium
+		Knockback: high
+		Recoil: INSANE
+		Accuracy layout:""",
+		"""Perfect shots: even more recoil
+		Supports special bullets: no"""
+	]
 ]
+
+const SHOTGUN_PRICE: int = 250
+const BLUNDERBOOST_PRICE: int = 200
 
 const NPC_SHAPE_RADIUS: Array = [10, 15, 12]
 const NPC_SHAPE_POS: Array = [Vector2(-5, 3), Vector2(0, 1), Vector2(-10, 1)]

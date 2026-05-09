@@ -5,26 +5,33 @@
 [ext_resource type="Texture2D" uid="uid://c3ota7nm4hf1b" path="res://graphics/environment/buildings/buildings.png" id="3_ejq8p"]
 [ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/systems/weather/rain_surface.gd" id="3_rla3o"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lm2ef"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_06rqn"]
 atlas = ExtResource("3_ejq8p")
-region = Rect2(75, 0, 75, 75)
+region = Rect2(83, 0, 83, 88)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rla3o"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1xka"]
 atlas = ExtResource("3_ejq8p")
-region = Rect2(0, 0, 75, 75)
+region = Rect2(0, 0, 83, 88)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f5uvq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfro8"]
 atlas = ExtResource("3_ejq8p")
-region = Rect2(150, 0, 75, 88)
+region = Rect2(166, 0, 83, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cue3w"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(83, 88, 83, 88)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uvy8r"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lm2ef")
+"texture": SubResource("AtlasTexture_06rqn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rla3o")
+"texture": SubResource("AtlasTexture_o1xka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfro8")
 }],
 "loop": true,
 "name": &"regular",
@@ -32,7 +39,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f5uvq")
+"texture": SubResource("AtlasTexture_cue3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cue3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cue3w")
 }],
 "loop": true,
 "name": &"ruined",
@@ -52,8 +65,10 @@ script = ExtResource("1_ejq8p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=271440179 node_paths=PackedStringArray("spawn_node")]
 sprite_frames = SubResource("SpriteFrames_uvy8r")
-animation = &"regular"
+animation = &"ruined"
+offset = Vector2(0, -0.5)
 script = ExtResource("3_rla3o")
+auto_call = false
 spawn_node = NodePath("../LocalFX")
 
 [node name="LocalFX" type="Node2D" parent="." unique_id=851241081]

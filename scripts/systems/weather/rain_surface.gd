@@ -6,6 +6,7 @@ class_name RainSurface
 var frame_points: Array
 var surface_size: Vector2
 
+@export var auto_call: bool = true
 @export var override_anim: String
 @export var use_meta: bool
 
@@ -14,7 +15,8 @@ var spawn_treshold: float = 0.1
 @export var spawn_node: Node
 
 func _ready() -> void:
-	get_all_points()
+	if auto_call:
+		get_all_points()
 	
 	var first_texture = sprite_frames.get_frame_texture(animation, 0)
 	surface_size = Vector2(first_texture.get_width(), first_texture.get_height())

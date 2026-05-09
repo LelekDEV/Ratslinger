@@ -128,7 +128,7 @@ region_rect = Rect2(152, 28, 16, 15)
 
 [node name="Option1" type="Node2D" parent="Options" unique_id=273567066]
 script = ExtResource("4_1fviu")
-setting_path = NodePath("music_volume")
+setting_path_str = "music_volume"
 
 [node name="LabelParent" type="Node2D" parent="Options/Option1" unique_id=1043594125]
 
@@ -222,7 +222,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Option2" type="Node2D" parent="Options" unique_id=1862013790]
 position = Vector2(0, 150)
 script = ExtResource("4_1fviu")
-setting_path = NodePath("sfx_volume")
+setting_path_str = "sfx_volume"
 
 [node name="LabelParent" type="Node2D" parent="Options/Option2" unique_id=495566954]
 
@@ -316,7 +316,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Option3" type="Node2D" parent="Options" unique_id=1571500181]
 position = Vector2(0, 300)
 script = ExtResource("4_1fviu")
-setting_path = NodePath("screen_shake")
+setting_path_str = "screen_shake"
 
 [node name="LabelParent" type="Node2D" parent="Options/Option3" unique_id=33249841]
 
@@ -410,7 +410,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Option4" type="Node2D" parent="Options" unique_id=1731021845]
 position = Vector2(0, 450)
 script = ExtResource("4_1fviu")
-setting_path = NodePath("on_death_action")
+setting_path_str = "on_death_action"
 type = 1
 select_options = Array[String](["skip cutscenes", "restart", "nothing"])
 
@@ -510,7 +510,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Option5" type="Node2D" parent="Options" unique_id=945370779]
 position = Vector2(0, 600)
 script = ExtResource("4_1fviu")
-setting_path = NodePath("boss_card")
+setting_path_str = "boss_card"
 type = 1
 select_options = Array[String](["enabled", "disabled"])
 
@@ -611,8 +611,8 @@ metadata/_edit_use_anchors_ = true
 [node name="Option6" type="Node2D" parent="Options" unique_id=2131811297]
 position = Vector2(0, 750)
 script = ExtResource("4_1fviu")
-setting_path = NodePath("physics_ticks_per_second")
-setting_path_extra = NodePath("max_fps")
+setting_path_str = "physics_ticks_per_second"
+setting_path_extra_str = "max_fps"
 use_engine_singleton = true
 value_suffix = " FPS"
 
