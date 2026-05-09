@@ -34,7 +34,7 @@ var is_squeezed: bool = false
 
 var speed: float = 75
 var acceleration: float = 0.05
-var recoil_values: Array = [50.0, 120.0]
+var recoil_values: Array = [50.0, 120.0, -500.0]
 
 var input: Vector2
 
@@ -47,7 +47,7 @@ enum Locations {ARENA, TOWN, TOWN_HALL}
 var location: Locations = Locations.ARENA
 var last_location: Locations = location
 
-enum Guns {REVOLVER, SHOTGUN}
+enum Guns {REVOLVER, SHOTGUN, TROMBONE}
 var gun: Guns = Guns.REVOLVER
 
 func _ready() -> void:
@@ -62,7 +62,7 @@ func _ready() -> void:
 		Global.block_movement = true
 		Global.block_input = true
 	
-	switch_gun(Guns.SHOTGUN)
+	# switch_gun(Guns.SHOTGUN)
 
 func _physics_process(_delta: float) -> void:
 	handle_movement()
@@ -73,11 +73,8 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func switch_gun(new_gun: Guns) -> void:
-	if new_gun == Guns.SHOTGUN and not Upgrades.unlocked_weapons[0]:
-		return
-	
 	gun = new_gun
-	
+
 	var frame: int = base_sprite.frame
 	var progress: float = base_sprite.frame_progress
 	
@@ -95,7 +92,12 @@ func switch_gun(new_gun: Guns) -> void:
 			gun_sprite.offset.x = 3.5
 			
 			base_sprite.play("handless")
-	
+		
+		Guns.TROMBONE:
+			gun_sprite.play("trombone")
+			gun_sprite.z_index = 1
+			gun_sprite.offset.x = -1
+
 	base_sprite.set_frame_and_progress(frame, progress)
 
 func reload_bullets(full: bool = false) -> void:
@@ -112,15 +114,19 @@ func reload_bullets(full: bool = false) -> void:
 
 func spawn_projectile(direction: Vector2) -> bool:
 	var is_special: bool = false
-	var shoot_offset: Vector2 = Vector2(0, 2 + int(gun == Guns.SHOTGUN) * 3)
+	var shoot_offset: Vector2 = Vector2(0, 2 + int(gun == Guns.SHOTGUN) * 3 - int(gun == Guns.TROMBONE) * 7)
 	var shoot_pos := Vector2.ONE * (16 + int(gun == Guns.SHOTGUN) * 8) * direction + shoot_offset
+	
 	
 	var projectile: Projectile
 	
 	match gun:
 		Guns.REVOLVER: projectile = Projectile.instantiate()
-		Guns.SHOTGUN: projectile = Projectile.instantiate(true)
-	
+		Guns.SHOTGUN: projectile = Projectile.instantiate(Projectile.ProjectileKind.SHOTGUN)
+		Guns.TROMBONE:
+			shoot_pos *= -1
+			projectile = Projectile.instantiate(Projectile.ProjectileKind.TROMBONE)
+		
 	var particles: CPUParticles2D
 	
 	match gun:
@@ -131,7 +137,11 @@ func spawn_projectile(direction: Vector2) -> bool:
 		Guns.SHOTGUN: 
 			particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT_HEAVY)
 			particles.position = Vector2.ONE * 8 * direction + shoot_offset
-	
+		
+		Guns.TROMBONE:
+			particles = ParticleSpawner.instantiate(ParticleSpawner.ID.SHOOT_SOUND_WAVE)
+			particles.position = shoot_pos
+
 	projectile.global_position = global_position + shoot_pos
 	projectile.global_rotation = direction.angle()
 	projectile.direction = direction
@@ -169,10 +179,32 @@ func handle_locations() -> void:
 	
 	last_location = location
 
+func is_gun_unlocked(check_gun: Guns) -> bool:
+	match check_gun:
+
+		Guns.REVOLVER:
+			return true
+
+		Guns.SHOTGUN:
+			return Upgrades.unlocked_weapons[0]
+
+		Guns.TROMBONE:
+			return Upgrades.unlocked_weapons[1]
+
+	return false
+
+func cycle_guns() -> void:
+	for i in Guns.size():
+		var next_gun = (gun + 1) % Guns.size()
+		
+		if is_gun_unlocked(next_gun):
+			switch_gun(next_gun)
+			return
+
 func handle_shooting() -> void:
 	if Input.is_action_just_pressed("switch_gun"):
 		@warning_ignore("int_as_enum_without_cast")
-		switch_gun((gun + 1) % Guns.size())
+		cycle_guns()
 	
 	if Input.is_action_just_pressed("shoot") and \
 		shoot_cooldown.is_stopped() and \
@@ -195,7 +227,8 @@ func handle_shooting() -> void:
 		match gun:
 			Guns.REVOLVER: recoil = recoil_values[0]
 			Guns.SHOTGUN: recoil = recoil_values[1] / (int(accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 2) + 1)
-		
+			Guns.TROMBONE: recoil = recoil_values[2] / (int(accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 2) + 1)
+
 		velocity -= direction * recoil
 		
 		if is_special:

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://g408c8ffeg8k" path="res://graphics/characters/player/legs.png" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/systems/weather/rain_surface.gd" id="4_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://ck3rrnjmf4vj8" path="res://graphics/characters/player/squeeze.png" id="4_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://dcp6r1cs85nau" path="res://graphics/characters/player/knockback_gun.png" id="4_x6wru"]
 [ext_resource type="Texture2D" uid="uid://clhtwnivxpeov" path="res://graphics/characters/player/base_handless.png" id="5_hmd7n"]
 [ext_resource type="PackedScene" uid="uid://cb4w1r51ouhpi" path="res://scenes/world/interaction/squeeze_lock.tscn" id="7_fjrip"]
 
@@ -81,6 +82,14 @@ animations = [{
 "loop": false,
 "name": &"shotgun_shoot",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_x6wru")
+}],
+"loop": true,
+"name": &"trombone",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
@@ -263,6 +272,7 @@ offset = Vector2(11.5, 0)
 [node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=1353984724 node_paths=PackedStringArray("spawn_node")]
 position = Vector2(0.5, -2)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
+animation = &"handless"
 autoplay = "default"
 script = ExtResource("4_qlg0r")
 use_meta = true

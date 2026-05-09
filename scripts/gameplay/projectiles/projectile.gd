@@ -21,37 +21,51 @@ var penetrating: bool = false
 enum Type {REGULAR = -1, VAMPIRE, FIRE, POISON}
 var type: Type = Type.REGULAR
 
-enum Action {REGULAR, STATIONARY}
+@export var use_special_particles: bool = true
+
+enum Action {REGULAR, STATIONARY, WAVE}
 @export var action: Action
 var ignored_enemies: Array
+var ignored_bounce_enemies: Array
 
-static func instantiate(is_shotgun: bool = false) -> Projectile:
-	if is_shotgun:
-		return preload("res://scenes/world/projectiles/shotgun_projectile.tscn").instantiate()
-	else:
-		return preload("res://scenes/world/projectiles/projectile.tscn").instantiate() as Projectile
+var debounced_enemies: int = 0
+
+enum ProjectileKind {REGULAR, SHOTGUN, TROMBONE}
+
+static func instantiate(kind: ProjectileKind = ProjectileKind.REGULAR) -> Projectile:
+	match kind:
+		ProjectileKind.SHOTGUN:
+			return preload("res://scenes/world/projectiles/shotgun_projectile.tscn").instantiate()
+		ProjectileKind.TROMBONE:
+			return preload("res://scenes/world/projectiles/trombone_projectile.tscn").instantiate()
+		_:
+			return preload("res://scenes/world/projectiles/projectile.tscn").instantiate()
 
 func _ready() -> void:
-	if action == Action.REGULAR:
+	if use_special_particles:
 		special_particles_dark = $SpecialParticles/Dark
 		special_particles_light = $SpecialParticles/Light
 	
 	if type != Type.REGULAR:
-		if action == Action.REGULAR:
+		if use_special_particles:
 			special_particles_dark.emitting = true
 			special_particles_light.emitting = true
 			special_particles_dark.color = Consts.SPECIAL_BULLETS_COLORS.dark[type]
 			special_particles_light.color = Consts.SPECIAL_BULLETS_COLORS.light[type]
 		
-		if type == Type.VAMPIRE:
-			sprite.play("vampire")
-		elif type == Type.FIRE:
-			sprite.play("fire")
-		elif type == Type.POISON:
-			sprite.play("poison")
+		if action != Action.WAVE:
+			if type == Type.VAMPIRE:
+				sprite.play("vampire")
+			elif type == Type.FIRE:
+				sprite.play("fire")
+			elif type == Type.POISON:
+				sprite.play("poison")
+	
+	if action == Action.WAVE:
+		direction *= -1
 
 func _physics_process(delta: float) -> void:
-	if action == Action.REGULAR:
+	if action == Action.REGULAR or action == Action.WAVE:
 		velocity = direction * speed * delta
 		global_position += velocity
 
@@ -99,11 +113,41 @@ func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
 	if action == Action.REGULAR:
 		if not enemy.free_on_death and enemy.health <= 0:
 			await SignalBus.boss_death_anim_ended
-		
+
 		queue_free()
 	
 	ignored_enemies.append(enemy)
+	
+	if action == Action.WAVE:
+		ignored_bounce_enemies.append(enemy)
+		var dist: float = INF
+		var closest_eminem_pos: Vector2
 
+		for eminem: Enemy in Global.all_enemies:
+			if eminem in ignored_bounce_enemies:
+				continue
+			
+			var new_dist: float = eminem.global_position.distance_squared_to(global_position)
+			if new_dist < dist:
+				dist = new_dist
+				closest_eminem_pos = eminem.global_position
+		
+		direction = global_position.direction_to(closest_eminem_pos)
+		sprite.global_rotation = direction.angle() + PI
+		handle_bouce()
+
+func handle_bouce() -> void:
+	debounced_enemies += 1
+	
+	if debounced_enemies == 1:
+		sprite.play("m_wave")
+	elif debounced_enemies == 2:
+		sprite.play("s_wave")
+	
+	elif debounced_enemies == 3:
+		queue_free()
+	
+	
 func _on_death_timer_timeout() -> void:
 	queue_free()
 

@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cr62blk27lda3"]
+
+[ext_resource type="Texture2D" uid="uid://dqvx45apg0lh6" path="res://graphics/characters/player/single_note_particles.png" id="1_ont7w"]
+[ext_resource type="Script" uid="uid://cnqofd2aq28ts" path="res://scripts/fx/sound_wave_particles.gd" id="2_rbwhg"]
+[ext_resource type="Texture2D" uid="uid://cjimv0wgc06i8" path="res://graphics/characters/player/double_note_particles.png" id="3_ca3ba"]
+
+[sub_resource type="Curve" id="Curve_7a8lf"]
+_data = [Vector2(0, 1), nan, 0.0, 1, 0, Vector2(0.2, 0), 0.0, nan, 0, 1]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_rbwhg"]
+_data = [Vector2(0, 1), 0.0, -4.9999995, 0, 1, Vector2(0.2, 0), -4.9999995, 0.0, 1, 0]
+point_count = 2
+
+[node name="ShootSoundWaveParticles" type="CPUParticles2D" unique_id=1878725894 groups=["particles"]]
+emitting = false
+amount = 10
+texture = ExtResource("1_ont7w")
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+particle_flag_align_y = true
+direction = Vector2(-1, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 200.0
+damping_min = 500.0
+damping_max = 500.0
+angle_min = 180.0
+angle_max = 360.0
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_7a8lf")
+script = ExtResource("2_rbwhg")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1320164037]
+emitting = false
+amount = 5
+texture = ExtResource("3_ca3ba")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+particle_flag_align_y = true
+direction = Vector2(-1, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 200.0
+damping_min = 500.0
+damping_max = 500.0
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_rbwhg")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

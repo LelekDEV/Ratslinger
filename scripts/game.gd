@@ -79,7 +79,7 @@ func _ready() -> void:
 	#Global.waves_cleared = 14
 	#Global.is_tutorial_passed = false
 	#Global.rain_value = -1
-	#Global.coins = 1000
+	#Global.coins = 100
 
 func setup_signals() -> void:
 	SignalBus.player_shoot.connect(camera.shake.bind(0.2, 2.5, 0.8))

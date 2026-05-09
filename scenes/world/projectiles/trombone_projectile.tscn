@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://bwhvg1g0frryj"]
+
+[ext_resource type="Script" uid="uid://bm72rju3rprm6" path="res://scripts/gameplay/projectiles/projectile.gd" id="1_lyf3x"]
+[ext_resource type="Texture2D" uid="uid://baretgn0igqpv" path="res://graphics/characters/player/sound wave.png" id="2_tdery"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w8sf3"]
+radius = 6.0
+height = 18.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgis8"]
+atlas = ExtResource("2_tdery")
+region = Rect2(120, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qom5y"]
+atlas = ExtResource("2_tdery")
+region = Rect2(140, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87we8"]
+atlas = ExtResource("2_tdery")
+region = Rect2(160, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyf3x"]
+atlas = ExtResource("2_tdery")
+region = Rect2(60, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdery"]
+atlas = ExtResource("2_tdery")
+region = Rect2(80, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8sf3"]
+atlas = ExtResource("2_tdery")
+region = Rect2(100, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k41ao"]
+atlas = ExtResource("2_tdery")
+region = Rect2(0, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqxvr"]
+atlas = ExtResource("2_tdery")
+region = Rect2(20, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y8u3"]
+atlas = ExtResource("2_tdery")
+region = Rect2(40, 0, 20, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dljsk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgis8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qom5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87we8")
+}],
+"loop": true,
+"name": &"l_wave",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyf3x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdery")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8sf3")
+}],
+"loop": true,
+"name": &"m_wave",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k41ao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqxvr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y8u3")
+}],
+"loop": true,
+"name": &"s_wave",
+"speed": 5.0
+}]
+
+[node name="TromboneProjectile" type="Area2D" unique_id=1388832086]
+script = ExtResource("1_lyf3x")
+use_special_particles = false
+action = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2141898865]
+z_index = 1
+shape = SubResource("CapsuleShape2D_w8sf3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1333006813]
+sprite_frames = SubResource("SpriteFrames_dljsk")
+animation = &"m_wave"
+flip_h = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

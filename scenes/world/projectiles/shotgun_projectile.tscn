@@ -143,6 +143,7 @@ points = PackedVector2Array(-18, 0, -8, -15, 15, -25, 27, 0, 15, 25, -8, 15)
 
 [node name="ShootgunProjectile" type="Area2D" unique_id=1560415016]
 script = ExtResource("1_mxh2e")
+use_special_particles = false
 action = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=77032614]
