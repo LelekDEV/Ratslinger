@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dktwes4awq3g6"
-path="res://.godot/imported/notes_particles.png-064de6c57917f98f27ebdabca789c378.ctex"
+uid="uid://cyj4a8fflpld5"
+path="res://.godot/imported/dash_effect.png-a5682c6ad109fe8990eb27d9637d8958.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/characters/player/notes_particles.png"
-dest_files=["res://.godot/imported/notes_particles.png-064de6c57917f98f27ebdabca789c378.ctex"]
+source_file="res://graphics/characters/player/dash_effect.png"
+dest_files=["res://.godot/imported/dash_effect.png-a5682c6ad109fe8990eb27d9637d8958.ctex"]
 
 [params]
 

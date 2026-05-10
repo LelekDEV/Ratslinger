@@ -10,8 +10,10 @@ class_name Projectile
 @onready var special_particles_dark: CPUParticles2D
 @onready var special_particles_light: CPUParticles2D
 
-var damage: float = 1
-var knockback: float = 150
+@onready var death_timer: Timer = $DeathTimer
+
+@export var damage: float = 1
+@export var knockback: float = 150
 
 var speed: float = 150
 var direction: Vector2
@@ -86,7 +88,7 @@ func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
 	if enemy in ignored_enemies:
 		return
 	
-	enemy.take_damage(damage * enemy.headshot_mult if is_critical else 1.0, global_position, is_critical, false, self)
+	enemy.take_damage(damage * enemy.headshot_mult if is_critical else damage, global_position, is_critical, false, self)
 	enemy.velocity += direction * knockback
 	
 	if type == Type.VAMPIRE:
@@ -120,36 +122,48 @@ func damage_and_destroy(enemy: Enemy, is_critical: bool) -> void:
 	
 	if action == Action.WAVE:
 		ignored_bounce_enemies.append(enemy)
-		var dist: float = INF
-		var closest_eminem_pos: Vector2
-
-		for eminem: Enemy in Global.all_enemies:
-			if eminem in ignored_bounce_enemies:
-				continue
-			
-			var new_dist: float = eminem.global_position.distance_squared_to(global_position)
-			if new_dist < dist:
-				dist = new_dist
-				closest_eminem_pos = eminem.global_position
 		
-		direction = global_position.direction_to(closest_eminem_pos)
-		sprite.global_rotation = direction.angle() + PI
-		handle_bouce()
+		bounce_direction()
+		bounce_absorb()
 
-func handle_bouce() -> void:
+func bounce_direction() -> void:
+	# I got rid of eminem muahahaha
+	if Global.all_enemies.all(func(enemy: Enemy): return enemy in ignored_bounce_enemies):
+		return
+	
+	var dist: float = INF
+	var closest_enemy_pos: Vector2
+	
+	for enemy: Enemy in Global.all_enemies:
+		if enemy in ignored_bounce_enemies:
+			continue
+		
+		var new_dist: float = enemy.global_position.distance_squared_to(global_position)
+		if new_dist < dist:
+			dist = new_dist
+			closest_enemy_pos = enemy.global_position
+	
+	direction = global_position.direction_to(closest_enemy_pos)
+	sprite.global_rotation = direction.angle() + PI
+
+func bounce_absorb() -> void:
 	debounced_enemies += 1
 	
 	if debounced_enemies == 1:
 		sprite.play("m_wave")
 	elif debounced_enemies == 2:
 		sprite.play("s_wave")
-	
 	elif debounced_enemies == 3:
 		queue_free()
+		return
 	
-	
+	death_timer.start()
+
 func _on_death_timer_timeout() -> void:
-	queue_free()
+	if action == Action.WAVE:
+		bounce_absorb()
+	else:
+		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
 	if is_queued_for_deletion():
@@ -170,6 +184,7 @@ func _on_area_entered(area: Area2D) -> void:
 		match action:
 			Action.REGULAR: damage_and_destroy(area.get_parent(), true)
 			Action.STATIONARY: damage_and_destroy(area.get_parent(), false)
+			Action.WAVE: damage_and_destroy(area.get_parent(), true)
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	sprite.visible = false

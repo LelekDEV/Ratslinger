@@ -42,7 +42,7 @@ func animate(from_projectile: Node2D, from_enemy: Enemy) -> void:
 	death_shadow_rect.color = Color.BLACK
 	
 	var highlight_nodes: Array = [player, from_projectile]
-	const DISCLUDED_NODE_PATHS: Array = ["LocalFX", "FireFX", "FlightPath"]
+	const DISCLUDED_NODE_PATHS: Array = ["LocalFX", "FireFX", "FlightPath", "DashParticles"]
 	
 	if from_enemy:
 		if from_enemy.ai == Enemy.AI.SEGMENT:

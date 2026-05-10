@@ -20,6 +20,7 @@ class_name Player
 @onready var squeeze_lock: SqueezeLock = $SqueezeLock
 
 @onready var local_fx: Node2D = $LocalFX
+@onready var dash_particles: CPUParticles2D = $DashParticles
 
 @export var gate: StaticBody2D
 
@@ -96,7 +97,7 @@ func switch_gun(new_gun: Guns) -> void:
 		Guns.TROMBONE:
 			gun_sprite.play("trombone")
 			gun_sprite.z_index = 1
-			gun_sprite.offset.x = -1
+			gun_sprite.offset.x = -1.5
 
 	base_sprite.set_frame_and_progress(frame, progress)
 
@@ -116,7 +117,6 @@ func spawn_projectile(direction: Vector2) -> bool:
 	var is_special: bool = false
 	var shoot_offset: Vector2 = Vector2(0, 2 + int(gun == Guns.SHOTGUN) * 3 - int(gun == Guns.TROMBONE) * 7)
 	var shoot_pos := Vector2.ONE * (16 + int(gun == Guns.SHOTGUN) * 8) * direction + shoot_offset
-	
 	
 	var projectile: Projectile
 	
@@ -147,9 +147,13 @@ func spawn_projectile(direction: Vector2) -> bool:
 	projectile.direction = direction
 	
 	if accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 2:
-		projectile.speed *= 1.5
-		projectile.knockback *= 3
-		projectile.penetrating = true
+		if gun == Guns.REVOLVER:
+			projectile.speed *= 1.5
+			projectile.knockback *= 3
+			projectile.penetrating = true
+		
+		elif gun == Guns.TROMBONE:
+			projectile.get_node("DeathTimer").wait_time = 1
 		
 		var type: Projectile.Type = bullet_bar.slot_types[bullet_bar.current_slot]
 		projectile.type = type
@@ -227,8 +231,8 @@ func handle_shooting() -> void:
 		match gun:
 			Guns.REVOLVER: recoil = recoil_values[0]
 			Guns.SHOTGUN: recoil = recoil_values[1] / (int(accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 2) + 1)
-			Guns.TROMBONE: recoil = recoil_values[2] / (int(accuracy_bar.get_type_from_value(accuracy_bar.progress_value) == 2) + 1)
-
+			Guns.TROMBONE: recoil = recoil_values[2]
+		
 		velocity -= direction * recoil
 		
 		if is_special:
@@ -240,11 +244,14 @@ func handle_shooting() -> void:
 		
 		if gun == Guns.SHOTGUN:
 			gun_sprite.play("shotgun_shoot")
+		elif gun == Guns.TROMBONE:
+			dash_particles.emitting = true
 		
 		SignalBus.player_shoot.emit(false)
 		Global.force_input = false
 
 func handle_movement() -> void:
+	# TO DO: should probably split some bits into handle_animation
 	if Global.block_movement or is_squeezed:
 		input = Vector2.ZERO
 	else:
@@ -264,8 +271,11 @@ func handle_movement() -> void:
 		base_sprite.flip_h = true
 		legs_sprite.flip_h = true
 	
-	gun_sprite.position.y = 3.5 + int(base_sprite.frame == 2) + int(gun == Guns.SHOTGUN) * 3
+	gun_sprite.position.y = 3.5 + int(base_sprite.frame == 2) + int(gun == Guns.SHOTGUN) * 3 + int(gun == Guns.TROMBONE) * 0.5
 	gun_sprite.global_rotation = get_angle_to(get_global_mouse_position())
+	
+	dash_particles.position = base_sprite.position
+	dash_particles.texture.region.position.x = 0 if flip else 37
 	
 	for fx in local_fx.get_children():
 		if fx.has_meta("flippable_pos"):

@@ -86,7 +86,7 @@ _data = {
 &"regular": SubResource("Animation_2sglj")
 }
 
-[node name="DamageIndicator" type="Label"]
+[node name="DamageIndicator" type="Label" unique_id=1952891616]
 offset_left = -9.0
 offset_top = -15.0
 offset_right = 9.0
@@ -98,7 +98,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("2_ltrgt")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_pdomm")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1790439354]
+libraries/ = SubResource("AnimationLibrary_pdomm")

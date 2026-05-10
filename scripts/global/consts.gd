@@ -14,21 +14,21 @@ const ITEM_DESC: Array = [
 	"Inflicts damaging and weakening poison.",
 	[
 		"""Traits: penetrating, multi-target, static projectile
+		Damage: 1
 		Range: low
 		Knockback: medium
 		Recoil: high
 		Accuracy layout:""",
-		"""Perfect shots: less recoil
-		Supports special bullets: on perfect shots"""
+		"Perfect shots: less recoil"
 	],
 	[
-		"""Traits: damageless, penetrating, multi-target, reversed direction
+		"""Traits: penetrating, multi-target, reversed direction, bouncing
+		Damage: 0.5
 		Range: medium
 		Knockback: high
 		Recoil: INSANE
 		Accuracy layout:""",
-		"""Perfect shots: even more recoil
-		Supports special bullets: no"""
+		"Perfect shots: much greater lifetime"
 	]
 ]
 
