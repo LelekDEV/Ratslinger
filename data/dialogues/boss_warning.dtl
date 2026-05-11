@@ -1,0 +1,10 @@
+[signal arg_type="dict" arg="{"name":"camera_override","type":"mayor_enter"}"]
+Hey, champ...[pause=0.25] You'd better take care of yourself.
+I sense a big chunk'o'meat is coming for ya.
+Just take a look for yourself.
+[wait time="1.0"]
+[signal arg_type="dict" arg="{"name":"camera_override","type":"arena"}"]
+[wait time="4.5"]
+So watch out and prepare as much as you can,[pause=0.25] will ya?
+[signal arg_type="dict" arg="{"name":"camera_override","type":"mayor_exit"}"]
+set {Global.is_boss_warned} = true

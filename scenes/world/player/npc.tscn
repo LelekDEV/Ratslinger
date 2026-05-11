@@ -100,9 +100,9 @@ id = 1
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1148445637 node_paths=PackedStringArray("spawn_node")]
 sprite_frames = SubResource("SpriteFrames_7n8xq")
 animation = &"mayor"
-frame_progress = 0.9938935
+frame_progress = 0.29121155
 script = ExtResource("4_4wlns")
-override_anim = "kiddo"
+auto_call = false
 spawn_node = NodePath("../LocalFX")
 
 [node name="LocalFX" type="Node2D" parent="." unique_id=2127123408]

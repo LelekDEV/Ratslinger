@@ -76,7 +76,7 @@ func _ready() -> void:
 	title_sand_sprite.global_position.x = int(player.global_position.x)
 	
 	# testing...
-	#Global.waves_cleared = 14
+	#Global.waves_cleared = 13
 	#Global.is_tutorial_passed = false
 	#Global.rain_value = -1
 	#Global.coins = 100
@@ -93,9 +93,16 @@ func setup_signals() -> void:
 	SignalBus.player_location_change.connect(ui.on_player_location_change)
 	
 	SignalBus.player_hit.connect(ui.animation.play.bind("player_hit"))
-	SignalBus.player_hit.connect(camera.shake)
+	SignalBus.player_hit.connect(camera.shake.bind(0.2, 2.5, 0.8))
 
 func _physics_process(_delta: float) -> void:
+	if Input.is_action_just_pressed("exit_boss_card"):
+		exit_boss_card.emit()
+	
+	if not Global.is_boss_warned and Global.is_boss_wave():
+		wave_start_interaction_area.animation.play("instant_exit")
+		return
+	
 	if wave_start_interaction_area.interacting and \
 		Input.is_action_just_pressed("interact") and \
 		not is_wave_active and \
@@ -103,9 +110,6 @@ func _physics_process(_delta: float) -> void:
 		not is_cutscene_on:
 		
 		start_wave()
-	
-	if Input.is_action_just_pressed("exit_boss_card"):
-		exit_boss_card.emit()
 
 func boss_card() -> void:
 	if Settings.boss_card == 0 and not (Global.waves_cleared == Global.death_wave and Settings.on_death_action == 1):
@@ -191,7 +195,7 @@ func start_wave() -> void:
 	
 	Global.death_coins = Global.coins
 	
-	if Global.waves_cleared % 15 == 14 and Global.waves_cleared >= 14:
+	if Global.is_boss_wave():
 		if Global.waves_cleared == Global.death_wave and Settings.on_death_action <= 1:
 			await boss_cutscene_skip()
 		else:

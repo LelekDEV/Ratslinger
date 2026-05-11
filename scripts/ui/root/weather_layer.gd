@@ -4,6 +4,7 @@ extends CanvasLayer
 
 func _ready() -> void:
 	SignalBus.scale_changed.connect(update_scale)
+	update_scale()
 
 func _physics_process(_delta: float) -> void:
 	sub_viewport.size = get_viewport().get_visible_rect().size / scale

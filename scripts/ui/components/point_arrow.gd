@@ -6,21 +6,28 @@ extends Sprite2D
 @export var wave_start_area: Area2D
 @export var target_pos: Vector2 = Vector2.ZERO
 
+enum Type {TUTORIAL, BOSS_RETURN}
+@export var type: Type
+
 var anim: float = 0
 
 func _physics_process(delta: float) -> void:
-	if Global.is_tutorial_passed:
+	if type == Type.TUTORIAL and Global.is_tutorial_passed or \
+		type == Type.BOSS_RETURN and Global.is_boss_warned:
 		queue_free()
 	
 	anim = fmod(anim + delta * 6, TAU)
 	offset.x = -20 + sin(anim) * 3
 	
-	visible = not wave_start_area.interacting and not Global.game.is_wave_active and not player.location == Player.Locations.TOWN_HALL
+	if type == Type.TUTORIAL:
+		visible = not wave_start_area.interacting and not Global.game.is_wave_active and not player.location == Player.Locations.TOWN_HALL
+	elif type == Type.BOSS_RETURN:
+		visible = Global.is_boss_wave()
 	
 	var c_size = get_viewport().get_visible_rect().size / camera.zoom
 	var c_rect = Rect2(camera.get_screen_center_position() - c_size / 2, c_size)
 	
-	if c_rect.has_point(Vector2.ZERO):
+	if c_rect.has_point(target_pos):
 		global_position = get_viewport().get_canvas_transform() * target_pos
 		global_rotation = PI / 2
 	

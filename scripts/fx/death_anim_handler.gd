@@ -42,7 +42,7 @@ func animate(from_projectile: Node2D, from_enemy: Enemy) -> void:
 	death_shadow_rect.color = Color.BLACK
 	
 	var highlight_nodes: Array = [player, from_projectile]
-	const DISCLUDED_NODE_PATHS: Array = ["LocalFX", "FireFX", "FlightPath", "DashParticles"]
+	const DISCLUDED_NODE_PATHS: Array = ["LocalFX", "FireFX", "FlightPath", "DashParticles", "PoisonParticles"]
 	
 	if from_enemy:
 		if from_enemy.ai == Enemy.AI.SEGMENT:
@@ -120,6 +120,7 @@ func on_boss_death(from_projectile: Projectile) -> void:
 	for sprite in player.find_children("*Sprite*"):
 		sprite.material = null
 	
+	player.dash_particles.visible = true
 	death_shadow_rect.visible = false
 	ui.visible = true
 	weather_layer.visible = true

@@ -11,6 +11,7 @@ var appear_value: float = 0
 var order_value: float
 
 func _physics_process(_delta: float) -> void:
+	visible = appear_value != 0
 	sprite.offset.y = floor((1 - appear_value) * 20)
 	particles.emitting = appear_value != 1 and appear_value != 0
 

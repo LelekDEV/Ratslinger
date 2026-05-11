@@ -46,6 +46,7 @@ SaverLoader="*uid://dfus07kijh5g4"
 
 directories/dch_directory={}
 directories/dtl_directory={
+"boss_warning": "res://data/dialogues/boss_warning.dtl",
 "builder": "res://data/dialogues/builder.dtl",
 "building_repaired": "res://data/dialogues/building_repaired.dtl",
 "introduction": "res://data/dialogues/introduction.dtl",

@@ -19,6 +19,8 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	
+	sprite.get_all_points()
+	
 	if id == ID.MAYOR:
 		Dialogic.signal_event.connect(mission_reward)
 	

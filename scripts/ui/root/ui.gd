@@ -1,6 +1,8 @@
 extends CanvasLayer
 class_name UI
 
+@export var icons: Node2D
+
 @onready var hearts: HBoxContainer = $Hearts
 @onready var location_popup: Sprite2D = $LocationPopup
 @onready var margin_container: MarginContainer = $MarginContainer
@@ -17,7 +19,9 @@ class_name UI
 
 @onready var shooting_tutorial: Node2D = $TutorialContainer/ShootingTutorial
 @onready var shooting_tutorial_label: Label = $TutorialContainer/ShootingTutorialLabel
+
 @onready var tutorial_arrow: Sprite2D = $TutorialArrow
+@onready var boss_return_arrow: Sprite2D = $BossReturnArrow
 
 @onready var animation: AnimationHandler = $AnimationHandler
 
@@ -121,6 +125,7 @@ func update_scale() -> void:
 	
 	shooting_tutorial.scale = scale_vector
 	if tutorial_arrow: tutorial_arrow.scale = scale_vector
+	if boss_return_arrow: boss_return_arrow.scale = scale_vector
 	
 	margin_container.scale = scale_vector / 4
 	
@@ -246,6 +251,15 @@ func on_player_location_change(location: Player.Locations) -> void:
 		toggle_combat_hud(false)
 		Global.block_input = true
 		
-		if location == Player.Locations.TOWN and Global.builder_value == 1:
-			await get_tree().create_timer(0.5, false).timeout
-			Dialogic.start("building_repaired")
+		if location == Player.Locations.TOWN:
+			if Global.builder_value == 1:
+				await get_tree().create_timer(0.5, false).timeout
+				Dialogic.start("building_repaired")
+			
+			elif not Global.is_boss_warned and Global.is_boss_wave():
+				await get_tree().create_timer(0.5, false).timeout
+				
+				boss_return_arrow.queue_free()
+				icons.show_skull()
+				
+				Dialogic.start("boss_warning")

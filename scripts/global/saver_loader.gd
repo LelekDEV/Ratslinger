@@ -17,6 +17,7 @@ var save_paths: Dictionary = {
 		^"enemy_stats",
 		^"is_tutorial_passed",
 		^"is_introduction_passed",
+		^"is_boss_warned",
 		^"builder_value",
 		^"rain_value"
 	],

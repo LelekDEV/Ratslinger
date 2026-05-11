@@ -34,6 +34,7 @@ var is_dialogue_on: bool = false
 
 var is_tutorial_passed: bool = false
 var is_introduction_passed: bool = false
+var is_boss_warned: bool = false
 
 var is_game_restarted: bool = false
 var is_title_restarted: bool = false
@@ -88,6 +89,10 @@ func update_min_scale_level() -> void:
 # It may be changed in scripts/global/consts.gd although that's unadvised, since it will result in disregulating all weights
 func fixed_lerp(from: Variant, to: Variant, weight: Variant) -> Variant:
 	return lerp(from, to, 1 - exp(Consts.FIXED_LERP_RELATIVE_FPS * log(1 - weight) * get_physics_process_delta_time()))
+
+func is_boss_wave() -> bool:
+	# Every 10 waves starting on wave 11, feel free to tinker
+	return waves_cleared % 10 == 0 and waves_cleared >= 10
 
 func get_rain_change_ratio() -> float:
 	if rain_value < 0:

@@ -74,6 +74,9 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func switch_gun(new_gun: Guns) -> void:
+	if is_squeezed:
+		return
+	
 	gun = new_gun
 
 	var frame: int = base_sprite.frame
@@ -316,7 +319,7 @@ func exit_squeeze() -> void:
 	gun_sprite.visible = true
 	legs_sprite.visible = true
 	
-	base_sprite.play("idle")
+	base_sprite.play("default")
 	
 	var particles: CPUParticles2D = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOOD)
 	particles.global_position = global_position

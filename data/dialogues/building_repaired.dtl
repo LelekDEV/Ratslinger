@@ -1,5 +1,5 @@
 [signal arg_type="dict" arg="{"name":"camera_override","type":"mayor_enter"}"]
-Hey champ, would'ya look at that!
+Hey champ,[pause=0.25] would'ya look at that!
 [wait time="1.0"]
 [signal arg_type="dict" arg="{"name":"camera_override","type":"shop"}"]
 [wait time="4.5"]
