@@ -182,7 +182,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1v3cm")
 }],
-"loop": true,
+"loop": false,
 "name": &"eat",
 "speed": 5.0
 }, {
@@ -286,8 +286,8 @@ scale_amount_curve = SubResource("Curve_1nh28")
 [node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=753240947]
 material = SubResource("ShaderMaterial_67sd0")
 sprite_frames = SubResource("SpriteFrames_gfyqs")
-animation = &"kick"
-frame = 8
+animation = &"eat"
+frame = 12
 frame_progress = 1.0
 
 [node name="FireFX" parent="." unique_id=452394200 instance=ExtResource("5_1nh28")]

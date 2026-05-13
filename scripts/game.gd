@@ -24,7 +24,7 @@ class_name Game
 
 @onready var gate: StaticBody2D = $Environment/Gate
 @onready var wave_start_interaction_area: Area2D = $WaveStartInteractionArea
-@onready var title_sand_sprite: Sprite2D = $SandSprite3
+@onready var title_background: Node2D = $Environment/Ground/TitleBackground
 
 @onready var bossfight_bound: ReferenceRect = $BossfightBoundRect
 @onready var bossfight_bound_shapes: Array = get_tree().get_nodes_in_group("bossfight_bound_shape")
@@ -56,7 +56,7 @@ func _ready() -> void:
 		GlobalAudio.music_player.stop()
 		SaverLoader.load_game()
 		
-		title_sand_sprite.global_position.x = int(player.global_position.x)
+		title_background.global_position.x = int(player.global_position.x)
 		
 		await get_tree().physics_frame
 		
@@ -69,11 +69,9 @@ func _ready() -> void:
 		return
 	
 	await SignalBus.game_loaded
-	# L this actually only emits when the game is loaded the first time.
-	# I'll workaround with a frame delay for restarting waves since I don't want to damage existing structure.
-	# There's 13 references to 'game_loaded' in the whole project, ouch...
+	# Actually, I'm not even sure how this works
 	
-	title_sand_sprite.global_position.x = int(player.global_position.x)
+	title_background.global_position.x = int(player.global_position.x)
 	
 	# testing...
 	#Global.waves_cleared = 13
