@@ -116,7 +116,12 @@ func _physics_process(_delta: float) -> void:
 		global_position = get_parent().global_position
 	
 	if Global.is_title_on:
-		global_position.y = lerp(468.0, get_parent().to_global(Vector2.ZERO).y, intro_value)
+		global_position.y = lerp(468.0, clampf(
+			get_parent().to_global(Vector2.ZERO).y, 
+			-250 + get_viewport_rect().size.y / zoom.y / 2, 
+			228 - get_viewport_rect().size.y / zoom.y / 2
+		), intro_value)
+		# These cherry-picked values seem to minimize the snap
 		limit_bottom = 10000000
 	
 	var last_pos: Vector2 = get_parent().global_position

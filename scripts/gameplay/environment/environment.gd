@@ -59,11 +59,18 @@ func disable_title_anim(is_instant: bool = false) -> void:
 			.set_ease(Tween.EASE_OUT)
 		
 		title_exit_tween.tween_property(self, "title_anim_speed", 0, 0.5)
+		await title_exit_tween.finished
+		
+		is_title_anim_disabled = true
 		
 		await SignalBus.title_exited
-	
-	is_title_anim_disabled = true
-	title_background.visible = false
+		await get_tree().process_frame
+		
+		is_title_anim_disabled = true
+		title_background.visible = false
+	else:
+		is_title_anim_disabled = true
+		title_background.visible = false
 
 func _on_cow_anim_timer_timeout() -> void:
 	cow_anim_timer.start(randf_range(1, 5))
