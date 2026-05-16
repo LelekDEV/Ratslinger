@@ -2,6 +2,7 @@ extends CanvasLayer
 class_name UI
 
 @export var icons: Node2D
+@export var builder_npc: NPC
 
 @onready var hearts: HBoxContainer = $Hearts
 @onready var location_popup: Sprite2D = $LocationPopup
@@ -252,8 +253,19 @@ func on_player_location_change(location: Player.Locations) -> void:
 		Global.block_input = true
 		
 		if location == Player.Locations.TOWN:
-			if Global.builder_value == 1:
+			if 2 in Global.town_state:
+				Global.shown_buildings.clear()
+				
+				for i in range(Global.town_state.size()):
+					if Global.town_state[i] == 2:
+						Global.shown_buildings.append(i)
+						Global.town_state[i] = 3
+				
+				Global.update_dialogic_var_building()
+				builder_npc.update_builder_pos()
+				
 				await get_tree().create_timer(0.5, false).timeout
+
 				Dialogic.start("building_repaired")
 			
 			elif not Global.is_boss_warned and Global.is_boss_wave():

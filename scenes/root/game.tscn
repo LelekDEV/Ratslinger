@@ -1320,10 +1320,11 @@ offset_bottom = 40.0
 texture = SubResource("ViewportTexture_4qk7b")
 metadata/_edit_lock_ = true
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1372504453 node_paths=PackedStringArray("icons") groups=["ui"]]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1372504453 node_paths=PackedStringArray("icons", "builder_npc") groups=["ui"]]
 layer = 0
 script = ExtResource("2_ijxjl")
 icons = NodePath("../Icons")
+builder_npc = NodePath("../NPC/BuilderNPC")
 
 [node name="PerfectFlashRect" type="ColorRect" parent="UI" unique_id=1366706336]
 anchors_preset = 15
@@ -1821,7 +1822,7 @@ position = Vector2(-584, 15)
 reward_coins_curve = SubResource("Curve_dawlq")
 
 [node name="BuilderNPC" parent="NPC" unique_id=540230813 instance=ExtResource("18_a8jnx")]
-position = Vector2(-459, -44)
+position = Vector2(-459.5, -44)
 id = 2
 
 [node name="Markers" type="Node2D" parent="." unique_id=1888461289 groups=["markers"]]

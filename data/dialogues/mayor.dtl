@@ -44,7 +44,7 @@ Anything specific y'come for?
 	Hmmh, y'see, this town used to stand full of it's mightiness, but now it's in trouble.
 	Just take a look at all those ruined buildings...
 	[wait time="1.0"]
-	[signal arg_type="dict" arg="{"name":"camera_override","type":"shop"}"]
+	[signal arg_type="dict" arg="{"name":"camera_override","type":"town"}"]
 	[wait time="4.5"]
 	Good news is, the more waves you defend, the better those buildings will stand!
 	Whilst ya do your bloody reckoning builders work hard to bring this town it's old shape.

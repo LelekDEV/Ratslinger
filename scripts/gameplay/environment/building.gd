@@ -53,19 +53,8 @@ func update() -> void:
 	var sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 	var interaction_collision: CollisionShape2D = get_node("InteractionArea/CollisionShape2D")
 	
-	match id:
-		ID.SHOP:
-			sprite.animation = &"ruined"
-			interaction_collision.disabled = true
-		
-		ID.TOWN_HALL:
-			sprite.animation = &"regular"
-			interaction_collision.disabled = false
-		
-		ID.FORGE:
-			sprite.animation = &"regular"
-			interaction_collision.disabled = false
-	
+	sprite.animation = &"ruined"
+	interaction_collision.disabled = true
 	sprite.frame = id
 
 func teleport():

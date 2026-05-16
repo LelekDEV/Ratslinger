@@ -26,7 +26,13 @@ var enemy_stats: Dictionary = {
 var waves_cleared: int = 0
 var death_wave: int = -1
 
-var builder_value: int = 0
+# 0 - ruined
+# 1 - being built
+# 2 - repaired and not checked
+# 2 - repaired and checked
+var town_state: Array = [1, 0, 0]
+var shown_buildings: Array
+
 var rain_value: float = -randi_range(0, 600)
 
 var is_title_on: bool = true
@@ -119,8 +125,24 @@ func roll_mission() -> void:
 
 func update_dialogic_var() -> void:
 	Dialogic.VAR.set_variable("mission_enemy_name", ["foxes", "cows", "beavers", "snakes", "owls"][mission_target])
-	Dialogic.VAR.set_variable("building_waves_left", Consts.NPC_BUILDER_WAVE_REQUIREMENTS[0] - Global.waves_cleared)
-	Dialogic.VAR.set_variable("town_dialog_enabled", Global.waves_cleared < Consts.NPC_BUILDER_WAVE_REQUIREMENTS[0])
+	Dialogic.VAR.set_variable("town_dialog_enabled", Global.waves_cleared < Consts.NPC_BUILDER_WAVE_REQUIREMENTS[-1])
+	
+	var current_building: int = town_state.find(1)
+	if current_building != -1:
+		Dialogic.VAR.set_variable("building_waves_left", Consts.NPC_BUILDER_WAVE_REQUIREMENTS[current_building] - Global.waves_cleared)
+
+func update_dialogic_var_building() -> void:
+	var building_names: Array = shown_buildings.map(func(i): return Consts.BUILDING_NAMES[i])
+	var text: String
+	
+	match shown_buildings.size():
+		1: text = "The %s" % building_names
+		2: text = "The %s and the %s" % building_names
+		3: text = "The %s, %s and %s" % building_names
+		# I've just learned new english rules with this one.
+		# Remember to make something more robust sometime when a new building comes lol
+	
+	Dialogic.VAR.set_variable("repaired_building", text)
 
 func start_mission() -> void:
 	is_mission_active = true

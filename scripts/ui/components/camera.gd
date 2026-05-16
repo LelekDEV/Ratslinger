@@ -25,20 +25,29 @@ class PositionOverride:
 	var ignore_x: bool
 	var ignore_y: bool
 	var meta: StringName
+	var trans: Tween.TransitionType
 	
-	func _init(_camera: Camera, _pos: Vector2, _ignore_x: bool, _ignore_y: bool, _meta: StringName = &"") -> void:
+	func _init(_camera: Camera, _pos: Vector2, 
+		_ignore_x: bool, _ignore_y: bool, 
+		_meta: StringName = &"",
+		_trans := Tween.TRANS_CIRC) -> void:
+		
 		camera = _camera
 		pos = _pos
+		
 		ignore_x = _ignore_x
 		ignore_y = _ignore_y
+		
 		meta = _meta
+		
+		trans = _trans
 		
 		initiate_tween()
 		camera.position_overrides.append(self)
 	
 	func initiate_tween() -> void:
 		tween = camera.create_tween() \
-			.set_trans(Tween.TRANS_CIRC) \
+			.set_trans(trans) \
 			.set_ease(Tween.EASE_IN_OUT)
 	
 	func end() -> void:
@@ -145,12 +154,27 @@ func alter_overrides(signal_data: Dictionary) -> void:
 			override.exit(1)
 			override.end()
 		
-		"shop":
-			var override := PositionOverride.new(self, Consts.CAMERA_POSITIONS.shop, false, false)
-			override.enter(1)
-			override.interval(2)
-			override.exit(1)
-			override.end()
+		"town":
+			var override_a := PositionOverride.new(self, Consts.CAMERA_POSITIONS.buildings[Global.shown_buildings[0]], false, false)
+			override_a.enter(1)
+			
+			if Global.shown_buildings.size() == 1:
+				override_a.interval(2)
+				override_a.exit(1)
+				override_a.end()
+			else:
+				await get_tree().create_timer(1, true).timeout
+				
+				var override_b := PositionOverride.new(self, Consts.CAMERA_POSITIONS.buildings[Global.shown_buildings[-1]], false, false, &"", Tween.TRANS_QUAD)
+				override_b.enter(2)
+				
+				await get_tree().create_timer(2, true).timeout
+				
+				override_a.call_deferred("exit", 1)
+				override_b.call_deferred("exit", 1)
+				
+				override_a.call_deferred("end")
+				override_b.call_deferred("end")
 		
 		"mayor_enter":
 			var override := PositionOverride.new(self, Consts.CAMERA_POSITIONS.mayor, false, true)

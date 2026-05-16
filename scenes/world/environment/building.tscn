@@ -17,9 +17,17 @@ region = Rect2(0, 0, 83, 88)
 atlas = ExtResource("3_ejq8p")
 region = Rect2(166, 0, 83, 88)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cue3w"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhb8v"]
 atlas = ExtResource("3_ejq8p")
 region = Rect2(83, 88, 83, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cue3w"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(0, 88, 83, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thl3v"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(166, 88, 83, 88)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uvy8r"]
 animations = [{
@@ -39,13 +47,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cue3w")
+"texture": SubResource("AtlasTexture_xhb8v")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cue3w")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cue3w")
+"texture": SubResource("AtlasTexture_thl3v")
 }],
 "loop": true,
 "name": &"ruined",

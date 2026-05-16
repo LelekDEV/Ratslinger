@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var settings_layer: CanvasLayer = get_tree().get_first_node_in_group("settings_layer")
+
 @onready var title_background: Node2D = $Ground/TitleBackground
 
 @onready var sand_sprite_title: Sprite2D = $Ground/TitleBackground/SandSprite
@@ -33,8 +35,19 @@ func _ready() -> void:
 		disable_title_anim(true)
 
 func _physics_process(delta: float) -> void:
-	if is_title_anim_disabled == true:
+	if is_title_anim_disabled or settings_layer.visible:
+		for sprite: AnimatedSprite2D in cow_sprites:
+			sprite.pause()
+		
+		cow_anim_timer.paused = true
+		
 		return
+	
+	for sprite: AnimatedSprite2D in cow_sprites:
+		if sprite.frame_progress != 1:
+			sprite.play()
+	
+	cow_anim_timer.paused = false
 	
 	title_anim += delta * title_anim_speed
 	sand_sprite_title.position.x = 32 - fmod(title_anim, 64)

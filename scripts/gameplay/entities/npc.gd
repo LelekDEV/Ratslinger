@@ -1,5 +1,6 @@
 @tool
 extends Node2D
+class_name NPC
 
 @onready var coins: Node2D = get_tree().get_first_node_in_group("coins")
 @onready var player: Player = get_tree().get_first_node_in_group("player")
@@ -38,6 +39,14 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	if interaction_area.interacting and Input.is_action_just_pressed("interact") and not Global.block_movement:
+		if id == ID.MAYOR:
+			print(Global.town_state)
+			Global.shown_buildings.clear()
+			
+			for i in range(Global.town_state.size()):
+				if Global.town_state[i] <= 1:
+					Global.shown_buildings.append(i)
+		
 		match id:
 			ID.KIDDO: Dialogic.start("kiddo")
 			ID.MAYOR: Dialogic.start("mayor")
@@ -58,6 +67,12 @@ func _physics_process(_delta: float) -> void:
 		await Dialogic.timeline_ended
 		interaction_area.animation.play("enter")
 
+func update_builder_pos() -> void:
+	if id != ID.BUILDER:
+		return
+	
+	global_position = Consts.NPC_BUILDER_POSITIONS[Global.town_state.find(1)]
+
 func update_builder_state(wave_ended: bool) -> void:
 	if id != ID.BUILDER:
 		return
@@ -65,15 +80,19 @@ func update_builder_state(wave_ended: bool) -> void:
 	if not is_inside_tree():
 		await tree_entered
 	
-	if Global.waves_cleared >= Consts.NPC_BUILDER_WAVE_REQUIREMENTS[0]:
-		global_position = Consts.NPC_BUILDER_POSITIONS[0]
-		
-		for building: Building in get_tree().get_nodes_in_group("building"):
-			if building.id == Building.ID.SHOP:
-				building.repair()
-		
-		if wave_ended and Global.builder_value == 0:
-			Global.builder_value = 1
+	for i in range(Consts.NPC_BUILDER_WAVE_REQUIREMENTS.size()):
+		if Global.waves_cleared >= Consts.NPC_BUILDER_WAVE_REQUIREMENTS[i]:
+			for building: Building in get_tree().get_nodes_in_group("building"):
+				if building.id == i:
+					building.repair()
+					
+					if Global.town_state[building.id] == 1:
+						Global.town_state[building.id] = 2
+						if building.id + 1 < Global.town_state.size():
+							Global.town_state[building.id + 1] = 1
+	
+	if not wave_ended:
+		update_builder_pos()
 
 func update() -> void:
 	var _sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")

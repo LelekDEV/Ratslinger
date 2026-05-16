@@ -1,9 +1,8 @@
 [signal arg_type="dict" arg="{"name":"camera_override","type":"mayor_enter"}"]
 Hey champ,[pause=0.25] would'ya look at that!
 [wait time="1.0"]
-[signal arg_type="dict" arg="{"name":"camera_override","type":"shop"}"]
+[signal arg_type="dict" arg="{"name":"camera_override","type":"town"}"]
 [wait time="4.5"]
 {so}{repaired_building}{sc} is back to business!
 Now, go check it out. There's a lot of interesting stuff waiting for ya.
 [signal arg_type="dict" arg="{"name":"camera_override","type":"mayor_exit"}"]
-set {Global.builder_value} = 2

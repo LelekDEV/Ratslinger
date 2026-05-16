@@ -38,12 +38,14 @@ const BLUNDERBOOST_PRICE: int = 200
 const NPC_SHAPE_RADIUS: Array = [10, 15, 12]
 const NPC_SHAPE_POS: Array = [Vector2(-5, 3), Vector2(0, 1), Vector2(-10, 1)]
 
-const NPC_BUILDER_POSITIONS = [Vector2(-10000, 0), Vector2(-459, -44)]
-const NPC_BUILDER_WAVE_REQUIREMENTS = [3]
+const NPC_BUILDER_POSITIONS: Array = [Vector2(-459.5, -44), Vector2(-592.5, -50), Vector2(-720.5, -48), Vector2(-10000, 0)]
+const NPC_BUILDER_WAVE_REQUIREMENTS = [3, 6, 9]
+
+const BUILDING_NAMES: Array = ["shop", "rathouse", "forge"]
 
 const CAMERA_POSITIONS: Dictionary = {
 	"arena": Vector2.ZERO,
-	"shop": Vector2(-452, -75),
+	"buildings": [Vector2(-452, -75), Vector2(-584, -75), Vector2(-719.5, -75)],
 	"mayor": Vector2(-584, 15)
 }
 
