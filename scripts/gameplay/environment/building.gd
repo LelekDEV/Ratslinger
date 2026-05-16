@@ -15,7 +15,7 @@ class_name Building
 
 @export_tool_button("Update properties") var update_action = update
 
-enum ID {SHOP, TOWN_HALL, FORGE}
+enum ID {SHOP, FORGE, TOWN_HALL}
 @export var id: ID
 
 func _ready() -> void:

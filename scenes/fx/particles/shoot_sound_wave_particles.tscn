@@ -13,6 +13,7 @@ _data = [Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="ShootSoundWaveParticles" type="CPUParticles2D" unique_id=1878725894 groups=["particles"]]
+emitting = false
 amount = 6
 texture = ExtResource("1_ont7w")
 lifetime = 1.5

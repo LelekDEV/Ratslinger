@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://cphhwde7lhxk2"]
+
+[ext_resource type="Script" uid="uid://cca7wgvl5osx" path="res://scripts/gameplay/environment/tamed_rat.gd" id="1_ucegt"]
+[ext_resource type="Texture2D" uid="uid://d0g38ict850qy" path="res://graphics/environment/tamed_rat.png" id="1_wwjss"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ucegt"]
+atlas = ExtResource("1_wwjss")
+region = Rect2(0, 50, 95, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpki3"]
+atlas = ExtResource("1_wwjss")
+region = Rect2(95, 50, 95, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sc2gv"]
+atlas = ExtResource("1_wwjss")
+region = Rect2(0, 0, 95, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qni4t"]
+atlas = ExtResource("1_wwjss")
+region = Rect2(95, 0, 95, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0n4h"]
+atlas = ExtResource("1_wwjss")
+region = Rect2(190, 0, 95, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5sx5e"]
+atlas = ExtResource("1_wwjss")
+region = Rect2(285, 0, 95, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okrbt"]
+atlas = ExtResource("1_wwjss")
+region = Rect2(380, 0, 95, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6a4e3"]
+atlas = ExtResource("1_wwjss")
+region = Rect2(475, 0, 95, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mu4jd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ucegt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpki3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sc2gv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qni4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0n4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5sx5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_okrbt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a4e3")
+}],
+"loop": false,
+"name": &"tail_wag",
+"speed": 4.0
+}]
+
+[node name="TamedRat" type="Node2D" unique_id=7442248]
+script = ExtResource("1_ucegt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1955800110]
+sprite_frames = SubResource("SpriteFrames_mu4jd")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Timer" type="Timer" parent="." unique_id=1483826957]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_anim_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

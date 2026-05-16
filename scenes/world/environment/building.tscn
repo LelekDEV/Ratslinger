@@ -9,25 +9,25 @@
 atlas = ExtResource("3_ejq8p")
 region = Rect2(83, 0, 83, 88)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o1xka"]
-atlas = ExtResource("3_ejq8p")
-region = Rect2(0, 0, 83, 88)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_cfro8"]
 atlas = ExtResource("3_ejq8p")
 region = Rect2(166, 0, 83, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1xka"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(0, 0, 83, 88)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xhb8v"]
 atlas = ExtResource("3_ejq8p")
 region = Rect2(83, 88, 83, 88)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cue3w"]
-atlas = ExtResource("3_ejq8p")
-region = Rect2(0, 88, 83, 88)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_thl3v"]
 atlas = ExtResource("3_ejq8p")
 region = Rect2(166, 88, 83, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cue3w"]
+atlas = ExtResource("3_ejq8p")
+region = Rect2(0, 88, 83, 88)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uvy8r"]
 animations = [{
@@ -36,10 +36,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_06rqn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_o1xka")
+"texture": SubResource("AtlasTexture_cfro8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cfro8")
+"texture": SubResource("AtlasTexture_o1xka")
 }],
 "loop": true,
 "name": &"regular",
@@ -50,10 +50,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_xhb8v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cue3w")
+"texture": SubResource("AtlasTexture_thl3v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_thl3v")
+"texture": SubResource("AtlasTexture_cue3w")
 }],
 "loop": true,
 "name": &"ruined",
@@ -73,7 +73,7 @@ script = ExtResource("1_ejq8p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=271440179 node_paths=PackedStringArray("spawn_node")]
 sprite_frames = SubResource("SpriteFrames_uvy8r")
-animation = &"ruined"
+animation = &"regular"
 offset = Vector2(0, -0.5)
 script = ExtResource("3_rla3o")
 auto_call = false

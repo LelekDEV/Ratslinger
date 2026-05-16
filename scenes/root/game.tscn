@@ -57,6 +57,7 @@
 [ext_resource type="AudioStream" uid="uid://sts3sksabhkn" path="res://audio/cutscene/quake.wav" id="49_xovr5"]
 [ext_resource type="Texture2D" uid="uid://bcjxmy3h3daal" path="res://graphics/characters/enemies/cow/cow.png" id="51_42jw8"]
 [ext_resource type="PackedScene" uid="uid://dtv6ju2mwiuwi" path="res://scenes/ui/layers/statistics.tscn" id="53_ncowb"]
+[ext_resource type="PackedScene" uid="uid://cphhwde7lhxk2" path="res://scenes/world/environment/tamed_rat.tscn" id="58_2x0kx"]
 
 [sub_resource type="Animation" id="Animation_0pks0"]
 length = 0.001
@@ -1690,11 +1691,11 @@ position = Vector2(-452, -95)
 
 [node name="Forge" parent="Environment" unique_id=1582154463 instance=ExtResource("9_l77qo")]
 position = Vector2(-719.5, -95)
-id = 2
+id = 1
 
 [node name="Rathaus" parent="Environment" unique_id=1779372816 instance=ExtResource("9_l77qo")]
 position = Vector2(-584, -95)
-id = 1
+id = 2
 
 [node name="Gate" parent="Environment" unique_id=1886308699 instance=ExtResource("10_2mmsw")]
 position = Vector2(-298, 0)
@@ -1929,6 +1930,20 @@ bus = &"SFX"
 
 [node name="Statistics" parent="." unique_id=344172419 instance=ExtResource("53_ncowb")]
 visible = false
+
+[node name="TamedRats" type="Node2D" parent="." unique_id=1797750134]
+
+[node name="TamedRat1" parent="TamedRats" unique_id=7442248 instance=ExtResource("58_2x0kx")]
+z_index = -1
+position = Vector2(-400, 150)
+
+[node name="TamedRat2" parent="TamedRats" unique_id=1305234454 instance=ExtResource("58_2x0kx")]
+z_index = -1
+position = Vector2(-650, 135)
+
+[node name="TamedRat3" parent="TamedRats" unique_id=558332139 instance=ExtResource("58_2x0kx")]
+z_index = -1
+position = Vector2(-375, -125)
 
 [connection signal="timeout" from="Environment/Ground/CowAnimTimer" to="Environment" method="_on_cow_anim_timer_timeout"]
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

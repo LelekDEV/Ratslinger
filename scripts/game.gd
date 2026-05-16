@@ -74,7 +74,7 @@ func _ready() -> void:
 	title_background.global_position.x = int(player.global_position.x)
 	
 	# testing...
-	#Global.waves_cleared = 13
+	#Global.waves_cleared = 3
 	#Global.is_tutorial_passed = false
 	#Global.rain_value = -1
 	#Global.coins = 100
