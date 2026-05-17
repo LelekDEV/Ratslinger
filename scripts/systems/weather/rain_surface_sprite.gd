@@ -16,6 +16,11 @@ var spawn_treshold: float = 0.1
 func _ready() -> void:
 	update_data()
 
+# DEBUG SPLASH POINTS DRAW
+"""func _draw() -> void:
+	for pos in points.top:
+		draw_circle(pos - surface_size / 2, 0.25, Color.RED)"""
+
 func update_data() -> void:
 	if hframes > 1 or vframes > 1:
 		var img: Image = texture.get_image()
@@ -54,7 +59,7 @@ func _physics_process(delta: float) -> void:
 			fx.set_meta("flippable_pos", pos)
 			fx.visible = false
 		else:
-			fx.position = pos - floor(surface_size / 2)
+			fx.position = pos - surface_size / 2
 		
 		spawn_node.add_child(fx)
 		

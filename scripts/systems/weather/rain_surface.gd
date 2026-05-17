@@ -3,11 +3,9 @@ class_name RainSurface
 
 @onready var SplashFX: PackedScene = preload("res://scenes/fx/weather/splash_fx.tscn")
 
-var frame_points: Array
+var all_points: Dictionary
 var surface_size: Vector2
 
-@export var auto_call: bool = true
-@export var override_anim: String
 @export var use_meta: bool
 
 var spawn_value: float = 0
@@ -15,11 +13,15 @@ var spawn_treshold: float = 0.1
 @export var spawn_node: Node
 
 func _ready() -> void:
-	if auto_call:
-		get_all_points()
+	get_all_points()
 	
 	var first_texture = sprite_frames.get_frame_texture(animation, 0)
 	surface_size = Vector2(first_texture.get_width(), first_texture.get_height())
+
+# DEBUG SPLASH POINTS DRAW
+"""func _draw() -> void:
+	for pos in all_points[animation][frame].top:
+		draw_circle(pos - surface_size / 2 + spawn_node.position, 0.25, Color.RED)"""
 
 func _physics_process(delta: float) -> void:
 	spawn_value += delta * Global.get_rain_change_ratio()
@@ -30,15 +32,15 @@ func _physics_process(delta: float) -> void:
 		var pos: Vector2
 		
 		if randf_range(0, 1) > 0.2:
-			pos = frame_points[frame].top[randi_range(0, frame_points[frame].top.size() - 1)]
+			pos = all_points[animation][frame].top[randi_range(0, all_points[animation][frame].top.size() - 1)]
 		else:
-			pos = frame_points[frame].side[randi_range(0, frame_points[frame].side.size() - 1)]
+			pos = all_points[animation][frame].side[randi_range(0, all_points[animation][frame].side.size() - 1)]
 		
 		if use_meta:
 			fx.set_meta("flippable_pos", pos)
 			fx.visible = false
 		else:
-			fx.position = pos - floor(surface_size / 2)
+			fx.position = pos - surface_size / 2
 		
 		spawn_node.add_child(fx)
 		
@@ -46,12 +48,12 @@ func _physics_process(delta: float) -> void:
 		spawn_treshold = randf_range(0.08, 0.1)
 
 func get_all_points() -> void:
-	@warning_ignore("incompatible_ternary")
-	var anim: String = override_anim if override_anim else animation
-	
-	for i in range(sprite_frames.get_frame_count(anim)):
-		var texture = sprite_frames.get_frame_texture(anim, i)
-		frame_points.append(get_edges(texture))
+	for anim in sprite_frames.get_animation_names():
+		all_points[anim] = []
+		
+		for i in range(sprite_frames.get_frame_count(anim)):
+			var texture = sprite_frames.get_frame_texture(anim, i)
+			all_points[anim].append(get_edges(texture))
 
 static func get_edges(texture: Texture2D) -> Dictionary:
 	var points: Dictionary = {

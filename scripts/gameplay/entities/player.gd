@@ -101,6 +101,8 @@ func switch_gun(new_gun: Guns) -> void:
 			gun_sprite.play("trombone")
 			gun_sprite.z_index = 1
 			gun_sprite.offset.x = -1.5
+			
+			base_sprite.play("handless")
 
 	base_sprite.set_frame_and_progress(frame, progress)
 
@@ -201,8 +203,9 @@ func is_gun_unlocked(check_gun: Guns) -> bool:
 	return false
 
 func cycle_guns() -> void:
-	for i in Guns.size():
-		var next_gun = (gun + 1) % Guns.size()
+	var next_gun: int = gun
+	while true:
+		next_gun = (next_gun + 1) % Guns.size()
 		
 		if is_gun_unlocked(next_gun):
 			switch_gun(next_gun)
@@ -319,7 +322,7 @@ func exit_squeeze() -> void:
 	gun_sprite.visible = true
 	legs_sprite.visible = true
 	
-	base_sprite.play("default")
+	base_sprite.play("default" if gun == Guns.REVOLVER else "handless")
 	
 	var particles: CPUParticles2D = ParticleSpawner.instantiate(ParticleSpawner.ID.BLOOD)
 	particles.global_position = global_position

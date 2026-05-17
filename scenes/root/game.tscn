@@ -54,8 +54,10 @@
 [ext_resource type="Script" uid="uid://dv6lwnchc0xul" path="res://scripts/gameplay/environment/environment.gd" id="39_m4tf3"]
 [ext_resource type="Script" uid="uid://6wxtgdvdmdn0" path="res://scripts/gameplay/environment/sand_spike_spawner.gd" id="42_dt87u"]
 [ext_resource type="Script" uid="uid://do80blcsew3si" path="res://scripts/systems/audio/music_handler.gd" id="42_l3433"]
+[ext_resource type="Script" uid="uid://cq1yth4joycrx" path="res://scripts/systems/weather/rain_surface_sprite.gd" id="45_42jw8"]
 [ext_resource type="AudioStream" uid="uid://sts3sksabhkn" path="res://audio/cutscene/quake.wav" id="49_xovr5"]
 [ext_resource type="Texture2D" uid="uid://bcjxmy3h3daal" path="res://graphics/characters/enemies/cow/cow.png" id="51_42jw8"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/systems/weather/rain_surface.gd" id="52_lqohm"]
 [ext_resource type="PackedScene" uid="uid://dtv6ju2mwiuwi" path="res://scenes/ui/layers/statistics.tscn" id="53_ncowb"]
 [ext_resource type="PackedScene" uid="uid://cphhwde7lhxk2" path="res://scenes/world/environment/tamed_rat.tscn" id="58_2x0kx"]
 
@@ -1254,6 +1256,9 @@ distance = -210.0
 y_sort_enabled = true
 script = ExtResource("1_o8yes")
 
+[node name="Statistics" parent="." unique_id=344172419 instance=ExtResource("53_ncowb")]
+visible = false
+
 [node name="MapLayer" parent="." unique_id=1954318359 instance=ExtResource("2_osimy")]
 
 [node name="BestiaryLayer" parent="." unique_id=229625304 groups=["bestiary_layer"] instance=ExtResource("2_yylqm")]
@@ -1734,13 +1739,17 @@ material = SubResource("ShaderMaterial_vjquk")
 position = Vector2(-822, 60)
 texture = SubResource("ViewportTexture_57iyq")
 
-[node name="TowerSprite1" type="Sprite2D" parent="Environment" unique_id=946271222]
+[node name="TowerSprite1" type="Sprite2D" parent="Environment" unique_id=946271222 node_paths=PackedStringArray("spawn_node")]
 position = Vector2(-799, -47)
 texture = ExtResource("19_d8x6a")
+script = ExtResource("45_42jw8")
+spawn_node = NodePath(".")
 
-[node name="TowerSprite2" type="Sprite2D" parent="Environment" unique_id=1756406117]
+[node name="TowerSprite2" type="Sprite2D" parent="Environment" unique_id=1756406117 node_paths=PackedStringArray("spawn_node")]
 position = Vector2(-803, 32)
 texture = ExtResource("19_d8x6a")
+script = ExtResource("45_42jw8")
+spawn_node = NodePath(".")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Environment" unique_id=1513322276 node_paths=PackedStringArray("spawn_node")]
 y_sort_enabled = true
@@ -1765,23 +1774,35 @@ region_enabled = true
 region_rect = Rect2(0, 0, 648, 468)
 metadata/_edit_lock_ = true
 
-[node name="CowSprite1" type="AnimatedSprite2D" parent="Environment/Ground/TitleBackground" unique_id=726359805]
+[node name="CowSprite1" type="AnimatedSprite2D" parent="Environment/Ground/TitleBackground" unique_id=726359805 node_paths=PackedStringArray("spawn_node")]
 z_index = -2
 position = Vector2(0, 468)
 sprite_frames = SubResource("SpriteFrames_3q75t")
 animation = &"eat"
+script = ExtResource("52_lqohm")
+spawn_node = NodePath("LocalFX")
 
-[node name="CowSprite2" type="AnimatedSprite2D" parent="Environment/Ground/TitleBackground" unique_id=2046172921]
+[node name="LocalFX" type="Node2D" parent="Environment/Ground/TitleBackground/CowSprite1" unique_id=2000523016]
+
+[node name="CowSprite2" type="AnimatedSprite2D" parent="Environment/Ground/TitleBackground" unique_id=2046172921 node_paths=PackedStringArray("spawn_node")]
 z_index = -2
 position = Vector2(200, 468)
 sprite_frames = SubResource("SpriteFrames_3q75t")
 animation = &"kick"
+script = ExtResource("52_lqohm")
+spawn_node = NodePath("LocalFX")
 
-[node name="CowSprite3" type="AnimatedSprite2D" parent="Environment/Ground/TitleBackground" unique_id=2080063469]
+[node name="LocalFX" type="Node2D" parent="Environment/Ground/TitleBackground/CowSprite2" unique_id=1067939823]
+
+[node name="CowSprite3" type="AnimatedSprite2D" parent="Environment/Ground/TitleBackground" unique_id=2080063469 node_paths=PackedStringArray("spawn_node")]
 z_index = -2
 position = Vector2(-200, 468)
 sprite_frames = SubResource("SpriteFrames_3q75t")
 animation = &"yell"
+script = ExtResource("52_lqohm")
+spawn_node = NodePath("LocalFX")
+
+[node name="LocalFX" type="Node2D" parent="Environment/Ground/TitleBackground/CowSprite3" unique_id=741958165]
 
 [node name="SandSprite1" type="Sprite2D" parent="Environment/Ground" unique_id=64867769]
 z_index = -2
@@ -1808,6 +1829,20 @@ texture = ExtResource("8_sh5j3")
 wait_time = 5.0
 one_shot = true
 autostart = true
+
+[node name="TamedRats" type="Node2D" parent="Environment" unique_id=1797750134]
+
+[node name="TamedRat1" parent="Environment/TamedRats" unique_id=7442248 instance=ExtResource("58_2x0kx")]
+z_index = -1
+position = Vector2(-400, 150)
+
+[node name="TamedRat2" parent="Environment/TamedRats" unique_id=1305234454 instance=ExtResource("58_2x0kx")]
+z_index = -1
+position = Vector2(-650, 135)
+
+[node name="TamedRat3" parent="Environment/TamedRats" unique_id=558332139 instance=ExtResource("58_2x0kx")]
+z_index = -1
+position = Vector2(-375, -125)
 
 [node name="FX" type="Node2D" parent="." unique_id=52843161 groups=["fx"]]
 
@@ -1927,23 +1962,6 @@ wait_time = 8.0
 stream = ExtResource("49_xovr5")
 volume_db = 2.0
 bus = &"SFX"
-
-[node name="Statistics" parent="." unique_id=344172419 instance=ExtResource("53_ncowb")]
-visible = false
-
-[node name="TamedRats" type="Node2D" parent="." unique_id=1797750134]
-
-[node name="TamedRat1" parent="TamedRats" unique_id=7442248 instance=ExtResource("58_2x0kx")]
-z_index = -1
-position = Vector2(-400, 150)
-
-[node name="TamedRat2" parent="TamedRats" unique_id=1305234454 instance=ExtResource("58_2x0kx")]
-z_index = -1
-position = Vector2(-650, 135)
-
-[node name="TamedRat3" parent="TamedRats" unique_id=558332139 instance=ExtResource("58_2x0kx")]
-z_index = -1
-position = Vector2(-375, -125)
 
 [connection signal="timeout" from="Environment/Ground/CowAnimTimer" to="Environment" method="_on_cow_anim_timer_timeout"]
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

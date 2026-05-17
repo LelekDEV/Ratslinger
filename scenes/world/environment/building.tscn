@@ -41,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o1xka")
 }],
-"loop": true,
+"loop": false,
 "name": &"regular",
 "speed": 5.0
 }, {
@@ -55,9 +55,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cue3w")
 }],
-"loop": true,
+"loop": false,
 "name": &"ruined",
-"speed": 5.0
+"speed": 0.5
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvy8r"]
@@ -73,13 +73,13 @@ script = ExtResource("1_ejq8p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=271440179 node_paths=PackedStringArray("spawn_node")]
 sprite_frames = SubResource("SpriteFrames_uvy8r")
-animation = &"regular"
+animation = &"ruined"
 offset = Vector2(0, -0.5)
 script = ExtResource("3_rla3o")
-auto_call = false
 spawn_node = NodePath("../LocalFX")
 
 [node name="LocalFX" type="Node2D" parent="." unique_id=851241081]
+position = Vector2(0, -0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=21281098]
 position = Vector2(0, -0.75)

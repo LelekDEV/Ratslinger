@@ -25,3 +25,5 @@ signal scale_changed
 
 signal title_exit
 signal title_exited
+
+signal fullscreen_toggled

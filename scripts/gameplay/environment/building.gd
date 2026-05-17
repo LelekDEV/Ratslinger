@@ -23,8 +23,6 @@ func _ready() -> void:
 	
 	if Engine.is_editor_hint():
 		return
-	
-	get_node("AnimatedSprite2D").call_deferred("get_all_points")
 
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():

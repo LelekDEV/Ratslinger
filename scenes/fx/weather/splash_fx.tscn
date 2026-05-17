@@ -37,6 +37,7 @@ sprite_frames = SubResource("SpriteFrames_6n4du")
 autoplay = "default"
 frame = 2
 frame_progress = 1.0
+offset = Vector2(0.5, 0.5)
 script = ExtResource("2_qdlfi")
 
 [connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

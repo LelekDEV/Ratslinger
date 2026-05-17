@@ -16,6 +16,8 @@ func _process(_delta: float) -> void:
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		
+		SignalBus.fullscreen_toggled.emit()
+		
 		transition_rect.visible = true
 		await get_tree().physics_frame
 		transition_rect.visible = false

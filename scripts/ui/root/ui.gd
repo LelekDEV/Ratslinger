@@ -44,6 +44,7 @@ func _ready() -> void:
 		SignalBus.accuracy_perfect_early.connect(GlobalAudio.play_sfx.bind(AudioConsts.SFX.PERFECT))
 	
 	SignalBus.scale_changed.connect(update_scale)
+	SignalBus.fullscreen_toggled.connect(unstuck_accuracy_bar)
 	
 	Dialogic.timeline_started.connect(start_dialogue)
 	Dialogic.timeline_ended.connect(end_dialogue)
@@ -78,7 +79,7 @@ func _ready() -> void:
 			await Dialogic.timeline_ended
 			Global.is_introduction_passed = true
 	else:
-		toggle_combat_hud(false)
+		ready_hud()
 		
 		if Global.is_introduction_passed:
 			Global.block_movement = false
@@ -89,17 +90,24 @@ func _ready() -> void:
 			get_node("../NPC/MayorNPC/InteractionArea").animation.play("exit")
 			
 			Dialogic.start("introduction")
-		
+			
 			await Dialogic.timeline_ended
 			Global.is_introduction_passed = true
+			
+			if player_location == Player.Locations.ARENA:
+				toggle_combat_hud(true)
 	
 	if player_location == Player.Locations.ARENA:
-		toggle_combat_hud(true)
 		Global.block_input = false
 	
 	show_location_popup()
 	update_coin_count()
 	update_enemy_count()
+
+func ready_hud() -> void:
+	await get_tree().process_frame
+	if player_location == Player.Locations.TOWN:
+		toggle_combat_hud(false)
 
 func ready_load() -> void:
 	await SignalBus.game_loaded
@@ -156,7 +164,17 @@ func end_dialogue() -> void:
 	animation.play("show_ui")
 	animation.play("hide_dialogue_strips")
 
+func unstuck_accuracy_bar() -> void:
+	# Why would one feel bad for monkeypatching if they don't even know the cause of the issue?
+	if accuracy_bar.anim_tween:
+		accuracy_bar.anim_tween.kill()
+	
+	accuracy_bar.position.y = (-6 if is_combat_hud_on else -46) * scale_float
+
 func toggle_combat_hud(on: bool) -> void:
+	if player_location == Player.Locations.ARENA and Engine.get_physics_frames() <= 2:
+		return
+	
 	is_combat_hud_on = on
 	
 	accuracy_bar.anim_tween = create_tween() \
@@ -218,16 +236,6 @@ func update_hearts(health: float) -> void:
 	
 	for heart: Control in hearts_sorted:
 		heart.target_fill = clamp((health + (i - 1) * 4) / 4, 0, 1)
-		i += 1
-
-func update_hearts_old(health: int) -> void:
-	var i: int = 0
-	
-	var hearts_sorted: Array = hearts.get_children()
-	hearts_sorted.reverse()
-	
-	for heart: Sprite2D in hearts_sorted:
-		heart.frame = clamp(8 - health - i * 4, 0, 4)
 		i += 1
 
 func on_player_location_change(location: Player.Locations) -> void:

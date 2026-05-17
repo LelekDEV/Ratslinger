@@ -98,14 +98,11 @@ script = ExtResource("2_wi8tm")
 treshold_mod = 2.0
 spawn_node = NodePath(".")
 
-[node name="BackSprite" type="Sprite2D" parent="." unique_id=1795218751 node_paths=PackedStringArray("spawn_node")]
+[node name="BackSprite" type="Sprite2D" parent="." unique_id=1795218751]
 z_index = -1
 texture = ExtResource("2_xwxio")
 region_enabled = true
 region_rect = Rect2(0, 0, 46, 75)
-script = ExtResource("2_wi8tm")
-treshold_mod = 2.0
-spawn_node = NodePath(".")
 
 [node name="LockSprite" type="Sprite2D" parent="." unique_id=906606299]
 self_modulate = Color(1, 1, 1, 0)

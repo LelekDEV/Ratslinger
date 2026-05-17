@@ -3,8 +3,6 @@ extends Node2D
 @onready var anim: AnimatedSprite2D = $"AnimatedSprite2D"
 @onready var timer: Timer = $"Timer"
 
-
-
 func _on_timer_timeout() -> void:
 	var random_num = randi_range(1,3)
 	

@@ -12,12 +12,16 @@ var spawn_treshold: float = 0.1
 func _ready() -> void:
 	assert(points.has_all(["top", "side"]), "Failed to read tile-set rain splash points data. Run res://scripts/editor/tilemap_rain_data.gd to update them.")
 
+# DEBUG SPLASH POINTS DRAW
+"""func _draw() -> void:
+	for pos in points.top:
+		draw_circle(pos - surface_size / 2, 0.25, Color.RED)"""
+
 func _physics_process(delta: float) -> void:
 	spawn_value += delta * Global.get_rain_change_ratio()
 	
 	if spawn_value > spawn_treshold:
 		var fx: AnimatedSprite2D = SplashFX.instantiate()
-		
 		var pos: Vector2
 		
 		if randf_range(0, 1) > 0.2:
@@ -25,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			pos = points.side[randi_range(0, points.side.size() - 1)]
 		
-		fx.position = pos - floor(surface_size / 2)
+		fx.position = pos - surface_size / 2
 		
 		add_child(fx)
 		

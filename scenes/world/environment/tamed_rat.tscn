@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cca7wgvl5osx" path="res://scripts/gameplay/environment/tamed_rat.gd" id="1_ucegt"]
 [ext_resource type="Texture2D" uid="uid://d0g38ict850qy" path="res://graphics/environment/tamed_rat.png" id="1_wwjss"]
+[ext_resource type="Script" uid="uid://8ofheei6xksh" path="res://scripts/systems/weather/rain_surface.gd" id="3_gpki3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ucegt"]
 atlas = ExtResource("1_wwjss")
@@ -75,10 +76,14 @@ animations = [{
 [node name="TamedRat" type="Node2D" unique_id=7442248]
 script = ExtResource("1_ucegt")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1955800110]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1955800110 node_paths=PackedStringArray("spawn_node")]
 sprite_frames = SubResource("SpriteFrames_mu4jd")
 animation = &"idle"
 autoplay = "idle"
+script = ExtResource("3_gpki3")
+spawn_node = NodePath("../LocalFX")
+
+[node name="LocalFX" type="Node2D" parent="." unique_id=605201940]
 
 [node name="Timer" type="Timer" parent="." unique_id=1483826957]
 wait_time = 3.0

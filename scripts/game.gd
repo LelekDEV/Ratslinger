@@ -74,10 +74,12 @@ func _ready() -> void:
 	title_background.global_position.x = int(player.global_position.x)
 	
 	# testing...
-	#Global.waves_cleared = 3
+	Global.waves_cleared = 10
 	#Global.is_tutorial_passed = false
 	#Global.rain_value = -1
 	#Global.coins = 100
+	#Engine.time_scale = 0.1
+	Upgrades.unlocked_weapons[0] = true
 
 func setup_signals() -> void:
 	SignalBus.player_shoot.connect(camera.shake.bind(0.2, 2.5, 0.8))
